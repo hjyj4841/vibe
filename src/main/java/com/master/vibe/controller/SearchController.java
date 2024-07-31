@@ -1,4 +1,4 @@
-package com.test.controller;
+package com.master.vibe.controller;
 
 import org.springframework.stereotype.Controller;
 
