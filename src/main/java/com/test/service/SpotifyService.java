@@ -21,6 +21,7 @@ public class SpotifyService {
 	
 	private final RestTemplate restTemplate = new RestTemplate();
 	
+	// token 발급 받는 메서드
 	private String getAccessToken() {
 		
 		String clientId = "d0a1ae63ef0149c08c1d1e32cfc89a0c";
@@ -45,6 +46,8 @@ public class SpotifyService {
 	
 	public ArrayList<ArrayList<String>> getArtistInfo(String musicName, int offset) {
 		String accessToken = getAccessToken();
+		
+		// 기능마다 바뀌는 구문
 		String url = "https://api.spotify.com/v1/search?q=" + musicName + "&type=track&limit=20&offset=" + offset;
 		
 		HttpHeaders headers = new HttpHeaders();
@@ -55,6 +58,7 @@ public class SpotifyService {
 		ResponseEntity<JsonNode> response = restTemplate.exchange(url, HttpMethod.GET, request, JsonNode.class);
 		JsonNode musicData = response.getBody();
 		
+		// api를 통해 response 받는 구문
 		ArrayList<ArrayList<String>> musicInfo = new ArrayList<ArrayList<String>>();
 		JsonNode trackInfo = musicData.get("tracks").get("items");
 		
