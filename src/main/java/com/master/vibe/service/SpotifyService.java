@@ -1,4 +1,4 @@
-package com.test.service;
+package com.master.vibe.service;
 
 import java.util.ArrayList;
 import java.util.Base64;

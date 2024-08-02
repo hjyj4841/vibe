@@ -7,10 +7,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-    <form action="/search">
-         플레이리스트 검색 : <input type="text" name="list"><br>
+    <form action="/select">
+         플레이리스트 태그 선택 <input type="text" name="tagCode"><br>
          <input type="submit" value="검색">
     </form>
-    
 </body>
 </html>
