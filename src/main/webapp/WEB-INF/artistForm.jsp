@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>아티스트 찾기</title>
 </head>
 <body>
 	<h1>아티스트 찾기</h1>

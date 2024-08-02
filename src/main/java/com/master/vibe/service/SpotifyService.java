@@ -1,4 +1,4 @@
-package com.test.service;
+package com.master.vibe.service;
 
 import java.util.ArrayList;
 import java.util.Base64;
@@ -15,6 +15,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.master.vibe.model.vo.Music;
 
 @Service
 public class SpotifyService {
@@ -44,7 +45,7 @@ public class SpotifyService {
 		return response.getBody().get("access_token").toString();
 	}
 	
-	public ArrayList<ArrayList<String>> getArtistInfo(String musicName, int offset) {
+	public ArrayList<Music> getArtistInfo(String musicName, int offset) {
 		String accessToken = getAccessToken();
 		
 		// 기능마다 바뀌는 구문
@@ -59,24 +60,26 @@ public class SpotifyService {
 		JsonNode musicData = response.getBody();
 		
 		// api를 통해 response 받는 구문
-		ArrayList<ArrayList<String>> musicInfo = new ArrayList<ArrayList<String>>();
+		ArrayList<Music> musicInfo = new ArrayList<>();
 		JsonNode trackInfo = musicData.get("tracks").get("items");
 		
 		for(JsonNode track : trackInfo) {
-			ArrayList<String> musicInfo2 = new ArrayList<String>();
 			
 			JsonNode albumInfo = track.get("album");
+			String id = track.get("id").asText();
 			String albumUrl = albumInfo.get("images").get(0).get("url").asText();
 			String albumName = albumInfo.get("name").asText();
 			String artistName = track.get("artists").get(0).get("name").asText();
 			String musicTitle = track.get("name").asText();
 			
-			musicInfo2.add(albumUrl);
-			musicInfo2.add(albumName);
-			musicInfo2.add(artistName);
-			musicInfo2.add(musicTitle);
+			Music music = new Music();
+			music.setId(id);
+			music.setAlbumName(albumName);
+			music.setAlbumUrl(albumUrl);
+			music.setArtistName(artistName);
+			music.setMusicTitle(musicTitle);
 			
-			musicInfo.add(musicInfo2);
+			musicInfo.add(music);
 		}		
 		return musicInfo;
 	}

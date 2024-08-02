@@ -1,4 +1,4 @@
-package com.test.controller;
+package com.master.vibe.controller;
 
 import java.util.ArrayList;
 
@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.test.service.SpotifyService;
+import com.master.vibe.model.vo.Music;
+import com.master.vibe.service.SpotifyService;
 
 @Controller
 public class SpotifyController {
@@ -25,7 +26,7 @@ public class SpotifyController {
 	@PostMapping("/artist")
 	public String getArtist(@RequestParam("musicName") String musicName, Model model) {
 		int offset = 0;
-		ArrayList<ArrayList<String>> musicData = spotifyService.getArtistInfo(musicName, offset);
+		ArrayList<Music> musicData = spotifyService.getArtistInfo(musicName, offset);
 		
 		model.addAttribute("musicData", musicData);
 		return "artistInfo";
