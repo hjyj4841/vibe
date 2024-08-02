@@ -1,4 +1,11 @@
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="mapper.PlaylistMapper">
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="PlaylistMapper">
+
+    <insert id="insertPlaylist" parameterType="Playlist">
+        INSERT INTO playlist (pl_title, user_email)
+        VALUES (#{plTitle}, #{userEmail});
+    </insert>
 
 </mapper>
