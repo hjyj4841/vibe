@@ -1,4 +1,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mapper.PlaylistMapper">
+	
+	<!-- user 탈퇴 시 playlist 정보 넘기기 -->
+	<update id="movePlaylist" parameterType="String">
+		UPDATE playlist
+		SET user_email = 'playlist@vibemaster.com'
+		WHERE user_email = #{userEmail}
+	</update>
+	
 
 </mapper>
