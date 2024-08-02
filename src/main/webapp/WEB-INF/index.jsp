@@ -43,5 +43,14 @@ prefix="c" %>
       </c:if>
       <li><a href="artist">api 참고 테스트</a></li>
     </ul>
+
+    <!-- 플레이리스트 생성 -->
+    <h1>플레이리스트 생성</h1>
+    <form action="/createPlaylist" method="post">
+      <input type="hidden" name="user_email" value="agrigs9@opensource.org" />
+      <label for="pl_title">플레이리스트 제목:</label>
+      <input type="text" id="pl_title" name="pl_title" required />
+      <button type="submit">플레이리스트 생성</button>
+    </form>
   </body>
 </html>

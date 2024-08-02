@@ -2,6 +2,7 @@ package mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.master.vibe.model.vo.Playlist;
@@ -14,4 +15,7 @@ public interface PlaylistMapper {
 	void addPlaylist(Playlist playlist);
 	List<Playlist> allPlaylist();
 	void movePlaylist(String userEmail);
+
+    //@Insert("INSERT INTO playlist (pl_title, user_email) VALUES (#{plTitle}, #{userEmail})")
+    void insertPlaylist(Playlist playlist);
 }

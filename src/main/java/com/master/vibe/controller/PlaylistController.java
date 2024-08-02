@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.master.vibe.model.vo.Playlist;
 import com.master.vibe.service.PlaylistService;
+import org.springframework.web.servlet.ModelAndView;
 
 // 현재 PlaylistController.java에서 @PostMapping("/addPlaylist") 메소드가 List<String> 타입의 selectedMusic을 받고 있습니다.
 // 그러나 선택된 음악 정보는 문자열이 아니라 복잡한 객체 구조임
@@ -87,7 +88,15 @@ public class PlaylistController {
 		model.addAttribute("allPlaylist", playlistService.allPlaylist());
 		return "index";
 	}
-    
-   
-    
+
+    @PostMapping("/createPlaylist")
+    public String createPlaylist(@RequestParam("pl_title") String pt, @RequestParam("user_email") String ue) {
+        Playlist playlist = new Playlist();
+        playlist.setPlTitle(pt);
+        playlist.setUserEmail(ue);
+
+        playlistService.createPlaylist(playlist);
+
+        return "redirect:/";
+    }
 }

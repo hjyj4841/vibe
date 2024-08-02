@@ -1,8 +1,10 @@
 package mapper;
 
-import org.apache.ibatis.annotations.Mapper;
+import com.master.vibe.model.vo.Tag;
+import org.apache.ibatis.annotations.Select;
 
-@Mapper
 public interface TagMapper {
 
+    @Select("SELECT tag_code FROM tag WHERE tag_name = #{tagName}")
+    Integer getTagCodeByName(String tagName);
 }

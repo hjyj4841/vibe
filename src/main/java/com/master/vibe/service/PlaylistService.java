@@ -33,5 +33,8 @@ public class PlaylistService {
     	return mapper.allPlaylist();
     }
     
-    
+    public void createPlaylist(Playlist playlist) {
+        mapper.insertPlaylist(playlist);
+       
+    }
 }
