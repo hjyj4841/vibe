@@ -13,5 +13,5 @@ public class Playlist {
 	private String plImg;
 	private Date plDate;
 	private char plPublicYn;
-	private String userEmail;
+	private User user;
 }
