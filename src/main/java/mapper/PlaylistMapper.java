@@ -13,4 +13,5 @@ import com.master.vibe.model.vo.Playlist;
 public interface PlaylistMapper {
 	void addPlaylist(Playlist playlist);
 	List<Playlist> allPlaylist();
+	void movePlaylist(String userEmail);
 }

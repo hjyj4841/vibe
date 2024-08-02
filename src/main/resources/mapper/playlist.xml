@@ -24,5 +24,13 @@
 		SELECT * FROM playlist
 		JOIN user USING (user_email)
 	</select>
+	
+	<!-- user 탈퇴 시 playlist 정보 넘기기 -->
+	<update id="movePlaylist" parameterType="String">
+		UPDATE playlist
+		SET user_email = 'playlist@vibemaster.com'
+		WHERE user_email = #{userEmail}
+	</update>
+	
 
 </mapper>

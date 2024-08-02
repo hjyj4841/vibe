@@ -19,4 +19,5 @@ public class User {
 	private Date userBirth;
 	private char userManager;
 	private Date userEnrollDate;
+	private String userPhone;
 }
