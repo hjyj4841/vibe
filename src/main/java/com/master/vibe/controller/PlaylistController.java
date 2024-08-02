@@ -13,6 +13,8 @@ import com.master.vibe.model.vo.Playlist;
 import com.master.vibe.service.PlaylistService;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.master.vibe.service.SpotifyService;
+
 // 현재 PlaylistController.java에서 @PostMapping("/addPlaylist") 메소드가 List<String> 타입의 selectedMusic을 받고 있습니다.
 // 그러나 선택된 음악 정보는 문자열이 아니라 복잡한 객체 구조임
 
@@ -21,6 +23,8 @@ public class PlaylistController {
 
 	@Autowired
 	private PlaylistService playlistService;
+
+    private SpotifyService spotifyService = new SpotifyService();
 	
 //	// 선택된 음악 ID를 사용하여 플레이리스트에 추가하는 로직을 구현
 //	@PostMapping("/addPlaylist")
@@ -108,6 +112,15 @@ public class PlaylistController {
 		
 		return "index";
 	}
+	
+	public PlaylistController(SpotifyService spotifyService) {
+		this.spotifyService = spotifyService;
+	}
+	
+	// @GetMapping("/playlists")
+//	public String searchPlaylists(@RequestParam String query) {
+//		 return spotifyService.searchPlaylists(query);
+//	}
 	
 
 }

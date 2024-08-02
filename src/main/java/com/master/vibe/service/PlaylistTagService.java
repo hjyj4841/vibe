@@ -20,4 +20,9 @@ public class PlaylistTagService {
 	public List<Playlist> tagPlaylist(SearchDTO dto){
 		return mapper.search(dto);
 	}
+	public List<Playlist> getPlaylistsByTag(String tagCode) {
+		
+		return mapper.getPlayLikesByTagLikeCount(tagCode);
+	}
+
 }

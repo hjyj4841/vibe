@@ -1,4 +1,8 @@
+<<<<<<<< HEAD:src/test/java/com/master/vibe/SpotifyController.java
 package com.master.vibe;
+========
+package com.master.vibe.controller;
+>>>>>>>> junyong:src/main/java/com/master/vibe/controller/SpotifyController.java
 
 import java.util.ArrayList;
 
@@ -9,7 +13,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+<<<<<<<< HEAD:src/test/java/com/master/vibe/SpotifyController.java
 import com.master.vibe.SpotifyService;
+========
+import com.master.vibe.service.SpotifyService;
+>>>>>>>> junyong:src/main/java/com/master/vibe/controller/SpotifyController.java
 
 @Controller
 public class SpotifyController {

@@ -11,4 +11,5 @@ import com.master.vibe.model.vo.Playlist;
 public interface PlaylistTagMapper {
 	// 전체 검색, 태그 검색
 	List<Playlist> search(SearchDTO dto);
+	List<Playlist> getPlayLikesByTagLikeCount(String tagCode);
 }

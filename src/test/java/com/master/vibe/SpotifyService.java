@@ -1,4 +1,8 @@
+<<<<<<<< HEAD:src/test/java/com/master/vibe/SpotifyService.java
 package com.master.vibe;
+========
+package com.master.vibe.service;
+>>>>>>>> junyong:src/main/java/com/master/vibe/service/SpotifyService.java
 
 import java.util.ArrayList;
 import java.util.Base64;
