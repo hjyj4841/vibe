@@ -2,13 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mapper.PlaylistMapper">
-	<!-- 
-	<insert id="addPlaylist" parameterType="Playlist">	
-		INSERT INTO playlist (pl_title, pl_img, pl_date, pl_public_yn, user_email)
-		VALUES (#{plTitle}, #{plImg}, #{plDate}, #{plPublicYn}, #{userEmail})
-	</insert>
-	-->
-		
+
 	 <resultMap type="Playlist" id="playListMap">
 		<id column="pl_code" property="plCode"/>
 		<result column="pl_title" property="plTitle"/>
@@ -31,6 +25,18 @@
 		</association>
 	</resultMap>
 	
+	<!-- 전체플리 조회 -->
+	<select id="allPlaylist" resultMap="playlistMap">
+		SELECT * FROM playlist
+		JOIN user USING (user_email)
+	</select>
+	
+	<!-- result type이렇게 쓰면 서버 자체 에러 나서 안돌아감.... com.example이란 패키지가 없음.. 
+	<select id="searchPlaylists" resultType="com.example.model.Playlist">
+		SELECT * FROM playlist_music WHERE name LIKE CONCAT('%', #{name}, '%')
+	</select>
+	-->
+	
 	<!-- user 탈퇴 시 playlist 정보 넘기기 -->
 	<update id="movePlaylist" parameterType="String">
 		UPDATE playlist
@@ -43,18 +49,10 @@
 		VALUES (#{plTitle}, #{userEmail})
     </insert>
 
-	<select id="allPlaylist" resultMap="playlistMap">
-		SELECT * FROM playlist
-		JOIN user USING (user_email)
-	</select>
-	
-	<!-- 전체플리 조회 -->
-	<select id="allPlayList" resultMap="playListMap">
-		SELECT * 
-		FROM playlist
-	</select>
-	
-	<select id="searchPlaylists" resultType="com.example.model.Playlist">
-		SELECT * FROM playlist_music WHERE name LIKE CONCAT('%', #{name}, '%')
-	</select>
+	<!-- 
+	<insert id="addPlaylist" parameterType="Playlist">	
+		INSERT INTO playlist (pl_title, pl_img, pl_date, pl_public_yn, user_email)
+		VALUES (#{plTitle}, #{plImg}, #{plDate}, #{plPublicYn}, #{userEmail})
+	</insert>
+	-->
 </mapper>

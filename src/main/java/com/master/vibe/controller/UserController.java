@@ -20,6 +20,12 @@ public class UserController {
 	@Autowired
 	private UserService service;
 	
+	// 테스트 페이지 연결
+	@GetMapping("/test")
+	public String testPage() {
+		return "test/test";
+	}
+	
 	// 메인페이지 연결
 	@GetMapping("/")
 	public String index() {
@@ -38,7 +44,7 @@ public class UserController {
 		} catch (Exception e) {}
 		
 		service.register(user);
-		return "redirect:/";
+		return "test/userTest";
 	}
 	
 	// 로그인
@@ -66,7 +72,7 @@ public class UserController {
 		
 		// 정상 회원
 		session.setAttribute("user", u);
-		return "redirect:/";
+		return "test/userTest";
 		
 	}
 	
@@ -76,7 +82,7 @@ public class UserController {
 		HttpSession session = request.getSession();
 		if(session.getAttribute("user") != null) session.invalidate();
 		
-		return "redirect:/";
+		return "test/userTest";
 	}
 	
 	// 마이페이지
@@ -100,7 +106,7 @@ public class UserController {
 			service.deleteUser(user.getUserEmail());
 			
 			if(session.getAttribute("user") != null) session.invalidate();
-			return "redirect:/";
+			return "test/userTest";
 		}
 		
 		return "user/mypage";

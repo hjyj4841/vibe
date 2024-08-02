@@ -32,11 +32,6 @@ public class PlaylistService {
         mapper.insertPlaylist(playlist);
        
     }
-
-    public List<Playlist> allPlaylist() {
-    	System.out.println(mapper.allPlaylist());
-    	return mapper.allPlaylist();
-    }
 	
 	public List<Playlist> allPlaylist() {
 		return mapper.allPlayList();

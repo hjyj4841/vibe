@@ -7,6 +7,6 @@
 </head>
 <body>
     <h1>${message}</h1>
-    <a href="index.jsp">메인 페이지로 돌아가기</a>
+    <a href="/">메인 페이지로 돌아가기</a>
 </body>
 </html>
