@@ -9,23 +9,27 @@
 	</insert>
 	-->
 		
-	 <resultMap id="playlistMap" type="Playlist">
-        <id column="pl_code" property="plCode" />
-        <result column="pl_title" property="plTitle" />
-        <result column="pl_img" property="plImg" />
-        <result column="pl_date" property="plDate" />
-        <result column="pl_public_yn" property="plPublicYn" />
-   	<association property="user" javaType="User">
-  	 	<id column="user_email" property="userEmail"/>
+	 <resultMap type="Playlist" id="playListMap">
+		<id column="pl_code" property="plCode"/>
+		<result column="pl_title" property="plTitle"/>
+		<result column="pl_img" property="plImg"/>
+		<result column="pl_date" property="plDate"/>
+		<result column="pl_public_yn" property="plPublicYn"/>
+		<association property="user" javaType="User">
+			<id column="user_email" property="userEmail"/>
 			<result column="user_password" property="userPassword"/>
 			<result column="user_nickname" property="userNickname"/>
-	</association>
-    </resultMap>
-	
-	<select id="allPlaylist" resultMap="playlistMap">
-		SELECT * FROM playlist
-		JOIN user USING (user_email)
-	</select>
+			<result column="user_img" property="userImg"/>
+			<result column="user_date" property="userDate"/>
+			<result column="user_ent_yn" property="userEntYn"/>
+			<result column="user_spotify_yn" property="userSpotifyYn"/>
+			<result column="user_gender" property="userGender"/>
+			<result column="user_birth" property="userBirth"/>
+			<result column="user_manager" property="userManager"/>
+			<result column="user_enroll_date" property="userEnrollDate"/>
+			<result column="user_phone" property="userPhone"/>
+		</association>
+	</resultMap>
 	
 	<!-- user 탈퇴 시 playlist 정보 넘기기 -->
 	<update id="movePlaylist" parameterType="String">
@@ -38,4 +42,15 @@
         INSERT INTO playlist(pl_title, user_email)
 		VALUES (#{plTitle}, #{userEmail})
     </insert>
+
+	<select id="allPlaylist" resultMap="playlistMap">
+		SELECT * FROM playlist
+		JOIN user USING (user_email)
+	</select>
+	
+	<!-- 전체플리 조회 -->
+	<select id="allPlayList" resultMap="playListMap">
+		SELECT * 
+		FROM playlist
+	</select>
 </mapper>

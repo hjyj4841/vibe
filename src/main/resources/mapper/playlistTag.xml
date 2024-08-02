@@ -2,5 +2,50 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mapper.PlaylistTagMapper">
+	<resultMap type="PlayListTag" id="listTagMap">
+		<id column="pl_tag_code" property="plTagCode" />
+		<association property="playlist" javaType="Playlist">
+			<id column="pl_code" property="plCode" />
+			<result column="pl_title" property="plTitle" />
+			<result column="pl_img" property="plImg" />
+			<result column="pl_date" property="plDate" />
+			<result column="pl_public_yn" property="plPublicYn" />
+			<association property="user" javaType="User">
+				<id column="user_email" property="userEmail" />
+				<result column="user_password" property="userPassword" />
+				<result column="user_nickname" property="userNickname" />
+				<result column="user_img" property="userImg" />
+				<result column="user_date" property="userDate" />
+				<result column="user_ent_yn" property="userEntYn" />
+				<result column="user_spotify_yn" property="userSpotifyYn" />
+				<result column="user_gender" property="userGender" />
+				<result column="user_birth" property="userBirth" />
+				<result column="user_manager" property="userManager" />
+				<result column="user_enroll_date" property="userEnrollDate" />
+				<result column="user_phone" property="userPhone" />
+			</association>
+		</association>
+		<association property="tag" javaType="Tag">
+			<id column="tag_code" property="tagCode" />
+			<result column="tag_name" property="tagName" />
+		</association>
+	</resultMap>
 
+	<!-- 전체검색, 태그검색 -->
+	<select id="search" resultMap="listTagMap" parameterType="SearchDTO">
+		SELECT *
+		FROM playlist_tag
+		JOIN playlist USING (pl_code)
+		JOIN user USING (user_email)
+		JOIN tag USING (tag_code)
+		WHERE pl_public_yn = 'Y'
+		<choose>
+			<when test="select == 'all'">
+				AND pl_title LIKE CONCAT('%', #{searchPlaylist}, '%')
+			</when>
+			<when test="select == 'tag'">
+				AND tag_name LIKE CONCAT('%', #{searchPlaylist}, '%')
+			</when>
+		</choose>
+	</select>
 </mapper>

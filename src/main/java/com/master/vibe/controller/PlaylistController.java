@@ -81,14 +81,6 @@ public class PlaylistController {
     	return "redirect:/"; // 플레이리스트 추가 후 메인 페이지로 리다이렉트
     }
 
-    
-    @GetMapping("/")
-	public String index(Model model) {
-    	System.out.println(playlistService.allPlaylist());
-		model.addAttribute("allPlaylist", playlistService.allPlaylist());
-		return "index";
-	}
-
     @PostMapping("/createPlaylist")
     public String createPlaylist(@RequestParam("pl_title") String pt, @RequestParam("user_email") String ue) {
         Playlist playlist = new Playlist();
@@ -99,4 +91,37 @@ public class PlaylistController {
 
         return "redirect:/";
     }
+
+    
+    @GetMapping("/")
+	public String index(Model model) {
+    	System.out.println(playlistService.allPlaylist());
+		model.addAttribute("allPlaylist", playlistService.allPlaylist());
+		return "index";
+	}
+
+	@GetMapping("/")
+	public String index(Model model) {
+		
+		List<Playlist> list = playlistService.allPlaylist();
+		model.addAttribute("allPlaylist", list);
+		
+		return "index";
+	}
+	
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

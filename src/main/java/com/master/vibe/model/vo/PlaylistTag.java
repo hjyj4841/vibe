@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @Data @AllArgsConstructor @NoArgsConstructor
 public class PlaylistTag {
 	private int plTagCode;
-	private int plCode;
-	private int tagCode;
+	private Playlist playlist;
+	private Tag tag;
 }

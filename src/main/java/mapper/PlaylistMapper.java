@@ -13,9 +13,11 @@ import com.master.vibe.model.vo.Playlist;
 @Mapper
 public interface PlaylistMapper {
 	void addPlaylist(Playlist playlist);
-	List<Playlist> allPlaylist();
 	void movePlaylist(String userEmail);
-
+	
     //@Insert("INSERT INTO playlist (pl_title, user_email) VALUES (#{plTitle}, #{userEmail})")
     void insertPlaylist(Playlist playlist);
+
+	List<Playlist> allPlaylist();
+	List<Playlist> allPlayList();
 }
