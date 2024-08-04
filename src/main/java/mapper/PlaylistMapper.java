@@ -3,7 +3,8 @@ package mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
+
+import com.master.vibe.model.dto.CreatePlaylistDTO;
 import com.master.vibe.model.vo.Playlist;
 
 
@@ -12,42 +13,11 @@ import com.master.vibe.model.vo.Playlist;
 
 @Mapper
 public interface PlaylistMapper {
-	void addPlaylist(Playlist playlist);
-	void movePlaylist(String userEmail);
-    void insertPlaylist(Playlist playlist);
-
-	List<Playlist> allPlaylist();
-	List<Playlist> allPlayList();
-	List<Playlist> getPlaylistsByTag(@Param("tagCode") String tagCode);
+	
+	List<Playlist> allPlaylist(); // 플리 전체 조회
+	void movePlaylist(String userEmail); // 플레이리스트 소유자를 관리자로 변경(회원 탈퇴시)
+	void createPlaylist(CreatePlaylistDTO dto); // 플레이리스트 생성
+	
+//	호출하는 service가 없음
+//	List<Playlist> getPlaylistsByTag(@Param("tagCode") String tagCode);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

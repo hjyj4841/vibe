@@ -1,0 +1,380 @@
+body {
+  width: 100%;
+  height: 100vh;
+  background-color: black;
+  color: white;
+}
+
+header {
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: flex;
+  background-color: black;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 150px;
+  z-index: 100;
+}
+
+#logo {
+  display: flex;
+  width: 10%;
+  height: 80%;
+  justify-content: center;
+  align-items: center;
+}
+
+#logo img {
+  width: 130px;
+  height: 130px;
+}
+
+#nav1 {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 90%;
+  height: 100%;
+}
+
+#nav1 a {
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
+  color: white;
+}
+
+#search {
+  margin-right: 3%;
+}
+
+#contact {
+  margin-right: 3%;
+}
+
+#nav2 {
+  width: 20%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+#nav2 a {
+  padding-top: 1.7%;
+  font-size: 1.05rem;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 35%;
+  height: 24%;
+}
+#my {
+  color: black !important;
+  background-color: #f5f5f5;
+  border-radius: 10px;
+  margin-right: 20%;
+}
+
+#signUp {
+  color: white !important;
+  background-color: #303030;
+  border-radius: 10px;
+  margin-right: 5%;
+  border: 1px #949494 solid;
+}
+
+#mainbanner {
+  margin-top: 15%;
+  width: 100%;
+  height: 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+#maintitle {
+  margin-top: 10%;
+  font-size: 5rem;
+  margin-bottom: 10%;
+}
+
+#chant {
+  font-size: 2.5rem;
+}
+
+#mainnav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 30%;
+}
+
+#mainnav a {
+  width: 10%;
+  height: 100%;
+  margin-left: 1%;
+  margin-right: 1%;
+  line-height: 200%;
+  font-size: 1.5rem;
+  font-weight: bold;
+  border-radius: 10px;
+}
+
+#signIn {
+  color: #1e1e1e;
+  background-color: #e3e3e3;
+  border: 1px #767676 solid;
+}
+
+#ranking {
+  background-color: #2c2c2c;
+  color: #f5f5f5;
+  border: 1px #2c2c2c solid;
+}
+
+#listRank1 {
+  position: relative;
+  width: 100%;
+  height: 55%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+#listRank1backimg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 50%;
+  height: 90%;
+}
+
+#listRank1backimg img {
+  width: 100%;
+  height: 100%;
+  opacity: 50%;
+}
+#listRank1Miniimg {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
+  height: 3%;
+  margin-bottom: 20%;
+}
+#listRank1Miniimg img {
+  width: 40%;
+  margin-top: 10%;
+}
+
+#listRank1Text {
+  position: absolute;
+  text-align: center;
+  color: #ffd700;
+  margin-bottom: 5%;
+}
+
+#listRank1Text p:nth-child(1) {
+  font-size: 4rem;
+  margin-bottom: 3%;
+}
+
+#listRank1Text p:nth-child(2) {
+  font-size: 2rem;
+}
+
+#listRank1Icon {
+  position: absolute;
+  z-index: 1;
+  height: 100%;
+  width: 40%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+#listRank1Icon i {
+  font-size: 5rem;
+  color: white;
+}
+
+#listRank2 {
+  position: relative;
+  width: 100%;
+  height: 55%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+#listRank2backimg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 50%;
+  height: 90%;
+}
+
+#listRank2backimg img {
+  width: 100%;
+  height: 100%;
+  opacity: 50%;
+}
+#listRank2Miniimg {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
+  height: 3%;
+  margin-bottom: 20%;
+}
+#listRank2Miniimg img {
+  width: 40%;
+  margin-top: 10%;
+}
+
+#listRank2Text {
+  position: absolute;
+  text-align: center;
+  color: #a3a3a3;
+  margin-bottom: 5%;
+}
+
+#listRank2Text p:nth-child(1) {
+  font-size: 4rem;
+  margin-bottom: 3%;
+}
+
+#listRank2Text p:nth-child(2) {
+  font-size: 2rem;
+}
+
+#listRank2Icon {
+  position: absolute;
+  z-index: 1;
+  height: 100%;
+  width: 40%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+#listRank2Icon i {
+  font-size: 5rem;
+  color: white;
+}
+
+#listRank3 {
+  position: relative;
+  width: 100%;
+  height: 55%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+#listRank3backimg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 50%;
+  height: 90%;
+}
+
+#listRank3backimg img {
+  width: 100%;
+  height: 100%;
+  opacity: 50%;
+}
+#listRank3Miniimg {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
+  height: 3%;
+  margin-bottom: 20%;
+}
+#listRank3Miniimg img {
+  width: 40%;
+  margin-top: 10%;
+}
+
+#listRank3Text {
+  position: absolute;
+  text-align: center;
+  color: #cd7f32;
+  margin-bottom: 5%;
+}
+
+#listRank3Text p:nth-child(1) {
+  font-size: 4rem;
+  margin-bottom: 3%;
+}
+
+#listRank3Text p:nth-child(2) {
+  font-size: 2rem;
+}
+
+#listRank3Icon {
+  position: absolute;
+  z-index: 1;
+  height: 100%;
+  width: 40%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+#listRank3Icon i {
+  font-size: 5rem;
+  color: white;
+}
+
+footer {
+  width: 100%;
+  height: 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+footer p {
+  font-size: 6rem;
+}
+
+#footernav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 30%;
+}
+
+#footernav a {
+  width: 10%;
+  height: 50%;
+  text-align: center;
+  margin-left: 1%;
+  margin-right: 1%;
+  line-height: 150%;
+  font-size: 1.5rem;
+  font-weight: bold;
+  border-radius: 10px;
+}

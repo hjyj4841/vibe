@@ -1,4 +1,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mapper.PlaylistMusicMapper">
 
+	<resultMap type="PlaylistMusic" id="playlistMusicMap">
+		<id column="pm_code" property="pmCode"/>
+		<result column="pl_code" property="plCode"/>
+		<result column="music_code" property="musicCode"/>
+	</resultMap>
+	
+	<!-- 플레이리스트 음악 추가 -->
+	<insert id="addPlaylist" parameterType="java.util.List">
+		INSERT INTO playlist_music(pl_code, music_code)
+		VALUES
+		<foreach collection="list" item="plmusic" separator=",">
+		(#{plmusic.plCode}, #{plmusic.musicCode})
+		</foreach>
+	</insert>
+
 </mapper>

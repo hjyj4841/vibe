@@ -14,15 +14,16 @@ import mapper.PlaylistTagMapper;
 public class PlaylistTagService {
 
 	@Autowired
-	private PlaylistTagMapper mapper;
+	private PlaylistTagMapper playlistTagMapper;
 	
-	// 전체 검색, 태그 검색
-	public List<Playlist> tagPlaylist(SearchDTO dto){
-		return mapper.search(dto);
+	// 제목 검색, 태그 검색
+	public List<Playlist> searchPlaylist(SearchDTO dto){
+		return playlistTagMapper.searchPlaylist(dto);
 	}
 	
-	public List<Playlist> getPlaylistsByTag(String tagCode) {
-		return mapper.getPlayLikesByTagLikeCount(tagCode);
-	}
+//	호출하는 controller가 없음
+//	public List<Playlist> getPlaylistsByTag(String tagCode) {
+//		return playlistTagMapper.getPlaylistsByTag(tagCode);
+//	}
 
 }

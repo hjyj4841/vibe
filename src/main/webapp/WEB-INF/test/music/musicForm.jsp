@@ -9,7 +9,7 @@ prefix="c" %>
   </head>
   <body>
     <h1>아티스트 찾기</h1>
-    <form action="artist" method="post">
+    <form action="addMusic" method="post">
       <label for="musicName">Music Name : </label>
       <input type="text" id="musicName" name="musicName" required />
       <button type="submit">Search</button>

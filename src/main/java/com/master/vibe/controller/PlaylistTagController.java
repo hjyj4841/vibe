@@ -13,12 +13,12 @@ import com.master.vibe.service.PlaylistTagService;
 public class PlaylistTagController {
 	
 	@Autowired
-	private PlaylistTagService service;
+	private PlaylistTagService playlistTagService;
 	
-	// 전체 검색, 태그 검색
-	@GetMapping("search")
-	public String search(Model model, SearchDTO dto) {
-		model.addAttribute("searchTag", service.tagPlaylist(dto));
-		return "search";
-	}
+	// 플레이리스트 검색 페이지 (title or tag)
+  	@GetMapping("searchPlaylist")
+ 	public String searchPlaylist(Model model, SearchDTO dto) {
+ 		model.addAttribute("searchTag", playlistTagService.searchPlaylist(dto));
+ 		return "test/search/searchPlaylist";
+ 	}
 }

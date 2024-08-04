@@ -8,7 +8,7 @@
 </head>
 <body>
 	<h1>회원가입</h1>
-	<form action="register" method="post">
+	<form action="registerUser" method="post">
 		<div><input type="text" name="userEmail" placeholder="Email"></div>
 		<div><input type="password" name="userPassword" placeholder="Password"></div>
 		<div><input type="text" name="userNickname" placeholder="Nickname"></div>

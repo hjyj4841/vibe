@@ -18,12 +18,16 @@ import jakarta.servlet.http.HttpSession;
 public class UserController {
 	
 	@Autowired
-	private UserService service;
+	private UserService userService;
 	
 	// 테스트 페이지 연결
 	@GetMapping("/test")
 	public String testPage() {
 		return "test/test";
+	}
+	@GetMapping("/userTest")
+	public String userTest() {
+		return "test/userTest";
 	}
 	
 	// 메인페이지 연결
@@ -33,17 +37,19 @@ public class UserController {
 	}
 	
 	// 회원가입
-	@GetMapping("/register")
+	@GetMapping("/registerUser")
 	public String register() {
-		return "user/register";
+		return "user/registerUser";
 	}
-	@PostMapping("/register")
-	public String register(User user, String birthDay) {		
+	@PostMapping("/registerUser")
+	public String register(User user, String birthDay) {
+		System.out.println(user);
+		System.out.println(birthDay);
 		try {
 			user.setUserBirth(new SimpleDateFormat("yyyy-MM-dd").parse(birthDay));
 		} catch (Exception e) {}
 		
-		service.register(user);
+		userService.register(user);
 		return "test/userTest";
 	}
 	
@@ -52,24 +58,20 @@ public class UserController {
 	public String login() {
 		return "user/login";
 	}
-	
 	@PostMapping("login")
 	public String login(User user, HttpServletRequest request, Model model) {		
 		HttpSession session = request.getSession();
-		
-		User u = service.login(user);
+		User u = userService.login(user);
 		
 		// 아이디 / 비밀번호 조회 실패
 		if(u == null) {
 			return "user/login_fail_empty_user";
 		}
-		
 		// 탈퇴한 회원
 		if(u.getUserEntYn() == 'Y') {
-			model.addAttribute("rejoinDate", service.rejoinDate(user.getUserEmail()));
+			model.addAttribute("rejoinDate", userService.rejoinDate(user.getUserEmail()));
 			return "user/login_fail_deleteUser";
 		}
-		
 		// 정상 회원
 		session.setAttribute("user", u);
 		return "test/userTest";
@@ -103,7 +105,7 @@ public class UserController {
 		User user = (User)session.getAttribute("user");
 		
 		if(userPassword.equals(user.getUserPassword())) {
-			service.deleteUser(user.getUserEmail());
+			userService.deleteUser(user.getUserEmail());
 			
 			if(session.getAttribute("user") != null) session.invalidate();
 			return "test/userTest";

@@ -25,39 +25,38 @@
 	<h2>플레이리스트 곡 추가</h2>
 	<!-- <form action="/addPlaylist" method="post"> -->
 	<form action="/playlist" method="post">
-	<table border="1">
-		<tr>
-			<th>플리 코드</th>
-			<th>추가한 곡 앨범 이미지</th>
-			<th>추가한 곡 앨범명</th>
-			<th>추가한 곡 아티스트명</th>
-			<th>추가한 음악명</th>
-		</tr>
-		<tr>
-			<td>${music.id}</td>
-			<td><img alt="" src="${music.albumUrl}"></td>
-			<td>${music.albumName}</td>
-			<td>${music.artistName}</td>
-			<td>${music.musicTitle}</td>
-			<!-- <input type="email" id="userEmail" name="userEmail" required> -->
-		</tr>
-	</table>
-	
-	<!-- 
-	 <c:if test="${not empty selectedMusic}">
-        <h3>선택된 음악 목록</h3>
-        <ul>
-            <c:forEach var="music" items="${selectedMusic}">
-                <li>
-                    <img src="${music[0]}" alt="Album Image">
-                    <p>앨범명: ${music[1]}</p>
-                    <p>아티스트: ${music[2]}</p>
-                    <p>곡명: ${music[3]}</p>
-                </li>
-            </c:forEach>
-        </ul>
-    </c:if>
-	-->
+		<table border="1">
+			<tr>
+				<th>플리 코드</th>
+				<th>추가한 곡 앨범 이미지</th>
+				<th>추가한 곡 앨범명</th>
+				<th>추가한 곡 아티스트명</th>
+				<th>추가한 음악명</th>
+			</tr>
+			<tr>
+				<td>${music.id}</td>
+				<td><img alt="" src="${music.albumUrl}"></td>
+				<td>${music.albumName}</td>
+				<td>${music.artistName}</td>
+				<td>${music.musicTitle}</td>
+				<!-- <input type="email" id="userEmail" name="userEmail" required> -->
+			</tr> 
+		
+		<%-- 
+		 <c:if test="${not empty selectedMusic}">
+	        <h3>선택된 음악 목록</h3>
+	        <ul>
+	            <c:forEach var="music" items="${selectedMusic}">
+	                <li>
+	                    <img src="${music[0]}" alt="Album Image">
+	                    <p>앨범명: ${music[1]}</p>
+	                    <p>아티스트: ${music[2]}</p>
+	                    <p>곡명: ${music[3]}</p>
+	                </li>
+	            </c:forEach>
+	        </ul>
+	    </c:if>
+		--%>
 	</form>
 </body>
 </html>

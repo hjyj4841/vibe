@@ -32,25 +32,25 @@
 		</association>
 	</resultMap>
 
-	<!-- 전체검색, 태그검색 -->
-	<select id="search" resultMap="listTagMap" parameterType="SearchDTO">
+	<!-- 플리 이름검색, 태그검색 -->
+	<select id="searchPlaylist" resultMap="listTagMap" parameterType="SearchDTO">
 		SELECT *
 		FROM playlist_tag
-		JOIN playlist USING (pl_code)
+		LEFT JOIN playlist USING (pl_code)
 		JOIN user USING (user_email)
 		JOIN tag USING (tag_code)
 		WHERE pl_public_yn = 'Y'
 		<choose>
-			<when test="select == 'all'">
-				AND pl_title LIKE CONCAT('%', #{searchPlaylist}, '%')
+			<when test="select == 'title'">
+				AND pl_title LIKE CONCAT('%', #{search}, '%')
 			</when>
 			<when test="select == 'tag'">
-				AND tag_name LIKE CONCAT('%', #{searchPlaylist}, '%')
+				AND tag_name LIKE CONCAT('%', #{search}, '%')
 			</when>
 		</choose>
 	</select>
 	
-	<!-- result type이 무엇을 가리키는지 패키지랑 클래스 없어서 오류남.... playlistTagMapper랑 매칭되는 메서드는 무엇.... 
+	<!-- 문제 코드
 	<select id="getLikesByTag" resultType="com.example.vo.PlaylistTagLikeVO">
 		SELECT t.tag_name, p.pl_code, p.pl_title, COUNT(pl_like.like_code) AS like_count
         FROM tag t

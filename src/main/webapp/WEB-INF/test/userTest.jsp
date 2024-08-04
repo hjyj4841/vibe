@@ -13,7 +13,7 @@
     <ul>
       <c:if test="${user == null}">
         <li><a href="login">로그인</a></li>
-        <li><a href="register">회원가입</a></li>
+        <li><a href="registerUser">회원가입</a></li>
       </c:if>
       <c:if test="${user != null}">
         <li><a href="mypage">마이페이지</a></li>

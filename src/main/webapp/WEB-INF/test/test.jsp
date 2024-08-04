@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,18 +8,11 @@
 <body>
 	<h1>Test Home</h1>
 	<ul>
-		<li><a href="/test/userTest.jsp">user 기능 테스트</a></li>
-		<li>
-			<!-- 플레이리스트 생성 -->
-	    	<h1>플레이리스트 생성</h1>
-	    	<form action="/createPlaylist" method="post">
-	     		 <input type="hidden" name="user_email" value="agrigs9@opensource.org" />
-	      		<label for="pl_title">플레이리스트 제목:</label>
-	      		<input type="text" id="pl_title" name="pl_title" required />
-	      		<button type="submit">플레이리스트 생성</button>
-	    	</form>
-		</li>
-		
+		<li><a href="userTest">user 관련</a></li>
+		<li><a href="createPlaylist">플레이리스트 생성</a></li>
+		<li><a href="addMusic">플레이리스트 곡 추가</a></li>
+		<li><a href="searchHome">플레이리스트 검색</a></li>
+		<li><a href="playlistMusic">플레이리스트 곡 조회</a></li>
 	</ul>
 </body>
 </html>

@@ -7,7 +7,11 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>아이디 또는 비밀번호가 다릅니다.</h1>
-	<a href="userTest">홈으로 돌아가기</a>
+	<footer>
+		<p>Challenge to make Best PlayList</p>
+		<nav id="footernav">
+			<a href="" id="signIn">Sign In</a><a href="" id="ranking">Ranking</a>
+		</nav>
+	</footer>
 </body>
 </html>

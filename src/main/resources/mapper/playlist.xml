@@ -3,7 +3,7 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mapper.PlaylistMapper">
 
-	 <resultMap type="Playlist" id="playListMap">
+	 <resultMap type="Playlist" id="playlistMap">
 		<id column="pl_code" property="plCode"/>
 		<result column="pl_title" property="plTitle"/>
 		<result column="pl_img" property="plImg"/>
@@ -29,13 +29,14 @@
 	<select id="allPlaylist" resultMap="playlistMap">
 		SELECT * FROM playlist
 		JOIN user USING (user_email)
+		WHERE pl_public_yn = 'Y'
 	</select>
 	
-	<!-- result type이렇게 쓰면 서버 자체 에러 나서 안돌아감.... com.example이란 패키지가 없음.. 
-	<select id="searchPlaylists" resultType="com.example.model.Playlist">
-		SELECT * FROM playlist_music WHERE name LIKE CONCAT('%', #{name}, '%')
-	</select>
-	-->
+	<!-- 플레이리스트 생성 -->
+	<insert id="createPlaylist" parameterType="CreatePlaylistDTO">
+        INSERT INTO playlist(pl_title, user_email)
+		VALUES (#{plTitle}, #{userEmail})
+    </insert>
 	
 	<!-- user 탈퇴 시 playlist 정보 넘기기 -->
 	<update id="movePlaylist" parameterType="String">
@@ -44,15 +45,16 @@
 		WHERE user_email = #{userEmail}
 	</update>
 
-    <insert id="insertPlaylist" parameterType="Playlist">
-        INSERT INTO playlist(pl_title, user_email)
-		VALUES (#{plTitle}, #{userEmail})
-    </insert>
-
-	<!-- 
+	<!-- 중복 코드
 	<insert id="addPlaylist" parameterType="Playlist">	
 		INSERT INTO playlist (pl_title, pl_img, pl_date, pl_public_yn, user_email)
 		VALUES (#{plTitle}, #{plImg}, #{plDate}, #{plPublicYn}, #{userEmail})
 	</insert>
+	-->
+	
+	<!-- 문제 코드
+	<select id="searchPlaylists" resultType="com.example.model.Playlist">
+		SELECT * FROM playlist_music WHERE name LIKE CONCAT('%', #{name}, '%')
+	</select>
 	-->
 </mapper>

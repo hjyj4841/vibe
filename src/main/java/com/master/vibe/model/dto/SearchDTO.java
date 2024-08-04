@@ -7,5 +7,5 @@ import lombok.Setter;
 public class SearchDTO {
 	// 전체 검색, 태그 검색
 	private String select;
-	private String searchPlaylist;
+	private String search;
 }

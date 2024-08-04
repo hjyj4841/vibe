@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.master.vibe.model.dto.CreatePlaylistDTO;
 import com.master.vibe.model.vo.Playlist;
 import mapper.PlaylistMapper;
 
@@ -15,26 +16,21 @@ import mapper.PlaylistMapper;
 public class PlaylistService {
 
 	@Autowired
-	private PlaylistMapper mapper;
+	private PlaylistMapper playlistMapper;
 	
-	public void addPlaylist(Playlist playlist) {
-        mapper.addPlaylist(playlist);
-    }
-
-	// 선택된 음악 리스트를 처리하여 플레이리스트에 추가하는 로직을 추가할 수 있습니다.
-    public void addPlaylist(List<String> selectedMusic) {
-        // 예를 들어, 선택된 음악의 정보를 기반으로 Playlist 객체를 생성하고, 이를 데이터베이스에 추가하는 로직
-        // 구현 예시
-//    	mapper.addPlaylist(selectedMusic);
-    }
-    
-    public void createPlaylist(Playlist playlist) {
-        mapper.insertPlaylist(playlist);
-       
-    }
-	
+	// 플레이리스트 전체 조회
 	public List<Playlist> allPlaylist() {
-		return mapper.allPlayList();
+		return playlistMapper.allPlaylist();
 	}
 	
+	// 플레이리스트 생성
+	public void createPlaylist(CreatePlaylistDTO dto) {
+        playlistMapper.createPlaylist(dto);
+    }
+	
+//	중복 코드 - 플레이리스트 생성 메서드 createPlaylist
+//	public void addPlaylist(Playlist playlist) {
+//        playlistMapper.addPlaylist(playlist);
+//    }
+
 }
