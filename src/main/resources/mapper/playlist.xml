@@ -45,16 +45,10 @@
 		WHERE user_email = #{userEmail}
 	</update>
 
-	<!-- 중복 코드
+	<!-- 
 	<insert id="addPlaylist" parameterType="Playlist">	
 		INSERT INTO playlist (pl_title, pl_img, pl_date, pl_public_yn, user_email)
 		VALUES (#{plTitle}, #{plImg}, #{plDate}, #{plPublicYn}, #{userEmail})
 	</insert>
-	-->
-	
-	<!-- 문제 코드
-	<select id="searchPlaylists" resultType="com.example.model.Playlist">
-		SELECT * FROM playlist_music WHERE name LIKE CONCAT('%', #{name}, '%')
-	</select>
 	-->
 </mapper>

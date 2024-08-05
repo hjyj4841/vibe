@@ -50,8 +50,8 @@
 		</choose>
 	</select>
 	
-	<!-- 문제 코드
-	<select id="getLikesByTag" resultType="com.example.vo.PlaylistTagLikeVO">
+	<!-- 
+	<select id="getLikesByTag" resultType="PlaylistTag">
 		SELECT t.tag_name, p.pl_code, p.pl_title, COUNT(pl_like.like_code) AS like_count
         FROM tag t
         JOIN playlist_tag pt ON t.tag_code = pt.tag_code

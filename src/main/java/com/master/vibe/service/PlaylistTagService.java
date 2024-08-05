@@ -21,9 +21,8 @@ public class PlaylistTagService {
 		return playlistTagMapper.searchPlaylist(dto);
 	}
 	
-//	호출하는 controller가 없음
-//	public List<Playlist> getPlaylistsByTag(String tagCode) {
-//		return playlistTagMapper.getPlaylistsByTag(tagCode);
-//	}
+	public List<Playlist> getPlaylistsByTag(String tagCode) {
+		return playlistTagMapper.getPlaylistsByTag(tagCode);
+	}
 
 }

@@ -32,7 +32,7 @@ public class PlaylistMusicController {
         return "test/playlist/addMusic"; // playlist.jsp로 리다이렉트
     }
     
-    // 플레이리스트 추가 폼 불러오기 - 플레이리스트 내 music 정보 조회?
+    // 플레이리스트 추가 폼 불러오기
     @GetMapping("/playlistMusic")
     public String showAddPlaylistForm(Model model, @RequestParam(value = "selectedMusic", required = false) List<String> selectedMusic) {
         model.addAttribute("selectedMusic", selectedMusic);

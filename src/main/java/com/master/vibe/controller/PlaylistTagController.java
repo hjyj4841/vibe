@@ -21,4 +21,11 @@ public class PlaylistTagController {
  		model.addAttribute("searchTag", playlistTagService.searchPlaylist(dto));
  		return "test/search/searchPlaylist";
  	}
+  	
+  	@GetMapping("/search")
+	public String getPlaylistsByTag(String tagCode, Model model) {
+		model.addAttribute("list", playlistTagService.getPlaylistsByTag(tagCode));
+		
+		return "searchtagview";
+	}
 }
