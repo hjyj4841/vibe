@@ -1,380 +1,178 @@
-body {
-  width: 100%;
-  height: 100vh;
-  background-color: black;
-  color: white;
+html {
+	scroll-behavior: smooth; /* 페이지 내 이동 시 부드럽게 이동 */
+	overflow: hidden; /* 스크롤바 안보이게 하기 위함 */
 }
 
-header {
-  position: fixed;
-  left: 0;
-  top: 0;
-  display: flex;
-  background-color: black;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  height: 150px;
-  z-index: 100;
-}
-
-#logo {
-  display: flex;
-  width: 10%;
-  height: 80%;
-  justify-content: center;
-  align-items: center;
-}
-
-#logo img {
-  width: 130px;
-  height: 130px;
-}
-
-#nav1 {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  width: 90%;
-  height: 100%;
-}
-
-#nav1 a {
-  font-size: 1.2rem;
-  font-weight: bold;
-  text-align: center;
-  color: white;
-}
-
-#search {
-  margin-right: 3%;
-}
-
-#contact {
-  margin-right: 3%;
-}
-
-#nav2 {
-  width: 20%;
-  height: 100%;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
-
-#nav2 a {
-  padding-top: 1.7%;
-  font-size: 1.05rem;
-  font-weight: bold;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 35%;
-  height: 24%;
-}
-#my {
-  color: black !important;
-  background-color: #f5f5f5;
-  border-radius: 10px;
-  margin-right: 20%;
-}
-
-#signUp {
-  color: white !important;
-  background-color: #303030;
-  border-radius: 10px;
-  margin-right: 5%;
-  border: 1px #949494 solid;
-}
-
+/* 메인 배너 */
 #mainbanner {
-  margin-top: 15%;
-  width: 100%;
-  height: 20%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-#maintitle {
-  margin-top: 10%;
-  font-size: 5rem;
-  margin-bottom: 10%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	
+	width: 100%;
+	height: 100vh;
+	
+	text-align: center;
 }
 
 #chant {
-  font-size: 2.5rem;
+	font-size: 2rem;
+}
+
+#maintitle {
+	margin: 10px 0 30px 0;
+	font-size: 5rem;
 }
 
 #mainnav {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 30%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 80px;
 }
 
 #mainnav a {
-  width: 10%;
-  height: 100%;
-  margin-left: 1%;
-  margin-right: 1%;
-  line-height: 200%;
-  font-size: 1.5rem;
-  font-weight: bold;
-  border-radius: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 200px;
+	height: 100%;
+	margin: 10px;
+	border-radius: 10px;
+	font-size: 1.5rem;
+	font-weight: bold;
 }
 
-#signIn {
-  color: #1e1e1e;
-  background-color: #e3e3e3;
-  border: 1px #767676 solid;
+/* 리스트 박스 */
+#listBox {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	flex-direction:column;
+	height: 100vh;
+	width: 100%;
+}
+.listTop{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+}
+.rankButtonBox{
+	display: flex;
+	justify-content:center;
+	align-items:center;
+	height: 100%;
+	margin-right:20px;
+	
+	flex-direction: column;
+}
+.rankButtonBox h2{
+	margin-bottom: 20px;
+	font-size: 1.5rem;
+}
+.rankButtonBox button{
+	width: 100px;
+	border: none;
+	background: none;
+	color: white;
+	height: 50px;
+	cursor: pointer;
+	transition: 0.5s;
 }
 
-#ranking {
-  background-color: #2c2c2c;
-  color: #f5f5f5;
-  border: 1px #2c2c2c solid;
+.listContainer {
+	position: flex;
+	justify-content: center;
+	align-items: center;
+	
+	width: 1200px;
+	height: 650px;
+	box-shadow: 3px 3px 5px black;
+	margin-bottom: 20px;
 }
 
-#listRank1 {
-  position: relative;
-  width: 100%;
-  height: 55%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
+.listRank {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: absolute;
+	
+	width: 1200px;
+	height: 650px;
+	transition: 1s;
+	
+}
+.listRank:nth-child(1){
+	z-index: 1;
 }
 
-#listRank1backimg {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  width: 50%;
-  height: 90%;
+.listRank:nth-child(2),
+.listRank:nth-child(3){
+	opacity: 0;
+	z-index: 0;
 }
 
-#listRank1backimg img {
-  width: 100%;
-  height: 100%;
-  opacity: 50%;
-}
-#listRank1Miniimg {
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 40%;
-  height: 3%;
-  margin-bottom: 20%;
-}
-#listRank1Miniimg img {
-  width: 40%;
-  margin-top: 10%;
+/* 이미지 */
+.listImg {
+	filter: brightness(30%);
+	position: absolute;
+	object-fit: cover;
+	width: 100%;
+	height: 100%;
 }
 
-#listRank1Text {
-  position: absolute;
-  text-align: center;
-  color: #ffd700;
-  margin-bottom: 5%;
+.listRankDesc{
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-around;
+	
+	width: 100%;
+	height: 100%;
+	z-index: 1;
 }
 
-#listRank1Text p:nth-child(1) {
-  font-size: 4rem;
-  margin-bottom: 3%;
+.listMiniImg {
+	width: 400px;
+	height: 250px;
+	object-fit: cover;
+	box-shadow: 3px 3px 3px black;
 }
 
-#listRank1Text p:nth-child(2) {
-  font-size: 2rem;
+/* 리스트 랭크 텍스트 */
+.listRankText {
+	text-align: center;
+	text-shadow: 3px 3px 3px black;
+	bottom: 100px;
 }
 
-#listRank1Icon {
-  position: absolute;
-  z-index: 1;
-  height: 100%;
-  width: 40%;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
+.listRankText:nth-child(1) {
+	color: #ffd700;
 }
 
-#listRank1Icon i {
-  font-size: 5rem;
-  color: white;
+.listRankText:nth-child(2) {
+	color: #a3a3a3;
 }
 
-#listRank2 {
-  position: relative;
-  width: 100%;
-  height: 55%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
+.listRankText:nth-child(3) {
+	color: #cd7f32;
 }
 
-#listRank2backimg {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  width: 50%;
-  height: 90%;
+.listRankText p:nth-child(1) {
+	font-size: 3rem;
+	margin-bottom: 30px;
 }
 
-#listRank2backimg img {
-  width: 100%;
-  height: 100%;
-  opacity: 50%;
-}
-#listRank2Miniimg {
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 40%;
-  height: 3%;
-  margin-bottom: 20%;
-}
-#listRank2Miniimg img {
-  width: 40%;
-  margin-top: 10%;
+.listRankText p:nth-child(2) {
+	font-size: 2rem;
 }
 
-#listRank2Text {
-  position: absolute;
-  text-align: center;
-  color: #a3a3a3;
-  margin-bottom: 5%;
+.emptyRight{
+	height: 100%;
+	width: 100px;
 }
 
-#listRank2Text p:nth-child(1) {
-  font-size: 4rem;
-  margin-bottom: 3%;
-}
-
-#listRank2Text p:nth-child(2) {
-  font-size: 2rem;
-}
-
-#listRank2Icon {
-  position: absolute;
-  z-index: 1;
-  height: 100%;
-  width: 40%;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-}
-
-#listRank2Icon i {
-  font-size: 5rem;
-  color: white;
-}
-
-#listRank3 {
-  position: relative;
-  width: 100%;
-  height: 55%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
-}
-
-#listRank3backimg {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  width: 50%;
-  height: 90%;
-}
-
-#listRank3backimg img {
-  width: 100%;
-  height: 100%;
-  opacity: 50%;
-}
-#listRank3Miniimg {
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 40%;
-  height: 3%;
-  margin-bottom: 20%;
-}
-#listRank3Miniimg img {
-  width: 40%;
-  margin-top: 10%;
-}
-
-#listRank3Text {
-  position: absolute;
-  text-align: center;
-  color: #cd7f32;
-  margin-bottom: 5%;
-}
-
-#listRank3Text p:nth-child(1) {
-  font-size: 4rem;
-  margin-bottom: 3%;
-}
-
-#listRank3Text p:nth-child(2) {
-  font-size: 2rem;
-}
-
-#listRank3Icon {
-  position: absolute;
-  z-index: 1;
-  height: 100%;
-  width: 40%;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-}
-
-#listRank3Icon i {
-  font-size: 5rem;
-  color: white;
-}
-
-footer {
-  width: 100%;
-  height: 20%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-footer p {
-  font-size: 6rem;
-}
-
-#footernav {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 30%;
-}
-
-#footernav a {
-  width: 10%;
-  height: 50%;
-  text-align: center;
-  margin-left: 1%;
-  margin-right: 1%;
-  line-height: 150%;
-  font-size: 1.5rem;
-  font-weight: bold;
-  border-radius: 10px;
-}

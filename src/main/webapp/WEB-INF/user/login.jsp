@@ -4,14 +4,33 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<link rel="stylesheet" href="/css/reset.css" />
+<link rel="stylesheet" href="/css/login.css">
+<title>Sign In</title>
 </head>
 <body>
-	<h1>로그인</h1>
-	<form action="login" method="post">
-		<div><input type="text" name="userEmail" placeholder="Email"></div>
-		<div><input type="password" name="userPassword" placeholder="Password"></div>
-		<input type="submit" value="로그인">
-	</form>
+	<jsp:include page="../tiles/header.jsp"></jsp:include>
+	<div class="container">
+		<div class="con">
+			<div class="loginBox">
+				<div class="loginBoxLeft">
+					<h1>Sign In</h1>
+					<p>your account</p>
+					<form action="login" method="post">
+						<div><input type="text" name="userEmail" placeholder="Email" id="userEmail"></div>
+						<div><input type="password" name="userPassword" placeholder="Password" id="userPassword"></div>
+						<div><a href="">Forgot your Email or Password?</a></div>
+						<div><input type="submit" value="SIGN IN"></div>
+					</form>
+				</div>
+				<div class="loginBoxRight">
+					<h1>Sign Up</h1>
+					<p>Enter your personal details and start digging with us</p>
+					<a href="registerUser">SIGN UP</a>
+				</div>
+			</div>
+		</div>
+		<jsp:include page="../tiles/footer.jsp"></jsp:include>
+	</div>
 </body>
 </html>

@@ -50,7 +50,7 @@ public class UserController {
 		} catch (Exception e) {}
 		
 		userService.register(user);
-		return "test/userTest";
+		return "index";
 	}
 	
 	// 로그인
@@ -74,7 +74,7 @@ public class UserController {
 		}
 		// 정상 회원
 		session.setAttribute("user", u);
-		return "test/userTest";
+		return "index";
 		
 	}
 	
@@ -84,7 +84,7 @@ public class UserController {
 		HttpSession session = request.getSession();
 		if(session.getAttribute("user") != null) session.invalidate();
 		
-		return "test/userTest";
+		return "index";
 	}
 	
 	// 마이페이지

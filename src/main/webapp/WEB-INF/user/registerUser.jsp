@@ -5,24 +5,38 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="/css/reset.css" />
+<link rel="stylesheet" href="/css/register.css">
 </head>
 <body>
-	<h1>회원가입</h1>
-	<form action="registerUser" method="post">
-		<div><input type="text" name="userEmail" placeholder="Email"></div>
-		<div><input type="password" name="userPassword" placeholder="Password"></div>
-		<div><input type="text" name="userNickname" placeholder="Nickname"></div>
-		<div>
-			<h3>성별 선택</h3>
-			<label><input type="radio" name="userGender" value="male"> 남자</label>
-			<label><input type="radio" name="userGender" value="female"> 여자</label>
-			<label><input type="radio" name="userGender" value="nonbinary"> 논바이너리</label>
+	<jsp:include page="../tiles/header.jsp"></jsp:include>
+	<div class="container">
+		<div class="con">
+			<div class="registerBox">
+				<h1>Create Account</h1>
+				<p>your email for registration</p>
+				<form action="registerUser" method="post">
+					<div class="registerTop">
+						<div class="registerLeft">
+							<div><input type="text" name="userEmail" placeholder="Email" required></div>
+							<div><input type="password" name="userPassword" placeholder="Password" required></div>
+							<div><input type="text" name="userNickname" placeholder="Nickname" required></div>
+						</div>
+						<div class="registerRight">
+							<div class="genderSelect">
+								<input type="radio" name="userGender" value="male" id="male" checked> <label for="male">Male</label>
+								<input type="radio" name="userGender" value="female" id="female"> <label for="female">Female</label>
+								<input type="radio" name="userGender" value="nonbinary" id="nonbinary"> <label for="nonbinary">Nonbinary</label>
+							</div>
+							<div><input type="date" name="birthDay" required></div>
+							<div><input type="text" name="userPhone" placeholder="PhoneNum : 000-0000-0000" required></div>
+						</div>
+					</div>
+					<input type="submit" value="회원가입">
+				</form>
+			</div>
 		</div>
-		<div>
-			생년월일 : <input type="date" name="birthDay">
-		</div>
-		<div><input type="text" name="userPhone" placeholder="PhoneNum : 000-0000-0000"></div>
-		<input type="submit" value="회원가입">
-	</form>
+		<jsp:include page="../tiles/footer.jsp"></jsp:include>
+	</div>
 </body>
 </html>
