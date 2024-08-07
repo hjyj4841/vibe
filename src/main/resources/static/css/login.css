@@ -89,6 +89,10 @@
 	cursor: pointer;
 	font-weight: bold;
 	font-size: 0.8rem;
+	transition:0.5s;
+}
+.loginBoxLeft input[type=submit]:hover{
+	background-color: red;
 }
 
 .loginBoxRight{
@@ -105,4 +109,9 @@
 	color: white;
 	font-weight: bold;
 	font-size: 0.8rem;
+	transition: 0.5s;
+}
+.loginBoxRight a:hover{
+	background-color: red;
+	border: 1px solid red;
 }

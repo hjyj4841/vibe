@@ -10,6 +10,6 @@
 <body>
 	<h1>이미 탈퇴한 회원 입니다.</h1>
 	<h2>재가입까지 ${rejoinDate }일 남았습니다.</h2>
-	<a href="userTest">홈으로 돌아가기</a>
+	<a href="/">홈으로 돌아가기</a>
 </body>
 </html>

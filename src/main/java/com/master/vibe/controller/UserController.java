@@ -43,14 +43,12 @@ public class UserController {
 	}
 	@PostMapping("/registerUser")
 	public String register(User user, String birthDay) {
-		System.out.println(user);
-		System.out.println(birthDay);
 		try {
 			user.setUserBirth(new SimpleDateFormat("yyyy-MM-dd").parse(birthDay));
 		} catch (Exception e) {}
 		
 		userService.register(user);
-		return "index";
+		return "redirect:/";
 	}
 	
 	// 로그인

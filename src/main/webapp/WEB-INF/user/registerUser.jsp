@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Sign Up</title>
 <link rel="stylesheet" href="/css/reset.css" />
 <link rel="stylesheet" href="/css/register.css">
 </head>
@@ -23,20 +23,27 @@
 							<div><input type="text" name="userNickname" placeholder="Nickname" required></div>
 						</div>
 						<div class="registerRight">
-							<div class="genderSelect">
-								<input type="radio" name="userGender" value="male" id="male" checked> <label for="male">Male</label>
-								<input type="radio" name="userGender" value="female" id="female"> <label for="female">Female</label>
-								<input type="radio" name="userGender" value="nonbinary" id="nonbinary"> <label for="nonbinary">Nonbinary</label>
+							<div>
+								<h3>Gender</h3>
+								<div class="genderSelect">
+									<input type="radio" name="userGender" value="male" id="male" checked> 
+									<label for="male">Male</label>
+									<input type="radio" name="userGender" value="female" id="female"> 
+									<label for="female">Female</label>
+									<input type="radio" name="userGender" value="nonbinary" id="nonbinary"> 
+									<label for="nonbinary">Nonbinary</label>
+								</div>
+								<div><input type="date" name="birthDay" data-placeholder="Date of Birth" max="9999-12-31" required></div>
+								<div><input type="text" name="userPhone" placeholder="PhoneNum : 000-0000-0000" required></div>
 							</div>
-							<div><input type="date" name="birthDay" required></div>
-							<div><input type="text" name="userPhone" placeholder="PhoneNum : 000-0000-0000" required></div>
 						</div>
 					</div>
-					<input type="submit" value="회원가입">
+					<input type="submit" value="SIGN UP">
 				</form>
 			</div>
 		</div>
 		<jsp:include page="../tiles/footer.jsp"></jsp:include>
 	</div>
+	<script type="text/javascript" src="/js/userRegister.js"></script>
 </body>
 </html>

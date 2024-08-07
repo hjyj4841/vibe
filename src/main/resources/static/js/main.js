@@ -46,37 +46,8 @@ window.addEventListener("wheel", function(e) {
 scrollTop(mHtml, 0);
 
 // listRank div 바뀌는 이벤트
-$(".rankButtonBox button").hover(
-	(e) => {
-		$(e.target).css("color", "red");
-	},
-	(e) => {
-		$(e.target).css("color", "white");
-	}
-);
 const buttons = document.querySelectorAll(".rankButtonBox button");
 const ranklists = document.querySelectorAll(".listRank");
-
-/*for(let i = 0; i <= buttons.length; i++){
-	buttons[i].addEventListener("click", function() {
-		ranklists[i].style.display = "block";
-		switch(i){
-			case 0:
-				ranklists[1].style.display = "none";
-				ranklists[2].style.display = "none";
-				break;
-			case 1:
-				ranklists[0].style.display = "none";
-				ranklists[2].style.display = "none";
-				break;
-			case 2:
-				ranklists[0].style.display = "none";
-				ranklists[1].style.display = "none";
-				break;
-		}
-	});
-}
-*/
 
 for(let i = 0; i <= buttons.length; i++){
 	buttons[i].addEventListener("click", function() {

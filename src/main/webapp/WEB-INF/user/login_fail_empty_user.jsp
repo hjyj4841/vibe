@@ -8,6 +8,6 @@
 </head>
 <body>
 	<h1>아이디 또는 비밀번호가 다릅니다.</h1>
-	<a href="userTest">홈으로 돌아가기</a>
+	<a href="/">홈으로 돌아가기</a>
 </body>
 </html>

@@ -19,7 +19,6 @@
 			<a href="/">
 				<img src="/imgs/logo/logoW.png" alt="" />
 			</a>
-			<!-- 서버 주소로 수정 -->
 		</div>
 		
 		<!-- nav1 영역 -->
