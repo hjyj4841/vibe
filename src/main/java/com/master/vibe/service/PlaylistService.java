@@ -28,4 +28,9 @@ public class PlaylistService {
         playlistMapper.createPlaylist(dto);
     }
 	
+//	중복 코드 - 플레이리스트 생성 메서드 createPlaylist
+//	public void addPlaylist(Playlist playlist) {
+//        playlistMapper.addPlaylist(playlist);
+//    }
+
 }

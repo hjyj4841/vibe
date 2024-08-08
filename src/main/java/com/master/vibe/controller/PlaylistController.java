@@ -36,12 +36,26 @@ public class PlaylistController {
         return "test/test";
     }
 	
-    // 플레이리스트 좋아요 순 조회
+    
+    
+    
+   
+
+    
+    
+//	의문 코드
+//	SpotifyService spotifyService = new SpotifyService();
+//	public PlaylistController(SpotifyService spotifyService) {
+//		this.spotifyService = spotifyService;
+//	}
+//	
 //	@GetMapping("/playlists")
 //	public String searchPlaylists(@RequestParam String query) {
 //		 return spotifyService.searchPlaylists(query);
 //	}
 	
+    
+//	중복 코드 -> playlistMusicController.addPlaylist
 //	// 선택된 음악 ID를 사용하여 플레이리스트에 추가하는 로직을 구현
 //	@PostMapping("/addPlaylist")
 //	public String addPlaylist(@RequestParam("selectedMusic") List<String> selectedMusic, Model model) {
@@ -51,15 +65,36 @@ public class PlaylistController {
 //		model.addAttribute("selectedMusic", selectedMusic);
 //	    return "playlist"; // 작업 완료 후
 //	}
+//    
 //  // 플레이리스트 추가 폼 불러오기
 //	@GetMapping("/playlist")
 //	public String addPlaylist(Model model) {
 //		return "playlist";
 //	}
+    
+    
+//	중복 코드 - 플레이리스트 생성 메서드 구현 완
 //	// 플레이리스트 추가
 //	@PostMapping("/playlist")
 //	public String addPlaylist(Playlist playlist) {
 //		playlistService.addPlaylist(playlist);
 //		return "redirect:/"; // 플레이리스트 추가 후 메인 페이지로 리다이렉트
 //	}
+    
+//	???
+//	@PostMapping("/addPlaylist")
+//	public String addPlaylist(@RequestParam("selectedMusic") String selectedMusicJson, Model model) {
+//		// ObjectMapper를 사용하여 JSON 문자열을 List로 변환
+//		ObjectMapper objectMapper = new ObjectMapper();
+//        List<List<String>> selectedMusic = null;
+//        try {
+//            selectedMusic = objectMapper.readValue(selectedMusicJson, new TypeReference<List<List<String>>>() {});
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//		
+//        // 선택된 음악 정보를 모델에 추가
+//        model.addAttribute("selectedMusic", selectedMusic);
+//        return "playlist"; // 플레이리스트 추가 후 'playlist.jsp'로 리턴
+//    }
 }
