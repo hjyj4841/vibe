@@ -5,6 +5,7 @@ import lombok.Setter;
 
 @Getter @Setter
 public class CreatePlaylistDTO {
+	private String plImg;
 	private String plTitle;
 	private String userEmail;
 }

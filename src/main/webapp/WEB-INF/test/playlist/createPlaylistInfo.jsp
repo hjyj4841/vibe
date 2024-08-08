@@ -62,6 +62,7 @@ pageEncoding="UTF-8"%>
   </head>
   <body>
   	<!-- -->
+  	<img src="">
     <h1>${plTitle}</h1>
     <form action="addMusic" method="post">
 	<label><button type="submit">+</button></label>
