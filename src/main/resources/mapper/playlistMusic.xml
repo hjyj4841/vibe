@@ -15,5 +15,12 @@
 		(#{plmusic.plCode}, #{plmusic.musicCode})
 		</foreach>
 	</insert>
+	
+	<!-- 해당플레이리스트의 음악코드 조회 -->
+	<select id="showMusicList" parameterType="Integer" resultType="String">
+		SELECT music_code
+		FROM playlist_music
+		WHERE pl_code = #{plCode}
+	</select>
 
 </mapper>

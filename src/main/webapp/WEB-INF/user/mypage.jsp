@@ -6,103 +6,125 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="/css/reset.css">
-<link rel="stylesheet" href="/css/mypage.css">
+<link rel="stylesheet" href="./css/reset.css">
+<link rel="stylesheet" href="./css/mypage.css">
 <title>my page</title>
 </head>
 <body>
 	<jsp:include page="../tiles/header.jsp"></jsp:include>
 	<div class="container">
 		<div class="con">
-			<div class="myLeftBox">
-				<div class="myLeftTopBox">	
-					<img alt="회원이미지" src="${user.userImg }">
-					<div class="myAccInfo">
-						<div class="myTagBox">
-							<div>
-								<p># Rock</p>
-								<p># Pop</p>
-								<p># Indie</p>
-							</div>
-							<div>
-								<p># Metal</p>
-								<p># Hiphop</p>
-							</div>
+			<div class="mypageBox">
+				<div class="myLeft">
+					<div class="myProfile">
+						<img alt="회원이미지" src="${user.userImg }">
+						<p class="myNick">${user.userNickname }</p>
+						<p class="myEmail">${user.userEmail }</p>
+						<c:choose>
+							<c:when test="${user.userSpotifyYn == 89}">
+								<div class="connectSpotify">
+									<i class="fa-brands fa-spotify"></i>
+									<span>connected</span>
+								</div>
+							</c:when>
+							<c:otherwise>
+								<div class="disconnectSpotify">
+									<i class="fa-brands fa-spotify"></i>
+									<span>disconnected</span>
+								</div>
+							</c:otherwise>
+						</c:choose>
+					</div>
+					<div class="myList">
+						<div>
+							<a href="/">
+								<i class="fa-solid fa-house-user"></i>
+								<span>Home</span>
+							</a>
 						</div>
 						<div>
-							<div>
-								<c:choose>
-									<%-- ascii code : 89 == Y --%>
-									<c:when test="${user.userSpotifyYn == 89}">
-										spotify 연동
-									</c:when>
-									<c:otherwise>
-										spotify 미연동
-									</c:otherwise>
-								</c:choose>
-							</div>
-							<div>
-								<fmt:formatDate value="${user.userDate}" pattern="yyyy-MM-dd" />
-							</div>
+							<a>
+								<i class="fa-solid fa-circle-play"></i>
+								<span>My PlayList</span>
+							</a>
+						</div>
+						<div>
+							<a>
+								<i class="fa-brands fa-gratipay"></i>
+								<span>Like PlayList</span>
+							</a>
+						</div>
+						
+					</div>
+					<div class="myChangeInfo">
+						<div>
+							<a>
+								<i class="fa-solid fa-gear"></i>
+								<span>Edit Profile</span>
+							</a>
+						</div>
+						<div>
+							<a href="deleteUser">
+								<span>delete ID</span>
+							</a>
 						</div>
 					</div>
 				</div>
-				<div class="myLeftBottomBox">
-					<div>${user.userNickname }</div>
-					<div>${user.userEmail }</div>
-					<div>${user.userPhone }</div>
-					<div><fmt:formatDate value="${user.userBirth}" pattern="yyyy-MM-dd" /></div>
+				<div class="myRight">
+					<div class="myTagBox">
+						<div>
+							My Favorite Tags
+						</div>
+						<div class="myTags">
+							<div>
+								<div>
+									<img src="./imgs/tag/tag_img1.jpg">
+									<span>#Rock</span>
+								</div>
+							</div>
+							<div>
+								<div>
+									<img src="./imgs/tag/tag_img2.jpg">
+									<span>#Pop</span>
+								</div>
+							</div>
+							<div>
+								<div>
+									<img src="./imgs/tag/tag_img3.jpg">
+									<span>#Dance</span>
+								</div>
+							</div>
+							<div>
+								<div>
+									<img src="./imgs/tag/tag_img4.png">
+									<span>#Metal</span>
+								</div>
+							</div>
+							<div>
+								<div>
+									<img src="./imgs/tag/tag_img5.jpg">
+									<span>#Hiphop</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="myEtcBox">
+						<div>넣을게 없어...</div>
+						<div>컨텐츠가 없어...</div>
+					</div>
 				</div>
-			</div>
-			<div class="myRightBox">
-			
 			</div>
 		</div>
 		<jsp:include page="../tiles/footer.jsp"></jsp:include>
 	</div>
 
 
+	<%-- ascii code : 89 == Y --%>
 	<%-- 
-	<h1>마이페이지</h1>
-	<table>
-		<tr>
-			<td>Image : </td>
-			<td><img alt="회원이미지" src="${user.userImg }"></td>
-		</tr>
-		<tr>
-			<td>E-mail : </td>
-			<td>${user.userEmail }</td>
-		</tr>
-		<tr>
-			<td>Nickname : </td>
-			<td>${user.userNickname }</td>
-		</tr>
-		<tr>
-			<td>생일 : </td>
-			<td><fmt:formatDate value="${user.userBirth}" pattern="yyyy-MM-dd" /></td>
-		</tr>
-		<tr>
-			<td>가입일 : </td>
-			<td><fmt:formatDate value="${user.userDate}" pattern="yyyy-MM-dd" /></td>
-		</tr>
-		<tr>
-			<td>스포티파이 연동 유무 : </td>
-			<td>
-			<c:choose>
-				<c:when test="${user.userSpotifyYn == 89}"> <!-- ascii code : 89 == Y -->
-					연동
-				</c:when>
-				<c:otherwise>
-					미연동
-				</c:otherwise>
-			</c:choose>
-			</td>
-		</tr>
-		<tr>
-			<td>전화번호 : </td>
-			<td>${user.userPhone }</td>
-		</tr>
-	</table>
+	
+	<div>${user.userPhone }</div>
+	<fmt:formatDate value="${user.userDate}" pattern="yyyy-MM-dd" />
+	<fmt:formatDate value="${user.userBirth}" pattern="yyyy-MM-dd" />
 	<a href="deleteUser">회원탈퇴</a> 
 	--%>
 </body>

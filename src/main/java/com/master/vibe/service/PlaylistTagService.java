@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.master.vibe.model.dto.SearchDTO;
 import com.master.vibe.model.vo.Playlist;
+import com.master.vibe.model.vo.PlaylistTag;
 
 import mapper.PlaylistTagMapper;
 
@@ -17,7 +18,7 @@ public class PlaylistTagService {
 	private PlaylistTagMapper playlistTagMapper;
 	
 	// 제목 검색, 태그 검색
-	public List<Playlist> searchPlaylist(SearchDTO dto){
+	public List<PlaylistTag> searchPlaylist(SearchDTO dto){
 		return playlistTagMapper.searchPlaylist(dto);
 	}
 	

@@ -10,5 +10,5 @@ import com.master.vibe.model.vo.PlaylistMusic;
 public interface PlaylistMusicMapper {
 	
 	void addPlaylist(List<PlaylistMusic> list); // 플레이리스트 곡추가
-
+	List<String> showMusicList(int plCode);
 }

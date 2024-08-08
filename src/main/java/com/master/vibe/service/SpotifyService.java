@@ -2,6 +2,7 @@ package com.master.vibe.service;
 
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.HttpEntity;
@@ -81,6 +82,51 @@ public class SpotifyService {
 			
 			musicInfo.add(music);
 		}		
+		return musicInfo;
+	}
+	
+	public ArrayList<Music> getMusicINfoForMusicCode(List<String> musicCodeList){
+		String accessToken = getAccessToken();
+		
+		String str = "";
+		for(int i = 0; i < 50; i++) {
+			if(i == 0) {
+				str += musicCodeList.get(i);
+			}else {
+				str += "," + musicCodeList.get(i);
+			}
+		}
+		String url = "https://api.spotify.com/v1/tracks?ids=" + str;
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Authorization", "Bearer " + accessToken);
+		
+		HttpEntity<String> request = new HttpEntity<String>(headers);
+		
+		ResponseEntity<JsonNode> response = restTemplate.exchange(url, HttpMethod.GET, request, JsonNode.class);
+		JsonNode musicData = response.getBody();
+		
+		ArrayList<Music> musicInfo = new ArrayList<>();
+		JsonNode trackInfo = musicData.get("tracks");
+		
+		for(JsonNode track : trackInfo) {
+			JsonNode albumInfo = track.get("album");
+			String id = track.get("id").asText();
+			String albumUrl = albumInfo.get("images").get(0).get("url").asText();
+			String albumName = albumInfo.get("name").asText();
+			String artistName = track.get("artists").get(0).get("name").asText();
+			String musicTitle = track.get("name").asText();
+			
+			Music music = new Music();
+			music.setId(id);
+			music.setAlbumName(albumName);
+			music.setAlbumUrl(albumUrl);
+			music.setArtistName(artistName);
+			music.setMusicTitle(musicTitle);
+			
+			musicInfo.add(music);
+		}
+		
 		return musicInfo;
 	}
 	

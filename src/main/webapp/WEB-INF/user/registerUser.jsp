@@ -5,8 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Sign Up</title>
-<link rel="stylesheet" href="/css/reset.css" />
-<link rel="stylesheet" href="/css/register.css">
+<link rel="stylesheet" href="./css/reset.css" />
+<link rel="stylesheet" href="./css/register.css">
 </head>
 <body>
 	<jsp:include page="../tiles/header.jsp"></jsp:include>
@@ -44,6 +44,6 @@
 		</div>
 		<jsp:include page="../tiles/footer.jsp"></jsp:include>
 	</div>
-	<script type="text/javascript" src="/js/userRegister.js"></script>
+	<script type="text/javascript" src="./js/userRegister.js"></script>
 </body>
 </html>

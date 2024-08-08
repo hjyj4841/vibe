@@ -27,7 +27,11 @@ public class PlaylistMusicService {
     		pm.setPlCode(plCode);
     		list.add(pm);
     	}
-    	
     	playlistMusicMapper.addPlaylist(list);
+    }
+    
+    // 플레이리스트_뮤직 테이블에서 해당 플레이리스트의 뮤직코드만 조회
+    public List<String> showMusicList(int plCode){
+    	return playlistMusicMapper.showMusicList(plCode);
     }
 }

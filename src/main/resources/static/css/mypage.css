@@ -3,54 +3,192 @@
 	width: 100%;
 	display: flex;
 	flex-direction: column;
-	justify-content: flex-end;
 	align-items: center;
+	justify-content: flex-end;
 }
 .con{
+	padding-top:130px;
+	height: 830px;
 	width: 100%;
+	display: flex;
+	align-content: center;
+	justify-content: center;
+	margin-bottom: 10px; 
+}
+.mypageBox{
+	width: 1000px;
+	height: 100%;
+	background-color: white;
+	border-radius: 20px;
+	overflow: hidden;
+	display: flex;
+	box-shadow: 5px 5px 5px black;
+}
+.myLeft{
+	width: 250px;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	box-shadow: 0px 3px 3px black;
+}
+.myLeft > div{
+	flex: 1;
+	width: 100%;
+	height: 100%;
+}
+.myProfile{
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+.myProfile img{
+	width: 100px;
+	height: 100px;
+	border-radius: 50%;
+	object-fit: center;
+	box-shadow: 2px 2px 2px black;
+}
+.myProfile > *{
+	margin: 6px;
+}
+.myProfile > div{
+	color: white;
+	padding: 5px;
+	border-radius: 20px;
+}
+
+.myNick{
+	color: black;
+	font-weight: bold;
+}
+.myEmail{
+	color: gray;
+}
+.connectSpotify{
+	background-color: #1ED760;
+}
+.disconnectSpotify{
+	background-color: gray;
+}
+.myList,
+.myChangeInfo{
+	display: flex;
+	flex-direction: column;
+}
+.myList div,
+.myChangeInfo div{
+	padding: 10px 0px 10px 30px;
+	display: flex;
+	align-items: center;
+}
+.myList a,
+.myChangeInfo a{
+	color: #333;
+	cursor: pointer;
+	transition: 0.5s;
+}
+.myList a:hover,
+.myChangeInfo a:hover{
+	color: red;
+}
+.myList span,
+.myChangeInfo span{
+	padding-left: 5px;
+	font-weight: bold;
+	font-size: 0.9rem;
+}
+.myChangeInfo{
+	justify-content: space-between;
+}
+.myChangeInfo div:last-child span{
+	font-weight: normal;
+	color: red;
+	font-size: 0.8rem;
+}
+.myChangeInfo div:last-child span:hover{
+	font-weight: bold;
+}
+
+.myRight{
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+.myRight > *{
+	width: 100%;
+}
+.myTagBox > div:nth-child(1) {
+	color: #333;
+	font-weight: bold;
+	display: flex;
+	align-items: center;
+	padding: 25px;
+}
+.myTags{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 300px;
+	width: 100%;
+}
+.myTags > div{
+	width: 150px;
 	height: 100%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 }
-.myLeftBox{
+.myTags > div > div{
+	overflow: hidden;
+	width: 100px;
+	height: 100px;
+	transition: all 0.5s linear;
 	display: flex;
-	flex-direction: column;
-	background-color: white;
-	color: black;
-	padding: 20px;
-	border-radius: 20px;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+	position: relative;
+	box-shadow: 3px 3px 3px black;
 }
-
-.myLeftTopBox {
-	display: flex;
+.myTags > div > div:hover{
+	width: 100%;
+	height: 100%;
 }
-
-.myLeftTopBox img{
-	width: 180px;
-	height: 180px;
+.myTags > div > div:hover img{
+	filter : grayscale(0);
+}
+.myTags > div > div:hover span{
+	font-size: 1.5rem;
+}
+.myTags img{
+	height: 400px;
 	object-fit: cover;
+	filter : grayscale(100%);
+	transition: 0.5s;
+	position: absolute;
 }
-.myAccInfo{
+.myTags span{
+	position: absolute;
+	color: black;
+	z-index: 1;
+	text-shadow: -1px 0px 1px white, 0px 1px 1px white, 1px 0px 1px white, 0px -1px 1px white;
+	font-weight: bold;
+	transition: 0.5s;
+}
+.myEtcBox{
 	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	padding-left: 20px;
+	width: 100%;
+	height: 100%;
 }
-.myTagBox{
+.myEtcBox > div{
+	width: 100%;
+	height: 100%;
+	color: black;
 	display: flex;
-	justify-content: flex-start;
-}
-.myTagBox > div{
-	padding: 10px;	
-}
-.myTagBox p{
-	margin-bottom: 10px;
-}
-.myLeftBottomBox div {
-	padding: 20px;
-}
-
-.myRightBox{
-	background-color: red;
+	justify-content: center;
+	align-items: center;
 }

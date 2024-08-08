@@ -4,9 +4,8 @@
 <html>
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link rel="stylesheet" href="/css/reset.css" />
-<link rel="stylesheet" href="/css/style.css" />
+<link rel="stylesheet" href="./css/reset.css" />
+<link rel="stylesheet" href="./css/style.css" />
 <title>VibeMaster</title>
 </head>
 <body>
@@ -27,6 +26,16 @@
 			</c:if>
 			<a href="" class="ranking">Ranking</a>
 		</nav>
+		<form class="mainSearchBox" action="searchPlaylist">
+			<select name="select">
+				<option value="title">Title</option>
+				<option value="tag">Tag</option>
+			</select>
+			<input type="text" placeholder="Search Playlist..." name="search">
+			<button id="searchPlBtn" type="submit">
+				<i class="fa-solid fa-magnifying-glass"></i>
+			</button>
+		</form>
 	</section>
 
 	<!-- DB에 따라 바뀔 부분 -->
@@ -91,6 +100,6 @@
 		</div>
 		<jsp:include page="tiles/footer.jsp"></jsp:include>
 	</div>
-	<script src="/js/main.js"></script>
+	<script src="./js/main.js"></script>
 </body>
 </html>

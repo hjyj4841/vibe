@@ -18,7 +18,11 @@
 		</tr>
 		<c:forEach items="${searchTag}" var="searchPlaylist">
 			<tr>
-				<td>${searchPlaylist.playlist.plTitle}</td>
+				<td>
+					<a href="/showPlaylistMusic?plCode=${searchPlaylist.playlist.plCode }">
+						${searchPlaylist.playlist.plTitle}
+					</a>
+				</td>
 				<td><img src="${searchPlaylist.playlist.plImg}"></td>
 				<td>${searchPlaylist.tag.tagName}</td>
 				<td><img src="${searchPlaylist.playlist.user.userImg}"></td>

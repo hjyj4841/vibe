@@ -13,6 +13,13 @@
 		<li><a href="addMusic">플레이리스트 곡 추가</a></li>
 		<li><a href="searchHome">플레이리스트 검색</a></li>
 		<li><a href="playlistMusic">플레이리스트 곡 조회</a></li>
+		<li>
+			<form action="showPlaylistMusic">
+				<input type="text" name="plCode" placeholder="test_code = 1">
+				<button type="submit">검색</button>
+			</form>
+		</li>
 	</ul>
+	
 </body>
 </html>
