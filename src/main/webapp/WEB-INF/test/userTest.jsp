@@ -14,9 +14,12 @@
       <c:if test="${user == null}">
         <li><a href="login">로그인</a></li>
         <li><a href="registerUser">회원가입</a></li>
+        <li><a href="findUserID">아이디 찾기</a></li>
+        <li><a href="findUserPWD">비밀번호 찾기</a></li>
       </c:if>
       <c:if test="${user != null}">
         <li><a href="mypage">마이페이지</a></li>
+        <li><a href="userLikeTag">내가 좋아요한 태그</a></li>
         <li><a href="logout">로그아웃</a></li>
       </c:if>
       <li><a href="artist">api 참고 테스트</a></li>

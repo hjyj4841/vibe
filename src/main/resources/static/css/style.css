@@ -1,3 +1,8 @@
+html {
+  scroll-behavior: smooth; /* 페이지 내 이동 시 부드럽게 이동 */
+  /* overflow: hidden; 스크롤바 안보이게 하기 위함 */
+}
+
 body {
   width: 100%;
   height: 100vh;
@@ -5,6 +10,7 @@ body {
   color: white;
 }
 
+/* 헤더 영역 */
 header {
   position: fixed;
   left: 0;
@@ -14,324 +20,186 @@ header {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: 150px;
-  z-index: 100;
+  height: 100px;
+  z-index: 1;
 }
 
+/* 로고 */
 #logo {
+  flex: 1;
   display: flex;
-  width: 10%;
-  height: 80%;
+  width: 100px;
   justify-content: center;
   align-items: center;
 }
-
 #logo img {
-  width: 130px;
-  height: 130px;
+  width: 100px;
 }
 
+/* nav 중간 단 */
 #nav1 {
+  flex: 7;
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  width: 90%;
+  width: 100%;
   height: 100%;
 }
-
 #nav1 a {
   font-size: 1.2rem;
   font-weight: bold;
-  text-align: center;
   color: white;
+  padding: 20px;
 }
 
-#search {
-  margin-right: 3%;
-}
-
-#contact {
-  margin-right: 3%;
-}
-
+/* nav 끝 단 */
 #nav2 {
-  width: 20%;
-  height: 100%;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
-
-#nav2 a {
-  padding-top: 1.7%;
-  font-size: 1.05rem;
-  font-weight: bold;
+  flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 35%;
-  height: 24%;
+  width: 100%;
+  height: 100%;
+}
+#nav2 a {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  font-size: 1.05rem;
+  font-weight: bold;
+
+  width: 100px;
+  height: 40px;
+  border-radius: 10px;
+  margin: 10px;
 }
 #my {
-  color: black !important;
+  color: black;
   background-color: #f5f5f5;
-  border-radius: 10px;
-  margin-right: 20%;
 }
-
 #signUp {
-  color: white !important;
+  color: white;
   background-color: #303030;
-  border-radius: 10px;
-  margin-right: 5%;
   border: 1px #949494 solid;
 }
 
+/* 메인 배너 */
 #mainbanner {
-  margin-top: 15%;
   width: 100%;
-  height: 20%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
 }
-
-#maintitle {
-  margin-top: 10%;
-  font-size: 5rem;
-  margin-bottom: 10%;
-}
-
 #chant {
   font-size: 2.5rem;
 }
-
+#maintitle {
+  margin: 10px 0 30px 0;
+  font-size: 5rem;
+}
 #mainnav {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 30%;
+  height: 80px;
 }
-
 #mainnav a {
-  width: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 200px;
   height: 100%;
-  margin-left: 1%;
-  margin-right: 1%;
-  line-height: 200%;
+  margin: 10px;
+  border-radius: 10px;
+
   font-size: 1.5rem;
   font-weight: bold;
-  border-radius: 10px;
 }
-
 #signIn {
   color: #1e1e1e;
   background-color: #e3e3e3;
   border: 1px #767676 solid;
 }
-
 #ranking {
   background-color: #2c2c2c;
   color: #f5f5f5;
   border: 1px #2c2c2c solid;
 }
 
-#listRank1 {
+/* 리스트 박스 */
+#listBox {
   position: relative;
-  width: 100%;
-  height: 55%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+.listRank {
+  position: absolute;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-end;
-}
+  justify-content: center;
 
-#listRank1backimg {
+  width: 100%;
+  height: 100vh;
+}
+.listRankBox {
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
-  width: 50%;
-  height: 90%;
+  width: 1200px;
+  height: 650px;
 }
-
-#listRank1backimg img {
+/* 이미지 */
+.listImg {
   width: 100%;
   height: 100%;
-  opacity: 50%;
-}
-#listRank1Miniimg {
+  object-fit: cover;
+  filter: brightness(30%);
   position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 40%;
-  height: 3%;
-  margin-bottom: 20%;
+  /* box-shadow: 0px 10px 50px red; */
 }
-#listRank1Miniimg img {
-  width: 40%;
-  margin-top: 10%;
+.listMiniImg {
+  position: absolute;
+  top: 100px;
+  width: 400px;
+  height: 250px;
+  object-fit: cover;
 }
 
-#listRank1Text {
+/* 리스트 랭크 텍스트 */
+.listRankText {
   position: absolute;
   text-align: center;
+  text-shadow: 0px 0px 5px black;
+  bottom: 100px;
+}
+.listRankTest:nth-child(1) {
   color: #ffd700;
-  margin-bottom: 5%;
 }
-
-#listRank1Text p:nth-child(1) {
-  font-size: 4rem;
-  margin-bottom: 3%;
-}
-
-#listRank1Text p:nth-child(2) {
-  font-size: 2rem;
-}
-
-#listRank1Icon {
-  position: absolute;
-  z-index: 1;
-  height: 100%;
-  width: 40%;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-}
-
-#listRank1Icon i {
-  font-size: 5rem;
-  color: white;
-}
-
-#listRank2 {
-  position: relative;
-  width: 100%;
-  height: 55%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
-}
-
-#listRank2backimg {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  width: 50%;
-  height: 90%;
-}
-
-#listRank2backimg img {
-  width: 100%;
-  height: 100%;
-  opacity: 50%;
-}
-#listRank2Miniimg {
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 40%;
-  height: 3%;
-  margin-bottom: 20%;
-}
-#listRank2Miniimg img {
-  width: 40%;
-  margin-top: 10%;
-}
-
-#listRank2Text {
-  position: absolute;
-  text-align: center;
+.listRankTest:nth-child(2) {
   color: #a3a3a3;
-  margin-bottom: 5%;
 }
-
-#listRank2Text p:nth-child(1) {
-  font-size: 4rem;
-  margin-bottom: 3%;
-}
-
-#listRank2Text p:nth-child(2) {
-  font-size: 2rem;
-}
-
-#listRank2Icon {
-  position: absolute;
-  z-index: 1;
-  height: 100%;
-  width: 40%;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-}
-
-#listRank2Icon i {
-  font-size: 5rem;
-  color: white;
-}
-
-#listRank3 {
-  position: relative;
-  width: 100%;
-  height: 55%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
-}
-
-#listRank3backimg {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  width: 50%;
-  height: 90%;
-}
-
-#listRank3backimg img {
-  width: 100%;
-  height: 100%;
-  opacity: 50%;
-}
-#listRank3Miniimg {
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 40%;
-  height: 3%;
-  margin-bottom: 20%;
-}
-#listRank3Miniimg img {
-  width: 40%;
-  margin-top: 10%;
-}
-
-#listRank3Text {
-  position: absolute;
-  text-align: center;
+.listRankTest:nth-child(3) {
   color: #cd7f32;
-  margin-bottom: 5%;
 }
-
-#listRank3Text p:nth-child(1) {
-  font-size: 4rem;
-  margin-bottom: 3%;
+.listRankText p:nth-child(1) {
+  font-size: 3rem;
+  margin-bottom: 30px;
 }
-
-#listRank3Text p:nth-child(2) {
+.listRankText p:nth-child(2) {
   font-size: 2rem;
 }
-
-#listRank3Icon {
+/* 리스트랭크 아이콘 */
+.listRankIcon {
   position: absolute;
   z-index: 1;
   height: 100%;
@@ -339,24 +207,27 @@ header {
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  right: 50px;
 }
-
-#listRank3Icon i {
-  font-size: 5rem;
+.listRankIcon i {
+  font-size: 3rem;
   color: white;
 }
 
+/* footer 영역 */
 footer {
-  width: 100%;
-  height: 20%;
+  align-self: flex-end;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
 
+  background-color: black;
+  width: 100%;
+  height: 130px;
+}
 footer p {
-  font-size: 6rem;
+  font-size: 2rem;
 }
 
 #footernav {
@@ -364,17 +235,18 @@ footer p {
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 30%;
+  height: 70px;
 }
 
 #footernav a {
-  width: 10%;
-  height: 50%;
-  text-align: center;
-  margin-left: 1%;
-  margin-right: 1%;
-  line-height: 150%;
-  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+  height: 40px;
+
+  font-size: 1.3rem;
   font-weight: bold;
   border-radius: 10px;
+  margin: 0px 5px 0px 5px;
 }

@@ -35,11 +35,11 @@
 			<td>스포티파이 연동 유무 : </td>
 			<td>
 			<c:choose>
-				<c:when test="${user.userSpotifyYn == 89}"> <!-- ascii code : 89 == Y -->
+				<c:when test="${user.userSpotifyYn === 89}"> <!-- ascii code : 89 == Y -->
 					연동
 				</c:when>
 				<c:otherwise>
-					미연동
+					미연동 <a href=spotifyConnect>연동하기</a>
 				</c:otherwise>
 			</c:choose>
 			</td>
@@ -48,6 +48,8 @@
 			<td>전화번호 : </td>
 			<td>${user.userPhone }</td>
 		</tr>
+		<tr>
+		<td><a href="updateUser"><button>회원정보 수정</button></a>
 	</table>
 	<a href="deleteUser">회원탈퇴</a>
 </body>

@@ -2,43 +2,117 @@
 <mapper namespace="mapper.UserMapper">
 
 	<resultMap type="User" id="userMap">
-		<id column="user_email" property="userEmail"/>
-		<result column="user_password" property="userPassword"/>
-		<result column="user_nickname" property="userNickname"/>
-		<result column="user_img" property="userImg"/>
-		<result column="user_date" property="userDate"/>
-		<result column="user_ent_yn" property="userEntYn"/>
-		<result column="user_spotify_yn" property="userSpotifyYn"/>
-		<result column="user_gender" property="userGender"/>
-		<result column="user_birth" property="userBirth"/>
-		<result column="user_manager" property="userManager"/>
-		<result column="user_enroll_date" property="userEnrollDate"/>
-		<result column="user_phone" property="userPhone"/>
+		<id column="user_email" property="userEmail" />
+		<result column="user_password" property="userPassword" />
+		<result column="user_nickname" property="userNickname" />
+		<result column="user_img" property="userImg" />
+		<result column="user_date" property="userDate" />
+		<result column="user_ent_yn" property="userEntYn" />
+		<result column="user_spotify_yn" property="userSpotifyYn" />
+		<result column="user_gender" property="userGender" />
+		<result column="user_birth" property="userBirth" />
+		<result column="user_manager" property="userManager" />
+		<result column="user_enroll_date" property="userEnrollDate" />
+		<result column="user_phone" property="userPhone" />
 	</resultMap>
 
 	<!-- 회원가입 -->
 	<insert id="register" parameterType="User">
-		INSERT INTO user(user_email, user_password, user_nickname, user_gender, user_birth, user_phone)
-		VALUES(#{userEmail}, #{userPassword}, #{userNickname}, #{userGender}, #{userBirth}, #{userPhone})
+		INSERT INTO user(user_email,
+		user_password, user_nickname, user_gender, user_birth, user_phone)
+		VALUES(#{userEmail}, #{userPassword}, #{userNickname}, #{userGender},
+		#{userBirth}, #{userPhone})
 	</insert>
 	<!-- 로그인 -->
 	<select id="login" parameterType="User" resultMap="userMap">
+		SELECT * FROM
+		user
+		WHERE user_email = #{userEmail} AND user_password =
+		#{userPassword}
+	</select>
+
+	<!-- 유저 아이디 찾기 -->
+	<select id="findUserID" parameterType="FindUserIDDTO"
+		resultMap="userMap">
+		SELECT user_email FROM user
+		WHERE user_birth = #{userBirth}
+		AND user_phone = #{userPhone}
+	</select>
+
+	<!-- 유저 비밀번호 찾기 -->
+	<select id="findUserPWD" parameterType="FindUserPWDDTO"
+		resultMap="userMap">
+		SELECT user_email, user_password FROM user
+		WHERE user_birth =
+		#{userBirth}
+		AND user_phone = #{userPhone} AND user_email =
+		#{userEmail}
+	</select>
+
+	<!-- 유저 비밀번호 찾기 후 비밀번호 변경 -->
+	<update id="updateUserPWD" parameterType="User">
+		UPDATE user
+		SET
+		user_password = #{userPassword}
+		WHERE user_email = #{userEmail}
+	</update>
+
+
+	<!-- 유저 정보 수정 -->
+	<update id="updateUser" parameterType="UserUpdateDTO">
+		UPDATE user
+		SET
+		user_password = #{userPassword},
+		user_nickname = #{userNickname},
+		user_phone = #{userPhone}
+		WHERE user_email = #{userEmail}
+	</update>
+
+	<select id="sameNickname" parameterType="UserUpdateDTO"
+		resultMap="userMap">
 		SELECT * FROM user
-		WHERE user_email = #{userEmail} AND user_password = #{userPassword}
+		WHERE user_nickname = #{userNickname} AND
+		user_Email != #{userEmail}
 	</select>
 
 	<!-- 회원탈퇴 -->
 	<update id="deleteUser" parameterType="String">
 		UPDATE user
-		SET user_ent_yn = 'Y',
-			user_enroll_date = current_date()
+		SET user_ent_yn
+		= 'Y',
+		user_enroll_date = current_date()
 		WHERE user_email = #{userEmail}
 	</update>
-	
+
 	<!-- 남은 재가입 날짜 조회 -->
-	<select id="rejoinDate" parameterType="String" resultType="String">
+	<select id="rejoinDate" parameterType="String"
+		resultType="String">
 		SELECT ADDDATE(user_enroll_date, 7) - current_date()
-		FROM user
+		FROM
+		user
 		WHERE user_email = #{user_email}
 	</select>
+
+	<!-- join -->
+	<!-- 내가 좋아요한 태그 -->
+	<select id="userLikeTag" parameterType="String"
+		resultType="com.master.vibe.model.dto.UserLikeTagDTO">
+		SELECT tag_name AS tagName, Count(*) AS tagCount FROM tag
+		LEFT JOIN playlist_tag USING (tag_code)
+		LEFT JOIN playlist_like USING
+		(pl_code)
+		LEFT JOIN user USING (user_email)
+		WHERE user_email =
+		#{userEmail}
+		GROUP BY tag_name
+		ORDER BY tagCount DESC
+		LIMIT 5
+	</select>
+
+	<!-- 스포티파이 계정 연동 관련 -->
+	<update id="updateSpotifyStatus" parameterType="String">
+		UPDATE user
+		SET user_spotify_yn = #{status}
+		WHERE user_email = #{userEmail}
+	</update>
 </mapper>
