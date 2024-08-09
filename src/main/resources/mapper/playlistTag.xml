@@ -36,9 +36,9 @@
 	<select id="searchPlaylist" resultMap="listTagMap" parameterType="SearchDTO">
 		SELECT *
 		FROM playlist_tag
-		LEFT JOIN playlist USING (pl_code)
-		JOIN user USING (user_email)
-		JOIN tag USING (tag_code)
+		RIGHT JOIN playlist USING (pl_code)
+		LEFT JOIN user USING (user_email)
+		LEFT JOIN tag USING (tag_code)
 		WHERE pl_public_yn = 'Y'
 		<choose>
 			<when test="select == 'title'">

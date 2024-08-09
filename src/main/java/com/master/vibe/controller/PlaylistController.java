@@ -8,7 +8,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.master.vibe.model.dto.CreatePlaylistDTO;
+import com.master.vibe.model.vo.User;
 import com.master.vibe.service.PlaylistService;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 // 현재 PlaylistController.java에서 @PostMapping("/addPlaylist") 메소드가 List<String> 타입의 selectedMusic을 받고 있습니다.
 // 그러나 선택된 음악 정보는 문자열이 아니라 복잡한 객체 구조임
@@ -31,9 +35,23 @@ public class PlaylistController {
     	return "test/playlist/createPlaylist";
     }
     @PostMapping("/createPlaylist")
-    public String createPlaylist(CreatePlaylistDTO dto) {
-        playlistService.createPlaylist(dto);
+    public String createPlaylist(String plTitle, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        User user = (User)session.getAttribute("user");
+        
+    	playlistService.createPlaylist(new CreatePlaylistDTO(plTitle, user.getUserEmail()));
         return "test/test";
+    }
+    
+    // 회원본인의 플레이리스트 조회
+    @GetMapping("myPlaylist")
+    public String myPlaylist(HttpServletRequest request, Model model) {
+    	HttpSession session = request.getSession();
+    	User user = (User)session.getAttribute("user");
+    	
+    	model.addAttribute("playlist", playlistService.myPlaylist(user.getUserEmail()));
+    	
+    	return "playlist/myPlaylist";
     }
 	
     // 플레이리스트 좋아요 순 조회

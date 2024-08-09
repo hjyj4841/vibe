@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.master.vibe.model.vo.Music;
 import com.master.vibe.service.SpotifyService;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class SpotifyController {
 
@@ -19,7 +22,10 @@ public class SpotifyController {
 	
 	// 플레이리스트 음악 추가
 	@GetMapping("/addMusic")
-	public String artistForm() {
+	public String artistForm(String plCode, Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		session.setAttribute("plCode", plCode);
+		
 		return "test/music/musicForm";
 	}
 	@PostMapping("/addMusic")

@@ -16,24 +16,21 @@
 	margin-bottom: 10px; 
 }
 .mypageBox{
-	width: 1000px;
+	width: 1200px;
 	height: 100%;
-	background-color: white;
 	border-radius: 20px;
 	overflow: hidden;
 	display: flex;
-	box-shadow: 5px 5px 5px black;
 }
 .myLeft{
-	width: 250px;
+	width: 400px;
 	height: 100%;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	box-shadow: 0px 3px 3px black;
+	box-shadow: 0px 3px 3px white;
 }
 .myLeft > div{
-	flex: 1;
 	width: 100%;
 	height: 100%;
 }
@@ -44,34 +41,43 @@
 	justify-content: center;
 	align-items: center;
 }
-.myProfile img{
+.myImg{
 	width: 100px;
 	height: 100px;
+	overflow: hidden;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	border-radius: 50%;
-	object-fit: center;
-	box-shadow: 2px 2px 2px black;
+	box-shadow: 1px 1px 2px white;
 }
+.myImg img{
+	object-fit: cover;
+	width: 100%;
+	height: 100%;
+}
+
 .myProfile > *{
 	margin: 6px;
 }
-.myProfile > div{
+.spotifyInfo{
 	color: white;
 	padding: 5px;
 	border-radius: 20px;
 }
 
 .myNick{
-	color: black;
+	color: white;
 	font-weight: bold;
 }
 .myEmail{
-	color: gray;
+	color: #999;
 }
 .connectSpotify{
 	background-color: #1ED760;
 }
 .disconnectSpotify{
-	background-color: gray;
+	background-color: #999;
 }
 .myList,
 .myChangeInfo{
@@ -86,9 +92,9 @@
 }
 .myList a,
 .myChangeInfo a{
-	color: #333;
+	color: #999;
 	cursor: pointer;
-	transition: 0.5s;
+	transition: 0.3s;
 }
 .myList a:hover,
 .myChangeInfo a:hover{
@@ -122,10 +128,12 @@
 	width: 100%;
 }
 .myTagBox > div:nth-child(1) {
-	color: #333;
+	color: white;
 	font-weight: bold;
 	display: flex;
 	align-items: center;
+	justify-content: center;
+	font-size: 1.5rem;
 	padding: 25px;
 }
 .myTags{
@@ -146,13 +154,12 @@
 	overflow: hidden;
 	width: 100px;
 	height: 100px;
-	transition: all 0.5s linear;
+	transition: all 0.3s linear;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	cursor: pointer;
 	position: relative;
-	box-shadow: 3px 3px 3px black;
 }
 .myTags > div > div:hover{
 	width: 100%;
@@ -187,7 +194,7 @@
 .myEtcBox > div{
 	width: 100%;
 	height: 100%;
-	color: black;
+	color: white;
 	display: flex;
 	justify-content: center;
 	align-items: center;

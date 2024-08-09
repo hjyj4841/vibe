@@ -28,4 +28,14 @@ public class PlaylistService {
         playlistMapper.createPlaylist(dto);
     }
 	
+	// 내가 생성한 플레이리스트 조회
+	public List<Playlist> myPlaylist(String userEmail) {
+		return playlistMapper.myPlaylist(userEmail);
+	}
+	
+	// plcode로 플레이리스트 정보 조회
+	public Playlist selectPlaylistForPlCode(int plCode) {
+		return playlistMapper.selectPlaylistForPlCode(plCode);
+	}
+	
 }

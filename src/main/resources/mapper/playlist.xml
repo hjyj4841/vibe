@@ -51,4 +51,16 @@
 		VALUES (#{plTitle}, #{plImg}, #{plDate}, #{plPublicYn}, #{userEmail})
 	</insert>
 	-->
+	
+	<!-- 회원 본인의 플레이리스트 조회 -->
+	<select id="myPlaylist" resultMap="playlistMap" parameterType="String">
+		SELECT * FROM playlist
+		WHERE user_email = #{userEmail}
+	</select>
+	
+	<!-- 플레이리스트 코드로 플레이리스트 정보 조회 -->
+	<select id="selectPlaylistForPlCode" resultMap="playlistMap" parameterType="Integer">
+		SELECT * FROM playlist
+		WHERE pl_code = #{plCode}
+	</select>
 </mapper>

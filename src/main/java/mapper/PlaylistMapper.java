@@ -17,4 +17,6 @@ public interface PlaylistMapper {
 	List<Playlist> allPlaylist(); // 플리 전체 조회
 	void movePlaylist(String userEmail); // 플레이리스트 소유자를 관리자로 변경(회원 탈퇴시)
 	void createPlaylist(CreatePlaylistDTO dto); // 플레이리스트 생성
+	List<Playlist> myPlaylist(String userEmail); // 회원 본인의 플레이리스트 조회
+	Playlist selectPlaylistForPlCode(int plCode); // plCode로 플레이리스트 조회
 }

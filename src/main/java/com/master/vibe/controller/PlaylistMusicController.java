@@ -10,8 +10,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.master.vibe.model.vo.Music;
+import com.master.vibe.model.vo.Playlist;
 import com.master.vibe.service.PlaylistMusicService;
+import com.master.vibe.service.PlaylistService;
 import com.master.vibe.service.SpotifyService;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class PlaylistMusicController {
@@ -22,16 +27,17 @@ public class PlaylistMusicController {
 	@Autowired
 	private SpotifyService spotifyService;
 	
+	@Autowired
+	private PlaylistService playlistService;
+	
 	// 선택된 음악 ID를 사용하여 플레이리스트에 추가하는 로직을 구현
     @PostMapping("/addPlaylist")
-    public String addPlaylist(@RequestParam List<String> selectedMusic, @RequestParam String plCode, Model model) {
+    public String addPlaylist(@RequestParam List<String> selectedMusic, Model model, HttpServletRequest request) {
         // selectedMusic 리스트를 Playlist 객체로 변환하는 로직 필요 -> service에서 구현
     	// 이 예제에서는 단순히 추가된 음악 목록을 출력함
-    	System.err.println(selectedMusic);
-    	System.err.println(plCode);
+    	HttpSession session = request.getSession();
     	
-    	playlistMusicService.addPlaylist(selectedMusic, Integer.parseInt(plCode));
-    	
+    	playlistMusicService.addPlaylist(selectedMusic, Integer.parseInt(session.getAttribute("plCode").toString())); // pl 코드 넘겨줘야된다
         model.addAttribute("selectedMusic", selectedMusic);
         
         return "test/playlist/addMusic"; // playlist.jsp로 리다이렉트
@@ -48,6 +54,9 @@ public class PlaylistMusicController {
     @GetMapping("/showPlaylistMusic")
     public String showPlaylistMusic(String plCode, Model model) {
     	List<String> musicCode = playlistMusicService.showMusicList(Integer.parseInt(plCode));
+    	
+    	model.addAttribute("playlist", playlistService.selectPlaylistForPlCode(Integer.parseInt(plCode)));
+    	
     	if(musicCode.size() != 0) {
     		List<Music> musicInfo = spotifyService.getMusicINfoForMusicCode(musicCode);
     		model.addAttribute("musicList", musicInfo);

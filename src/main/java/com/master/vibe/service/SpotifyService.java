@@ -89,13 +89,19 @@ public class SpotifyService {
 		String accessToken = getAccessToken();
 		
 		String str = "";
-		for(int i = 0; i < 50; i++) {
-			if(i == 0) {
-				str += musicCodeList.get(i);
-			}else {
-				str += "," + musicCodeList.get(i);
-			}
+		
+		if(musicCodeList.size() <= 50) {
+			for(String musicCode : musicCodeList) str += musicCode + ",";
+			str = str.substring(0, str.length()-1); // 마지막 콤마 제거 위함
+		} else {
+			int page = musicCodeList.size() / 50; // 한번에 최대 요청할 수 있는 음악 갯수 50개
+			if(musicCodeList.size() % 50 > 0) page ++;
+			
+			// 일단 50개만 보이도록 고정
+			for(int i = 0; i < 50; i++) str += musicCodeList.get(i) + ","; 
+			str = str.substring(0, str.length()-1);
 		}
+		
 		String url = "https://api.spotify.com/v1/tracks?ids=" + str;
 		
 		HttpHeaders headers = new HttpHeaders();

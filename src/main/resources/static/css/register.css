@@ -53,7 +53,7 @@
 	font-weight: bold;
 	font-size: 0.8rem;
 	margin-bottom: 20px;
-	transition: 0.5s;
+	transition: 0.2s;
 }
 .registerBox > form > input:hover{
 	background-color: red;

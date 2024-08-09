@@ -17,18 +17,20 @@
 			<div class="mypageBox">
 				<div class="myLeft">
 					<div class="myProfile">
-						<img alt="회원이미지" src="${user.userImg }">
+						<div class="myImg">
+							<img alt="회원이미지" src="${user.userImg }">
+						</div>
 						<p class="myNick">${user.userNickname }</p>
 						<p class="myEmail">${user.userEmail }</p>
 						<c:choose>
 							<c:when test="${user.userSpotifyYn == 89}">
-								<div class="connectSpotify">
+								<div class="connectSpotify spotifyInfo">
 									<i class="fa-brands fa-spotify"></i>
 									<span>connected</span>
 								</div>
 							</c:when>
 							<c:otherwise>
-								<div class="disconnectSpotify">
+								<div class="disconnectSpotify spotifyInfo">
 									<i class="fa-brands fa-spotify"></i>
 									<span>disconnected</span>
 								</div>
@@ -43,7 +45,7 @@
 							</a>
 						</div>
 						<div>
-							<a>
+							<a href="myPlaylist">
 								<i class="fa-solid fa-circle-play"></i>
 								<span>My PlayList</span>
 							</a>
@@ -84,19 +86,19 @@
 							</div>
 							<div>
 								<div>
-									<img src="./imgs/tag/tag_img2.jpg">
+									<img src="./imgs/tag/tag_img2.png">
 									<span>#Pop</span>
 								</div>
 							</div>
 							<div>
 								<div>
-									<img src="./imgs/tag/tag_img3.jpg">
+									<img src="./imgs/tag/tag_img3.png">
 									<span>#Dance</span>
 								</div>
 							</div>
 							<div>
 								<div>
-									<img src="./imgs/tag/tag_img4.png">
+									<img src="./imgs/tag/tag_img4.jpg">
 									<span>#Metal</span>
 								</div>
 							</div>
