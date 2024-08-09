@@ -1,14 +1,18 @@
 package com.master.vibe.controller;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.master.vibe.model.dto.CreatePlaylistDTO;
+import com.master.vibe.model.dto.DeletePlaylistDTO;
+import com.master.vibe.model.dto.UpdatePlaylistDTO;
 import com.master.vibe.service.PlaylistService;
+import com.master.vibe.service.TagService;
 
 // 현재 PlaylistController.java에서 @PostMapping("/addPlaylist") 메소드가 List<String> 타입의 selectedMusic을 받고 있습니다.
 // 그러나 선택된 음악 정보는 문자열이 아니라 복잡한 객체 구조임
@@ -31,35 +35,34 @@ public class PlaylistController {
     	return "test/playlist/createPlaylist";
     }
     @PostMapping("/createPlaylist")
-    public String createPlaylist(CreatePlaylistDTO dto) {
-        playlistService.createPlaylist(dto);
+    public RedirectView createPlaylist(CreatePlaylistDTO dto) {
+        int playlistId = playlistService.createPlaylist(dto);
+        // 생성된 플레이리스트 ID를 태그 입력 페이지로 전달
+        return new RedirectView("/addTags?playlistId=" + playlistId);
+    }
+
+    // 플레이리스트 삭제
+    @GetMapping("/deletePlaylist")
+    public String deletePlaylist() {
+    	return "test/playlist/deletePlaylist";
+    }
+    
+    @PostMapping("/deletePlaylist")
+    public String deletePlaylist(DeletePlaylistDTO dto) {
+        playlistService.deletePlaylist(dto);
         return "test/test";
     }
-	
-    // 플레이리스트 좋아요 순 조회
-//	@GetMapping("/playlists")
-//	public String searchPlaylists(@RequestParam String query) {
-//		 return spotifyService.searchPlaylists(query);
-//	}
-	
-//	// 선택된 음악 ID를 사용하여 플레이리스트에 추가하는 로직을 구현
-//	@PostMapping("/addPlaylist")
-//	public String addPlaylist(@RequestParam("selectedMusic") List<String> selectedMusic, Model model) {
-//		System.out.println(selectedMusic);
-//		
-//		playlistService.addPlaylist(selectedMusic);
-//		model.addAttribute("selectedMusic", selectedMusic);
-//	    return "playlist"; // 작업 완료 후
-//	}
-//  // 플레이리스트 추가 폼 불러오기
-//	@GetMapping("/playlist")
-//	public String addPlaylist(Model model) {
-//		return "playlist";
-//	}
-//	// 플레이리스트 추가
-//	@PostMapping("/playlist")
-//	public String addPlaylist(Playlist playlist) {
-//		playlistService.addPlaylist(playlist);
-//		return "redirect:/"; // 플레이리스트 추가 후 메인 페이지로 리다이렉트
-//	}
+    
+    // 플레이리스트 수정
+    @GetMapping("/updatePlaylist")
+    public String updatePlaylist() {
+        return "test/playlist/updatePlaylist";
+    }
+
+    @PostMapping("/updatePlaylist")
+    public String updatePlaylist(UpdatePlaylistDTO dto) {
+        playlistService.updatePlaylistTitle(dto);
+        return "test/test";
+    }
+
 }
