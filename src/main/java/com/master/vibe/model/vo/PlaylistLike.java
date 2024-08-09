@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 public class PlaylistLike {
 	private int likeCode;
 	private Date likeDate;
-	private String userEmail;
-	private int plCode;
+	private User user;
+	private Playlist playlist;
 }

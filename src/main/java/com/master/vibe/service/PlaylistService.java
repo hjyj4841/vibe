@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.master.vibe.model.dto.CreatePlaylistDTO;
+import com.master.vibe.model.dto.SearchDTO;
 import com.master.vibe.model.vo.Playlist;
 import mapper.PlaylistMapper;
 
@@ -19,8 +20,8 @@ public class PlaylistService {
 	private PlaylistMapper playlistMapper;
 	
 	// 플레이리스트 전체 조회
-	public List<Playlist> allPlaylist() {
-		return playlistMapper.allPlaylist();
+	public List<Playlist> allPlaylist(SearchDTO dto) {
+		return playlistMapper.allPlaylist(dto);
 	}
 	
 	// 플레이리스트 생성

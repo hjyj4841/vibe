@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.master.vibe.model.dto.CreatePlaylistDTO;
+import com.master.vibe.model.dto.SearchDTO;
 import com.master.vibe.service.PlaylistService;
 
 // 현재 PlaylistController.java에서 @PostMapping("/addPlaylist") 메소드가 List<String> 타입의 selectedMusic을 받고 있습니다.
@@ -22,7 +23,8 @@ public class PlaylistController {
 	// 플레이리스트 전체 조회 페이지
     @GetMapping("/searchHome")
 	public String searchAllPlaylist(Model model) {
-		model.addAttribute("allPlaylist", playlistService.allPlaylist());
+    	SearchDTO dto = new SearchDTO();
+		model.addAttribute("allPlaylist", playlistService.allPlaylist(dto));
 		return "test/search/searchHome";
 	}
     // 플레이리스트 생성

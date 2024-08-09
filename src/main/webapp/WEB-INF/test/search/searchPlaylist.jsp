@@ -18,11 +18,15 @@
 		</tr>
 		<c:forEach items="${searchTag}" var="searchPlaylist">
 			<tr>
-				<td>${searchPlaylist.playlist.plTitle}</td>
-				<td><img src="${searchPlaylist.playlist.plImg}"></td>
-				<td>${searchPlaylist.tag.tagName}</td>
-				<td><img src="${searchPlaylist.playlist.user.userImg}"></td>
-				<td>${searchPlaylist.playlist.user.userNickname}</td>	 
+				<td>${searchPlaylist.plTitle}</td>
+				<td><img src="${searchPlaylist.plImg}"></td>
+				<td>
+				<c:forEach items="${searchPlaylist.tagList}" var="tag">
+					#${tag.tag.tagName} 
+				</c:forEach>
+				</td>
+				<td><img src="${searchPlaylist.user.userImg}"></td>
+				<td>${searchPlaylist.user.userNickname}</td>	 
 			</tr>
 		</c:forEach>
 	</table>

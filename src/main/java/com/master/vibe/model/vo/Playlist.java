@@ -14,4 +14,6 @@ public class Playlist {
 	private Date plDate;
 	private char plPublicYn;
 	private User user;
+	
+
 }
