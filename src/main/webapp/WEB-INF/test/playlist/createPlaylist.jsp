@@ -13,14 +13,21 @@
     	<form action="createPlaylist" method="post" autocomplete="off">
     		<!-- 임시로 넣어둔 유저, 추후 로그인한 유저 정보로 수정 예정 -->
      		<input type="hidden" name="userEmail" value="agrigs9@opensource.org" />
+     		<input type="hidden" name="plImg" value="/imgs/createplaylistimg/default.png" />
       		<label for="plTitle">플레이리스트 제목 : </label>
-      		<!-- 기본값은 JavaScript로 설정 -->
-      		<!-- <input type="text" id="plTitle" name="plTitle" /> -->
-      		<!-- 사용자가 플레이리스트 제목을 입력하지 않아도 기본값으로 "플레이리스트 #N" 설정 -->
-      		<!-- <input type="text" id="plTitle" name="plTitle" value="#플레이리스트" /> -->
-      		<!-- CSS와 JavaScript로 값을 숨깁니다 -->
       		<input type="text" id="plTitle" name="plTitle" class="hidden-value" />
       		
+      		<!-- 삭제 금지! 
+      		<!-- 아래 코드 뭐하려고 했던 거냐면. 플레이리스트 생성 시 제목을 무조건 입력해야 하는 게 아니라
+      			 사용자가 입력을 안 하고 생성 버튼만 눌러도 default 값으로 #플레이리스트 or 플레이리스트 #N 지정해서 넘겨주기 위함
+      			 플레이리스트 #N의 경우 N은 사용자의 플레이리스트 생성 횟수를 반영해서 다음에 추가로 생성 시 N+1 -->
+      		<!-- 기본값은 JavaScript로 설정 -->
+      		<!-- <input type="text" id="plTitle" name="plTitle" /> -->
+      		<!-- 사용자가 플레이리스트 제목을 입력하지 않아도 기본값으로 "플레이리스트 #N" 설정. CSS, JavaScript로 값 숨김 (해보는 중)
+      		 	<input type="text" id="plTitle" name="plTitle" value="#플레이리스트" /> -->
+      		 	
+      		<!--  -->
+      		<input type="hidden" name="plImg" value="/imgs/createplaylistimg/defaultCD.png" />
       		<button type="submit">플레이리스트 생성</button>
     	</form>
 </body>

@@ -35,6 +35,9 @@ public class PlaylistController {
     public String createPlaylist(CreatePlaylistDTO dto, Model model) {
         playlistService.createPlaylist(dto);
         
+        // createPlaylist.jsp에서 사용자가 플레이리스트 생성 시 기본으로 plImg /createplaylistimg/default.png를 불러옴
+        model.addAttribute("plImg", dto.getPlImg());
+        
         // createPlaylist.jsp에서 사용자가 입력한 plTitle 불러옴
         model.addAttribute("plTitle", dto.getPlTitle());
         
