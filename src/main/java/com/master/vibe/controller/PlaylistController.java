@@ -33,7 +33,7 @@ public class PlaylistController {
     @PostMapping("/createPlaylist")
     public String createPlaylist(CreatePlaylistDTO dto) {
         playlistService.createPlaylist(dto);
-        return "test/test";
+        return "redirect:/searchHome"; // test/test -> redirect:/searchHome // 내가 만든 플레이리스트 조회
     }
 	
     // 플레이리스트 좋아요 순 조회

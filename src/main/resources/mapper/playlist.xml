@@ -51,4 +51,32 @@
 		VALUES (#{plTitle}, #{plImg}, #{plDate}, #{plPublicYn}, #{userEmail})
 	</insert>
 	-->
+	
+	<!-- 내가 만든 플레이리스트 조회 -->
+	<select id="allPlaylist" resultType="com.master.vibe.vo.Playlist"> <!--  -->
+	    SELECT * FROM playlist
+	</select>
+	
+	<insert id="createPlaylist" parameterType="com.master.vibe.model.dto.CreatePlaylistDTO">
+	    INSERT INTO playlist (pl.title, pl_img, pl_date, pl_public_yn, user_email)
+	    VALUES (#{plTitl}, #{plImg}, #{plDate}, #{plPublicYn}, #{userEmail})
+	</insert>
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
