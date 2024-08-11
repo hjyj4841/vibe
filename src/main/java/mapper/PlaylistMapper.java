@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Select;
 import com.master.vibe.model.dto.CreatePlaylistDTO;
 import com.master.vibe.model.dto.DeletePlaylistDTO;
 import com.master.vibe.model.dto.UpdatePlaylistDTO;
+import com.master.vibe.model.dto.SearchDTO;
 import com.master.vibe.model.vo.Playlist;
 
 
@@ -17,7 +18,7 @@ import com.master.vibe.model.vo.Playlist;
 @Mapper
 public interface PlaylistMapper {
 	
-	List<Playlist> allPlaylist(); // 플리 전체 조회
+	List<Playlist> allPlaylist(SearchDTO dto); // 플리 전체 조회
 	void movePlaylist(String userEmail); // 플레이리스트 소유자를 관리자로 변경(회원 탈퇴시)
 	void createPlaylist(CreatePlaylistDTO dto); // 플레이리스트 생성
 	List<Playlist> myPlaylist(String userEmail); // 회원 본인의 플레이리스트 조회

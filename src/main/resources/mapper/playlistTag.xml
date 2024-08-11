@@ -5,35 +5,46 @@
 
 	<resultMap type="PlayListTag" id="listTagMap">
 		<id column="pl_tag_code" property="plTagCode" />
-		<association property="playlist" javaType="Playlist">
-			<id column="pl_code" property="plCode" />
-			<result column="pl_title" property="plTitle" />
-			<result column="pl_img" property="plImg" />
-			<result column="pl_date" property="plDate" />
-			<result column="pl_public_yn" property="plPublicYn" />
-			<association property="user" javaType="User">
-				<id column="user_email" property="userEmail" />
-				<result column="user_password" property="userPassword" />
-				<result column="user_nickname" property="userNickname" />
-				<result column="user_img" property="userImg" />
-				<result column="user_date" property="userDate" />
-				<result column="user_ent_yn" property="userEntYn" />
-				<result column="user_spotify_yn" property="userSpotifyYn" />
-				<result column="user_gender" property="userGender" />
-				<result column="user_birth" property="userBirth" />
-				<result column="user_manager" property="userManager" />
-				<result column="user_enroll_date" property="userEnrollDate" />
-				<result column="user_phone" property="userPhone" />
-			</association>
-		</association>
 		<association property="tag" javaType="Tag">
 			<id column="tag_code" property="tagCode" />
 			<result column="tag_name" property="tagName" />
 		</association>
 	</resultMap>
+	
+	<!-- 플레이리스트 플레이리스트코드마다 태그 가져오는 쿼리 -->
+	<select id="searchTagPlaylist" resultMap="listTagMap" parameterType="Integer">
+		SELECT * 
+		FROM playlist_tag
+		JOIN tag USING (tag_code)
+		WHERE pl_code = #{code}
+	</select>
+	
+	<!-- 플레이리스트 태그테이블에서 태그 검색 쿼리(중복 제거) -->
+	<select id="searchTag" resultType="Integer" parameterType="String">
+	SELECT distinct pl_code 
+		FROM playlist_tag
+		JOIN tag USING (tag_code)
+		WHERE tag_name LIKE CONCAT('%', #{search}, '%')
+	</select>
+	
+	<!-- 
+	
+	 SELECT * 
+		FROM playlist_tag
+		JOIN tag USING (tag_code)
+        WHERE pl_code = 3
+        AND tag_name LIKE '%El%'
+	<select id="allPlaylist" resultMap="playlistMap" parameterType="SearchDTO">
+		SELECT * FROM playlist
+		JOIN user USING (user_email)
+		WHERE pl_public_yn = 'Y'
+		<if test="search != null">
+			AND pl_title LIKE CONCAT('%', #{search}, '%')
+		</if>
+	</select> -->
 
 	<!-- 플리 이름검색, 태그검색 -->
-	<select id="searchPlaylist" resultMap="listTagMap" parameterType="SearchDTO">
+	<!-- <select id="searchPlaylist" resultMap="listTagMap" parameterType="SearchDTO">
 		SELECT *
 		FROM playlist_tag
 		RIGHT JOIN playlist USING (pl_code)
@@ -48,10 +59,10 @@
 				AND tag_name LIKE CONCAT('%', #{search}, '%')
 			</when>
 		</choose>
-	</select>
+	</select> -->
 	
-	<!-- 
-	<select id="getLikesByTag" resultType="PlaylistTag">
+	<!-- 문제 코드
+	<select id="getLikesByTag" resultType="com.example.vo.PlaylistTagLikeVO">
 		SELECT t.tag_name, p.pl_code, p.pl_title, COUNT(pl_like.like_code) AS like_count
         FROM tag t
         JOIN playlist_tag pt ON t.tag_code = pt.tag_code

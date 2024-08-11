@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.master.vibe.model.dto.CreatePlaylistDTO;
 import com.master.vibe.model.dto.DeletePlaylistDTO;
 import com.master.vibe.model.dto.UpdatePlaylistDTO;
+import com.master.vibe.model.dto.SearchDTO;
 import com.master.vibe.model.vo.Playlist;
 import mapper.PlaylistMapper;
 
@@ -21,8 +22,8 @@ public class PlaylistService {
     private PlaylistMapper playlistMapper;
     
     // 플레이리스트 전체 조회
-    public List<Playlist> allPlaylist() {
-        return playlistMapper.allPlaylist();
+    public List<Playlist> allPlaylist(SearchDTO dto) {
+        return playlistMapper.allPlaylist(dto);
     }
 	
 	// 내가 생성한 플레이리스트 조회
@@ -35,6 +36,11 @@ public class PlaylistService {
 		return playlistMapper.selectPlaylistForPlCode(plCode);
 	}
 	
+    // 생성 두개 중 하나만
+	// 플레이리스트 생성
+	public void createPlaylist(CreatePlaylistDTO dto) {
+        playlistMapper.createPlaylist(dto);
+    }
     
     // 플레이리스트 생성
     public int createPlaylist(CreatePlaylistDTO dto) {

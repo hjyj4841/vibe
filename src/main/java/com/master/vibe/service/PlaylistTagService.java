@@ -17,13 +17,22 @@ public class PlaylistTagService {
 	@Autowired
 	private PlaylistTagMapper playlistTagMapper;
 	
-	// 제목 검색, 태그 검색
-	public List<PlaylistTag> searchPlaylist(SearchDTO dto){
-		return playlistTagMapper.searchPlaylist(dto);
+	public List<PlaylistTag> searchTagPlaylist(int code) {
+		return playlistTagMapper.searchTagPlaylist(code);
 	}
 	
-	public List<Playlist> getPlaylistsByTag(String tagCode) {
-		return playlistTagMapper.getPlaylistsByTag(tagCode);
+	public List<Integer> searchTag(String search) {
+		return playlistTagMapper.searchTag(search);
 	}
+	
+	
+	// 제목 검색, 태그 검색
+	//public List<PlaylistTag> searchPlaylist(SearchDTO dto){
+	//	return playlistTagMapper.searchPlaylist(dto);
+	//}
+	
+	//public List<Playlist> getPlaylistsByTag(String tagCode) {
+	//	return playlistTagMapper.getPlaylistsByTag(tagCode);
+	//}
 
 }

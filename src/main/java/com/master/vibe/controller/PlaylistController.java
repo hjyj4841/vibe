@@ -12,6 +12,7 @@ import com.master.vibe.model.dto.CreatePlaylistDTO;
 import com.master.vibe.model.vo.User;
 import com.master.vibe.model.dto.DeletePlaylistDTO;
 import com.master.vibe.model.dto.UpdatePlaylistDTO;
+import com.master.vibe.model.dto.SearchDTO;
 import com.master.vibe.service.PlaylistService;
 import com.master.vibe.service.TagService;
 
@@ -30,7 +31,8 @@ public class PlaylistController {
 	// 플레이리스트 전체 조회 페이지
     @GetMapping("/searchHome")
 	public String searchAllPlaylist(Model model) {
-		model.addAttribute("allPlaylist", playlistService.allPlaylist());
+    	SearchDTO dto = new SearchDTO();
+		model.addAttribute("allPlaylist", playlistService.allPlaylist(dto));
 		return "test/search/searchHome";
 	}
     

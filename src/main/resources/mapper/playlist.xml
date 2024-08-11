@@ -25,11 +25,22 @@
 		</association>
 	</resultMap>
 	
-	<!-- 전체 플리 조회 -->
-	<select id="allPlaylist" resultMap="playlistMap">
+	<!-- 전체플리 조회 -->
+	<select id="allPlaylist" resultMap="playlistMap" parameterType="SearchDTO">
 		SELECT * FROM playlist
 		JOIN user USING (user_email)
 		WHERE pl_public_yn = 'Y'
+		
+		<!-- 타이틀로 검색 쿼리 -->
+		<if test="search != null">
+			AND pl_title LIKE CONCAT('%', #{search}, '%')
+		</if>
+		<!-- 태그로 검색 쿼리 -->
+		<if test="codes != null">
+			AND pl_code IN <foreach collection="codes" item="code" open="(" close=")" separator=",">
+				#{code}
+			</foreach>
+		</if>
 	</select>
 	
 	<!-- 플레이리스트 생성 -->
@@ -45,7 +56,7 @@
 		WHERE user_email = #{userEmail}
 	</update>
 
-	<!-- 
+	<!-- 중복 코드
 	<insert id="addPlaylist" parameterType="Playlist">	
 		INSERT INTO playlist (pl_title, pl_img, pl_date, pl_public_yn, user_email)
 		VALUES (#{plTitle}, #{plImg}, #{plDate}, #{plPublicYn}, #{userEmail})
