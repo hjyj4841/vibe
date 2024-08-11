@@ -5,10 +5,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.master.vibe.model.dto.CreatePlaylistDTO;
 import com.master.vibe.model.vo.User;
+import com.master.vibe.model.dto.DeletePlaylistDTO;
+import com.master.vibe.model.dto.UpdatePlaylistDTO;
 import com.master.vibe.service.PlaylistService;
+import com.master.vibe.service.TagService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -42,6 +47,13 @@ public class PlaylistController {
     	playlistService.createPlaylist(new CreatePlaylistDTO(plTitle, user.getUserEmail()));
         return "test/test";
     }
+
+    // 수정시 참고 예정
+    //  public RedirectView createPlaylist(CreatePlaylistDTO dto) {
+    //     int playlistId = playlistService.createPlaylist(dto);
+    //     // 생성된 플레이리스트 ID를 태그 입력 페이지로 전달
+    //     return new RedirectView("/addTags?playlistId=" + playlistId);
+    // }
 
     // 수정시 참고 예정
     //  public String createPlaylist(CreatePlaylistDTO dto, Model model) {
@@ -83,4 +95,30 @@ public class PlaylistController {
     }
     */
     
+   
+
+    // 플레이리스트 삭제
+    @GetMapping("/deletePlaylist")
+    public String deletePlaylist() {
+    	return "test/playlist/deletePlaylist";
+    }
+    
+    @PostMapping("/deletePlaylist")
+    public String deletePlaylist(DeletePlaylistDTO dto) {
+        playlistService.deletePlaylist(dto);
+        return "test/test";
+    }
+    
+    // 플레이리스트 수정
+    @GetMapping("/updatePlaylist")
+    public String updatePlaylist() {
+        return "test/playlist/updatePlaylist";
+    }
+
+    @PostMapping("/updatePlaylist")
+    public String updatePlaylist(UpdatePlaylistDTO dto) {
+        playlistService.updatePlaylistTitle(dto);
+        return "test/test";
+    }
+
 }

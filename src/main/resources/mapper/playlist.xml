@@ -63,4 +63,18 @@
 		SELECT * FROM playlist
 		WHERE pl_code = #{plCode}
 	</select>
+	
+	<!-- 플레이리스트 삭제 -->
+	<delete id="deletePlaylist" parameterType="DeletePlaylistDTO">
+    	DELETE FROM playlist
+    	WHERE pl_code = #{plCode}
+	</delete>
+	
+	<!-- 플레이리스트 제목 수정 -->
+    <update id="updatePlaylistTitle" parameterType="UpdatePlaylistDTO">
+        UPDATE playlist
+        SET pl_title = #{newPlTitle}
+        WHERE pl_code = #{plCode}
+    </update>
+
 </mapper>

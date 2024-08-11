@@ -1,4 +1,22 @@
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mapper.TagMapper">
 
+    <!-- 태그 이름으로 태그 검색 -->
+    <select id="findTagByName" parameterType="String" resultType="Tag">
+        SELECT * FROM tag WHERE tag_name = #{tagName}
+    </select>
+
+    <!-- 태그 추가 -->
+    <insert id="insertTag" parameterType="Tag">
+        INSERT INTO tag (tag_name)
+        VALUES (#{tagName})
+    </insert>
+
+    <!-- 플레이리스트와 태그 연결 -->
+    <insert id="addTagToPlaylist" parameterType="Map">
+        INSERT INTO playlist_tag (pl_code, tag_code)
+        VALUES (#{playlistId}, #{tagCode})
+    </insert>
 </mapper>
