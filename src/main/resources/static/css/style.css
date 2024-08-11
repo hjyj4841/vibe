@@ -1,232 +1,232 @@
 html {
-	scroll-behavior: smooth; /* 페이지 내 이동 시 부드럽게 이동 */
-	overflow: hidden; /* 스크롤바 안보이게 하기 위함 */
+  scroll-behavior: smooth; /* 페이지 내 이동 시 부드럽게 이동 */
+  overflow: hidden; /* 스크롤바 안보이게 하기 위함 */
 }
 
 /* 메인 배너 */
 #mainbanner {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	
-	width: 100%;
-	height: 100vh;
-	
-	text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  height: 100vh;
+
+  text-align: center;
 }
 
 #chant {
-	font-size: 2rem;
+  font-size: 2rem;
 }
 
 #maintitle {
-	margin: 10px 0 30px 0;
-	font-size: 5rem;
+  margin: 10px 0 30px 0;
+  font-size: 5rem;
 }
-
+#maintitle {
+  margin: 10px 0 30px 0;
+  font-size: 5rem;
+}
 #mainnav {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 100%;
-	height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 80px;
 }
-
 #mainnav a {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 200px;
-	height: 100%;
-	margin: 10px;
-	border-radius: 10px;
-	font-size: 1.5rem;
-	font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  height: 100%;
+  margin: 10px;
+  border-radius: 10px;
+  font-size: 1.5rem;
+  font-weight: bold;
 }
-.mainSearchBox{
-	width: 800px;
-	height: 200px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	position: relative;
+.mainSearchBox {
+  width: 800px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
 }
-.mainSearchBox select{
-	position: absolute;
-	background-color: white;
-	border: none;
-	width: 10%;
-	height: 80px;
-	text-align: center;
-	left: 0;
-	z-index: 1;
-	border-radius: 25px 0px 0px 25px;
-	border: 3px solid green;
-	border-right: none;
-	font-weight: bold;
+.mainSearchBox select {
+  position: absolute;
+  background-color: white;
+  border: none;
+  width: 10%;
+  height: 80px;
+  text-align: center;
+  left: 0;
+  z-index: 1;
+  border-radius: 25px 0px 0px 25px;
+  border: 3px solid green;
+  border-right: none;
+  font-weight: bold;
 }
-.mainSearchBox select > option{
-	font-size: 1rem;
-	line-height: 20px;
+.mainSearchBox select > option {
+  font-size: 1rem;
+  line-height: 20px;
 }
-.mainSearchBox input{
-	position: absolute;
-	background-color: white;
-	border: none;
-	width: 100%;
-	height: 80px;
-	border-radius: 25px 25px 25px 25px;
-	padding-left: 15%;
-	padding-right: 10%;
-	border: 3px solid green;
-	font-size: 1.3rem;
-	color: #333;
+.mainSearchBox input {
+  position: absolute;
+  background-color: white;
+  border: none;
+  width: 100%;
+  height: 80px;
+  border-radius: 25px 25px 25px 25px;
+  padding-left: 15%;
+  padding-right: 10%;
+  border: 3px solid green;
+  font-size: 1.3rem;
+  color: #333;
 }
-.mainSearchBox button{
-	position: absolute;	
-	background-color: white;
-	border: 3px solid green;
-	border-left: none;
-	width: 10%;
-	height: 80px;
-	right: 0;
-	z-index: 1;
-	cursor: pointer;
-	border-radius: 0px 25px 25px 0px;
+.mainSearchBox button {
+  position: absolute;
+  background-color: white;
+  border: 3px solid green;
+  border-left: none;
+  width: 10%;
+  height: 80px;
+  right: 0;
+  z-index: 1;
+  cursor: pointer;
+  border-radius: 0px 25px 25px 0px;
 }
 
 /* 리스트 박스 */
 #listBox {
-	display: flex;
-	justify-content: flex-end;
-	align-items: center;
-	flex-direction:column;
-	height: 100vh;
-	width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
 }
-.listTop{
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 100%;
+.listTop {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
-.rankButtonBox{
-	display: flex;
-	justify-content:center;
-	align-items:center;
-	height: 100%;
-	margin-right:30px;
-	
-	flex-direction: column;
+.rankButtonBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  margin-right: 30px;
+
+  flex-direction: column;
 }
-.rankButtonBox h2{
-	margin-bottom: 20px;
-	font-size: 1.5rem;
+.rankButtonBox h2 {
+  margin-bottom: 20px;
+  font-size: 1.5rem;
 }
-.rankButtonBox button{
-	width: 100px;
-	border: none;
-	background: none;
-	color: white;
-	height: 50px;
-	cursor: pointer;
-	transition: 0.5s;
+.rankButtonBox button {
+  width: 100px;
+  border: none;
+  background: none;
+  color: white;
+  height: 50px;
+  cursor: pointer;
+  transition: 0.5s;
 }
-.rankButtonBox button:hover{
-	color: red;
+.rankButtonBox button:hover {
+  color: red;
 }
 
 .listContainer {
-	position: flex;
-	justify-content: center;
-	align-items: center;
-	
-	width: 1200px;
-	height: 650px;
-	box-shadow: 3px 3px 5px black;
-	margin-bottom: 20px;
+  position: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 1200px;
+  height: 650px;
+  box-shadow: 3px 3px 5px black;
+  margin-bottom: 20px;
 }
 
 .listRank {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	position: absolute;
-	
-	width: 1200px;
-	height: 650px;
-	transition: 1s;
-	
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+
+  width: 1200px;
+  height: 650px;
+  transition: 1s;
 }
-.listRank:nth-child(1){
-	z-index: 1;
+.listRank:nth-child(1) {
+  z-index: 1;
 }
 
 .listRank:nth-child(2),
-.listRank:nth-child(3){
-	opacity: 0;
-	z-index: 0;
+.listRank:nth-child(3) {
+  opacity: 0;
+  z-index: 0;
 }
 
 /* 이미지 */
 .listImg {
-	filter: brightness(30%);
-	position: absolute;
-	object-fit: cover;
-	width: 100%;
-	height: 100%;
+  filter: brightness(30%);
+  position: absolute;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
 }
 
-.listRankDesc{
-	position: absolute;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: space-around;
-	
-	width: 100%;
-	height: 100%;
-	z-index: 1;
+.listRankDesc {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+
+  width: 100%;
+  height: 100%;
+  z-index: 1;
 }
 
 .listMiniImg {
-	width: 400px;
-	height: 250px;
-	object-fit: cover;
-	box-shadow: 3px 3px 3px black;
+  width: 400px;
+  height: 250px;
+  object-fit: cover;
+  box-shadow: 3px 3px 3px black;
 }
 
 /* 리스트 랭크 텍스트 */
 .listRankText {
-	text-align: center;
-	text-shadow: 3px 3px 3px black;
-	bottom: 100px;
+  text-align: center;
+  text-shadow: 3px 3px 3px black;
+  bottom: 100px;
 }
 
 .listRankText:nth-child(1) {
-	color: #ffd700;
+  color: #ffd700;
 }
 
 .listRankText:nth-child(2) {
-	color: #a3a3a3;
+  color: #a3a3a3;
 }
 
 .listRankText:nth-child(3) {
-	color: #cd7f32;
+  color: #cd7f32;
 }
 
 .listRankText p:nth-child(1) {
-	font-size: 3rem;
-	margin-bottom: 30px;
+  font-size: 3rem;
+  margin-bottom: 30px;
 }
 
 .listRankText p:nth-child(2) {
-	font-size: 2rem;
+  font-size: 2rem;
 }
 
-.emptyRight{
-	height: 100%;
-	width: 100px;
+.emptyRight {
+  height: 100%;
+  width: 100px;
 }
-
