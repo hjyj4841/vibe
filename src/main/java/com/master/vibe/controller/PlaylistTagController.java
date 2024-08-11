@@ -3,9 +3,7 @@ package com.master.vibe.controller;
 import org.springframework.stereotype.Controller;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -24,7 +22,6 @@ public class PlaylistTagController {
 	
 	@Autowired
 	private PlaylistTagService playlistTagService;
-	
 	@Autowired
 	private PlaylistService playlistService;
 	
@@ -75,14 +72,4 @@ public class PlaylistTagController {
  		model.addAttribute("searchTag", dtoList);
  		return "test/search/searchPlaylist";
  	}
-<<<<<<< Updated upstream
-=======
-  	
-  	//@GetMapping("/search")
-	//public String getPlaylistsByTag(String tagCode, Model model) {
-	//	model.addAttribute("list", playlistTagService.getPlaylistsByTag(tagCode));
-		
-	//	return "searchtagview";
-	//}
->>>>>>> Stashed changes
 }

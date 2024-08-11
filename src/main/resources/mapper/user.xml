@@ -23,6 +23,7 @@
 		VALUES(#{userEmail}, #{userPassword}, #{userNickname}, #{userGender},
 		#{userBirth}, #{userPhone})
 	</insert>
+	
 	<!-- 로그인 -->
 	<select id="login" parameterType="User" resultMap="userMap">
 		SELECT * FROM
@@ -32,21 +33,18 @@
 	</select>
 
 	<!-- 유저 아이디 찾기 -->
-	<select id="findUserID" parameterType="FindUserIDDTO"
-		resultMap="userMap">
+	<select id="findUserID" parameterType="User" resultMap="userMap">
 		SELECT user_email FROM user
 		WHERE user_birth = #{userBirth}
 		AND user_phone = #{userPhone}
 	</select>
 
 	<!-- 유저 비밀번호 찾기 -->
-	<select id="findUserPWD" parameterType="FindUserPWDDTO"
-		resultMap="userMap">
-		SELECT user_email, user_password FROM user
-		WHERE user_birth =
-		#{userBirth}
-		AND user_phone = #{userPhone} AND user_email =
-		#{userEmail}
+	<select id="findUserPWD" parameterType="User" resultMap="userMap">
+		SELECT * FROM user
+		WHERE user_birth = #{userBirth}
+		AND user_phone = #{userPhone} 
+		AND user_email = #{userEmail}
 	</select>
 
 	<!-- 유저 비밀번호 찾기 후 비밀번호 변경 -->
@@ -57,9 +55,8 @@
 		WHERE user_email = #{userEmail}
 	</update>
 
-
 	<!-- 유저 정보 수정 -->
-	<update id="updateUser" parameterType="UserUpdateDTO">
+	<update id="updateUser" parameterType="User">
 		UPDATE user
 		SET
 		user_password = #{userPassword},
@@ -68,11 +65,10 @@
 		WHERE user_email = #{userEmail}
 	</update>
 
-	<select id="sameNickname" parameterType="UserUpdateDTO"
-		resultMap="userMap">
+	<select id="sameNickname" parameterType="User" resultMap="userMap">
 		SELECT * FROM user
-		WHERE user_nickname = #{userNickname} AND
-		user_Email != #{userEmail}
+		WHERE user_nickname = #{userNickname} 
+		AND user_Email != #{userEmail}
 	</select>
 
 	<!-- 회원탈퇴 -->

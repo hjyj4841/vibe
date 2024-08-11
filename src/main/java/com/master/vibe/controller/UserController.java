@@ -8,20 +8,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import com.master.vibe.model.dto.FindUserIDDTO;
-import com.master.vibe.model.dto.FindUserPWDDTO;
-import com.master.vibe.model.dto.UpdateUserPWDDTO;
 import com.master.vibe.model.dto.UserLikeTagDTO;
-import com.master.vibe.model.dto.UpdateUserPWDDTO;
-import com.master.vibe.model.dto.UserUpdateDTO;
 import com.master.vibe.model.vo.User;
 import com.master.vibe.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 public class UserController {
@@ -56,8 +49,7 @@ public class UserController {
 	public String register(User user, String birthDay) {
 		try {
 			user.setUserBirth(new SimpleDateFormat("yyyy-MM-dd").parse(birthDay));
-		} catch (Exception e) {
-		}
+		} catch (Exception e) {}
 
 		userService.register(user);
 		return "redirect:/";
@@ -88,43 +80,31 @@ public class UserController {
 		return "index";
 		
 	}
-
-	// 아이디 찾기
-	@GetMapping("/findUserID")
-	public String findUserID() {
-		return "user/findUserID";
+	
+	// 계정 찾기 페이지로 이동
+	@GetMapping("/findUser")
+	public String findUser() {
+		return "user/findUser";
 	}
-
-	@PostMapping("findUserID")
-	public String findUserID(FindUserIDDTO dto, Model model) {
-		User u = new User();
-		u = userService.findUserID(dto);
-		model.addAttribute("userEmail", u.getUserEmail());
-		return "user/showUserID";
-
+	// 계정 찾기
+	@PostMapping("findUser")
+	public String findUserID(User user, String birthDay, Model model) {
+		try {
+			user.setUserBirth(new SimpleDateFormat("yyyy-MM-dd").parse(birthDay));
+		} catch (Exception e) {}
+		
+		if(user.getUserEmail() == null) { // userEmail이 null 이면 아이디 찾기
+			model.addAttribute("userEmail", userService.findUserID(user).getUserEmail());
+			return "user/showUserID";
+		}else {
+			model.addAttribute("user", userService.findUserPWD(user));
+			return "user/showUserPWD";
+		}
 	}
-
-	// 비밀번호 찾기
-	@GetMapping("/findUserPWD")
-	public String findUserPWD() {
-		return "user/findUserPWD";
-	}
-
-	@PostMapping("findUserPWD")
-	public String findUserPWD(FindUserPWDDTO dto, Model model) {
-		User u = new User();
-		u = userService.findUserPWD(dto);
-		model.addAttribute("user", u);
-		return "user/showUserPWD";
-	}
-
 	// 비밀번호 수정
 	@PostMapping("updateUserPWD")
-	public String updateUserPWD(String userEmail, String userPassword) {
-		User u = new User();
-		u.setUserEmail(userEmail);
-		u.setUserPassword(userPassword);
-		userService.updateUserPWD(u);
+	public String updateUserPWD(User user) {
+		userService.updateUserPWD(user);
 		return "user/login";
 	}
 
@@ -134,7 +114,7 @@ public class UserController {
 		HttpSession session = request.getSession();
 		if(session.getAttribute("user") != null) session.invalidate();
 		
-		return "index";
+		return "redirect:/";
 	}
 
 	// 마이페이지
@@ -150,18 +130,20 @@ public class UserController {
 	}
 
 	@PostMapping("updateUser")
-	public String updateUser(UserUpdateDTO dto, HttpServletRequest request) {
+	public String updateUser(User user, HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("user");
-		dto.setUserEmail(user.getUserEmail());
-		User u = new User();
-		u = userService.updateUser(dto);
-		if (u != null) {
-			session.setAttribute("user", u);
+		User u = (User) session.getAttribute("user"); // 현재 접속중인 유저 정보
+		
+		// 변경할 정보들을 현재접속한 유저 정보에 담아서 서비스로 처리
+		u.setUserNickname(user.getUserNickname());
+		u.setUserPassword(user.getUserPassword());
+		u.setUserPhone(user.getUserPhone());
+		
+		if (userService.updateUser(u) != null) {
+			session.setAttribute("user", u); // 변경된 정보로 session에 다시 담기
 			return "user/mypage";
-		} else {
-			return "test/userTest";
-		}
+		} 
+		return "test/userTest";
 	}
 
 	// 회원 탈퇴
@@ -180,7 +162,7 @@ public class UserController {
 
 			if (session.getAttribute("user") != null)
 				session.invalidate();
-			return "test/userTest";
+			return "index";
 		}
 
 		return "user/mypage";
@@ -188,11 +170,11 @@ public class UserController {
 
 	// join
 	// 내가 좋아요한 태그
-
 	@GetMapping("userLikeTag")
     public String userLikeTag(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
+        
         if (user != null) {
             List<UserLikeTagDTO> list = userService.userLikeTag(user.getUserEmail());
             System.out.println(list.isEmpty());
@@ -202,6 +184,4 @@ public class UserController {
         return "user/login";
     }
 	
-
-
 }

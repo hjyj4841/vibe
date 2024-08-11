@@ -1,6 +1,5 @@
 package com.master.vibe.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.master.vibe.model.vo.Music;
-import com.master.vibe.model.vo.Playlist;
 import com.master.vibe.service.PlaylistMusicService;
 import com.master.vibe.service.PlaylistService;
 import com.master.vibe.service.SpotifyService;
@@ -24,10 +22,8 @@ public class PlaylistMusicController {
 	
 	@Autowired
 	private PlaylistMusicService playlistMusicService;
-	
 	@Autowired
 	private SpotifyService spotifyService;
-	
 	@Autowired
 	private PlaylistService playlistService;
 	
@@ -41,7 +37,7 @@ public class PlaylistMusicController {
     	playlistMusicService.addPlaylist(selectedMusic, Integer.parseInt(session.getAttribute("plCode").toString())); // session에 지정되어 있는 pl 코드 넘겨줌
         model.addAttribute("selectedMusic", selectedMusic);
         
-        return "test/playlist/addMusicInPlaylist";	// addPlaylist.jsp로 리다이렉트
+        return "redirect:/showPlaylistInfo?plCode=" + session.getAttribute("plCode");	// addPlaylist.jsp로 리다이렉트
     }
         
     // 플레이리스트 추가 폼 불러오기
@@ -52,8 +48,8 @@ public class PlaylistMusicController {
     }
     
     // 플레이리스트 내 곡 조회
-    @GetMapping("/showPlaylistMusic")
-    public String showPlaylistMusic(String plCode, Model model) {
+    @GetMapping("/showPlaylistInfo")
+    public String showPlaylistInfo(String plCode, Model model) {
     	List<String> musicCode = playlistMusicService.showMusicList(Integer.parseInt(plCode));
     	
     	model.addAttribute("playlist", playlistService.selectPlaylistForPlCode(Integer.parseInt(plCode)));
@@ -63,7 +59,7 @@ public class PlaylistMusicController {
     		model.addAttribute("musicList", musicInfo);
     	}
     	
-    	return "test/music/showPlaylistMusic";
+    	return "playlist/showPlaylistInfo";
     }
     
 }

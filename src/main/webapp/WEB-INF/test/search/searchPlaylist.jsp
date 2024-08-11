@@ -19,7 +19,7 @@
 		<c:forEach items="${searchTag}" var="searchPlaylist">
 			<tr>
 				<td>
-					<a href="/showPlaylistMusic?plCode=${searchPlaylist.plTitle}">
+					<a href="/showPlaylistInfo?plCode=${searchPlaylist.plCode}">
 						${searchPlaylist.plTitle}
 					</a>
 				</td>
@@ -30,7 +30,7 @@
 				</c:forEach>
 				</td>
 				<td><img src="${searchPlaylist.user.userImg}"></td>
-				<td>${searchPlaylist.user.userNickname}</td>	 
+				<td>${searchPlaylist.user.userNickname}</td>
 			</tr>
 		</c:forEach>
 	</table>

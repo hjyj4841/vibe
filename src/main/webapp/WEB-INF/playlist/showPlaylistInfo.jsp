@@ -11,6 +11,8 @@
 	<h1>플레이리스트 곡 조회</h1>
 	<c:if test="${user.userEmail eq playlist.user.userEmail}">
 		<a href="addMusic?plCode=${playlist.plCode }">곡 추가</a>
+		<a href="deletePlaylist?plCode=${playlist.plCode }">플레이리스트 삭제</a>
+		<a href="updatePlaylist?plCode=${playlist.plCode }">플레이리스트 수정</a>
 	</c:if>
 	<table>
 		<tr>

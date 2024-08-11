@@ -6,19 +6,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.master.vibe.model.dto.FindUserIDDTO;
-import com.master.vibe.model.dto.FindUserPWDDTO;
-import com.master.vibe.model.dto.UpdateUserPWDDTO;
 import com.master.vibe.model.dto.UserLikeTagDTO;
-import com.master.vibe.model.dto.UserUpdateDTO;
 import com.master.vibe.model.vo.User;
 
 import mapper.PlaylistMapper;
 import mapper.UserMapper;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 
 @Service
 public class UserService {
@@ -45,34 +37,26 @@ public class UserService {
 	}
 
 	// 유저 ID 찾기
-	public User findUserID(FindUserIDDTO dto) {
-		User u = userMapper.findUserID(dto);
-		return u;
+	public User findUserID(User user) {
+		return userMapper.findUserID(user);
 	}
 
 	// 유저 PWD 찾기
-	public User findUserPWD(FindUserPWDDTO dto) {
-		User u = userMapper.findUserPWD(dto);
-		System.out.println(u);
-		return u;
+	public User findUserPWD(User user) {
+		return userMapper.findUserPWD(user);
 	}
 
 	// 비밀번호 찾기 후 비밀번호 변경
-
 	public void updateUserPWD(User user) {
 		userMapper.updateUserPWD(user);
-
 	}
 
 	// 회원 정보 수정
-	public User updateUser(UserUpdateDTO dto) {
-		if (userMapper.sameNickname(dto) == null) {
-			;
-			userMapper.updateUser(dto);
-			User user = new User();
-			user.setUserEmail(dto.getUserEmail());
-			user.setUserPassword(dto.getUserPassword());
-			return userMapper.login(user);
+	public User updateUser(User user) {
+		if (userMapper.sameNickname(user) == null) { // 변경하려는 닉네임이 같은 중복되는지 조회 (추후 ajax처리로 변경)
+			userMapper.updateUser(user); // 회원정보 수정
+			
+			return userMapper.login(user); // 수정된 정보로 로그인
 		} else {
 			return null;
 		}

@@ -30,7 +30,7 @@
 			<tr>
 				<td></td>
 				<td>
-					<button type="submit">수정하기
+					<button type="submit">수정하기</button>
 				</td>
 			</tr>
 		</table>

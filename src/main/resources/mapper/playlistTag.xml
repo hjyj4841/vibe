@@ -28,7 +28,6 @@
 	</select>
 	
 	<!-- 
-	
 	 SELECT * 
 		FROM playlist_tag
 		JOIN tag USING (tag_code)
@@ -61,16 +60,4 @@
 		</choose>
 	</select> -->
 	
-	<!-- 문제 코드
-	<select id="getLikesByTag" resultType="com.example.vo.PlaylistTagLikeVO">
-		SELECT t.tag_name, p.pl_code, p.pl_title, COUNT(pl_like.like_code) AS like_count
-        FROM tag t
-        JOIN playlist_tag pt ON t.tag_code = pt.tag_code
-        JOIN playlist p ON pt.pl_code = p.pl_code
-        LEFT JOIN playlist_like pl_like ON p.pl_code = pl_like.pl_code
-        WHERE t.tag_name = #{tagName}
-        GROUP BY t.tag_name, p.pl_code
-        ORDER BY like_count DESC;
-	</select>
-	-->
 </mapper>

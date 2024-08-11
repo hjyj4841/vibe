@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import com.master.vibe.model.vo.PlaylistTag;
-import com.master.vibe.model.vo.Tag;
 import com.master.vibe.model.vo.User;
 
 import lombok.Builder;

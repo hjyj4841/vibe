@@ -22,18 +22,18 @@ public class SpotifyController {
 	
 	// 플레이리스트 음악 추가
 	@GetMapping("/addMusic")
-	public String artistForm(String plCode, Model model, HttpServletRequest request) {
+	public String MusicForm(String plCode, Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		session.setAttribute("plCode", plCode);
 		
-		return "test/music/musicForm";
+		return "music/musicForm";
 	}
 	@PostMapping("/addMusic")
-	public String getArtist(String musicName, Model model) {
+	public String getMusic(String musicName, Model model) {
 		int offset = 0;
-		ArrayList<Music> musicData = spotifyService.getArtistInfo(musicName, offset);
+		ArrayList<Music> musicData = spotifyService.getMusicInfoForMusicName(musicName, offset);
 		
 		model.addAttribute("musicData", musicData);
-		return "test/music/musicInfo";
+		return "music/musicInfo";
 	}
 }

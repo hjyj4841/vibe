@@ -56,13 +56,6 @@
 		WHERE user_email = #{userEmail}
 	</update>
 
-	<!-- 중복 코드
-	<insert id="addPlaylist" parameterType="Playlist">	
-		INSERT INTO playlist (pl_title, pl_img, pl_date, pl_public_yn, user_email)
-		VALUES (#{plTitle}, #{plImg}, #{plDate}, #{plPublicYn}, #{userEmail})
-	</insert>
-	-->
-	
 	<!-- 회원 본인의 플레이리스트 조회 -->
 	<select id="myPlaylist" resultMap="playlistMap" parameterType="String">
 		SELECT * FROM playlist
@@ -76,15 +69,15 @@
 	</select>
 	
 	<!-- 플레이리스트 삭제 -->
-	<delete id="deletePlaylist" parameterType="DeletePlaylistDTO">
+	<delete id="deletePlaylist" parameterType="Integer">
     	DELETE FROM playlist
     	WHERE pl_code = #{plCode}
 	</delete>
 	
 	<!-- 플레이리스트 제목 수정 -->
-    <update id="updatePlaylistTitle" parameterType="UpdatePlaylistDTO">
+    <update id="updatePlaylistTitle" parameterType="Playlist">
         UPDATE playlist
-        SET pl_title = #{newPlTitle}
+        SET pl_title = #{plTitle}
         WHERE pl_code = #{plCode}
     </update>
 

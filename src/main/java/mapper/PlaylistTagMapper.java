@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.master.vibe.model.dto.SearchDTO;
-import com.master.vibe.model.vo.Playlist;
 import com.master.vibe.model.vo.PlaylistTag;
 
 @Mapper

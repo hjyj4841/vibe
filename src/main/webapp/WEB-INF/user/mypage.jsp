@@ -58,7 +58,7 @@ prefix="c" %> <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
             </div>
             <div class="myChangeInfo">
               <div>
-                <a>
+                <a href="updateUser">
                   <i class="fa-solid fa-gear"></i>
                   <span>Edit Profile</span>
                 </a>

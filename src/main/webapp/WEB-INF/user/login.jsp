@@ -19,7 +19,7 @@
 					<form action="login" method="post">
 						<div><input type="text" name="userEmail" placeholder="Email" id="userEmail"></div>
 						<div><input type="password" name="userPassword" placeholder="Password" id="userPassword"></div>
-						<div><a href="">Forgot your Email or Password?</a></div>
+						<div><a href="/findUser">Forgot your Email or Password?</a></div>
 						<div><input type="submit" value="SIGN IN"></div>
 					</form>
 				</div>

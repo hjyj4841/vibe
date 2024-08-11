@@ -17,8 +17,9 @@
 		<select name="select">
 			<option value="title">제목 검색</option>
 			<option value="tag">태그 검색</option>
-		</select> 플리 : <input type="text" name="search"> <input type="submit"
-			value="검색">
+		</select> 
+		플리 : <input type="text" name="search"> 
+		<input type="submit" value="검색">
 	</form>
 
 	<br>

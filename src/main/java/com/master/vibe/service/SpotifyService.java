@@ -25,10 +25,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.master.vibe.model.vo.Music;
-import com.master.vibe.model.vo.User;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import mapper.UserMapper;
 
 @Service
@@ -97,10 +94,10 @@ public class SpotifyService {
 
     public void updateUserSpotifyStatus(String userEmail) {
         System.out.println(userEmail);
-      userMapper.updateSpotifyStatus(userEmail, "Y"); // 스포티파이 연결 상태를 DB에 업데이트
+        userMapper.updateSpotifyStatus(userEmail, "Y"); // 스포티파이 연결 상태를 DB에 업데이트
     }
 	
-	public ArrayList<Music> getArtistInfo(String musicName, int offset) {
+	public ArrayList<Music> getMusicInfoForMusicName(String musicName, int offset) {
 		String accessToken = getAccessToken();
 		
 		// 기능마다 바뀌는 구문

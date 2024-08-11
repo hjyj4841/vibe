@@ -3,11 +3,8 @@ package mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
 
 import com.master.vibe.model.dto.CreatePlaylistDTO;
-import com.master.vibe.model.dto.DeletePlaylistDTO;
-import com.master.vibe.model.dto.UpdatePlaylistDTO;
 import com.master.vibe.model.dto.SearchDTO;
 import com.master.vibe.model.vo.Playlist;
 
@@ -24,10 +21,10 @@ public interface PlaylistMapper {
 	List<Playlist> myPlaylist(String userEmail); // 회원 본인의 플레이리스트 조회
 	Playlist selectPlaylistForPlCode(int plCode); // plCode로 플레이리스트 조회
 
-    @Select("SELECT LAST_INSERT_ID()")
-    int getLastInsertedId(); // 최근 삽입된 플레이리스트의 ID를 가져옴
+    // @Select("SELECT LAST_INSERT_ID()")
+    // int getLastInsertedId(); // 최근 삽입된 플레이리스트의 ID를 가져옴
 
-    void deletePlaylist(DeletePlaylistDTO dto); // 플레이리스트 삭제
+    void deletePlaylist(int plCode); // 플레이리스트 삭제
     
-    void updatePlaylistTitle(UpdatePlaylistDTO dto); // 플레이리스트 제목 수정
+    void updatePlaylistTitle(Playlist playlist); // 플레이리스트 제목 수정
 }

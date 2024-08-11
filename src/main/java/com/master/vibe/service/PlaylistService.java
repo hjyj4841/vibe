@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.master.vibe.model.dto.CreatePlaylistDTO;
-import com.master.vibe.model.dto.DeletePlaylistDTO;
-import com.master.vibe.model.dto.UpdatePlaylistDTO;
 import com.master.vibe.model.dto.SearchDTO;
 import com.master.vibe.model.vo.Playlist;
 import mapper.PlaylistMapper;
@@ -36,25 +34,19 @@ public class PlaylistService {
 		return playlistMapper.selectPlaylistForPlCode(plCode);
 	}
 	
-    // 생성 두개 중 하나만
-	// 플레이리스트 생성
-	public void createPlaylist(CreatePlaylistDTO dto) {
-        playlistMapper.createPlaylist(dto);
-    }
-    
-    // 플레이리스트 생성
-    public int createPlaylist(CreatePlaylistDTO dto) {
-        playlistMapper.createPlaylist(dto);
-        return playlistMapper.getLastInsertedId(); // 최근 삽입된 플레이리스트의 ID를 반환
-    }
+	 // 플레이리스트 생성
+	 public void createPlaylist(CreatePlaylistDTO dto) {
+	    playlistMapper.createPlaylist(dto);
+	    //return playlistMapper.getLastInsertedId(); // 최근 삽입된 플레이리스트의 ID를 반환
+	 }
     
     // 플레이리스트 삭제
-    public void deletePlaylist(DeletePlaylistDTO dto) {
-        playlistMapper.deletePlaylist(dto);
+    public void deletePlaylist(int plCode) {
+        playlistMapper.deletePlaylist(plCode);
     }
     
     // 플레이리스트 수정
-    public void updatePlaylistTitle(UpdatePlaylistDTO dto) {
-        playlistMapper.updatePlaylistTitle(dto);
+    public void updatePlaylistTitle(Playlist playlist) {
+        playlistMapper.updatePlaylistTitle(playlist);
     }
 }
