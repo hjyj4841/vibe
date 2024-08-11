@@ -40,7 +40,7 @@
 				<td>${music.artistName}</td>
 				<td>${music.musicTitle}</td>
 				<!-- <input type="email" id="userEmail" name="userEmail" required> -->
-			</tr> 
+			</tr>
 		
 		<%-- 
 		 <c:if test="${not empty selectedMusic}">

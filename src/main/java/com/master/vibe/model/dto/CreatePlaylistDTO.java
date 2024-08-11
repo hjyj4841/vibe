@@ -11,3 +11,37 @@ public class CreatePlaylistDTO {
 	private String userEmail;
 	// private String plImg;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

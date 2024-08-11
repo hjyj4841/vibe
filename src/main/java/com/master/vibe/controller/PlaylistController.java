@@ -48,6 +48,11 @@ public class PlaylistController {
         return "test/test";
     }
 
+// 수정시 참고 예정
+    // public String createPlaylist(CreatePlaylistDTO dto) {
+    //     playlistService.createPlaylist(dto);
+    //     return "redirect:/searchHome"; // test/test -> redirect:/searchHome // 내가 만든 플레이리스트 조회
+
     // 수정시 참고 예정
     //  public RedirectView createPlaylist(CreatePlaylistDTO dto) {
     //     int playlistId = playlistService.createPlaylist(dto);
