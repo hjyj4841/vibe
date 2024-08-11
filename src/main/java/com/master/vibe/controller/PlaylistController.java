@@ -1,6 +1,5 @@
 package com.master.vibe.controller;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +28,7 @@ public class PlaylistController {
 		model.addAttribute("allPlaylist", playlistService.allPlaylist());
 		return "test/search/searchHome";
 	}
+    
     // 플레이리스트 생성
     @GetMapping("/createPlaylist")
     public String createPlaylist() {
@@ -42,6 +42,21 @@ public class PlaylistController {
     	playlistService.createPlaylist(new CreatePlaylistDTO(plTitle, user.getUserEmail()));
         return "test/test";
     }
+
+    // 수정시 참고 예정
+    //  public String createPlaylist(CreatePlaylistDTO dto, Model model) {
+    //     playlistService.createPlaylist(dto);
+        
+    //     // createPlaylist.jsp에서 사용자가 플레이리스트 생성 시 기본으로 plImg /createplaylistimg/default.png를 불러옴
+    //     model.addAttribute("plImg", dto.getPlImg());
+        
+    //     // createPlaylist.jsp에서 사용자가 입력한 plTitle 불러옴
+    //     model.addAttribute("plTitle", dto.getPlTitle());
+        
+    //     return "test/playlist/createPlaylistInfo"; // 생성된 플레이리스트 정보 페이지로 이동
+        
+    //     //return "test/playlist/createOKPlaylist"; // 플레이리스트 생성 완료 페이지로 이동
+    // }
     
     // 회원본인의 플레이리스트 조회
     @GetMapping("myPlaylist")
@@ -54,30 +69,18 @@ public class PlaylistController {
     	return "playlist/myPlaylist";
     }
 	
-    // 플레이리스트 좋아요 순 조회
-//	@GetMapping("/playlists")
-//	public String searchPlaylists(@RequestParam String query) {
-//		 return spotifyService.searchPlaylists(query);
-//	}
-	
-//	// 선택된 음악 ID를 사용하여 플레이리스트에 추가하는 로직을 구현
-//	@PostMapping("/addPlaylist")
-//	public String addPlaylist(@RequestParam("selectedMusic") List<String> selectedMusic, Model model) {
-//		System.out.println(selectedMusic);
-//		
-//		playlistService.addPlaylist(selectedMusic);
-//		model.addAttribute("selectedMusic", selectedMusic);
-//	    return "playlist"; // 작업 완료 후
-//	}
-//  // 플레이리스트 추가 폼 불러오기
-//	@GetMapping("/playlist")
-//	public String addPlaylist(Model model) {
-//		return "playlist";
-//	}
-//	// 플레이리스트 추가
-//	@PostMapping("/playlist")
-//	public String addPlaylist(Playlist playlist) {
-//		playlistService.addPlaylist(playlist);
-//		return "redirect:/"; // 플레이리스트 추가 후 메인 페이지로 리다이렉트
-//	}
+    /*
+    // 플레이리스트 생성 처리
+    @PostMapping("/createPlaylist")
+    public String createPlaylist(CreatePlaylistDTO dto, Model model) {
+        playlistService.createPlaylist(dto);
+        
+        // DTO에서 제목을 추출하여 모델에 추가
+        model.addAttribute("plTitle", dto.getPlTitle());
+        
+        // 생성된 플레이리스트 정보 페이지로 이동
+        return "test/playlist/createPlaylistInfo";
+    }
+    */
+    
 }

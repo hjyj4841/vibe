@@ -10,7 +10,7 @@
 <body>
 	<%-- artistInfo.jsp에서 선택한 음악 정보를 playlist.jsp로 전달하고, 플레이리스트를 추가할 때 선택된 음악의 정보를 처리하는 것 --%>
 	<h1>음악 정보</h1>
-	<form action="addPlaylist" method="post">
+	<form action="addMusicInPlaylist" method="post">
 		<table>
 			<tr>
 				<th>선택</th>
@@ -37,6 +37,6 @@
 		</table>
 		<input type="submit" value="플레이리스트에 추가하기">
 	</form>
-	<a href="artist">다른 아티스트 찾기</a>
+	<a href="addMusic">검색</a>
 </body>
 </html>

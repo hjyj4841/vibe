@@ -5,14 +5,14 @@ prefix="c" %>
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>음악 찾기</title>
+    <title>검색하기</title>
   </head>
   <body>
-    <h1>음악 찾기</h1>
+    <h1>검색하기</h1>
     <form action="addMusic" method="post">
-      <label for="musicName">Music Name : </label>
+      <label for="musicName">아티스트, 곡 등을 검색해보세요.</label>
       <input type="text" id="musicName" name="musicName" required />
-      <button type="submit">Search</button>
+      <button type="submit">검색</button>
     </form>
   </body>
 </html>

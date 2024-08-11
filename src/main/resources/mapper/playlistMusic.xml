@@ -8,7 +8,7 @@
 	</resultMap>
 	
 	<!-- 플레이리스트 음악 추가 -->
-	<insert id="addPlaylist" parameterType="java.util.List">
+	<insert id="addMusicInPlaylist" parameterType="java.util.List">
 		INSERT INTO playlist_music(pl_code, music_code)
 		VALUES
 		<foreach collection="list" item="plmusic" separator=",">
