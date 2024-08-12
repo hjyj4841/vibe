@@ -40,10 +40,15 @@ public class PlaylistTagController {
   		List<PlaylistDTO> dtoList = new ArrayList<>();
   		if(dto.getSelect().equals("title")) {
   			search.setSearch(dto.getSearch());
-  			// 태그 검색일 때 타이틀을 뽑아옴
+  		// 태그 검색일 때 타이틀을 뽑아옴
   		} else if(dto.getSelect().equals("tag")) {
   			List<Integer> codes = playlistTagService.searchTag(dto.getSearch());
-  			search.setCodes(codes);
+  			if(codes.size()!=0) {
+  				search.setCodes(codes);
+  			} else {
+  				model.addAttribute("searchTag", null);
+  		 		return "test/search/searchPlaylist";
+  			}
   		}
   		
   		// 뽑아온 타이틀로 리스트 만듬
@@ -72,4 +77,11 @@ public class PlaylistTagController {
  		model.addAttribute("searchTag", dtoList);
  		return "test/search/searchPlaylist";
  	}
+  	
+  	//@GetMapping("/search")
+	//public String getPlaylistsByTag(String tagCode, Model model) {
+	//	model.addAttribute("list", playlistTagService.getPlaylistsByTag(tagCode));
+		
+	//	return "searchtagview";
+	//}
 }
