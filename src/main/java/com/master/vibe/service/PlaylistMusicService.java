@@ -26,12 +26,18 @@ public class PlaylistMusicService {
     		pm.setPlCode(plCode);
     		list.add(pm);
     	}
-    	
-    	playlistMusicMapper.addMusicInPlaylist(list);
+    	playlistMusicMapper.addMusicToPlaylist(list);
     }
     
     // 플레이리스트_뮤직 테이블에서 해당 플레이리스트의 뮤직코드만 조회
     public List<String> showMusicList(int plCode){
     	return playlistMusicMapper.showMusicList(plCode);
     }
+    
+    
+    // 플레이리스트에서 음악 삭제
+    public void deleteMusicFromPlaylist(int plCode, List<String> selectedDeleteMusic) {
+        playlistMusicMapper.deleteMusicFromPlaylist(plCode, selectedDeleteMusic);
+    }
+    
 }

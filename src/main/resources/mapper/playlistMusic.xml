@@ -8,7 +8,7 @@
 	</resultMap>
 	
 	<!-- 플레이리스트 음악 추가 -->
-	<insert id="addMusicInPlaylist" parameterType="java.util.List">
+	<insert id="addMusicToPlaylist" parameterType="java.util.List">
 		INSERT INTO playlist_music(pl_code, music_code)
 		VALUES
 		<foreach collection="list" item="plmusic" separator=",">
@@ -16,11 +16,21 @@
 		</foreach>
 	</insert>
 	
-	<!-- 해당플레이리스트의 음악코드 조회 -->
+	<!-- 해당 플레이리스트의 음악코드 조회 -->
 	<select id="showMusicList" parameterType="Integer" resultType="String">
 		SELECT music_code
 		FROM playlist_music
 		WHERE pl_code = #{plCode}
 	</select>
+
+	<!-- 플레이리스트 음악 삭제 -->
+	<delete id="deleteMusicFromPlaylist" parameterType="java.util.List">
+		DELETE FROM playlist_music
+		WHERE pl_code = #{plCode}
+		AND music_code IN
+		<foreach collection="list" item="musicCode" open="(" separator="," close=")">
+        #{musicCode}
+    	</foreach>
+	</delete>
 
 </mapper>

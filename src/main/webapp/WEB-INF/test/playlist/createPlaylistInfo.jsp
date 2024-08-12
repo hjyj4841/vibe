@@ -62,7 +62,7 @@ pageEncoding="UTF-8"%>
   </head>
   <body>
   	<!-- <img src="${plImg}" alt="플레이리스트 이미지" style="max-width: 100%; height: auto;" /> -->
-  	<img src="${pageContext.request.contextPath}/imgs/createplaylistimg/defaultCD.png" alt="defaultImg" style="max-width: 20%; height: auto;" />
+  	<img src="${pageContext.request.contextPath}/imgs/createplaylistimg/defaultCD.png" alt="defaultImg" style="max-width: 200px; height: auto;" />
     <h1>${plTitle}</h1>
     <form action="addMusic" method="post">
 	<label><button type="submit">+</button></label>

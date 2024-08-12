@@ -97,6 +97,5 @@ public class PlaylistController {
         // 생성된 플레이리스트 정보 페이지로 이동
         return "test/playlist/createPlaylistInfo";
     }
-    */
-
+	*/
 }

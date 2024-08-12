@@ -28,7 +28,8 @@ public class PlaylistMusicController {
 	private PlaylistService playlistService;
 	
 	// 선택된 음악 ID를 사용하여 플레이리스트에 추가하는 로직을 구현
-    @PostMapping("/addMusicInPlaylist")
+	// music/musicInfo.jsp : <form action="addMusicInPlaylist" method="post">
+    @PostMapping("/addMusicToPlaylist")
     public String addPlaylist(@RequestParam List<String> selectedMusic, Model model, HttpServletRequest request) {
         // selectedMusic 리스트를 Playlist 객체로 변환하는 로직 필요 -> service에서 구현
     	// 이 예제에서는 단순히 추가된 음악 목록을 출력함
@@ -60,6 +61,25 @@ public class PlaylistMusicController {
     	}
     	
     	return "playlist/showPlaylistInfo";
+    }
+    
+    // 선택한 음악 플레이리스트에서 삭제
+    @PostMapping("/deleteMusicFromPlaylist")
+    public String deleteMusicFromPlaylist(@RequestParam List<String> selectedDeleteMusic, @RequestParam int plCode) {
+//    public String removeMusicFromPlaylist(@RequestParam List<String> selectedDeleteMusic, HttpServletRequest request) {
+    	playlistMusicService.deleteMusicFromPlaylist(plCode, selectedDeleteMusic);
+    	
+    	return "redirect:/showPlaylistInfo?plCode=" + plCode;
+    	
+    	/*
+    	HttpSession session = request.getSession();
+    	int plCode = Integer.parseInt(session.getAttribute("plCode").toString());
+    	
+    	// 플레이리스트 코드와 음악 코드 목록을 서비스에 전달
+        playlistMusicService.deleteMusicFromPlaylist(plCode, selectedDeleteMusic);
+
+        return "redirect:/showPlaylistInfo?plCode=" + plCode;
+        */
     }
     
 }

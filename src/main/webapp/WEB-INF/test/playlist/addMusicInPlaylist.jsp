@@ -34,7 +34,6 @@
 				<th>추가한 음악명</th>
 			</tr>
 			<tr>
-			<td>아무거나 찍어보자</td>
 				<td>${music.id}</td>
 				<td><img alt="" src="${music.albumUrl}"></td>
 				<td>${music.albumName}</td>
