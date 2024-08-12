@@ -21,12 +21,10 @@ public class PlaylistTagService {
 		return playlistTagMapper.searchTagPlaylist(code);
 	}
 	
-<<<<<<< Updated upstream
 //	호출하는 controller가 없음
 //	public List<Playlist> getPlaylistsByTag(String tagCode) {
 //		return playlistTagMapper.getPlaylistsByTag(tagCode);
 //	}
-=======
 	public List<Integer> searchTag(String search) {
 		return playlistTagMapper.searchTag(search);
 	}
@@ -40,6 +38,5 @@ public class PlaylistTagService {
 	//public List<Playlist> getPlaylistsByTag(String tagCode) {
 	//	return playlistTagMapper.getPlaylistsByTag(tagCode);
 	//}
->>>>>>> Stashed changes
 
 }
