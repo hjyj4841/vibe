@@ -22,10 +22,7 @@
 		<!-- <input type="text" id="plTitle" name="plTitle" /> -->
 		<!-- 사용자가 플레이리스트 제목을 입력하지 않아도 기본값으로 "플레이리스트 #N" 설정. CSS, JavaScript로 값 숨김 (해보는 중)
       		 	<input type="text" id="plTitle" name="plTitle" value="#플레이리스트" /> -->
-
-		<!-- db에서 default 처리 예정 -->
-		<input type="hidden" name="plImg" value="/imgs/createplaylistimg/defaultCD.png" />
-
+      		 	
 		<button type="submit">플레이리스트 생성</button>
 	</form>
 </body>

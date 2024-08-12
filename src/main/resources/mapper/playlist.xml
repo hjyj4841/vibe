@@ -45,8 +45,8 @@
 	
 	<!-- 플레이리스트 생성 -->
 	<insert id="createPlaylist" parameterType="CreatePlaylistDTO">
-        INSERT INTO playlist(pl_img, pl_title, user_email)
-		VALUES (#{plImg}, #{plTitle}, #{userEmail})
+        INSERT INTO playlist(pl_title, user_email)
+		VALUES (#{plTitle}, #{userEmail})
     </insert>
 	
 	<!-- user 탈퇴 시 playlist 정보 넘기기 -->

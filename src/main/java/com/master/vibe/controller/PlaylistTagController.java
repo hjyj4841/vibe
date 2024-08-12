@@ -44,11 +44,11 @@ public class PlaylistTagController {
   		} else if(dto.getSelect().equals("tag")) {
   			List<Integer> codes = playlistTagService.searchTag(dto.getSearch());
   			if(codes.size()!=0) {
-  				search.setCodes(codes);
-  			} else {
-  				model.addAttribute("searchTag", null);
-  		 		return "test/search/searchPlaylist";
-  			}
+	  				search.setCodes(codes);
+	  			} else {
+	  				model.addAttribute("searchTag", null);
+	  		 		return "test/search/searchPlaylist";
+	  			}
   		}
   		
   		// 뽑아온 타이틀로 리스트 만듬
