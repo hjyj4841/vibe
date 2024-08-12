@@ -32,4 +32,7 @@ public interface UserMapper {
 
 	void updateSpotifyStatus(@Param("userEmail") String userEmail, @Param("status") String status);
 
+	User emailCheck(String userEmail); // 회원가입 시 이메일 중복 체크
+	
+	User nicknameCheck(String userNickname); // 회원가입 시 닉네임 중복 체크
 }

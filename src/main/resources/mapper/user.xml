@@ -65,6 +65,7 @@
 		WHERE user_email = #{userEmail}
 	</update>
 
+	<!-- 회원 정보 변경 시 닉네임 중복 조회 -->
 	<select id="sameNickname" parameterType="User" resultMap="userMap">
 		SELECT * FROM user
 		WHERE user_nickname = #{userNickname} 
@@ -111,4 +112,16 @@
 		SET user_spotify_yn = #{status}
 		WHERE user_email = #{userEmail}
 	</update>
+	
+	<!-- 회원가입 시 이메일 중복 확인 -->
+	<select id="emailCheck" parameterType="String" resultMap="userMap">
+		SELECT * FROM user
+		WHERE user_email = #{userEmail}
+	</select>
+	
+	<!-- 회원가입 시 닉네임 중복 확인 -->
+	<select id="nicknameCheck" parameterType="String" resultMap="userMap">
+		SELECT * FROM user
+		WHERE user_nickname = #{userNickname}
+	</select>
 </mapper>

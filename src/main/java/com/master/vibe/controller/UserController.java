@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.master.vibe.model.dto.UserLikeTagDTO;
 import com.master.vibe.model.vo.User;
@@ -183,5 +184,19 @@ public class UserController {
         }
         return "user/login";
     }
+	
+	// ajax - 회원가입시 아이디 중복 조회
+	@ResponseBody
+	@PostMapping("/emailCheck")
+	public boolean emailCheck(String userEmail) {
+		return userService.emailCheck(userEmail);
+	}
+	
+	// ajax - 회원가입시 닉네임 중복 조회
+	@ResponseBody
+	@PostMapping("/nicknameCheck")
+	public boolean nicknameCheck(String userNickname) {
+		return userService.nicknameCheck(userNickname);
+	}
 	
 }

@@ -83,9 +83,39 @@
 	border: none;
 	background-color: #e5e5e5;
 	width: 280px;
-	height: 30px;
+	height: 45px;
 	padding: 20px;
+}
+.registerLeft > div{
+	width: 280px;
+	height: 40px;
 	margin: 20px;
+}
+
+.emailBox,
+.nicknameBox{
+	position: relative;
+}
+.emailBox > input,
+.nicknameBox > input{
+	position: absolute;
+}
+.emailBox > input[type=text],
+.nicknameBox > input[type=text]{
+	padding-right: 80px;
+}
+
+.emailBox > input[type=button],
+.nicknameBox > input[type=button]{
+	background-color: white;
+	color: #b6b6b6;
+	width: 80px;
+	height: 45px;
+	right: 0;
+	border: 1px solid #e5e5e5;
+	text-align: center;
+	line-height: 5px;
+	cursor: pointer;
 }
 
 .registerRight input{

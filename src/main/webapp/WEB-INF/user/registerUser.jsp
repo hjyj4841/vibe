@@ -15,12 +15,23 @@
 			<div class="registerBox">
 				<h1>Create Account</h1>
 				<p>your email for registration</p>
-				<form action="registerUser" method="post">
+				<form action="registerUser" method="post" onsubmit="return validate()">
 					<div class="registerTop">
 						<div class="registerLeft">
-							<div><input type="text" name="userEmail" placeholder="Email" required></div>
-							<div><input type="password" name="userPassword" placeholder="Password" required></div>
-							<div><input type="text" name="userNickname" placeholder="Nickname" required></div>
+							<div>
+								<div class="emailBox">
+									<input type="text" name="userEmail" placeholder="Email" id="userEmail" required>
+									<input type="button" value="Check" id="emailCheck">
+								</div>
+							</div>
+							<div><input type="password" name="userPassword" placeholder="Password" id="userPassword" required></div>
+							<div><input type="password" placeholder="Password Check" id="passwordCheck" required></div>
+							<div>
+								<div class="nicknameBox">
+									<input type="text" name="userNickname" placeholder="Nickname" id="userNickname" maxlength="30" required>
+									<input type="button" value="Check" id="nicknameCheck">
+								</div>
+							</div>
 						</div>
 						<div class="registerRight">
 							<div>
@@ -34,7 +45,7 @@
 									<label for="nonbinary">Nonbinary</label>
 								</div>
 								<div><input type="date" name="birthDay" data-placeholder="Date of Birth" max="9999-12-31" required></div>
-								<div><input type="text" name="userPhone" placeholder="PhoneNum : 000-0000-0000" required></div>
+								<div><input type="text" name="userPhone" placeholder="PhoneNum : 000-0000-0000" id="userPhone" maxlength="13" required></div>
 							</div>
 						</div>
 					</div>

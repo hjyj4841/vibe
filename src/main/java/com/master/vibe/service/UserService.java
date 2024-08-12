@@ -79,6 +79,18 @@ public class UserService {
         return list != null ? list : new ArrayList<>();
     }
 	
+	// 회원가입 시 이메일 중복 체크
+	public boolean emailCheck(String userEmail) {
+		if(userMapper.emailCheck(userEmail) == null) return true;
+		return false;
+	}
+	
+	// 회원가입 시 닉네임 중복 체크
+	public boolean nicknameCheck(String userNickname) {
+		if(userMapper.nicknameCheck(userNickname) == null) return true;
+		return false;
+	}
+	
 //	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 //
 //
