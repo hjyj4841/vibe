@@ -6,6 +6,9 @@
 	crossorigin="anonymous"></script>
 <link rel="stylesheet" href="./css/header.css" />
 <link rel="stylesheet" href="./css/footer.css" />
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
+</style>
 	<!-- 헤더 영역 -->
 	<header>
 		<!-- 로고 -->

@@ -29,35 +29,32 @@ public class PlaylistTagController {
   	@GetMapping("searchPlaylist")
  	public String searchPlaylist(Model model, SearchDTO dto) {
   		
-  		System.out.println(dto.getSelect()); // 선택???? -> title, tag
-  		System.out.println(dto.getSearch()); // 검색된 키워드 
-  		
-  		List<Playlist> playlist = new ArrayList<>();
-  		
   		SearchDTO search = new SearchDTO();
   		
-  		// 타이틀 검색일 때 타이틀을 뽑아옴
-  		List<PlaylistDTO> dtoList = new ArrayList<>();
+  		// 플리 제목 검색이라면 DTO에 검색 내용 대입
   		if(dto.getSelect().equals("title")) {
   			search.setSearch(dto.getSearch());
   		// 태그 검색일 때 타이틀을 뽑아옴
   		} else if(dto.getSelect().equals("tag")) {
+  			// 검색한 태그명이 포함된 태그를 가진 플레이리스트를 담은 List - pl_code
   			List<Integer> codes = playlistTagService.searchTag(dto.getSearch());
   			if(codes.size()!=0) {
 	  				search.setCodes(codes);
 	  			} else {
+	  				// 조회된 내용이 없을 경우 null 리턴
 	  				model.addAttribute("searchTag", null);
-	  		 		return "test/search/searchPlaylist";
+	  		 		return "search/searchPlaylist";
 	  			}
   		}
   		
-  		// 뽑아온 타이틀로 리스트 만듬
-  		playlist = playlistService.allPlaylist(search);
+  		// 검색한 내용을 바탕으로 플레이리스트를 담는 리스트 생성
+  		List<Playlist> playlist = playlistService.allPlaylist(search);
+  		
+  		// model에 담을 플레이리스트의 목록들
+  		List<PlaylistDTO> dtoList = new ArrayList<>();
   		
   		// 뽑아온 태그를 리스트로 만드는 코드
   		for(Playlist play : playlist) {
-  			System.out.println(play.getPlCode());
- 
   			List<PlaylistTag> tagList = playlistTagService.searchTagPlaylist(play.getPlCode());
   			PlaylistDTO pDto = PlaylistDTO.builder()
   					.plCode(play.getPlCode())
@@ -71,11 +68,9 @@ public class PlaylistTagController {
   					.build();
   			dtoList.add(pDto);
   		}
-  		
-  		System.out.println(dtoList);
- 
  		model.addAttribute("searchTag", dtoList);
- 		return "test/search/searchPlaylist";
+ 		
+ 		return "search/searchPlaylist";
  	}
   	
   	//@GetMapping("/search")
