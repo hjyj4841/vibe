@@ -137,7 +137,8 @@ function validate(){
 	else if(!nicknameCheck) alert("닉네임 체크를 진행해주세요.");
 	else if(!regEmailCheck) alert("이메일형식을 확인해주세요.");
 	else if(!regPasswordCheck) alert("패스워드 형식을 확인해주세요. (알파벳/숫자/특수문자 포함 8~14자)");
-	else if(!passwordSameCheck) alert("패스워드가 올바르지 않습니다.");
+	else if(!passwordSameCheck) alert("패스워드가 다릅니다.");
 	else if(!phoneCheck) alert("전화번호 형식을 확인해주세요.");
-	else return true;
+	return emailCheck && nicknameCheck && regEmailCheck 
+	&& regPasswordCheck && passwordSameCheck && phoneCheck;
 }
