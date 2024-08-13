@@ -42,21 +42,20 @@
 	<!-- 리스트 박스 -->
 	<div id="listBox">
 		<div class="listTop">
-			<!-- 랭크 버튼 -->
 			<div class="rankButtonBox">
-				<h2>TOP Rank</h2>
-				<button>1st</button>
-				<button>2nd</button>
-				<button>3rd</button>
+				<div>
+					<h2>TOP Rank</h2>
+					<button>1st</button>
+					<button>2nd</button>
+					<button>3rd</button>
+				</div>
 			</div>
-			
 			<div class="listContainer">
-				<!-- 랭크 1위 -->
+				<!-- 랭크 1위 - 후에 jstl 사용해서 상위 리스트 3개만 표출 -->
 				<section class="listRank">
-					<img class="listImg" src="/imgs/playlistimg/list1.jpg" />
+					<img src="/imgs/playlistimg/list1.jpg" />
 					<div class="listRankDesc">
-						<img class="listMiniImg" src="/imgs/playlistimg/list1.jpg" />
-	
+						<img src="/imgs/playlistimg/list1.jpg" />
 						<div class="listRankText">
 							<!-- 플레이리스트 제목 -->
 							<p>개쩌는 힙합클럽 MIX</p>
@@ -65,13 +64,11 @@
 						</div>
 					</div>
 				</section>
-				
 				<!-- 랭크 2위 -->
 				<section class="listRank">
-					<img class="listImg" src="/imgs/playlistimg/list2.jpg" />
+					<img src="/imgs/playlistimg/list2.jpg" />
 					<div class="listRankDesc">
-						<img class="listMiniImg" src="/imgs/playlistimg/list2.jpg" />
-	
+						<img src="/imgs/playlistimg/list2.jpg" />
 						<div class="listRankText">
 							<!-- 플레이리스트 제목 -->
 							<p>nowitzki</p>
@@ -80,13 +77,11 @@
 						</div>
 					</div>
 				</section>
-				
 				<!-- 랭크 3위 -->
 				<section class="listRank">
-					<img class="listImg" src="/imgs/playlistimg/list3.jpg" />
+					<img src="/imgs/playlistimg/list3.jpg" />
 					<div class="listRankDesc">
-						<img class="listMiniImg" src="/imgs/playlistimg/list3.jpg" />
-	
+						<img src="/imgs/playlistimg/list3.jpg" />
 						<div class="listRankText">
 							<!-- 플레이리스트 제목 -->
 							<p>24:26</p>
