@@ -4,9 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.master.vibe.model.dto.CreatePlaylistDTO;
+import com.master.vibe.model.dto.PlaylistDTO;
 import com.master.vibe.model.vo.Playlist;
 import com.master.vibe.model.vo.User;
 import com.master.vibe.model.dto.SearchDTO;
@@ -79,11 +82,31 @@ public class PlaylistController {
     	
         return "playlist/updatePlaylist";
     }
+    
+    
     @PostMapping("/updatePlaylist")
     public String updatePlaylist(Playlist playlist) {
         playlistService.updatePlaylistTitle(playlist);
         return "redirect:/myPlaylist";
     }
+    
+    /*
+    @PostMapping("/updatePlaylist")
+    public String updatePlaylist(@ModelAttribute PlaylistDTO playlistDTO) {
+    	MultipartFile file = playlistDTO.getPlImg();
+        if (file != null && !file.isEmpty()) {
+            // 파일 처리 로직 (예: 파일 저장)
+            String fileName = file.getOriginalFilename();
+            // 파일 저장 위치 및 로직을 설정하세요.
+            // 예: file.transferTo(new File("/path/to/save/" + fileName));
+            // 파일 저장 후, 경로를 DTO에 추가할 수 있습니다.
+            // playlistDTO.setPlImgPath("/path/to/save/" + fileName);
+        }
+        // DTO를 사용하여 업데이트 로직 처리
+        playlistService.updatePlaylist(playlistDTO);
+        return "redirect:/somePage";
+    }
+    */
     
     /*
     // 플레이리스트 생성 처리

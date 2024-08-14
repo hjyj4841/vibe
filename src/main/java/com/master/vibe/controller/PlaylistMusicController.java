@@ -1,6 +1,7 @@
 package com.master.vibe.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.master.vibe.model.vo.Music;
 import com.master.vibe.service.PlaylistMusicService;
@@ -80,6 +82,20 @@ public class PlaylistMusicController {
 
         return "redirect:/showPlaylistInfo?plCode=" + plCode;
         */
+    }
+    
+    // 사용자가 플레이리스트에 음악 추가 시 추가하려는 음악이 해당 플레이리스트에 이미 있는 곡인지 중복 체크
+    @PostMapping("/checkMusicInPlaylist")
+    @ResponseBody
+    public List<String> checkMusicInPlaylist(@RequestParam List<String> musicId, HttpServletRequest request) {
+    	HttpSession session = request.getSession();
+    	int plCode = Integer.parseInt(session.getAttribute("plCode").toString());
+    	
+    	// Map 형태로 전달
+        return playlistMusicService.getExistingMusicIdInPlaylist(plCode, musicId);
+        
+//    	List<String> existingMusicId = playlistMusicService.getExistingMusicIdInPlaylist(plCode, musicId);
+//    	return existingMusicId;
     }
     
 }

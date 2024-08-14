@@ -62,7 +62,7 @@ public class PlaylistTagController {
   			PlaylistDTO pDto = PlaylistDTO.builder()
   					.plCode(play.getPlCode())
   					.plTitle(play.getPlTitle())
-  					.plImg(play.getPlImg())
+  					//.plImg(play.getPlImg())
   					.tagList(tagList)
   					.user(User.builder()
   							.userNickname(play.getUser().getUserNickname())

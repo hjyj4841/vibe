@@ -32,5 +32,16 @@
         #{musicCode}
     	</foreach>
 	</delete>
-
+	
+	<!-- 중복 체크 : 플레이리스트에 존재하는 음악 ID 조회 -->
+	<select id="getExistingMusicIdInPlaylist" parameterType="map" resultType="String">
+		SELECT music_code
+		FROM playlist_music
+		WHERE pl_code = #{plCode}
+		AND music_code IN
+        <!-- WHERE pl_code = #{params[0]} 첫 번째 항목이 plCode -->
+        <foreach collection="musicId" item="musicId" open="(" separator="," close=")">
+        	#{musicId}
+        </foreach>
+    </select>
 </mapper>
