@@ -6,13 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.master.vibe.model.dto.CreatePlaylistDTO;
+import com.master.vibe.model.dto.PlaylistDTO;
 import com.master.vibe.model.dto.SearchDTO;
 import com.master.vibe.model.vo.Music;
 import com.master.vibe.model.vo.Playlist;
 import mapper.PlaylistMapper;
 
-// 현재 PlaylistService.java는 addPlaylist 메소드를 List<String> 타입으로 오버로딩하고 있지만, 해당 메소드의 내용이 비어 있습니다.
-// 이 메소드를 적절히 구현해야 합니다. 플레이리스트를 추가할 때 음악 정보를 다루는 로직을 여기에 추가할 수 있습니다.
+// 플레이리스트 추가 시 음악 정보를 다루는 로직
 
 @Service
 public class PlaylistService {
@@ -69,4 +69,5 @@ public class PlaylistService {
     public List<String> getTagsByPlaylistCode(int plCode) {
         return playlistMapper.findTagsByPlaylistCode(plCode);
     }
+
 }

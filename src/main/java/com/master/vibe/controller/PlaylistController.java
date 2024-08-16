@@ -120,6 +120,7 @@ public class PlaylistController {
     	
         return "playlist/updatePlaylist";
     }
+    
     @PostMapping("/updatePlaylist")
     public String updatePlaylist(Playlist playlist) {
         playlistService.updatePlaylistTitle(playlist);
@@ -138,6 +139,24 @@ public class PlaylistController {
     }
     
     /*
+    @PostMapping("/updatePlaylist")
+    public String updatePlaylist(@ModelAttribute PlaylistDTO playlistDTO) {
+    	MultipartFile file = playlistDTO.getPlImg();
+        if (file != null && !file.isEmpty()) {
+            // 파일 처리 로직 (예: 파일 저장)
+            String fileName = file.getOriginalFilename();
+            // 파일 저장 위치 및 로직을 설정하세요.
+            // 예: file.transferTo(new File("/path/to/save/" + fileName));
+            // 파일 저장 후, 경로를 DTO에 추가할 수 있습니다.
+            // playlistDTO.setPlImgPath("/path/to/save/" + fileName);
+        }
+        // DTO를 사용하여 업데이트 로직 처리
+        playlistService.updatePlaylist(playlistDTO);
+        return "redirect:/somePage";
+    }
+    */
+    
+    /*
     // 플레이리스트 생성 처리
     @PostMapping("/createPlaylist")
     public String createPlaylist(CreatePlaylistDTO dto, Model model) {
@@ -149,6 +168,5 @@ public class PlaylistController {
         // 생성된 플레이리스트 정보 페이지로 이동
         return "test/playlist/createPlaylistInfo";
     }
-    */
-
+	*/
 }
