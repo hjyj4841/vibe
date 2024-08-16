@@ -4,12 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.master.vibe.model.dto.CreatePlaylistDTO;
-import com.master.vibe.model.dto.PlaylistDTO;
 import com.master.vibe.model.vo.Playlist;
 import com.master.vibe.model.vo.User;
 import com.master.vibe.model.dto.SearchDTO;
@@ -82,7 +79,6 @@ public class PlaylistController {
     	
         return "playlist/updatePlaylist";
     }
-    
     
     @PostMapping("/updatePlaylist")
     public String updatePlaylist(Playlist playlist) {

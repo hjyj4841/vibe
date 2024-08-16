@@ -10,6 +10,7 @@
 		window.history.back(); // 이전 페이지로 돌아가기
 	}
 	
+	/*
 	// 플레이리스트 이미지 변경하기
 	function previewImage(event) {
 		const file = event.target.files[0];
@@ -22,6 +23,7 @@
             reader.readAsDataURL(file);
         }
 	}
+	*/
 </script>
 <style>
 /* 이미지 변경 클릭 시 파일 불러오기 시스템 버튼 형태 처리 */
@@ -38,7 +40,7 @@ label[for="imgChange"] {
 </head>
 <body>
     <h1>플레이리스트 수정</h1>
-    <form action="/updatePlaylist" method="post" enctype="multipart/form-data">
+    <form action="/updatePlaylist" method="post">
         <!-- 플레이리스트 코드와 수정할 제목을 입력 받음 -->
         <input type="hidden" value="${playlist.plCode }" name="plCode">
         

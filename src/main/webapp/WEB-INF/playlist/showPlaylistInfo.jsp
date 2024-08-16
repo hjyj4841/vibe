@@ -6,6 +6,14 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+/* a 태그 */
+td a {
+	cursor: pointer;
+	text-decoration: none;
+	color: black;
+}
+</style>
 </head>
 <body>
 	<h3>플레이리스트 곡 조회</h3>
@@ -31,10 +39,26 @@
 		<c:forEach items="${musicList }" var="music">
 			<tr>
 				<td><input type="checkbox" name="selectedDeleteMusic" value="${music.id}"></td>
-				<td><img src="${music.albumUrl }" style="width: 100px"></td>
-				<td>${music.musicTitle }</td>
-				<td>${music.artistName }</td>
-				<td>${music.albumName }</td>
+				<td>
+					<a href="musicDetail?musicId=${music.id}">
+						<img src="${music.albumUrl }" style="width: 100px">
+					</a>
+				</td>
+				<td>
+					<a href="musicDetail?musicId=${music.id}">
+				    	${music.musicTitle }
+				    </a>
+				</td>
+				<td>
+					<a href="musicDetail?musicId=${music.id}">
+						${music.artistName }
+					</a>
+				</td>
+				<td>
+					<a href="musicDetail?musicId=${music.id}">
+						${music.albumName }
+					</a>	
+				</td>
 			</tr>
 		</c:forEach>
 	</table>
