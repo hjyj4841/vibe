@@ -124,27 +124,29 @@
 			</div>
 			<div class="searchListMain">
 				<c:forEach items="${searchTag}" var="searchPlaylist">
-					<div class="playlistCon">
-						<img src="${searchPlaylist.plImg}">
-						<div class="plContentsBox">
-							<p class="plTitle">${searchPlaylist.plTitle}</p>
-							<p class="plTags">
-								<c:forEach items="${searchPlaylist.tagList}" var="tag">
-									#${tag.tag.tagName} 
-								</c:forEach>
-							</p>
-							<div class="creatorInfo">
-								<img src="${searchPlaylist.user.userImg}">
-								<p class="creatorNickname">${searchPlaylist.user.userNickname}</p>
+					<a href="/showPlaylistInfo?plCode=${searchPlaylist.plCode}">
+						<div class="playlistCon">
+							<img src="${searchPlaylist.plImg}">
+							<div class="plContentsBox">
+								<p class="plTitle">${searchPlaylist.plTitle}</p>
+								<p class="plTags">
+									<c:forEach items="${searchPlaylist.tagList}" var="tag">
+										#${tag.tag.tagName} 
+									</c:forEach>
+								</p>
+								<div class="creatorInfo">
+									<img src="${searchPlaylist.user.userImg}">
+									<p class="creatorNickname">${searchPlaylist.user.userNickname}</p>
+								</div>
+							</div>
+							<div class="plLikeBox">
+								<div>
+									<i class="fa-regular fa-heart"></i>
+									<span>LIKE 0</span>
+								</div>
 							</div>
 						</div>
-						<div class="plLikeBox">
-							<div>
-								<i class="fa-regular fa-heart"></i>
-								<span>LIKE 0</span>
-							</div>
-						</div>
-					</div>
+					</a>
 				</c:forEach>
 			</div>
 		</div>

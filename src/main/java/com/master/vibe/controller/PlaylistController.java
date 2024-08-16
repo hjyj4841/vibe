@@ -1,6 +1,8 @@
 package com.master.vibe.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,13 +33,18 @@ public class PlaylistController {
     
     // 플레이리스트 생성
     @GetMapping("/createPlaylist")
-    public String createPlaylist() {
+    public String createPlaylist(Model model) {
+    	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		User user = (User) authentication.getPrincipal();
+    	
+		model.addAttribute("user", user);
+		
     	return "playlist/createPlaylist";
     }
     @PostMapping("/createPlaylist")
-    public String createPlaylist(CreatePlaylistDTO dto, HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        User user = (User)session.getAttribute("user");
+    public String createPlaylist(CreatePlaylistDTO dto) {
+    	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		User user = (User) authentication.getPrincipal();
         
         dto.setUserEmail(user.getUserEmail());
         // createPlaylist.jsp에서 사용자가 플레이리스트 생성 시 기본으로 plImg /createplaylistimg/default.png를 불러옴 --> DB Default값으로 자동추가 되도록 수정 예정
@@ -55,8 +62,8 @@ public class PlaylistController {
     // 회원본인의 플레이리스트 조회
     @GetMapping("/myPlaylist")
     public String myPlaylist(HttpServletRequest request, Model model) {
-    	HttpSession session = request.getSession();
-    	User user = (User)session.getAttribute("user");
+    	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		User user = (User) authentication.getPrincipal();
     	
     	model.addAttribute("playlist", playlistService.myPlaylist(user.getUserEmail()));
     	

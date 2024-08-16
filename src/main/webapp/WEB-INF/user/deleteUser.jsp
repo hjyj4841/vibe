@@ -13,5 +13,8 @@
 		비밀번호 입력 : <input type="password" name="userPassword">
 		<input type="submit" value="회원 탈퇴">
 	</form>
+	<script>
+		if('${deleteUser}' != '') alert('${deleteUser}');
+	</script>
 </body>
 </html>

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,12 +19,12 @@
 		</div>
 		
 		<nav id="mainnav">
-			<c:if test="${user == null }">
+			<sec:authorize access="!isAuthenticated()">
 				<a href="login" class="signIn">Sign In</a> 
-			</c:if>
-			<c:if test="${user != null }">
+			</sec:authorize>
+			<sec:authorize access="isAuthenticated()">
 				<a href="mypage" class="signIn">My Page</a>
-			</c:if>
+			</sec:authorize>
 			<a href="" class="ranking">Ranking</a>
 		</nav>
 		<form class="mainSearchBox" action="searchPlaylist">
@@ -96,5 +97,8 @@
 		<jsp:include page="tiles/footer.jsp"></jsp:include>
 	</div>
 	<script src="./js/main.js"></script>
+	<script>
+		if('${deleteUser}' != '') alert('${deleteUser}');
+	</script>
 </body>
 </html>

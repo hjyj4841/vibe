@@ -4,6 +4,10 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,7 +49,6 @@ public class UserController {
 	public String register() {
 		return "user/registerUser";
 	}
-
 	@PostMapping("/registerUser")
 	public String register(User user, String birthDay) {
 		try {
@@ -61,26 +64,17 @@ public class UserController {
 	public String login() {
 		return "user/login";
 	}
-
-	@PostMapping("login")
-	public String login(User user, HttpServletRequest request, Model model) {
-		HttpSession session = request.getSession();
-		User u = userService.login(user);
-
-		// 아이디 / 비밀번호 조회 실패
-		if (u == null) {
-			return "user/login_fail_empty_user";
-		}
-		// 탈퇴한 회원
-		if (u.getUserEntYn() == 'Y') {
-			model.addAttribute("rejoinDate", userService.rejoinDate(user.getUserEmail()));
-			return "user/login_fail_deleteUser";
-		}
-		// 정상 회원
-		session.setAttribute("user", u);
-		return "index";
+	
+	// 로그인 에러
+	@PostMapping("/loginError")
+	public String loginError(Model model) {
 		
+		model.addAttribute("msg", "ID 혹은 PASSWORD가 잘못 되었습니다.");
+		return "user/login";
 	}
+
+	// 탈퇴한 회원 재가입 남은 일수 조회 
+	// userService.rejoinDate(user.getUserEmail());
 	
 	// 계정 찾기 페이지로 이동
 	@GetMapping("/findUser")
@@ -109,42 +103,45 @@ public class UserController {
 		return "user/login";
 	}
 
-	// 로그아웃
-	@GetMapping("logout")
-	public String logout(HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		if(session.getAttribute("user") != null) session.invalidate();
-		
-		return "redirect:/";
-	}
-
 	// 마이페이지
 	@GetMapping("mypage")
-	public String mypage() {
+	public String mypage(Model model) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		User user = (User) authentication.getPrincipal();
+		
+		model.addAttribute("user", user);
+		
 		return "user/mypage";
 	}
 
 	// 회원 수정
 	@GetMapping("updateUser")
-	public String updateUser() {
+	public String updateUser(Model model) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		User user = (User) authentication.getPrincipal();
+		
+		model.addAttribute("user", user);
+		
 		return "user/updateUser";
 	}
 
 	@PostMapping("updateUser")
-	public String updateUser(User user, HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		User u = (User) session.getAttribute("user"); // 현재 접속중인 유저 정보
+	public String updateUser(User user, Model model) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		User u = (User) authentication.getPrincipal(); // 현재 접속중인 유저 정보
 		
 		// 변경할 정보들을 현재접속한 유저 정보에 담아서 서비스로 처리
 		u.setUserNickname(user.getUserNickname());
 		u.setUserPassword(user.getUserPassword());
 		u.setUserPhone(user.getUserPhone());
+		// 이미지 변경 로직 추가
 		
-		if (userService.updateUser(u) != null) {
-			session.setAttribute("user", u); // 변경된 정보로 session에 다시 담기
-			return "user/mypage";
-		} 
-		return "test/userTest";
+		userService.updateUser(u);
+		
+		model.addAttribute("user", u);
+		
+		// 변경된 정보로 session에 다시 담기
+		return "user/mypage";
 	}
 
 	// 회원 탈퇴
@@ -154,19 +151,21 @@ public class UserController {
 	}
 
 	@PostMapping("deleteUser")
-	public String deleteUser(String userPassword, HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("user");
-
-		if (userPassword.equals(user.getUserPassword())) {
-			userService.deleteUser(user.getUserEmail());
-
-			if (session.getAttribute("user") != null)
-				session.invalidate();
+	public String deleteUser(String userPassword, Model model, HttpServletRequest request) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		User user = (User) authentication.getPrincipal();
+		
+		HttpSession session = request.getSession(false);
+				
+		if(userService.deleteUser(user, userPassword)) {
+			model.addAttribute("deleteUser", "회원탈퇴 처리되었습니다.");
+			
+			session.invalidate();
+			SecurityContextHolder.getContext().setAuthentication(null);
 			return "index";
 		}
-
-		return "user/mypage";
+		model.addAttribute("deleteUser", "비밀번호가 일치하지 않습니다.");
+		return "user/deleteUser";
 	}
 
 	// join
@@ -199,4 +198,21 @@ public class UserController {
 		return userService.nicknameCheck(userNickname);
 	}
 	
+	// ajax - 회원정보 수정 시 닉네임 중복 조회
+	@ResponseBody
+	@PostMapping("/nicknameUpdate")
+	public boolean nicknameUpdate(String userNickname) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		User user = (User) authentication.getPrincipal();
+		
+		User u = null;
+		
+		try {
+			u = user.clone();
+		} catch (CloneNotSupportedException e) {}
+		
+		u.setUserNickname(userNickname);
+		
+		return userService.nicknameUpdate(u);
+	}
 }

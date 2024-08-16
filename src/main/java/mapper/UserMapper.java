@@ -12,11 +12,9 @@ import com.master.vibe.model.vo.User;
 public interface UserMapper {
 	void register(User user); // 회원가입
 
-	User login(User user); // 로그인
-
 	void updateUser(User user); // 회원정보 수정
 
-	User sameNickname(User user); // 중복 닉네임 찾기
+	User sameNickname(User user); // 회원수정 시 중복 닉네임 찾기
 
 	User findUserID(User user); // 회원 ID 찾기
 

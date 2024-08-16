@@ -16,9 +16,9 @@
 				<div class="loginBoxLeft">
 					<h1>Sign In</h1>
 					<p>your account</p>
-					<form action="login" method="post">
-						<div><input type="text" name="userEmail" placeholder="Email" id="userEmail"></div>
-						<div><input type="password" name="userPassword" placeholder="Password" id="userPassword"></div>
+					<form action="/login" method="post">
+						<div><input type="text" name="username" placeholder="Email" id="userEmail"></div>
+						<div><input type="password" name="password" placeholder="Password" id="userPassword"></div>
 						<div><a href="/findUser">Forgot your Email or Password?</a></div>
 						<div><input type="submit" value="SIGN IN"></div>
 					</form>
@@ -32,5 +32,11 @@
 		</div>
 		<jsp:include page="../tiles/footer.jsp"></jsp:include>
 	</div>
+	
+	<script>
+		if('${msg }' != ''){
+			alert('${msg}');
+		}
+	</script>
 </body>
 </html>

@@ -23,14 +23,6 @@
 		VALUES(#{userEmail}, #{userPassword}, #{userNickname}, #{userGender},
 		#{userBirth}, #{userPhone})
 	</insert>
-	
-	<!-- 로그인 -->
-	<select id="login" parameterType="User" resultMap="userMap">
-		SELECT * FROM
-		user
-		WHERE user_email = #{userEmail} AND user_password =
-		#{userPassword}
-	</select>
 
 	<!-- 유저 아이디 찾기 -->
 	<select id="findUserID" parameterType="User" resultMap="userMap">
