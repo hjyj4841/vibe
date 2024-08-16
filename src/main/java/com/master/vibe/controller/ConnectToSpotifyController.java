@@ -23,7 +23,7 @@ public class ConnectToSpotifyController {
 
     @GetMapping("/spotifyConnect")
     public String redirectToSpotify() {
-        String scope = "user-read-private user-read-email";
+        String scope = "'user-read-private user-read-email user-read-playback-state user-modify-playback-state streaming'";
         return "redirect:https://accounts.spotify.com/authorize?client_id=" + clientId 
                 + "&response_type=code&redirect_uri=" + redirectUri 
                 + "&scope=" + scope;
@@ -35,8 +35,10 @@ public class ConnectToSpotifyController {
         	HttpSession session = request.getSession();
             User user = (User) session.getAttribute("user");
             String accessToken = spotifyService.getAccessToken(code, clientId, clientSecret, redirectUri);
+            System.out.println(accessToken);
+            session.setAttribute("accessToken", accessToken);
             spotifyService.updateUserSpotifyStatus(user.getUserEmail());
-            return "redirect:/mypage"; // 마이페이지로 리다이렉트
+            return "redirect:/userTest"; // 마이페이지로 리다이렉트
         } catch (Exception e) {
             e.printStackTrace();
             return "redirect:/error"; // 오류 시 에러 페이지로 리다이렉트

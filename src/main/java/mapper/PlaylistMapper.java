@@ -31,4 +31,12 @@ public interface PlaylistMapper {
     List<Playlist> likerankingPlaylist(); // 랭킹 : 좋아요순
 	void deletePlaylistMusic(int plCode);
 	List<String> findTagsByPlaylistCode(int plCode);
+
+    List<Playlist> randomPlaylist(); // 플레이리스트 랜덤 조회 
+    
+    List<Playlist> searchTagRanking(String tagName); // 검색 태그별 랭킹 조회 
+    
+    List<Playlist> playListRankingOnMonth(); // 한달 동안의 플레이리스트 좋아요 랭킹 조회
+    
+    List<Playlist> playListRankingOnAgeGroup(String ageGroup);
 }

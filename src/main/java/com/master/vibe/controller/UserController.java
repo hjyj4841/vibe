@@ -183,6 +183,21 @@ public class UserController {
         }
         return "user/login";
     }
+
+	// 내 프로필 공유하기
+	@GetMapping("shareMyProfile")
+	public String shareMyProfile() {
+		return "user/shareMyProfile";
+	}
+
+	// 로그인 회원 음악 듣기
+	@GetMapping("musicListen")
+	public String musicListen(HttpServletRequest request, Model model) {
+		HttpSession session = request.getSession();
+		Object token = session.getAttribute("accessToken");
+		model.addAttribute("token", token);
+		return "music/musicListen";
+	}
 	
 	// ajax - 회원가입시 아이디 중복 조회
 	@ResponseBody

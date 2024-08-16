@@ -13,7 +13,11 @@ pageEncoding="UTF-8"%>
       <li><a href="createPlaylist">플레이리스트 생성</a></li>
       <li><a href="addMusic">플레이리스트 곡 추가</a></li>
       <li><a href="searchHome">플레이리스트 검색</a></li>
+      <li><a href="searchTag">태그별 랭킹 조회</a>
+      <li><a href="playListRankingOnMonth">한달간의 좋아요 랭킹 조회</a>
+      <li><a href="playListRankingOnAgeGroupSelect">연령별 좋아요 랭킹 조회</a></li>
       <li><a href="playlistMusic">플레이리스트 곡 조회</a></li>
+      <li><a href="randomPlaylist">랜덤 플레이리스트 조회</a></li>
       <li><a href="deletePlaylist">플레이리스트 삭제</a></li>
       <li><a href="updatePlaylist">플레이리스트 수정</a></li>
     </ul>

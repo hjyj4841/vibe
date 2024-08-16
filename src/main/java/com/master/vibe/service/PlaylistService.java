@@ -69,5 +69,24 @@ public class PlaylistService {
     public List<String> getTagsByPlaylistCode(int plCode) {
         return playlistMapper.findTagsByPlaylistCode(plCode);
     }
-
+    
+    // 플레이리스트 랜덤 조회
+    public List<Playlist> randomPlaylist(){
+    	return playlistMapper.randomPlaylist();
+    }
+    
+    // 검색 태그 랭킹 조회
+    public List<Playlist> searchTagRanking(String tagName){
+    	return playlistMapper.searchTagRanking(tagName);
+    }
+    
+    // 한달 동안의 플레이리스트 좋아요 랭킹 조회
+    public List<Playlist> playListRankingOnMonth(){
+    	return playlistMapper.playListRankingOnMonth();
+    }
+    
+    // 연령 그룹별 좋아요 랭킹 조회 
+    public List<Playlist> playListRankingOnAgeGroup(String ageGroup) {
+    	return playlistMapper.playListRankingOnAgeGroup(ageGroup);
+    }
 }

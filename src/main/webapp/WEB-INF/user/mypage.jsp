@@ -17,7 +17,10 @@ prefix="c" %> <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
           <div class="myLeft">
             <div class="myProfile">
               <div class="myImg">
-                <img alt="회원이미지" src="${user.userImg }" />
+               <img alt="회원이미지" src="${user.userImg }" >
+              </div>
+              <div class=shareMyProfile>
+              <a href="/shareMyProfile"><p>SHARE Profile</p></a>
               </div>
               <p class="myNick">${user.userNickname }</p>
               <p class="myEmail">${user.userEmail }</p>
@@ -31,7 +34,7 @@ prefix="c" %> <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
                 <c:otherwise>
                   <div class="disconnectSpotify spotifyInfo">
                     <i class="fa-brands fa-spotify"></i>
-                    <span>disconnected</span>
+                    <a href="/spotifyConnect"><span>disconnected</span></a>
                   </div>
                 </c:otherwise>
               </c:choose>
@@ -122,5 +125,7 @@ prefix="c" %> <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
     <fmt:formatDate value="${user.userBirth}" pattern="yyyy-MM-dd" />
     <a href="deleteUser">회원탈퇴</a>
     --%>
+    
+   
   </body>
 </html>

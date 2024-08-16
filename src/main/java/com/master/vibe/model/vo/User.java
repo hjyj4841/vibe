@@ -27,6 +27,7 @@ public class User implements UserDetails, Cloneable{
 	private char userManager;
 	private Date userEnrollDate;
 	private String userPhone;
+	private String ageGroup;
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -61,8 +62,6 @@ public class User implements UserDetails, Cloneable{
     
     @Override
     public User clone() throws CloneNotSupportedException{
-    	//CloneNotSupportedException 처리
     	return (User)super.clone();
     }
-		
 }

@@ -6,10 +6,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import java.io.File;
+import java.io.IOException;
+import java.util.UUID;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.master.vibe.model.dto.CreatePlaylistDTO;
 import com.master.vibe.model.vo.Music;
@@ -31,10 +37,30 @@ public class PlaylistController {
 	@Autowired
 	private TagService tagService;
 	
+	@Value("${spring.servlet.multipart.location}")
+    private String uploadPath;
+
+	// 플레이리스트 이미지 업로드 관련 // 서버 연결 관련 차후 보완 필요! 2024.08.16/현호
+//	@Value("${file.upload-dir}")
+//	private String uploadDir;
+
+	public String fileUpload(MultipartFile file) throws IllegalStateException, IOException {
+		UUID uuid = UUID.randomUUID();
+		String fileName = uuid.toString() + "_" + file.getOriginalFilename();
+		System.out.println(fileName);
+//	    File copyFile = new File("\\\\192.168.10.6\\vibe\\playlistImg\\" + fileName);
+		File copyFile = new File(uploadPath + File.separator + "playlistImg" + File.separator + fileName);
+		
+		System.out.println(copyFile.getPath());
+
+		file.transferTo(copyFile);
+		return fileName;
+	}
+
 	// 플레이리스트 전체 조회 페이지
-    @GetMapping("/searchHome")
+	@GetMapping("/searchHome")
 	public String searchAllPlaylist(Model model) {
-    	SearchDTO dto = new SearchDTO();
+		SearchDTO dto = new SearchDTO();
 		model.addAttribute("allPlaylist", playlistService.allPlaylist(dto));
 		return "test/search/searchHome";
 	}
@@ -59,9 +85,13 @@ public class PlaylistController {
             return "redirect:/login";
         }
         
+		System.out.println(dto.getPlUrl());
+		String fileName = fileUpload(dto.getPlUrl());
+
         dto.setUserEmail(user.getUserEmail());
         
         playlistService.createPlaylist(dto);
+		dto.setPlImg("http://localhost:8081/playlistImg/" + fileName);
         
         // 태그 입력값 받기
         List<String> tagNames = new ArrayList<>();
@@ -137,6 +167,48 @@ public class PlaylistController {
     	model.addAttribute("likeranking", likeranking);
 		return "ranking/likeranking";
     }
+
+	// 플레이리스트 랜덤 조회
+	@GetMapping("/randomPlaylist")
+	public String randomPlaylist(Model model) {
+		List<Playlist> randomPlaylist = playlistService.randomPlaylist();
+		System.out.println(randomPlaylist);
+		model.addAttribute("randomPlaylist", randomPlaylist);
+		return "playlist/randomPlaylist";
+	}
+
+	// 태그 검색 랭킹 조회
+	@GetMapping("/searchTag")
+	public String searchTag() {
+		return "playlist/searchTag";
+	}
+	@GetMapping("/searchTagRanking")
+	public String searchTagRanking(String tagName, Model model) {
+		List<Playlist> playlist = playlistService.searchTagRanking(tagName);
+		model.addAttribute("searchTagRanking", playlist);
+		return "playlist/searchTagRanking";
+	}
+
+	// 한달 동안의 플레이리스트 좋아요 랭킹 조회
+	@GetMapping("/playListRankingOnMonth")
+	public String playListRankingOnMonth(Model model) {
+		List<Playlist> playlist = playlistService.playListRankingOnMonth();
+		model.addAttribute("playListRankingOnMonth", playlist);
+		return "playlist/playListRankingOnMonth";
+	}
+
+	// 연령별 좋아요 랭킹 조회
+	@GetMapping("/playListRankingOnAgeGroupSelect")
+	public String playListRankingOnAgeGroupSelect() {
+		return "playlist/playListRankingOnAgeGroupSelect";
+	}
+	@PostMapping("/playListRankingOnAgeGroup")
+	public String playListRankingOnAgeGroup(String ageGroup, Model model) {
+		List<Playlist> playlist = playlistService.playListRankingOnAgeGroup(ageGroup);
+		model.addAttribute("playListRankingOnAgeGroup", playlist);
+		model.addAttribute("ageGroup", ageGroup);
+		return "playlist/playListRankingOnAgeGroup";
+	}
     
     /*
     @PostMapping("/updatePlaylist")
