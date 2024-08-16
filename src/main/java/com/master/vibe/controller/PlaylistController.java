@@ -77,7 +77,7 @@ public class PlaylistController {
     }
 
     @PostMapping("/createPlaylist")
-    public String createPlaylist(CreatePlaylistDTO dto) {
+    public String createPlaylist(CreatePlaylistDTO dto, HttpServletRequest request) throws IllegalStateException, IOException {
     	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		User user = (User) authentication.getPrincipal();
         
