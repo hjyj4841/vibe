@@ -34,6 +34,7 @@
 			<th>Date</th>
 			<th>공유 여부</th>
 			<th>좋아요</th>
+			<th>count</th>
 		</tr>
 		<c:forEach items="${allPlaylist}" var="playlist">
 			<tr>
@@ -42,31 +43,55 @@
 				<td><img src="${playlist.plImg }"></td>
 				<td>${playlist.plDate }</td>
 				<td>${playlist.plPublicYn }</td>
-				<td>
-					<div class="like">
-						<i class="fa-regular fa-heart"></i>
-					</div>
-				</td>
+				<c:if test="${empty likeCheck }">
+					<td class="like" data-code="${playlist.plCode }"><i class="fa-regular fa-heart"></i></td>
+				</c:if>
+				<c:if test="${not empty likeCheck }">
+					<td class="unlike"><i class="fa-solid fa-heart"></i></td>
+				</c:if>
+				<td><div class="likeCount"></div></td>
 			</tr>
 		</c:forEach>
 	</table>
-
 	<script>
-		// post방식으로
-		// /like
-		// 회원 이메일, 플레이리스트 코드, 좋아요 날짜 보내서 좋아요 테이블에 저장
-		// 돌아와서 "#like"의 <i class="fa-regular fa-heart"></i> 숨김 후 <i class="fa-solid fa-heart"></i> 추가
-		
-		$(".like").click((e)=>{
+	const likes = document.querySelectorAll(".like");
+	
+	likes.forEach(like => {
+		like.addEventListener('click', function(){
+			const code = like.getAttribute("data-code");
+			alert(code);
 			$.ajax({
-				type: "get",
+				type: "post",
 				url: "/like",
-				success: function(result){
-					console.log(result);
-					$(e.target).text(result);
+				data: {
+					code : code
+				},
+				success:function(){
+					location.reload()
+					alert("좋아요");
+				},
+				error:function(){
+					alert("다시");
 				}
 			})
-		});
+		})
+	});
+	/*
+		$("#like").click(()=>{
+			$.ajax({
+				type: "post",
+				url: "/like",
+				data: {
+					code : ${playlist.plCode}
+				},
+				success:function(){
+					alert("좋아요");
+				},
+				error:function(){
+					alert("다시");
+				}
+			})
+		}); */
 	</script>
 </body>
 </html>

@@ -20,6 +20,14 @@
 			</association>
 		</association>
 	</resultMap>
+
+	<resultMap type="PlaylistLike" id="plLikeMap">
+		<id property="likeCode" column="like_code"/>
+		<result property="likeDate" column="like_date"/>
+		<result property="plCode" column="pl_code"/>
+		<result property="userEmail" column="user_email"/>
+	</resultMap>
+
 	<select id="likePlaylist" parameterType="String"
 		resultMap="playlistLikeMap">
 		SELECT l.like_code, l.like_date, c.user_email,
@@ -31,6 +39,33 @@
 		WHERE pl_public_yn = 'Y'
 		AND m.user_email = #{userEmail};
 	</select>
+
+	<!-- 좋아요 -->
+	<select id="likeCheck" parameterType="PlaylistLike" resultMap="plLikeMap">
+		SELECT * 
+		FROM playlistLike
+		JOIN user USING (user_email)
+		WHERE pl_code = #{plCode} AND user_email = #{userEmail}
+	</select>
+
+	<!-- 좋아요 취소 -->
+	<delete id="cancel" parameterType="Integer">
+		DELETE FROM playlistLike
+		WHERE like_code = #{likeCode}
+	</delete>
+	
+	<!-- 좋아요 테이블에 유저이메일, 플레이리스트 추가 -->
+	<insert id="like" parameterType="PlaylistLike" useGeneratedKeys="true" keyProperty="plCode">
+		INSERT INTO playlistLike (user_email, pl_code)
+		VALUES (#{userEmail}, #{plCode})
+	</insert>
+	
+	<!-- 총 좋아요 수 -->
+	<select id="count" parameterType="Integer" resultType="Integer">
+		SELECT count(*)
+		FROM playlistLike
+		WHERE pl_code = #{plCode}
+	</select>
 </mapper>
 
 
@@ -40,4 +75,10 @@
 
 
 
+	
+	
+	
+	
+
+</mapper>
 
