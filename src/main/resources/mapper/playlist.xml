@@ -68,11 +68,15 @@
 		WHERE pl_code = #{plCode}
 	</select>
 	
-	<!-- 플레이리스트 삭제 -->
-	<delete id="deletePlaylist" parameterType="Integer">
-    	DELETE FROM playlist
-    	WHERE pl_code = #{plCode}
-	</delete>
+	<!-- 플레이리스트 관련 음악 삭제 -->
+    <delete id="deletePlaylistMusic" parameterType="Integer">
+        DELETE FROM playlist_music WHERE pl_code = #{plCode}
+    </delete>
+
+    <!-- 플레이리스트 삭제 -->
+    <delete id="deletePlaylist" parameterType="Integer">
+        DELETE FROM playlist WHERE pl_code = #{plCode}
+    </delete>
 	
 	<!-- 플레이리스트 제목 수정 -->
     <update id="updatePlaylistTitle" parameterType="Playlist">
@@ -90,4 +94,15 @@
     	GROUP BY pl_code
     	ORDER BY COUNT(like_code) DESC;
     </select>
+
+	<!-- 플레이리스트 코드로 태그 이름 조회 -->
+	<select id="findTagsByPlaylistCode" resultType="String" parameterType="int">
+	    SELECT tag_name 
+	    FROM playlist
+	    JOIN playlist_tag USING pl_code
+	    JOIN tag USING tag_code
+	    WHERE pl_code = #{plCode}
+	</select>
+
 </mapper>
+

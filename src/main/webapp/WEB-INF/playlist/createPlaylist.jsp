@@ -14,6 +14,14 @@
 		<label for="plTitle">플레이리스트 제목:</label> 
 		<input type="text" id="plTitle" name="plTitle" class="hidden-value" />
 
+		<ul id="tag-list" class="tag-list">
+		    <li><input type="text" name="tag1" placeholder="태그 입력" /></li>
+		    <li><input type="text" name="tag2" placeholder="태그 입력" /></li>
+		    <li><input type="text" name="tag3" placeholder="태그 입력" /></li>
+		    <li><input type="text" name="tag4" placeholder="태그 입력" /></li>
+		    <li><input type="text" name="tag5" placeholder="태그 입력" /></li>
+		</ul>
+
 		<!-- 삭제 금지! -->
 		<!-- 아래 코드 뭐하려고 했던 거냐면. 플레이리스트 생성 시 제목을 무조건 입력해야 하는 게 아니라
       			 사용자가 입력을 안 하고 생성 버튼만 눌러도 default 값으로 #플레이리스트 or 플레이리스트 #N 지정해서 넘겨주기 위함

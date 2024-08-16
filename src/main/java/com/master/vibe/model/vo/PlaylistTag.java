@@ -9,4 +9,6 @@ public class PlaylistTag {
 	private int plTagCode;
 	private Playlist playlist;
 	private Tag tag;
+	private int plCode;
+	private int tagCode;
 }

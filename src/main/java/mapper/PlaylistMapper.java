@@ -29,4 +29,6 @@ public interface PlaylistMapper {
     void updatePlaylistTitle(Playlist playlist); // 플레이리스트 제목 수정
     
     List<Playlist> likerankingPlaylist(); // 랭킹 : 좋아요순
+	void deletePlaylistMusic(int plCode);
+	List<String> findTagsByPlaylistCode(int plCode);
 }

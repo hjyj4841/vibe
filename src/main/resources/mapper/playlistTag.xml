@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mapper.PlaylistTagMapper">
@@ -59,5 +58,28 @@
 			</when>
 		</choose>
 	</select> -->
+	
+	<!-- 태그를 DB에 삽입 -->
+    <insert id="insertTag" parameterType="com.master.vibe.model.vo.Tag">
+        INSERT INTO tag(tag_name) VALUES (#{tagName})
+    </insert>
+
+    <!-- 태그 이름으로 태그 조회 -->
+    <select id="selectTagByName" parameterType="String" resultType="com.master.vibe.model.vo.Tag">
+        SELECT * FROM tag WHERE tag_name = #{tagName}
+    </select>
+
+    <!-- 플레이리스트 태그를 DB에 삽입 -->
+    <insert id="insertPlaylistTag">
+        INSERT INTO playlist_tag(pl_code, tag_code) VALUES (#{plCode}, #{tagCode})
+    </insert>
+	
+	<select id="findTagsByPlaylistCode" resultType="String" parameterType="int">
+	    SELECT tag_name 
+	    FROM tag
+	    JOIN playlist_tag USING (tag_code)
+	    WHERE pl_code = #{plCode}
+	</select>
+	
 	
 </mapper>

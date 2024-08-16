@@ -14,6 +14,14 @@
 		<a href="deletePlaylist?plCode=${playlist.plCode }">플레이리스트 삭제</a>
 		<a href="updatePlaylist?plCode=${playlist.plCode }">플레이리스트 수정</a>
 	</c:if>
+	
+	<h4>태그 : </h4>
+	<ul>
+		<c:forEach items="${tagList}" var="tag">
+			<li>${tag}</li>
+		</c:forEach>
+	</ul>
+	
 	<table>
 		<tr>
 			<th>앨범커버</th>

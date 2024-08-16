@@ -3,10 +3,12 @@ package com.master.vibe.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.master.vibe.model.dto.AddTagDTO;
 import com.master.vibe.model.vo.Tag;
+
+import mapper.PlaylistTagMapper;
 import mapper.TagMapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -14,21 +16,34 @@ public class TagService {
 
     @Autowired
     private TagMapper tagMapper;
+    
+    @Autowired
+    private PlaylistTagMapper playlistTagMapper;
 
-    public void addTagsToPlaylist(AddTagDTO dto, List<String> tagNames) {
-        // 1. 태그가 존재하는지 확인하고, 없으면 추가
-        for (String tagName : tagNames) {
-            Tag existingTag = tagMapper.findTagByName(tagName);
-            if (existingTag == null) {
-                tagMapper.insertTag(new Tag(0, tagName));
-            }
+    public void addTagsByName(List<String> tagNames) {
+        if (tagNames == null) {
+            tagNames = new ArrayList<>();
         }
 
-        // 2. 플레이리스트와 태그를 연결
         for (String tagName : tagNames) {
-            Tag tag = tagMapper.findTagByName(tagName);
+            List<Tag> existingTags = tagMapper.findTagByName(tagName);
+            if (existingTags.isEmpty()) {
+                Tag tag = new Tag();
+                tag.setTagName(tagName);
+                tagMapper.insertTag(tag);
+            }
+        }
+    }
+
+    public List<String> getTagsByPlaylistCode(int plCode) {
+        return tagMapper.findTagsByPlaylistCode(plCode);
+    }
+
+    public void addPlaylistTags(int plCode, List<String> tagNames) {
+        for (String tagName : tagNames) {
+            Tag tag = playlistTagMapper.selectTagByName(tagName);
             if (tag != null) {
-                tagMapper.addTagToPlaylist(dto.getPlaylistId(), tag.getTagCode());
+                playlistTagMapper.insertPlaylistTag(plCode, tag.getTagCode());
             }
         }
     }
