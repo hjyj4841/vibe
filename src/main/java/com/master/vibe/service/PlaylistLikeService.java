@@ -26,6 +26,7 @@ public class PlaylistLikeService {
 	
 	public List<PlaylistLike> playlistLike(String userEmail) {
 		return playlistLikeMapper.likePlaylist(userEmail);
+	}
 
 	// 좋아요
 	public void playlistLike(PlaylistLike vo) {

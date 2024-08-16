@@ -67,18 +67,3 @@
 		WHERE pl_code = #{plCode}
 	</select>
 </mapper>
-
-
-
-
-
-
-
-
-	
-	
-	
-	
-
-</mapper>
-
