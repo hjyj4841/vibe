@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.master.vibe.model.dto.CreatePlaylistDTO;
 import com.master.vibe.model.dto.SearchDTO;
+import com.master.vibe.model.vo.Music;
 import com.master.vibe.model.vo.Playlist;
 import mapper.PlaylistMapper;
 
@@ -42,11 +43,25 @@ public class PlaylistService {
     
     // 플레이리스트 삭제
     public void deletePlaylist(int plCode) {
-        playlistMapper.deletePlaylist(plCode);
+    	playlistMapper.deletePlaylistMusic(plCode);
+    	playlistMapper.deletePlaylist(plCode);
     }
     
     // 플레이리스트 수정
     public void updatePlaylistTitle(Playlist playlist) {
         playlistMapper.updatePlaylistTitle(playlist);
+    }
+
+	public Playlist getPlaylistByCode(int plCode) {
+		return null;
+	}
+
+	public List<Music> getMusicListByPlaylistCode(int plCode) {
+		return null;
+	}
+	
+	// 플레이리스트 코드로 태그 이름 리스트 가져오기
+    public List<String> getTagsByPlaylistCode(int plCode) {
+        return playlistMapper.findTagsByPlaylistCode(plCode);
     }
 }

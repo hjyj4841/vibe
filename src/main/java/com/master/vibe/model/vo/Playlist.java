@@ -10,18 +10,13 @@ import lombok.NoArgsConstructor;
 public class Playlist {
 	private int plCode;
 	private String plTitle;
+	private String userEmail;
 	private String plImg;
 	private Date plDate;
 	private char plPublicYn;
 	private User user;
 	
 }
-
-
-
-
-
-
 
 
 

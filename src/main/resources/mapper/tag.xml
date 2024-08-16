@@ -3,20 +3,27 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mapper.TagMapper">
 
-    <!-- 태그 이름으로 태그 검색 -->
-    <select id="findTagByName" parameterType="String" resultType="Tag">
-        SELECT * FROM tag WHERE tag_name = #{tagName}
+    <!-- resultMap 설정 -->
+    <resultMap id="tagMap" type="Tag">
+        <id column="tag_code" property="tagCode"/>
+        <result column="tag_name" property="tagName"/>
+    </resultMap>
+
+    <!-- 태그 이름으로 태그 조회 -->
+    <select id="findTagByName" resultMap="tagMap" parameterType="String">
+        SELECT * FROM tag
+        WHERE tag_name = #{tagName}
     </select>
 
     <!-- 태그 추가 -->
     <insert id="insertTag" parameterType="Tag">
-        INSERT INTO tag (tag_name)
-        VALUES (#{tagName})
+        INSERT INTO tag (tag_code, tag_name) VALUES (#{tagCode}, #{tagName})
     </insert>
 
-    <!-- 플레이리스트와 태그 연결 -->
-    <insert id="addTagToPlaylist" parameterType="Map">
-        INSERT INTO playlist_tag (pl_code, tag_code)
-        VALUES (#{playlistId}, #{tagCode})
-    </insert>
+    <!-- 태그 코드로 태그 이름 조회 -->
+    <select id="findTagNameByCode" resultType="String" parameterType="int">
+        SELECT tag_name FROM tag
+        WHERE tag_code = #{tagCode}
+    </select>
+
 </mapper>

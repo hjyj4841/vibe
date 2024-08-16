@@ -1,16 +1,17 @@
 package mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import com.master.vibe.model.vo.Tag;
 
 @Mapper
 public interface TagMapper {
 
-    Tag findTagByName(@Param("tagName") String tagName);
-    
+    List<Tag> findTagByName(String tagName);
     void insertTag(Tag tag);
-
-    void addTagToPlaylist(@Param("playlistId") int playlistId, @Param("tagCode") int tagCode);
+    String findTagNameByCode(int tagCode);
+	List<String> findTagsByPlaylistCode(int plCode);
+     
 }

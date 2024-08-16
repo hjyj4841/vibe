@@ -1,5 +1,8 @@
 package com.master.vibe.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,10 +10,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.master.vibe.model.dto.CreatePlaylistDTO;
+import com.master.vibe.model.vo.Music;
 import com.master.vibe.model.vo.Playlist;
 import com.master.vibe.model.vo.User;
 import com.master.vibe.model.dto.SearchDTO;
 import com.master.vibe.service.PlaylistService;
+import com.master.vibe.service.TagService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -20,6 +25,9 @@ public class PlaylistController {
 
 	@Autowired
 	private PlaylistService playlistService;
+	
+	@Autowired
+	private TagService tagService;
 	
 	// 플레이리스트 전체 조회 페이지
     @GetMapping("/searchHome")
@@ -32,26 +40,52 @@ public class PlaylistController {
     // 플레이리스트 생성
     @GetMapping("/createPlaylist")
     public String createPlaylist() {
-    	return "playlist/createPlaylist";
+        return "playlist/createPlaylist";
     }
+
     @PostMapping("/createPlaylist")
     public String createPlaylist(CreatePlaylistDTO dto, HttpServletRequest request) {
         HttpSession session = request.getSession();
         User user = (User)session.getAttribute("user");
         
+        if (user == null) {
+            return "redirect:/login";
+        }
+        
         dto.setUserEmail(user.getUserEmail());
-        // createPlaylist.jsp에서 사용자가 플레이리스트 생성 시 기본으로 plImg /createplaylistimg/default.png를 불러옴 --> DB Default값으로 자동추가 되도록 수정 예정
         
-    	playlistService.createPlaylist(dto);
-    	
-        return "redirect:/myPlaylist"; // 내가 만든 플레이리스트 조회
-        // int playlistId = playlistService.createPlaylist(dto); -> 생성된 플레이리스트 ID를 태그 입력 페이지로 전달
-        // return new RedirectView("/addTags?playlistId=" + playlistId); -> 플레이리스트 태그 추가 위함 -> 1) 상세 화면에서 수정가능 하도록 하는 방안 2) 생성시 태그 추가하는 기능은 보류
-        // return "test/playlist/createPlaylistInfo"; // 생성된 플레이리스트 정보 페이지로 이동
-        // return "test/playlist/createOKPlaylist"; // 플레이리스트 생성 완료 페이지로 이동
+        playlistService.createPlaylist(dto);
         
+        // 태그 입력값 받기
+        List<String> tagNames = new ArrayList<>();
+        for (int i = 1; i <= 5; i++) {
+            String tag = request.getParameter("tag" + i);
+            if (tag != null && !tag.trim().isEmpty()) {
+                tagNames.add(tag.trim());
+            }
+        }
+
+        // 태그 서비스 호출
+        tagService.addTagsByName(tagNames);
+
+        // 플레이리스트와 태그 연동
+        int plCode = dto.getPlCode(); // 생성된 플레이리스트 코드 가져오기
+        tagService.addPlaylistTags(plCode, tagNames);
+        
+        return "redirect:/myPlaylist";
     }
+    
+    @GetMapping("/playlistInfo")
+    public String showPlaylistInfo(int plCode, Model model) {
+        Playlist playlist = playlistService.getPlaylistByCode(plCode);
+        List<String> tagList = playlistService.getTagsByPlaylistCode(plCode);
+
+        model.addAttribute("playlist", playlist);
+        model.addAttribute("tagList", tagList);
         
+        return "playlist/showPlaylistInfo";
+    }
+    
     // 회원본인의 플레이리스트 조회
     @GetMapping("/myPlaylist")
     public String myPlaylist(HttpServletRequest request, Model model) {
