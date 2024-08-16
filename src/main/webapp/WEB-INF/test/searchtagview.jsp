@@ -20,7 +20,7 @@
            </tr>
          </thead>
          <tbody>
-            <c:forEach var="playlist items="$>
+            <c:forEach var="playlist items=">
               <tr>
                 <td><c:out value="${playlist.plCode}" /></td>
                 <td><c:out value="${playlist.plName}" /></td>
