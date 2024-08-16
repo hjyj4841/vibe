@@ -101,7 +101,7 @@ public class SpotifyService {
 		String accessToken = getAccessToken();
 		
 		// 기능마다 바뀌는 구문
-		String url = "https://api.spotify.com/v1/search?q=" + musicName + "&type=track&limit=20&offset=" + offset;
+		String url = "https://api.spotify.com/v1/search?q=" + musicName + "&type=track&limit=50&offset=" + offset;
 		
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Authorization", "Bearer " + accessToken);

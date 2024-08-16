@@ -114,6 +114,13 @@
 			<version>20210307</version>
 		</dependency>
 
+		<!-- SMB 프로토콜 (이미지 업로드 관련)-->
+		<dependency>
+			<groupId>com.hierynomus</groupId>
+			<artifactId>smbj</artifactId>
+			<version>0.10.0</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

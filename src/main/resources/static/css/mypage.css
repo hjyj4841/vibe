@@ -59,6 +59,23 @@
 
 .myProfile > *{
 	margin: 6px;
+	
+}
+
+.shareMyProfile {
+	border-radius: 50px;
+	background-color: skyblue;
+	width: 50px;
+	height: 10px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.shareMyProfile p{
+	color : black;
+	font-size: 6px;
+	font-weight: 900;
+	
 }
 .spotifyInfo{
 	color: white;

@@ -22,4 +22,5 @@ public class User {
 	private char userManager;
 	private Date userEnrollDate;
 	private String userPhone;
+	private String ageGroup;
 }

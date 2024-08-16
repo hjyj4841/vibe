@@ -19,6 +19,7 @@
       </c:if>
       <c:if test="${user != null}">
         <li><a href="mypage">마이페이지</a></li>
+        <li><a href="musicListen">음악 듣기</a>
         <li><a href="userLikeTag">내가 좋아요한 태그</a></li>
         <li><a href="logout">로그아웃</a></li>
       </c:if>
