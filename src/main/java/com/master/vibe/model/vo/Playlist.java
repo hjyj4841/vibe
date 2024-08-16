@@ -15,6 +15,9 @@ public class Playlist {
 	private char plPublicYn;
 	private User user;
 	
+	// 랭킹 : 좋아요순
+	private int likeCode;
+	
 }
 
 

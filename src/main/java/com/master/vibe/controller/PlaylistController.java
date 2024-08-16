@@ -1,5 +1,7 @@
 package com.master.vibe.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -90,6 +92,17 @@ public class PlaylistController {
     public String updatePlaylist(Playlist playlist) {
         playlistService.updatePlaylistTitle(playlist);
         return "redirect:/myPlaylist";
+    }
+    
+    // 랭킹 : 좋아요순
+    @GetMapping("/likeranking")
+    public String likeranking(Model model) {
+    	List<Playlist> likeranking = playlistService.likerankingPlaylist();
+    	for(Playlist pl : likeranking) {
+    		System.out.println(pl);
+    	}
+    	model.addAttribute("likeranking", likeranking);
+		return "ranking/likeranking";
     }
     
     /*

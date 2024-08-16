@@ -77,16 +77,19 @@
 			<artifactId>mybatis-spring-boot-starter</artifactId>
 			<version>3.0.3</version>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis-spring</artifactId>
 			<version>3.0.3</version>
 		</dependency>
+		
 		<!-- JDBC -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jdbc</artifactId>
 		</dependency>
+		
 		<!-- mySQL Connector -->
 		<dependency>
 			<groupId>com.mysql</groupId>
