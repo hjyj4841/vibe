@@ -80,23 +80,14 @@
         SET pl_title = #{plTitle}
         WHERE pl_code = #{plCode}
     </update>
-
+    
+    <!-- 랭킹 : 좋아요순 : 리스트 30개 조회-->
+    <select id="likerankingPlaylist" resultMap="playlistMap">
+    	SELECT pl_code, pl_title, pl_img, pl_date
+    	FROM playlist
+    	LEFT JOIN playlist_like USING (pl_code)
+    	WHERE pl_public_yn = 'Y'
+    	GROUP BY pl_code
+    	ORDER BY COUNT(like_code) DESC;
+    </select>
 </mapper>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

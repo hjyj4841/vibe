@@ -23,7 +23,7 @@ prefix="c" %> <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
               <p class="myEmail">${user.userEmail }</p>
               <c:choose>
                 <c:when test="${user.userSpotifyYn == 89}">
-                  <div class="connectSpotify spotifyInfo">
+                  <div class="confrnectSpotify spotifyInfo">
                     <i class="fa-brands fa-spotify"></i>
                     <span>connected</span>
                   </div>
@@ -50,7 +50,7 @@ prefix="c" %> <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
                 </a>
               </div>
               <div>
-                <a>
+                <a href="playlistLike">
                   <i class="fa-brands fa-gratipay"></i>
                   <span>Like PlayList</span>
                 </a>

@@ -3,6 +3,7 @@ package com.master.vibe.model.dto;
 import java.util.Date;
 import java.util.List;
 
+import com.master.vibe.model.vo.Playlist;
 import com.master.vibe.model.vo.PlaylistTag;
 import com.master.vibe.model.vo.User;
 
@@ -20,4 +21,7 @@ public class PlaylistDTO {
 	private User user;
 	
 	private List<PlaylistTag> tagList;
+	
+	// 랭킹 : 좋아요순
+	private int likeCode;
 }

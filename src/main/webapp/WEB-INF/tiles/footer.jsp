@@ -11,6 +11,8 @@
 			<c:if test="${user != null }">
 				<a href="mypage" class="signIn">my Page</a>
 			</c:if>
-			<a href="" class="ranking">Ranking</a>
+			
+			<!-- 랭킹 조회 -->
+			<a href="likeranking" class="ranking">Ranking</a>
 		</nav>
 	</footer>

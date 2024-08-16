@@ -24,7 +24,7 @@
 			<c:if test="${user != null }">
 				<a href="mypage" class="signIn">My Page</a>
 			</c:if>
-			<a href="" class="ranking">Ranking</a>
+			<a href="likeranking" class="ranking">Ranking</a>
 		</nav>
 		<form class="mainSearchBox" action="searchPlaylist">
 			<select name="select">
