@@ -4,10 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,7 +30,6 @@ public class UserController {
 	public String testPage() {
 		return "test/test";
 	}
-
 	@GetMapping("/userTest")
 	public String userTest() {
 		return "test/userTest";
@@ -65,15 +62,14 @@ public class UserController {
 		return "user/login";
 	}
 	
-	// 로그인 에러
+	// 로그인 에러 시 리턴할 메세지
 	@PostMapping("/loginError")
 	public String loginError(Model model) {
 		
 		model.addAttribute("msg", "ID 혹은 PASSWORD가 잘못 되었습니다.");
 		return "user/login";
 	}
-
-	// 탈퇴한 회원 재가입 남은 일수 조회 
+	// 탈퇴한 회원 재가입 남은 일수 조회 - 사용 예정
 	// userService.rejoinDate(user.getUserEmail());
 	
 	// 계정 찾기 페이지로 이동
@@ -81,8 +77,8 @@ public class UserController {
 	public String findUser() {
 		return "user/findUser";
 	}
-	// 계정 찾기
-	@PostMapping("findUser")
+	// 계정 찾기 - ID or PASSWORD
+	@PostMapping("/findUser")
 	public String findUserID(User user, String birthDay, Model model) {
 		try {
 			user.setUserBirth(new SimpleDateFormat("yyyy-MM-dd").parse(birthDay));
@@ -96,26 +92,30 @@ public class UserController {
 			return "user/showUserPWD";
 		}
 	}
-	// 비밀번호 수정
-	@PostMapping("updateUserPWD")
+	// 비밀번호 수정 - PASSWORD 찾기 이후 이어지는 메서드
+	@PostMapping("/updateUserPWD")
 	public String updateUserPWD(User user) {
 		userService.updateUserPWD(user);
 		return "user/login";
 	}
 
 	// 마이페이지
-	@GetMapping("mypage")
+	@GetMapping("/mypage")
 	public String mypage(Model model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		User user = (User) authentication.getPrincipal();
 		
+		// 유저가 좋아하는 태그 top 5
+		List<UserLikeTagDTO> list = userService.userLikeTag(user.getUserEmail());
+		
+		model.addAttribute("likeTagList", list);
 		model.addAttribute("user", user);
 		
 		return "user/mypage";
 	}
 
 	// 회원 수정
-	@GetMapping("updateUser")
+	@GetMapping("/updateUser")
 	public String updateUser(Model model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		User user = (User) authentication.getPrincipal();
@@ -125,7 +125,7 @@ public class UserController {
 		return "user/updateUser";
 	}
 
-	@PostMapping("updateUser")
+	@PostMapping("/updateUser")
 	public String updateUser(User user, Model model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		User u = (User) authentication.getPrincipal(); // 현재 접속중인 유저 정보
@@ -145,12 +145,11 @@ public class UserController {
 	}
 
 	// 회원 탈퇴
-	@GetMapping("deleteUser")
+	@GetMapping("/deleteUser")
 	public String deleteUser() {
 		return "user/deleteUser";
 	}
-
-	@PostMapping("deleteUser")
+	@PostMapping("/deleteUser")
 	public String deleteUser(String userPassword, Model model, HttpServletRequest request) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		User user = (User) authentication.getPrincipal();
@@ -168,30 +167,14 @@ public class UserController {
 		return "user/deleteUser";
 	}
 
-	// join
-	// 내가 좋아요한 태그
-	@GetMapping("userLikeTag")
-    public String userLikeTag(HttpServletRequest request, Model model) {
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
-        
-        if (user != null) {
-            List<UserLikeTagDTO> list = userService.userLikeTag(user.getUserEmail());
-            System.out.println(list.isEmpty());
-            model.addAttribute("likeTagList", list);
-            return "user/userLikeTag";
-        }
-        return "user/login";
-    }
-
 	// 내 프로필 공유하기
-	@GetMapping("shareMyProfile")
+	@GetMapping("/shareMyProfile")
 	public String shareMyProfile() {
 		return "user/shareMyProfile";
 	}
 
 	// 로그인 회원 음악 듣기
-	@GetMapping("musicListen")
+	@GetMapping("/musicListen")
 	public String musicListen(HttpServletRequest request, Model model) {
 		HttpSession session = request.getSession();
 		Object token = session.getAttribute("accessToken");
@@ -219,12 +202,11 @@ public class UserController {
 	public boolean nicknameUpdate(String userNickname) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		User user = (User) authentication.getPrincipal();
-		
 		User u = null;
 		
 		try {
 			u = user.clone();
-		} catch (CloneNotSupportedException e) {}
+		} catch (Exception e) {}
 		
 		u.setUserNickname(userNickname);
 		

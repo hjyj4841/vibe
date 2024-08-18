@@ -90,6 +90,5 @@ td a {
 		document.getElementById("link-copy-icon").addEventListener("click",
 				onClickCopyLink);
 	</script>
-
 </body>
 </html>

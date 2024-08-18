@@ -26,7 +26,7 @@ public class PlaylistTagController {
 	private PlaylistService playlistService;
 	
 	// 플레이리스트 검색 페이지 (title or tag)
-  	@GetMapping("searchPlaylist")
+  	@GetMapping("/searchPlaylist")
  	public String searchPlaylist(Model model, SearchDTO dto) {
   		
   		SearchDTO search = new SearchDTO();
@@ -59,7 +59,7 @@ public class PlaylistTagController {
   			PlaylistDTO pDto = PlaylistDTO.builder()
   					.plCode(play.getPlCode())
   					.plTitle(play.getPlTitle())
-  					//.plImg(play.getPlImg())
+  					.plImg(play.getPlImg())
   					.tagList(tagList)
   					.user(User.builder()
   							.userNickname(play.getUser().getUserNickname())

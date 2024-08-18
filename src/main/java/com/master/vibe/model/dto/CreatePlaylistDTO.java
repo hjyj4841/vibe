@@ -13,33 +13,9 @@ public class CreatePlaylistDTO {
 	private String userEmail;
 	private String plImg;
 	private List<String> tags;
+	private MultipartFile plUrl;
+	
 	public int getPlCode() {
 		return 0;
 	}
-	private MultipartFile plUrl;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

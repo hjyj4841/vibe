@@ -6,11 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,11 +20,12 @@ import com.master.vibe.model.vo.Music;
 import com.master.vibe.model.vo.Playlist;
 import com.master.vibe.model.vo.User;
 import com.master.vibe.model.dto.SearchDTO;
+import com.master.vibe.service.PlaylistMusicService;
 import com.master.vibe.service.PlaylistService;
+import com.master.vibe.service.SpotifyService;
 import com.master.vibe.service.TagService;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class PlaylistController {
@@ -35,10 +34,17 @@ public class PlaylistController {
 	private PlaylistService playlistService;
 	
 	@Autowired
+	private PlaylistMusicService playlistMusicService;
+	
+	@Autowired
 	private TagService tagService;
 	
-	@Value("${spring.servlet.multipart.location}")
-    private String uploadPath;
+	@Autowired
+	private SpotifyService spotifyService;
+	
+//	추합 중 오류 때문에 임시 주석으로 대체
+//	@Value("${spring.servlet.multipart.location}")
+//    private String uploadPath;
 
 	// 플레이리스트 이미지 업로드 관련 // 서버 연결 관련 차후 보완 필요! 2024.08.16/현호
 //	@Value("${file.upload-dir}")
@@ -49,11 +55,11 @@ public class PlaylistController {
 		String fileName = uuid.toString() + "_" + file.getOriginalFilename();
 		System.out.println(fileName);
 //	    File copyFile = new File("\\\\192.168.10.6\\vibe\\playlistImg\\" + fileName);
-		File copyFile = new File(uploadPath + File.separator + "playlistImg" + File.separator + fileName);
+//		File copyFile = new File(uploadPath + File.separator + "playlistImg" + File.separator + fileName);
 		
-		System.out.println(copyFile.getPath());
+//		System.out.println(copyFile.getPath());
 
-		file.transferTo(copyFile);
+//		file.transferTo(copyFile);
 		return fileName;
 	}
 
@@ -81,10 +87,6 @@ public class PlaylistController {
     	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		User user = (User) authentication.getPrincipal();
         
-        if (user == null) {
-            return "redirect:/login";
-        }
-        
 		System.out.println(dto.getPlUrl());
 		String fileName = fileUpload(dto.getPlUrl());
 
@@ -92,7 +94,7 @@ public class PlaylistController {
         
         playlistService.createPlaylist(dto);
 		dto.setPlImg("http://localhost:8081/playlistImg/" + fileName);
-        
+		
         // 태그 입력값 받기
         List<String> tagNames = new ArrayList<>();
         for (int i = 1; i <= 5; i++) {
@@ -101,7 +103,7 @@ public class PlaylistController {
                 tagNames.add(tag.trim());
             }
         }
-
+        
         // 태그 서비스 호출
         tagService.addTagsByName(tagNames);
 
@@ -112,23 +114,33 @@ public class PlaylistController {
         return "redirect:/myPlaylist";
     }
     
-    @GetMapping("/playlistInfo")
+    @GetMapping("/showPlaylistInfo")
     public String showPlaylistInfo(int plCode, Model model) {
-        Playlist playlist = playlistService.getPlaylistByCode(plCode);
-        List<String> tagList = playlistService.getTagsByPlaylistCode(plCode);
-
+    	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		User user = (User) authentication.getPrincipal();
+    	
+    	List<String> musicCode = playlistMusicService.showMusicList(plCode);
+        Playlist playlist = playlistService.selectPlaylistByPlCode(plCode);
+//        List<String> tagList = playlistService.getTagsByPlaylistCode(plCode);
+        
+        if(musicCode.size() != 0) {
+    		List<Music> musicInfo = spotifyService.getMusicINfoByMusicCode(musicCode);
+    		model.addAttribute("musicList", musicInfo);
+    	}
+        
+        model.addAttribute("user", user);
         model.addAttribute("playlist", playlist);
-        model.addAttribute("tagList", tagList);
+//        model.addAttribute("tagList", tagList);
         
         return "playlist/showPlaylistInfo";
     }
     
     // 회원본인의 플레이리스트 조회
     @GetMapping("/myPlaylist")
-    public String myPlaylist(HttpServletRequest request, Model model) {
+    public String myPlaylist(Model model) {
     	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		User user = (User) authentication.getPrincipal();
-    	
+		
     	model.addAttribute("playlist", playlistService.myPlaylist(user.getUserEmail()));
     	
     	return "playlist/myPlaylist";
@@ -139,32 +151,33 @@ public class PlaylistController {
     public String deletePlaylist(String plCode) {
         playlistService.deletePlaylist(Integer.parseInt(plCode));
         return "redirect:/myPlaylist";
-    }
+    }	
     
     // 플레이리스트 수정 -- 현재는 이름만 수정 가능
     @GetMapping("/updatePlaylist")
     public String updatePlaylist(String plCode, Model model) {
     	
     	model.addAttribute("playlist", 
-    			playlistService.selectPlaylistForPlCode(Integer.parseInt(plCode)));
+    			playlistService.selectPlaylistByPlCode(Integer.parseInt(plCode)));
     	
         return "playlist/updatePlaylist";
     }
-    
     @PostMapping("/updatePlaylist")
     public String updatePlaylist(Playlist playlist) {
         playlistService.updatePlaylistTitle(playlist);
         return "redirect:/myPlaylist";
     }
     
+    // 랭킹 관련
+    @GetMapping("/rankingHome")
+    public String rankingHome() {
+    	return "ranking/rankingHome";
+    }
+    
     // 랭킹 : 좋아요순
     @GetMapping("/likeranking")
     public String likeranking(Model model) {
-    	List<Playlist> likeranking = playlistService.likerankingPlaylist();
-    	for(Playlist pl : likeranking) {
-    		System.out.println(pl);
-    	}
-    	model.addAttribute("likeranking", likeranking);
+    	model.addAttribute("likeranking", playlistService.likerankingPlaylist());
 		return "ranking/likeranking";
     }
 
@@ -180,13 +193,13 @@ public class PlaylistController {
 	// 태그 검색 랭킹 조회
 	@GetMapping("/searchTag")
 	public String searchTag() {
-		return "playlist/searchTag";
+		return "ranking/searchTag";
 	}
 	@GetMapping("/searchTagRanking")
 	public String searchTagRanking(String tagName, Model model) {
 		List<Playlist> playlist = playlistService.searchTagRanking(tagName);
 		model.addAttribute("searchTagRanking", playlist);
-		return "playlist/searchTagRanking";
+		return "ranking/searchTagRanking";	
 	}
 
 	// 한달 동안의 플레이리스트 좋아요 랭킹 조회
@@ -194,20 +207,20 @@ public class PlaylistController {
 	public String playListRankingOnMonth(Model model) {
 		List<Playlist> playlist = playlistService.playListRankingOnMonth();
 		model.addAttribute("playListRankingOnMonth", playlist);
-		return "playlist/playListRankingOnMonth";
+		return "ranking/playListRankingOnMonth";
 	}
 
 	// 연령별 좋아요 랭킹 조회
 	@GetMapping("/playListRankingOnAgeGroupSelect")
 	public String playListRankingOnAgeGroupSelect() {
-		return "playlist/playListRankingOnAgeGroupSelect";
+		return "ranking/playListRankingOnAgeGroupSelect";
 	}
 	@PostMapping("/playListRankingOnAgeGroup")
 	public String playListRankingOnAgeGroup(String ageGroup, Model model) {
 		List<Playlist> playlist = playlistService.playListRankingOnAgeGroup(ageGroup);
 		model.addAttribute("playListRankingOnAgeGroup", playlist);
 		model.addAttribute("ageGroup", ageGroup);
-		return "playlist/playListRankingOnAgeGroup";
+		return "ranking/playListRankingOnAgeGroup";
 	}
     
     /*

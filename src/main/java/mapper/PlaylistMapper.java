@@ -16,10 +16,14 @@ import com.master.vibe.model.vo.Playlist;
 public interface PlaylistMapper {
 	
 	List<Playlist> allPlaylist(SearchDTO dto); // 플리 전체 조회
+	
 	void movePlaylist(String userEmail); // 플레이리스트 소유자를 관리자로 변경(회원 탈퇴시)
+	
 	void createPlaylist(CreatePlaylistDTO dto); // 플레이리스트 생성
+	
 	List<Playlist> myPlaylist(String userEmail); // 회원 본인의 플레이리스트 조회
-	Playlist selectPlaylistForPlCode(int plCode); // plCode로 플레이리스트 조회
+	
+	Playlist selectPlaylistByPlCode(int plCode); // plCode로 플레이리스트 조회
 
     // @Select("SELECT LAST_INSERT_ID()")
     // int getLastInsertedId(); // 최근 삽입된 플레이리스트의 ID를 가져옴
@@ -29,7 +33,9 @@ public interface PlaylistMapper {
     void updatePlaylistTitle(Playlist playlist); // 플레이리스트 제목 수정
     
     List<Playlist> likerankingPlaylist(); // 랭킹 : 좋아요순
+    
 	void deletePlaylistMusic(int plCode);
+	
 	List<String> findTagsByPlaylistCode(int plCode);
 
     List<Playlist> randomPlaylist(); // 플레이리스트 랜덤 조회 

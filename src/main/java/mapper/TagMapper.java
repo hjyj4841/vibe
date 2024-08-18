@@ -10,8 +10,11 @@ import com.master.vibe.model.vo.Tag;
 public interface TagMapper {
 
     List<Tag> findTagByName(String tagName);
+    
     void insertTag(Tag tag);
+    
     String findTagNameByCode(int tagCode);
+    
 	List<String> findTagsByPlaylistCode(int plCode);
      
 }

@@ -6,13 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.master.vibe.model.dto.CreatePlaylistDTO;
-import com.master.vibe.model.dto.PlaylistDTO;
 import com.master.vibe.model.dto.SearchDTO;
 import com.master.vibe.model.vo.Music;
 import com.master.vibe.model.vo.Playlist;
 import mapper.PlaylistMapper;
-
-// 플레이리스트 추가 시 음악 정보를 다루는 로직
 
 @Service
 public class PlaylistService {
@@ -31,8 +28,8 @@ public class PlaylistService {
 	}
 
 	// plcode로 플레이리스트 정보 조회
-	public Playlist selectPlaylistForPlCode(int plCode) {
-		return playlistMapper.selectPlaylistForPlCode(plCode);
+	public Playlist selectPlaylistByPlCode(int plCode) {
+		return playlistMapper.selectPlaylistByPlCode(plCode);
 	}
 
 	// 플레이리스트 생성
@@ -55,10 +52,6 @@ public class PlaylistService {
 	// 랭킹 : 좋아요순
 	public List<Playlist> likerankingPlaylist() {
 		return playlistMapper.likerankingPlaylist();
-	}
-
-	public Playlist getPlaylistByCode(int plCode) {
-		return null;
 	}
 
 	public List<Music> getMusicListByPlaylistCode(int plCode) {

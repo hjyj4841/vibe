@@ -12,6 +12,6 @@ uri="http://www.springframework.org/security/tags" %>
     <sec:authorize access="isAuthenticated()">
       <a href="mypage" class="signIn">my Page</a>
     </sec:authorize>
-    <a href="likeranking" class="ranking">Ranking</a>
+    <a href="rankingHome" class="ranking">Ranking</a>
   </nav>
 </footer>

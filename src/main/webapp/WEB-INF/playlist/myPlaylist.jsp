@@ -19,12 +19,21 @@
 		<c:forEach items="${playlist }" var="playlist">
 			<tr data-code="${playlist.plCode }">
 				<td><img src="${playlist.plImg }" alt="이미지" style= "width: 640px; height: 640px"></td>
-				<td>${playlist.plTitle }</td>
+				<td>${playlist.plTitle }</td>	
 				<td>${playlist.plPublicYn }</td>
 			</tr>
 		</c:forEach>
 	</table>
 
-	<script src="./js/goPlaylistInfo.js"></script>
+	<script>
+		const tr = document.querySelectorAll("tr");
+	
+		tr.forEach(t => {
+			t.addEventListener("click", function(){
+				window.location.href = "/showPlaylistInfo?plCode="
+					+ t.getAttribute("data-code");
+			});
+		});
+	</script>
 </body>
 </html>

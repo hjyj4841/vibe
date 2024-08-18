@@ -28,24 +28,23 @@
 		<result property="userEmail" column="user_email"/>
 	</resultMap>
 
-	<select id="likePlaylist" parameterType="String"
-		resultMap="playlistLikeMap">
-		SELECT l.like_code, l.like_date, c.user_email,
-		c.user_nickname, c.user_img, p.pl_code, p.pl_title, p.pl_img
+	<select id="likePlaylist" parameterType="String" resultMap="playlistLikeMap">
+		SELECT l.like_code, l.like_date, c.user_email, c.user_nickname, c.user_img, p.pl_code, p.pl_title, p.pl_img
 		FROM playlist_like l
-		JOIN user m ON (m.user_email = l.user_email)
-		JOIN playlist p using(pl_code)
-		JOIN user c ON (p.user_email = c.user_email)
+			JOIN user m ON (m.user_email = l.user_email)
+			JOIN playlist p using(pl_code)
+			JOIN user c ON (p.user_email = c.user_email)
 		WHERE pl_public_yn = 'Y'
-		AND m.user_email = #{userEmail};
+			AND m.user_email = #{userEmail};
 	</select>
 
 	<!-- 좋아요 -->
 	<select id="likeCheck" parameterType="PlaylistLike" resultMap="plLikeMap">
 		SELECT * 
 		FROM playlistLike
-		JOIN user USING (user_email)
-		WHERE pl_code = #{plCode} AND user_email = #{userEmail}
+			JOIN user USING (user_email)
+		WHERE pl_code = #{plCode}
+			AND user_email = #{userEmail}
 	</select>
 
 	<!-- 좋아요 취소 -->

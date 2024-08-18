@@ -17,10 +17,9 @@
             <section class="listRank">
                 <img class="listImg" src="${playlist.plImg}" alt="Playlist Image" />
                 <div class="listRankDesc">
-                    <img class="listMiniImg" src="${playlist.plImg}" alt="Mini Playlist Image" />
                     <div class="listRankText">
-                        <div class="size-test2"><p>${playlist.plTitle}</p></div>
-                        <p>${playlist.user.userNickname}</p>
+                        <div class="size-test2"><p>플레이리스트 제목 : ${playlist.plTitle}</p></div>
+                        <p>작성자 : ${playlist.user.userNickname}</p>
                     </div>
                 </div>
             </section>

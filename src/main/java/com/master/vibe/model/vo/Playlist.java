@@ -10,11 +10,10 @@ import lombok.NoArgsConstructor;
 public class Playlist {
 	private int plCode;
 	private String plTitle;
-	private String userEmail;
+	private User user;
 	private String plImg;
 	private Date plDate;
 	private char plPublicYn;
-	private User user;
 	private int likeCount;
 	
 	// 랭킹 : 좋아요순

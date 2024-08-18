@@ -14,15 +14,15 @@
 	<select id="searchTagPlaylist" resultMap="listTagMap" parameterType="Integer">
 		SELECT * 
 		FROM playlist_tag
-		JOIN tag USING (tag_code)
+			JOIN tag USING (tag_code)
 		WHERE pl_code = #{code}
 	</select>
 	
 	<!-- 플레이리스트 태그테이블에서 태그 검색 쿼리(중복 제거) -->
 	<select id="searchTag" resultType="Integer" parameterType="String">
-	SELECT distinct pl_code 
+		SELECT distinct pl_code 
 		FROM playlist_tag
-		JOIN tag USING (tag_code)
+			JOIN tag USING (tag_code)
 		WHERE tag_name LIKE CONCAT('%', #{search}, '%')
 	</select>
 	
@@ -77,7 +77,7 @@
 	<select id="findTagsByPlaylistCode" resultType="String" parameterType="int">
 	    SELECT tag_name 
 	    FROM tag
-	    JOIN playlist_tag USING (tag_code)
+	    	JOIN playlist_tag USING (tag_code)
 	    WHERE pl_code = #{plCode}
 	</select>
 	

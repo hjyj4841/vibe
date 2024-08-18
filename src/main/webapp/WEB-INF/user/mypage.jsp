@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core"
-prefix="c" %> <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+pageEncoding="UTF-8"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
   <head>
@@ -20,7 +20,7 @@ prefix="c" %> <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
                <img alt="회원이미지" src="${user.userImg }" >
               </div>
               <div class=shareMyProfile>
-              <a href="/shareMyProfile"><p>SHARE Profile</p></a>
+              	<a href="/shareMyProfile"><p>SHARE Profile</p></a>
               </div>
               <p class="myNick">${user.userNickname }</p>
               <p class="myEmail">${user.userEmail }</p>
@@ -53,7 +53,7 @@ prefix="c" %> <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
                 </a>
               </div>
               <div>
-                <a href="playlistLike">
+                <a href="likePlaylist">
                   <i class="fa-brands fa-gratipay"></i>
                   <span>Like PlayList</span>
                 </a>
@@ -77,36 +77,22 @@ prefix="c" %> <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
             <div class="myTagBox">
               <div>My Favorite Tags</div>
               <div class="myTags">
-                <div>
-                  <div>
-                    <img src="./imgs/tag/tag_img1.jpg" />
-                    <span>#Rock</span>
-                  </div>
-                </div>
-                <div>
-                  <div>
-                    <img src="./imgs/tag/tag_img2.png" />
-                    <span>#Pop</span>
-                  </div>
-                </div>
-                <div>
-                  <div>
-                    <img src="./imgs/tag/tag_img3.png" />
-                    <span>#Dance</span>
-                  </div>
-                </div>
-                <div>
-                  <div>
-                    <img src="./imgs/tag/tag_img4.jpg" />
-                    <span>#Metal</span>
-                  </div>
-                </div>
-                <div>
-                  <div>
-                    <img src="./imgs/tag/tag_img5.jpg" />
-                    <span>#Hiphop</span>
-                  </div>
-                </div>
+              <c:choose>
+              	<c:when test="${not empty likeTagList }">
+              		<c:forEach var="tag" items="${likeTagList }" varStatus="status">
+              			<div>
+                  			<div>
+                    			<img src="./imgs/tag/tag_img${status.count }.jpg" />
+                    			<span>#${tag.tagName }</span>
+                    			<!-- (좋아요 수: ${tag.tagCount}) -->
+                  			</div>
+                		</div>
+              		</c:forEach>
+              	</c:when>
+              	<c:otherwise>
+              		좋아요한 태그가 없습니다.
+              	</c:otherwise>
+              </c:choose>
               </div>
             </div>
             <div class="myEtcBox">
@@ -119,13 +105,5 @@ prefix="c" %> <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
       <jsp:include page="../tiles/footer.jsp"></jsp:include>
     </div>
 
-    <%-- ascii code : 89 == Y --%> <%--
-    <div>${user.userPhone }</div>
-    <fmt:formatDate value="${user.userDate}" pattern="yyyy-MM-dd" />
-    <fmt:formatDate value="${user.userBirth}" pattern="yyyy-MM-dd" />
-    <a href="deleteUser">회원탈퇴</a>
-    --%>
-    
-   
   </body>
 </html>

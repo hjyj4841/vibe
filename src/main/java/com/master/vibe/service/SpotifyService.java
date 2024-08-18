@@ -97,6 +97,7 @@ public class SpotifyService {
         userMapper.updateSpotifyStatus(userEmail, "Y"); // 스포티파이 연결 상태를 DB에 업데이트
     }
 	
+    // 검색한 음악정보 요청해서 받아오는 메서드
 	public ArrayList<Music> getMusicInfoForMusicName(String musicName, int offset) {
 		String accessToken = getAccessToken();
 		
@@ -136,7 +137,8 @@ public class SpotifyService {
 		return musicInfo;
 	}
 	
-	public ArrayList<Music> getMusicINfoForMusicCode(List<String> musicCodeList){
+	// 플레이리스트에 담겨 있는 음악정보 받아오는 메서드
+	public ArrayList<Music> getMusicINfoByMusicCode(List<String> musicCodeList){
 		String accessToken = getAccessToken();
 		
 		String str = "";

@@ -74,6 +74,7 @@ public class UserService implements UserDetailsService{
 		return userMapper.rejoinDate(userEmail);
 	}
 
+	// 회원이 좋아하는 태그 목록 5개 출력
 	public List<UserLikeTagDTO> userLikeTag(String userEmail) {
         List<UserLikeTagDTO> list = userMapper.userLikeTag(userEmail);
         return list != null ? list : new ArrayList<>();
@@ -101,14 +102,5 @@ public class UserService implements UserDetailsService{
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		return userMapper.emailCheck(username);
 	}
-	
-//	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
-//
-//
-//    public List<UserLikeTagDTO> userLikeTag(String userEmail) {
-//        List<UserLikeTagDTO> tags = userMapper.userLikeTag(userEmail);
-//        logger.debug("UserLikeTagDTO: {}", tags);
-//        return tags;
-//    }
 
 }

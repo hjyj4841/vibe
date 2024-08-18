@@ -27,10 +27,10 @@
 	<delete id="deleteMusicFromPlaylist" parameterType="java.util.List">
 		DELETE FROM playlist_music
 		WHERE pl_code = #{plCode}
-		AND music_code IN
-		<foreach collection="list" item="musicCode" open="(" separator="," close=")">
-        #{musicCode}
-    	</foreach>
+			AND music_code IN
+			<foreach collection="list" item="musicCode" open="(" separator="," close=")">
+	     	   #{musicCode}
+	    	</foreach>
 	</delete>
 	
 	<!-- 중복 체크 : 플레이리스트에 존재하는 음악 ID 조회 -->
@@ -38,10 +38,10 @@
 		SELECT music_code
 		FROM playlist_music
 		WHERE pl_code = #{plCode}
-		AND music_code IN
-        <!-- WHERE pl_code = #{params[0]} 첫 번째 항목이 plCode -->
-        <foreach collection="musicId" item="musicId" open="(" separator="," close=")">
-        	#{musicId}
-        </foreach>
+			AND music_code IN
+	        <!-- WHERE pl_code = #{params[0]} 첫 번째 항목이 plCode -->
+	        <foreach collection="musicId" item="musicId" open="(" separator="," close=")">
+	        	#{musicId}
+	        </foreach>
     </select>
 </mapper>

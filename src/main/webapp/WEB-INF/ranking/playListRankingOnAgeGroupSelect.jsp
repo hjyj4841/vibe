@@ -15,6 +15,7 @@
         <option value="30대">30대</option>
         <option value="40대">40대</option>
         <option value="50대">50대</option>
+        <option value="기타">기타</option>
     </select>
     <button type="submit">선택</button>
 </form>
