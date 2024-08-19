@@ -9,11 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.master.vibe.model.dto.PlaylistLikeDTO;
 import com.master.vibe.model.vo.User;
 import com.master.vibe.service.PlaylistLikeService;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class PlaylistLikeController {
@@ -33,9 +32,15 @@ public class PlaylistLikeController {
 	}
 	
 	@ResponseBody
-	@PostMapping("/like")
-	public void likeCheck(HttpServletRequest request, Model model, int code) {
-		HttpSession session = request.getSession();
-
+	@PostMapping("/userLike")
+	public boolean userLike(Model model, int plCode) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		User user = (User) authentication.getPrincipal();
+		
+		PlaylistLikeDTO dto = new PlaylistLikeDTO();
+		dto.setPlCode(plCode);
+		dto.setUserEmail(user.getUserEmail());
+		
+		return playlistLikeService.userLike(dto);
 	}
 }

@@ -48,7 +48,8 @@
 		UPDATE user
 		SET user_password = #{userPassword},
 			user_nickname = #{userNickname},
-			user_phone = #{userPhone}
+			user_phone = #{userPhone},
+			user_img = #{userImg}
 		WHERE user_email = #{userEmail}
 	</update>
 

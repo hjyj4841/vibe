@@ -21,13 +21,6 @@
 		</association>
 	</resultMap>
 
-	<resultMap type="PlaylistLike" id="plLikeMap">
-		<id property="likeCode" column="like_code"/>
-		<result property="likeDate" column="like_date"/>
-		<result property="plCode" column="pl_code"/>
-		<result property="userEmail" column="user_email"/>
-	</resultMap>
-
 	<select id="likePlaylist" parameterType="String" resultMap="playlistLikeMap">
 		SELECT l.like_code, l.like_date, c.user_email, c.user_nickname, c.user_img, p.pl_code, p.pl_title, p.pl_img
 		FROM playlist_like l
@@ -38,31 +31,28 @@
 			AND m.user_email = #{userEmail};
 	</select>
 
-	<!-- 좋아요 -->
-	<select id="likeCheck" parameterType="PlaylistLike" resultMap="plLikeMap">
+	<!-- 좋아요 했는지 확인 -->
+	<select id="userLikePlaylistCheck" parameterType="PlaylistLikeDTO" resultMap="playlistLikeMap">
 		SELECT * 
-		FROM playlistLike
-			JOIN user USING (user_email)
+		FROM playlist_like
 		WHERE pl_code = #{plCode}
 			AND user_email = #{userEmail}
 	</select>
-
-	<!-- 좋아요 취소 -->
-	<delete id="cancel" parameterType="Integer">
-		DELETE FROM playlistLike
-		WHERE like_code = #{likeCode}
-	</delete>
-	
-	<!-- 좋아요 테이블에 유저이메일, 플레이리스트 추가 -->
-	<insert id="like" parameterType="PlaylistLike" useGeneratedKeys="true" keyProperty="plCode">
-		INSERT INTO playlistLike (user_email, pl_code)
-		VALUES (#{userEmail}, #{plCode})
+	<!-- 좋아요 -->
+	<insert id="userLike" parameterType="PlaylistLikeDTO">
+		INSERT INTO playlist_like(pl_code, user_email)
+		VALUES(#{plCode}, #{userEmail})
 	</insert>
-	
-	<!-- 총 좋아요 수 -->
-	<select id="count" parameterType="Integer" resultType="Integer">
-		SELECT count(*)
-		FROM playlistLike
+	<!-- 좋아요 취소 -->
+	<delete id="userUnLike" parameterType="PlaylistLikeDTO">
+		DELETE FROM playlist_like
 		WHERE pl_code = #{plCode}
+			AND user_email = #{userEmail}
+	</delete>
+	<!-- 해당 플리의 좋아요 수 조회 -->
+	<select id="showLikeCount" parameterType="Integer" resultType="Integer">
+	SELECT COUNT(*) FROM playlist_like 
+	WHERE pl_code = #{plCode};
 	</select>
+	
 </mapper>

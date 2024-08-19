@@ -87,13 +87,11 @@ public class PlaylistController {
     	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		User user = (User) authentication.getPrincipal();
         
-		System.out.println(dto.getPlUrl());
-		String fileName = fileUpload(dto.getPlUrl());
-
+//		String fileName = fileUpload(dto.getPlUrl());
         dto.setUserEmail(user.getUserEmail());
         
         playlistService.createPlaylist(dto);
-		dto.setPlImg("http://localhost:8081/playlistImg/" + fileName);
+//		dto.setPlImg("http://localhost:8081/playlistImg/" + fileName);
 		
         // 태그 입력값 받기
         List<String> tagNames = new ArrayList<>();

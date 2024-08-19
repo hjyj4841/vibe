@@ -105,6 +105,9 @@
 	cursor: pointer;
 	font-size: 0.9rem;
 }
+#redHeart{
+	color: red;
+}
 /* 검색 리스트 화면 */
 .searchContainer{
 	height: 100vh;

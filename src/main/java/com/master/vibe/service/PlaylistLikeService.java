@@ -5,15 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.master.vibe.model.dto.PlaylistLikeDTO;
 import com.master.vibe.model.vo.PlaylistLike;
 
 import mapper.PlaylistLikeMapper;
 
 @Service
 public class PlaylistLikeService {
-	
-	@Autowired
-	private PlaylistLikeMapper like;
 	
 	@Autowired
 	private PlaylistLikeMapper playlistLikeMapper;
@@ -24,21 +22,25 @@ public class PlaylistLikeService {
 	}
 
 	// 좋아요
-	public void playlistLike(PlaylistLike vo) {
-		like.playlistLike(vo);
-	}
-	// 좋아요 테이블 추가
-	public PlaylistLike plLike(PlaylistLike vo) {
-		return like.plLike(vo);
+	public boolean userLike(PlaylistLikeDTO dto) {
+		// 조회해서 없으면 추가
+		if(playlistLikeMapper.userLikePlaylistCheck(dto) == null) {
+			playlistLikeMapper.userLike(dto);
+			return true;
+		}else {
+			// 있으면 삭제
+			playlistLikeMapper.userUnLike(dto);
+			return false;
+		}
 	}
 	
-	// 좋아요 취소
-	public int likeCode(int code) {
-		return like.cancle(code);
+	// 내가 해당 플리를 좋아했는지 조회
+	public PlaylistLike showPlLikeUser(PlaylistLikeDTO dto) {
+		return playlistLikeMapper.userLikePlaylistCheck(dto);
 	}
 	
-	// 좋아요 수
-	public int likeCount(int code) {
-		return like.likeCount(code);
+	
+	public int showLikeCount(int plCode){
+		return playlistLikeMapper.showLikeCount(plCode);
 	}
 }

@@ -1,7 +1,10 @@
 package com.master.vibe.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.master.vibe.config.DomainFailureHandler;
+import com.master.vibe.model.dto.UserDTO;
 import com.master.vibe.model.dto.UserLikeTagDTO;
 import com.master.vibe.model.vo.User;
 import com.master.vibe.service.UserService;
@@ -149,7 +153,7 @@ public class UserController {
 	}
 
 	@PostMapping("/updateUser")
-	public String updateUser(User user, Model model) {
+	public String updateUser(UserDTO user, Model model) throws IllegalStateException, IOException {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		User u = (User) authentication.getPrincipal(); // 현재 접속중인 유저 정보
 		
@@ -158,6 +162,20 @@ public class UserController {
 		u.setUserPassword(user.getUserPassword());
 		u.setUserPhone(user.getUserPhone());
 		// 이미지 변경 로직 추가
+		if(!user.getFile().isEmpty()) {
+			if(u.getUserImg() != null && !u.getUserImg().equals("http://192.168.10.6:8080/img/user_img/default_user.jpg")) {
+				File deleteFile = new File("\\\\192.168.10.6\\vibe\\img\\user_img\\" + new File(u.getUserImg()).getName());
+				deleteFile.delete();
+			}
+			UUID uuid = UUID.randomUUID();
+			String fileName = uuid.toString() + "_" + user.getFile().getOriginalFilename();
+			File copyFile = new File("\\\\192.168.10.6\\vibe\\img\\user_img\\" + fileName);
+			
+			user.getFile().transferTo(copyFile); // 업로드한 파일이 지정한 path 위치로 저장
+			u.setUserImg("http://192.168.10.6:8080/img/user_img/" + fileName);
+		} else {
+			u.setUserImg(user.getUserImg());
+		}
 		
 		userService.updateUser(u);
 		
