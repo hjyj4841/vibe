@@ -21,8 +21,8 @@ public class SecurityConfig {
 				.formLogin(login ->
 					login.loginPage("/login")
 					.defaultSuccessUrl("/", true)
-					.failureForwardUrl("/loginError")
-					// .failureHandler(new DomainFailureHandler())
+//					.failureForwardUrl("/loginError")
+					.failureHandler(new DomainFailureHandler())
 					.permitAll())
 				.logout(logout ->
 					logout.logoutUrl("/logout")

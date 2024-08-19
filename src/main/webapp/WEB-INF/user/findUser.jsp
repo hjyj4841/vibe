@@ -33,7 +33,6 @@
 				<td>이메일 :</td>
 				<td><input type=text name="userEmail"></td>
 			</tr>
-
 			<tr>
 				<td>생년 월일 :</td>
 				<td><input type=date name="birthDay"></td>
@@ -48,5 +47,8 @@
 			</tr>
 		</table>
 	</form>
+	<script>
+		if('${findMsg}' != '') alert('${findMsg}');
+	</script>
 </body>
 </html>

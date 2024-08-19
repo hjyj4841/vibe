@@ -100,6 +100,7 @@ uri="http://www.springframework.org/security/tags" %>
     <script src="./js/main.js"></script>
     <script>
       if ("${deleteUser}" != "") alert("${deleteUser}");
+      if('${registerMsg}' != '') alert('${registerMsg}');
     </script>
   </body>
 </html>

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.master.vibe.config.DomainFailureHandler;
 import com.master.vibe.model.dto.UserLikeTagDTO;
 import com.master.vibe.model.vo.User;
 import com.master.vibe.service.UserService;
@@ -47,13 +48,23 @@ public class UserController {
 		return "user/registerUser";
 	}
 	@PostMapping("/registerUser")
-	public String register(User user, String birthDay) {
+	public String register(User user, String birthDay, Model model) {
 		try {
 			user.setUserBirth(new SimpleDateFormat("yyyy-MM-dd").parse(birthDay));
 		} catch (Exception e) {}
 
-		userService.register(user);
-		return "redirect:/";
+		int success = userService.register(user);
+		
+		System.err.println(success);
+		
+		if(success == 1) {
+			model.addAttribute("registerMsg", "회원가입에 성공 하였습니다.");
+			return "index";
+		}else {
+			model.addAttribute("registerMsg", "회원가입에 실패 하였습니다.");
+			return "registerUser";
+		}
+		
 	}
 
 	// 로그인
@@ -63,14 +74,16 @@ public class UserController {
 	}
 	
 	// 로그인 에러 시 리턴할 메세지
-	@PostMapping("/loginError")
-	public String loginError(Model model) {
+	@GetMapping("/loginError")
+	public String loginError(Model model, String error, String username) {
 		
-		model.addAttribute("msg", "ID 혹은 PASSWORD가 잘못 되었습니다.");
+		if(error.equals("탈퇴회원")) {
+			error = "재가입까지 " + userService.rejoinDate(username) + "일 남았습니다.";
+		}
+		
+		model.addAttribute("msg", error);
 		return "user/login";
 	}
-	// 탈퇴한 회원 재가입 남은 일수 조회 - 사용 예정
-	// userService.rejoinDate(user.getUserEmail());
 	
 	// 계정 찾기 페이지로 이동
 	@GetMapping("/findUser")
@@ -85,10 +98,20 @@ public class UserController {
 		} catch (Exception e) {}
 		
 		if(user.getUserEmail() == null) { // userEmail이 null 이면 아이디 찾기
-			model.addAttribute("userEmail", userService.findUserID(user).getUserEmail());
+			user = userService.findUserID(user);
+			if(user == null) {
+				model.addAttribute("findMsg", "회원이 존재하지 않습니다.");
+				return "user/findUser";
+			}
+			model.addAttribute("userEmail", user.getUserEmail());
 			return "user/showUserID";
 		}else {
-			model.addAttribute("user", userService.findUserPWD(user));
+			user = userService.findUserPWD(user);
+			if(user == null) {
+				model.addAttribute("findMsg", "회원이 존재하지 않습니다.");
+				return "user/findUser";
+			}
+			model.addAttribute("user", user);
 			return "user/showUserPWD";
 		}
 	}

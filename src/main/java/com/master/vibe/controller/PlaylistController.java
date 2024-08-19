@@ -117,10 +117,14 @@ public class PlaylistController {
     @GetMapping("/showPlaylistInfo")
     public String showPlaylistInfo(int plCode, Model model) {
     	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		User user = (User) authentication.getPrincipal();
-    	
+
+    	if(!authentication.getName().equals("anonymousUser")) {
+    		User user = (User) authentication.getPrincipal();
+    		model.addAttribute("user", user);
+    	}
     	List<String> musicCode = playlistMusicService.showMusicList(plCode);
         Playlist playlist = playlistService.selectPlaylistByPlCode(plCode);
+        
 //        List<String> tagList = playlistService.getTagsByPlaylistCode(plCode);
         
         if(musicCode.size() != 0) {
@@ -128,10 +132,9 @@ public class PlaylistController {
     		model.addAttribute("musicList", musicInfo);
     	}
         
-        model.addAttribute("user", user);
-        model.addAttribute("playlist", playlist);
 //        model.addAttribute("tagList", tagList);
         
+        model.addAttribute("playlist", playlist);
         return "playlist/showPlaylistInfo";
     }
     

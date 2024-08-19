@@ -29,9 +29,9 @@ public class UserService implements UserDetailsService{
 	private PasswordEncoder bcpe;
 
 	// 회원가입
-	public void register(User user) {
+	public int register(User user) {
 		user.setUserPassword(bcpe.encode(user.getUserPassword()));
-		userMapper.register(user);
+		return userMapper.register(user);
 	}
 
 	// 유저 ID 찾기
@@ -70,7 +70,7 @@ public class UserService implements UserDetailsService{
 	}
 
 	// 탈퇴한 회원이 재가입 시도시 남은 일수 조회
-	public String rejoinDate(String userEmail) {
+	public int rejoinDate(String userEmail) {
 		return userMapper.rejoinDate(userEmail);
 	}
 

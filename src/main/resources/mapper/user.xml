@@ -68,7 +68,7 @@
 	</update>
 
 	<!-- 남은 재가입 날짜 조회 -->
-	<select id="rejoinDate" parameterType="String" resultType="String">
+	<select id="rejoinDate" parameterType="String" resultType="Integer">
 		SELECT ADDDATE(user_enroll_date, 7) - current_date()
 		FROM user
 		WHERE user_email = #{user_email}
