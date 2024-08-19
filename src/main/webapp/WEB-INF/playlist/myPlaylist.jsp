@@ -19,7 +19,7 @@
 		<c:forEach items="${playlist }" var="playlist">
 			<tr data-code="${playlist.plCode }">
 				<td><img src="${playlist.plImg }" alt="이미지" style= "width: 640px; height: 640px"></td>
-				<td>${playlist.plTitle }</td>	
+				<td>${playlist.plTitle }</td>
 				<td>${playlist.plPublicYn }</td>
 			</tr>
 		</c:forEach>

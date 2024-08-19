@@ -2,6 +2,8 @@ package com.master.vibe.model.vo;
 
 import java.util.Date;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,28 +13,15 @@ public class Playlist {
 	private int plCode;
 	private String plTitle;
 	private User user;
-	private String plImg;
+	// private String plImg;
 	private Date plDate;
 	private char plPublicYn;
 	private int likeCount;
+	
+	// 플레이리스트 이미지 파일 업로드
+	private MultipartFile plImg;
 	
 	// 랭킹 : 좋아요순
 	private int likeCode;
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

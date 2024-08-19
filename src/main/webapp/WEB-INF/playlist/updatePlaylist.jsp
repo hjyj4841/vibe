@@ -10,8 +10,8 @@
 		window.history.back(); // 이전 페이지로 돌아가기
 	}
 	
-	/*
-	// 플레이리스트 이미지 변경하기
+	
+	// 이미지 미리보기 기능
 	function previewImage(event) {
 		const file = event.target.files[0];
         if (file) {
@@ -23,7 +23,6 @@
             reader.readAsDataURL(file);
         }
 	}
-	*/
 </script>
 <style>
 /* 이미지 변경 클릭 시 파일 불러오기 시스템 버튼 형태 처리 */
@@ -40,13 +39,14 @@ label[for="imgChange"] {
 </head>
 <body>
     <h1>플레이리스트 수정</h1>
-    <form action="/updatePlaylist" method="post">
+    <form action="/updatePlaylist" method="post" enctype="multipart/form-data">
         <!-- 플레이리스트 코드와 수정할 제목을 입력 받음 -->
         <input type="hidden" value="${playlist.plCode }" name="plCode">
         
-        <img src="${playlist.plImg}" style="width: 200px;">
-        <!-- 이미지 변경 시도했으나 plImg 값이 default로 넣어져있더라고요.. 240814 -->
+        <img src="${playlist.plImg}" style="width: 300px;">
+        
         <label for="imgChange">이미지 변경</label>
+        <!-- <input type="file" id="imgChange" name="plImg"> -->
         <input type="file" id="imgChange" name="plImg" accept="image/*" onchange="previewImage(event)" /><br><br>
         
         <label for="plTitle">플레이리스트 제목:</label>

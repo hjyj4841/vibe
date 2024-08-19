@@ -45,9 +45,12 @@ public class PlaylistService {
 	}
 
 	// 플레이리스트 수정
-	public void updatePlaylistTitle(Playlist playlist) {
-		playlistMapper.updatePlaylistTitle(playlist);
+	public void updatePlaylist(Playlist playlist) {
+		playlistMapper.updatePlaylist(playlist);
 	}
+//	public void updatePlaylistTitle(Playlist playlist) {
+//		playlistMapper.updatePlaylistTitle(playlist);
+//	}
 
 	// 랭킹 : 좋아요순
 	public List<Playlist> likerankingPlaylist() {

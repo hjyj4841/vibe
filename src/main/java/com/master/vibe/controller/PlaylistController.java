@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+
+import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 
@@ -42,27 +44,19 @@ public class PlaylistController {
 	@Autowired
 	private SpotifyService spotifyService;
 	
-//	추합 중 오류 때문에 임시 주석으로 대체
-//	@Value("${spring.servlet.multipart.location}")
-//    private String uploadPath;
-
-	// 플레이리스트 이미지 업로드 관련 // 서버 연결 관련 차후 보완 필요! 2024.08.16/현호
-//	@Value("${file.upload-dir}")
-//	private String uploadDir;
-
+	// 플레이리스트 이미지 업로드 관련 2024.08.16/현호
 	public String fileUpload(MultipartFile file) throws IllegalStateException, IOException {
 		UUID uuid = UUID.randomUUID();
 		String fileName = uuid.toString() + "_" + file.getOriginalFilename();
 		System.out.println(fileName);
-//	    File copyFile = new File("\\\\192.168.10.6\\vibe\\playlistImg\\" + fileName);
-//		File copyFile = new File(uploadPath + File.separator + "playlistImg" + File.separator + fileName);
-		
-//		System.out.println(copyFile.getPath());
+	    File copyFile = new File("\\\\192.168.10.6\\vibe\\playlistImg\\" + fileName);
+	    
+		System.out.println(copyFile.getPath());
 
-//		file.transferTo(copyFile);
+		file.transferTo(copyFile);
 		return fileName;
 	}
-
+	
 	// 플레이리스트 전체 조회 페이지
 	@GetMapping("/searchHome")
 	public String searchAllPlaylist(Model model) {
@@ -92,8 +86,9 @@ public class PlaylistController {
 
         dto.setUserEmail(user.getUserEmail());
         
-        playlistService.createPlaylist(dto);
-		dto.setPlImg("http://localhost:8081/playlistImg/" + fileName);
+//		dto.setPlImg("http://localhost:8081/playlistImg/" + fileName);
+		dto.setPlImg("http://192.168.10.6:8080/playlistImg//" + fileName);
+		playlistService.createPlaylist(dto);
 		
         // 태그 입력값 받기
         List<String> tagNames = new ArrayList<>();
@@ -121,7 +116,7 @@ public class PlaylistController {
     	
     	List<String> musicCode = playlistMusicService.showMusicList(plCode);
         Playlist playlist = playlistService.selectPlaylistByPlCode(plCode);
-//        List<String> tagList = playlistService.getTagsByPlaylistCode(plCode);
+//      List<String> tagList = playlistService.getTagsByPlaylistCode(plCode);
         
         if(musicCode.size() != 0) {
     		List<Music> musicInfo = spotifyService.getMusicINfoByMusicCode(musicCode);
@@ -130,7 +125,7 @@ public class PlaylistController {
         
         model.addAttribute("user", user);
         model.addAttribute("playlist", playlist);
-//        model.addAttribute("tagList", tagList);
+//      model.addAttribute("tagList", tagList);
         
         return "playlist/showPlaylistInfo";
     }
@@ -151,7 +146,7 @@ public class PlaylistController {
     public String deletePlaylist(String plCode) {
         playlistService.deletePlaylist(Integer.parseInt(plCode));
         return "redirect:/myPlaylist";
-    }	
+    }
     
     // 플레이리스트 수정 -- 현재는 이름만 수정 가능
     @GetMapping("/updatePlaylist")
@@ -162,11 +157,39 @@ public class PlaylistController {
     	
         return "playlist/updatePlaylist";
     }
+    
     @PostMapping("/updatePlaylist")
-    public String updatePlaylist(Playlist playlist) {
-        playlistService.updatePlaylistTitle(playlist);
-        return "redirect:/myPlaylist";
-    }
+    public String updatePlaylist(Playlist playlist, MultipartFile plImg) throws IllegalStateException, IOException {
+    	if(plImg != null && !plImg.isEmpty()) {
+    		
+    		  String fileName = fileUpload(plImg);
+    	        if (fileName != null) {
+    	            playlist.setPlImg("http://your.server.url/playlistImg/" + fileName);
+    	        }
+    	    }
+    	    playlistService.updatePlaylist(playlist);
+    	    return "redirect:/showPlaylistInfo?plCode=" + playlist.getPlCode();
+    
+    		/*
+    		// 파일 업로드 처리
+    		
+    		// String fileName = fileUpload(plImg);
+    		// playlist.setPlImg("http://192.168.10.6:8080/playlistImg//" + fileName);
+    		
+    		String fileName = plImg.getOriginalFilename();
+    		System.out.println(fileName);
+    		
+    		File file = new File("http://192.168.10.6:8080/playlistImg//" + fileName);
+    		plImg.transferTo(file);
+    		// Playlist 객체에 파일 경로를 저장하거나 필요한 처리를 추가
+    	}
+        playlistService.updatePlaylist(playlist); // 수정된 서비스 메서드 호출
+        
+        // 플레이리스트 수정 후 저장 시 변경한 정보로 저장 후 이전 화면으로 이동(선택한 플레이리스트 화면)
+        return "redirect:/showPlaylistInfo?plCode=" + playlist.getPlCode();
+        */
+        
+    }    
     
     // 랭킹 관련
     @GetMapping("/rankingHome")
@@ -222,36 +245,5 @@ public class PlaylistController {
 		model.addAttribute("ageGroup", ageGroup);
 		return "ranking/playListRankingOnAgeGroup";
 	}
-    
-    /*
-    @PostMapping("/updatePlaylist")
-    public String updatePlaylist(@ModelAttribute PlaylistDTO playlistDTO) {
-    	MultipartFile file = playlistDTO.getPlImg();
-        if (file != null && !file.isEmpty()) {
-            // 파일 처리 로직 (예: 파일 저장)
-            String fileName = file.getOriginalFilename();
-            // 파일 저장 위치 및 로직을 설정하세요.
-            // 예: file.transferTo(new File("/path/to/save/" + fileName));
-            // 파일 저장 후, 경로를 DTO에 추가할 수 있습니다.
-            // playlistDTO.setPlImgPath("/path/to/save/" + fileName);
-        }
-        // DTO를 사용하여 업데이트 로직 처리
-        playlistService.updatePlaylist(playlistDTO);
-        return "redirect:/somePage";
-    }
-    */
-    
-    /*
-    // 플레이리스트 생성 처리
-    @PostMapping("/createPlaylist")
-    public String createPlaylist(CreatePlaylistDTO dto, Model model) {
-        playlistService.createPlaylist(dto);
-        
-        // DTO에서 제목을 추출하여 모델에 추가
-        model.addAttribute("plTitle", dto.getPlTitle());
-        
-        // 생성된 플레이리스트 정보 페이지로 이동
-        return "test/playlist/createPlaylistInfo";
-    }
-	*/
+	
 }
