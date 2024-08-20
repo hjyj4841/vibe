@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.master.vibe.model.dto.CreatePlaylistDTO;
 import com.master.vibe.model.dto.SearchDTO;
+import com.master.vibe.model.dto.UpdatePlaylistDTO;
 import com.master.vibe.model.vo.Music;
 import com.master.vibe.model.vo.Playlist;
 import mapper.PlaylistMapper;
@@ -48,6 +49,23 @@ public class PlaylistService {
 	public void updatePlaylist(Playlist playlist) {
 		playlistMapper.updatePlaylist(playlist);
 	}
+	
+	public void UpdatePlaylist(UpdatePlaylistDTO dto) {
+		playlistMapper.updatePlaylist(dto);
+	}
+	
+	
+	/*
+	public void updatePlaylist(UpdatePlaylistDTO dto) {
+//		playlistMapper.updatePlaylist();
+		Playlist playlist = new Playlist();
+		playlist.setPlCode(dto.getPlCode());
+		playlist.setPlTitle(dto.getPlTitle());
+		playlist.setPlImg(dto.getPlImgFile().getOriginalFilename()); // 새 이미지 경로 설정
+		
+		playlistMapper.updatePlaylist(playlist);
+	}
+*/
 //	public void updatePlaylistTitle(Playlist playlist) {
 //		playlistMapper.updatePlaylistTitle(playlist);
 //	}
@@ -85,4 +103,5 @@ public class PlaylistService {
     public List<Playlist> playListRankingOnAgeGroup(String ageGroup) {
     	return playlistMapper.playListRankingOnAgeGroup(ageGroup);
     }
+
 }

@@ -22,6 +22,7 @@ import com.master.vibe.model.vo.Music;
 import com.master.vibe.model.vo.Playlist;
 import com.master.vibe.model.vo.User;
 import com.master.vibe.model.dto.SearchDTO;
+import com.master.vibe.model.dto.UpdatePlaylistDTO;
 import com.master.vibe.service.PlaylistMusicService;
 import com.master.vibe.service.PlaylistService;
 import com.master.vibe.service.SpotifyService;
@@ -159,37 +160,71 @@ public class PlaylistController {
     }
     
     @PostMapping("/updatePlaylist")
-    public String updatePlaylist(Playlist playlist, MultipartFile plImg) throws IllegalStateException, IOException {
-    	if(plImg != null && !plImg.isEmpty()) {
-    		
-    		  String fileName = fileUpload(plImg);
-    	        if (fileName != null) {
-    	            playlist.setPlImg("http://your.server.url/playlistImg/" + fileName);
-    	        }
-    	    }
-    	    playlistService.updatePlaylist(playlist);
-    	    return "redirect:/showPlaylistInfo?plCode=" + playlist.getPlCode();
-    
-    		/*
-    		// 파일 업로드 처리
-    		
-    		// String fileName = fileUpload(plImg);
-    		// playlist.setPlImg("http://192.168.10.6:8080/playlistImg//" + fileName);
-    		
-    		String fileName = plImg.getOriginalFilename();
-    		System.out.println(fileName);
-    		
-    		File file = new File("http://192.168.10.6:8080/playlistImg//" + fileName);
-    		plImg.transferTo(file);
-    		// Playlist 객체에 파일 경로를 저장하거나 필요한 처리를 추가
+    public String updatePlaylist(UpdatePlaylistDTO dto) throws IllegalStateException, IOException {
+
+    	// 기존 플레이리스트 정보 조회
+    	Playlist playlist = playlistService.selectPlaylistByPlCode(dto.getPlCode());
+
+    	// 기존 이미지 파일 삭제
+    	String existImg = playlist.getPlImg();
+    	if(existImg != null && !existImg.isEmpty()) {
+    		System.out.println("존재하는 파일 : " + existImg);
+    		File file = new File("\\\\192.168.10.6\\vibe\\playlistImg\\" + existImg); // 실제 경로로 변경
+    		if(file.exists()) {
+    			file.delete();
+    		}
     	}
-        playlistService.updatePlaylist(playlist); // 수정된 서비스 메서드 호출
+    		
+    	/*
+    	// 기존 이미지 파일 삭제
+    	if(dto.getPlImgFile() != null && !dto.getPlImgFile().isEmpty()) {
+    	
+	    	String existImgPath = playlist.getPlImg();
+	    	if(existImgPath != null && !existImgPath.isEmpty()) {
+	    		File file = new File("http://192.168.10.6:8080/playlistImg//" + existImgPath);
+	    		
+	    		if(file.exists()) {
+	    			file.delete();
+	    		}
+	    	}
+	    	*/ 	
+    	
+    	// 새 이미지 파일 업로드
+    	String newFileName = null;
+    	if(dto.getPlImgFile() != null && !dto.getPlImgFile().isEmpty()) {
+    		UUID uuid = UUID.randomUUID();
+    		newFileName = uuid.toString() + "_" + dto.getPlImgFile().getOriginalFilename();
+    		System.out.println("새로 들어온 파일 : " + newFileName);
+    		File newFile = new File("\\\\192.168.10.6\\vibe\\playlistImg\\" + newFileName); // 실제 경로로 변경
+    		
+    		System.out.println(newFile.getPath());
+    		
+    		dto.getPlImgFile().transferTo(newFile);
+    	} else {
+    		// 이미지 파일 변경하지 않았으면 기존 이미지 유지
+    		newFileName = playlist.getPlImg();
+    	}
+    	
+    	// Playlist 객체를 사용하여 플레이리스트 업데이트
+    	playlist.setPlTitle(dto.getPlTitle());
+    	playlist.setPlImg(newFileName); // 새 이미지 파일 이름으로 설정
+    	
+    	/*
+    	// DTO를 사용하여 플레이리스트 업데이트
+    	Playlist updatedPlaylist = new Playlist();
+    	updatedPlaylist.setPlCode(dto.getPlCode());
+    	updatedPlaylist.setPlTitle(dto.getPlTitle());
+    	updatedPlaylist.setPlImg(newFileName); // 이미지 파일 이름을 경로로 설정
+    	*/
+    	
+    	playlistService.updatePlaylist(playlist); // 수정된 서비스 메서드 호출
         
         // 플레이리스트 수정 후 저장 시 변경한 정보로 저장 후 이전 화면으로 이동(선택한 플레이리스트 화면)
-        return "redirect:/showPlaylistInfo?plCode=" + playlist.getPlCode();
-        */
-        
-    }    
+//        return "redirect:/showPlaylistInfo?plCode=" + playlist.getPlCode();
+        return "redirect:/showPlaylistInfo?plCode=" + dto.getPlCode();
+    
+    }
+    
     
     // 랭킹 관련
     @GetMapping("/rankingHome")

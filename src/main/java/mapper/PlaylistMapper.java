@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.master.vibe.model.dto.CreatePlaylistDTO;
 import com.master.vibe.model.dto.SearchDTO;
+import com.master.vibe.model.dto.UpdatePlaylistDTO;
 import com.master.vibe.model.vo.Playlist;
 
 
@@ -29,9 +30,11 @@ public interface PlaylistMapper {
     // int getLastInsertedId(); // 최근 삽입된 플레이리스트의 ID를 가져옴
 
     void deletePlaylist(int plCode); // 플레이리스트 삭제
-    
+        
+    void updatePlaylist(UpdatePlaylistDTO dto); // 플레이리스트 수정
     void updatePlaylist(Playlist playlist); // 플레이리스트 수정
-    // void updatePlaylistTitle(Playlist playlist); // 플레이리스트 제목 수정
+    
+    //void updatePlaylistTitle(Playlist playlist); // 플레이리스트 제목 수정
     
     List<Playlist> likerankingPlaylist(); // 랭킹 : 좋아요순
     

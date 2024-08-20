@@ -38,7 +38,7 @@ td a {
 	// 플레이리스트 삭제 클릭 시 바로 삭제되는 것 alert으로 방지
 	function confirmDelete(event, url) {
 		event.preventDefault(); // 링크 클릭 기본 동작 방지
-		if (confirm('[${playlist.plTitle}] 이 플레이리스트를 삭제하시겠습니까?')) {
+		if (confirm('[${playlist.plTitle}] 플레이리스트를 삭제하시겠습니까?')) {
 			window.location.href = url; // 확인 클릭 시 삭제 URL로 이동
 		}
 	}
@@ -46,7 +46,7 @@ td a {
 </head>
 <body>
 	<h3>플레이리스트 곡 조회</h3>
-	<img src="${playlist.plImg}" style="width: 300px;">
+	<img src="http://192.168.10.6:8080/playlistImg/${playlist.plImg}" style="width: 300px;">
 	<a href="myPlaylist">목록</a>
 	<h1>${playlist.plTitle }</h1>
 	

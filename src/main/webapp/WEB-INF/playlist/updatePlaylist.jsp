@@ -10,11 +10,11 @@
 		window.history.back(); // 이전 페이지로 돌아가기
 	}
 	
-	
 	// 이미지 미리보기 기능
 	function previewImage(event) {
 		const file = event.target.files[0];
         if (file) {
+        	console.log(file);
             const reader = new FileReader();
             reader.onload = function(e) {
                 const image = document.getElementById('playlistImage');
@@ -43,11 +43,10 @@ label[for="imgChange"] {
         <!-- 플레이리스트 코드와 수정할 제목을 입력 받음 -->
         <input type="hidden" value="${playlist.plCode }" name="plCode">
         
-        <img src="${playlist.plImg}" style="width: 300px;">
+        <img src="http://192.168.10.6:8080/playlistImg/${playlist.plImg}" style="width: 300px;" id="playlistImage">
         
         <label for="imgChange">이미지 변경</label>
-        <!-- <input type="file" id="imgChange" name="plImg"> -->
-        <input type="file" id="imgChange" name="plImg" accept="image/*" onchange="previewImage(event)" /><br><br>
+        <input type="file" id="imgChange" name="plImgFile" accept="image/*" onchange="previewImage(event)" /><br><br>
         
         <label for="plTitle">플레이리스트 제목:</label>
         <input type="text" id="plTitle" name="plTitle" value="${playlist.plTitle }" required />
