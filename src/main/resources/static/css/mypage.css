@@ -5,9 +5,9 @@
 	flex-direction: column;
 	align-items: center;
 	justify-content: flex-end;
+	padding-top:130px;
 }
 .con{
-	padding-top:130px;
 	height: 830px;
 	width: 100%;
 	display: flex;
@@ -23,7 +23,7 @@
 	display: flex;
 }
 .myLeft{
-	width: 400px;
+	width: 350px;
 	height: 100%;
 	display: flex;
 	flex-direction: column;
@@ -49,7 +49,6 @@
 	justify-content: center;
 	align-items: center;
 	border-radius: 50%;
-	box-shadow: 1px 1px 2px white;
 }
 .myImg img{
 	object-fit: cover;
@@ -59,7 +58,6 @@
 
 .myProfile > *{
 	margin: 6px;
-	
 }
 
 .shareMyProfile {
@@ -81,6 +79,7 @@
 	color: white;
 	padding: 5px;
 	border-radius: 20px;
+	font-size: 0.8rem;
 }
 
 .myNick{
@@ -89,6 +88,7 @@
 }
 .myEmail{
 	color: #999;
+	font-size: 0.8rem;
 }
 .connectSpotify{
 	background-color: #1ED760;
@@ -144,13 +144,14 @@
 .myRight > *{
 	width: 100%;
 }
-.myTagBox > div:nth-child(1) {
-	color: white;
-	font-weight: bold;
+.tagBoxTitle {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	font-size: 1.5rem;
+}
+.myTagBox > div:nth-child(1){
+	color: white;
+	font-size: 1.2rem;
 	padding: 25px;
 }
 .myTags{
@@ -207,12 +208,93 @@
 	display: flex;
 	width: 100%;
 	height: 100%;
+	padding-top: 20px;
 }
 .myEtcBox > div{
 	width: 100%;
 	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+.myEtcBox > div > h1{
+	padding-bottom: 10px;
+}
+.myEtcBox > div > div{
+	height: 100%;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	margin-top: 20px;
+}
+.myEtcBox a{
 	color: white;
+}
+.myEtcBox a > div > img{
+	transition: 0.3s;
+}
+.myEtcBox a:hover > div > img{
+	filter: brightness(100%);
+}
+
+.etcCon{
+	width: 380px;
+	height: 200px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	
+	background-color: #222;
+}
+.etcCon > img{
+	width: 100px;
+	height: 100%;
+	object-fit: cover;
+	filter: brightness(50%);
+}
+.etcDesc{
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+}
+.etcDesc > div{
+	width: 100%;
+	padding: 10px;
+}
+.etcTitle{
+	font-size: 0.9rem;
+	margin-bottom: 5px;
+}
+.etcTag{
+	font-size: 0.7rem;
+	color: #888;
+	margin-bottom: 10px;
+}
+.plLikeBox{
+	font-size: 0.9rem;
+	display: inline;
+}
+.etcUserBox{
+	display: flex;
+	align-items: center;
+}
+.etcUserImg{
+	width: 30px;
+	height: 30px;
+	object-fit: cover;
+	border-radius: 50%;
+}
+.etcUserNickname{
+	margin-left: 10px;
+	font-size: 0.8rem;
+}
+.plLikeBox{
+	cursor: pointer;
+}
+#redHeart{
+	color: red;
 }

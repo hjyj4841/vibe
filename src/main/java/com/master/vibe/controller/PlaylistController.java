@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.master.vibe.model.dto.CreatePlaylistDTO;
+import com.master.vibe.model.dto.PlaylistDTO;
 import com.master.vibe.model.vo.Music;
 import com.master.vibe.model.vo.Playlist;
 import com.master.vibe.model.vo.User;
+import com.master.vibe.playlistViewer.PlaylistViewer;
 import com.master.vibe.model.dto.SearchDTO;
 import com.master.vibe.service.PlaylistMusicService;
 import com.master.vibe.service.PlaylistService;
@@ -41,6 +43,9 @@ public class PlaylistController {
 	
 	@Autowired
 	private SpotifyService spotifyService;
+	
+	@Autowired
+	private PlaylistViewer playlistViewer;
 	
 //	추합 중 오류 때문에 임시 주석으로 대체
 //	@Value("${spring.servlet.multipart.location}")
@@ -142,8 +147,11 @@ public class PlaylistController {
     	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		User user = (User) authentication.getPrincipal();
 		
-    	model.addAttribute("playlist", playlistService.myPlaylist(user.getUserEmail()));
-    	
+		List<Playlist> playlist = playlistService.myPlaylist(user.getUserEmail());
+		
+		model.addAttribute("searchTag", playlistViewer.playlistView(playlist, user));
+		
+    	model.addAttribute("user", user);
     	return "playlist/myPlaylist";
     }
 	

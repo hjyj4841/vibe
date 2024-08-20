@@ -182,7 +182,7 @@
 }
 /* 서치화면 메인 */
 .searchListMain{
-	height: 600px;
+	max-height: 600px;
 	overflow-y: scroll; 
 }
 .searchListMain > a {
@@ -190,7 +190,7 @@
 }
 /* 스크롤바 스타일 */
 .searchListMain::-webkit-scrollbar {
-    width: 10px;  /* 스크롤바의 너비 */
+    width: 5px;  /* 스크롤바의 너비 */
 }
 .searchListMain::-webkit-scrollbar-thumb {
     height: 10%; /* 스크롤바의 길이 */

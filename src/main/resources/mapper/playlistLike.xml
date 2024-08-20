@@ -20,15 +20,41 @@
 			</association>
 		</association>
 	</resultMap>
+	
+	<resultMap type="Playlist" id="playlistMap">
+		<id column="pl_code" property="plCode" />
+		<result column="pl_title" property="plTitle" />
+		<result column="pl_img" property="plImg" />
+		<result column="pl_date" property="plDate" />
+		<result column="pl_public_yn" property="plPublicYn" />
+		<result column="pl_code_count" property="likeCount" />
+		<association property="user" javaType="User">
+			<id column="user_email" property="userEmail" />
+			<result column="user_password" property="userPassword" />
+			<result column="user_nickname" property="userNickname" />
+			<result column="user_img" property="userImg" />
+			<result column="user_date" property="userDate" />
+			<result column="user_ent_yn" property="userEntYn" />
+			<result column="user_spotify_yn" property="userSpotifyYn" />
+			<result column="user_gender" property="userGender" />
+			<result column="user_birth" property="userBirth" />
+			<result column="user_manager" property="userManager" />
+			<result column="user_enroll_date" property="userEnrollDate" />
+			<result column="user_phone" property="userPhone" />
+			<result column="age_group" property="ageGroup" />
+		</association>
+	</resultMap>
 
-	<select id="likePlaylist" parameterType="String" resultMap="playlistLikeMap">
-		SELECT l.like_code, l.like_date, c.user_email, c.user_nickname, c.user_img, p.pl_code, p.pl_title, p.pl_img
+	<!-- 회원이 좋아한 플레이리스트 조회 -->
+	<select id="likePlaylist" parameterType="String" resultMap="playlistMap">
+		SELECT p.pl_code, p.pl_title, p.pl_img, p.pl_date, p.pl_public_yn, c.user_email, c.user_nickname, c.user_img
 		FROM playlist_like l
 			JOIN user m ON (m.user_email = l.user_email)
 			JOIN playlist p using(pl_code)
 			JOIN user c ON (p.user_email = c.user_email)
 		WHERE pl_public_yn = 'Y'
-			AND m.user_email = #{userEmail};
+			AND m.user_email = #{userEmail}
+		ORDER BY l.like_code DESC
 	</select>
 
 	<!-- 좋아요 했는지 확인 -->

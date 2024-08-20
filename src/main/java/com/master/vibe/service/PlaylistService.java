@@ -82,4 +82,9 @@ public class PlaylistService {
     public List<Playlist> playListRankingOnAgeGroup(String ageGroup) {
     	return playlistMapper.playListRankingOnAgeGroup(ageGroup);
     }
+    
+    // 특정유저의 플레이리스트 좋아요가 가장 많은 플레이리스트
+    public Playlist likeRankByUserEmail(String userEmail) {
+    	return playlistMapper.likeRankByUserEmail(userEmail);
+    }
 }

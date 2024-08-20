@@ -97,6 +97,7 @@ uri="http://www.springframework.org/security/tags" %>
       </div>
       <jsp:include page="tiles/footer.jsp"></jsp:include>
     </div>
+    <script src="./js/scroll.js"></script>
     <script src="./js/main.js"></script>
     <script>
       if ("${deleteUser}" != "") alert("${deleteUser}");

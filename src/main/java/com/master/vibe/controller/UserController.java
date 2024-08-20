@@ -18,7 +18,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.master.vibe.config.DomainFailureHandler;
 import com.master.vibe.model.dto.UserDTO;
 import com.master.vibe.model.dto.UserLikeTagDTO;
+import com.master.vibe.model.vo.Playlist;
 import com.master.vibe.model.vo.User;
+import com.master.vibe.playlistViewer.PlaylistViewer;
+import com.master.vibe.service.PlaylistService;
 import com.master.vibe.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,6 +32,12 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private PlaylistService playlistService;
+	
+	@Autowired
+	private PlaylistViewer playlistViewer;
 
 	// 테스트 페이지 연결
 	@GetMapping("/test")
@@ -135,6 +144,22 @@ public class UserController {
 		// 유저가 좋아하는 태그 top 5
 		List<UserLikeTagDTO> list = userService.userLikeTag(user.getUserEmail());
 		
+		// 해당유저의 좋아요가 가장 많은 플레이리스트
+		try {
+			Playlist playlist = playlistService.likeRankByUserEmail(user.getUserEmail());
+			model.addAttribute("topPlaylist", playlistViewer.onePlaylistView(playlist, user));
+		} catch(Exception e) {
+			model.addAttribute("topPlaylist", null);
+		}
+		
+		// 랜덤 플레이리스트 하나
+		try {
+			Playlist playlist = playlistService.randomPlaylist().get(0);
+			model.addAttribute("randomPlaylist", playlistViewer.onePlaylistView(playlist, user));
+		} catch(Exception e) {
+			model.addAttribute("randomPlaylist", null);
+		}
+	    
 		model.addAttribute("likeTagList", list);
 		model.addAttribute("user", user);
 		

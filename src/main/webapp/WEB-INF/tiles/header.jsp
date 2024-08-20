@@ -15,13 +15,13 @@
 		<!-- 로고 -->
 		<div id="logo">
 			<a href="/">
-				<img src="./imgs/logo/logoW.png" alt="" />
+				<img src="./imgs/logo/logoW.png"/>
 			</a>
 		</div>
 		
 		<!-- nav1 영역 -->
 		<div id="nav1">
-			<a href="searchHome" id="search">Search</a> 
+			<a href="/searchPlaylist?select=title&search=" id="search">Search</a> 
 			<a href="" id="contact">Contact</a>
 		</div>
 		
