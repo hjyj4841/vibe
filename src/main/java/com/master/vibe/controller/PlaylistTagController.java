@@ -2,20 +2,20 @@ package com.master.vibe.controller;
 
 import org.springframework.stereotype.Controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.master.vibe.model.dto.PlaylistDTO;
 import com.master.vibe.model.dto.SearchDTO;
 import com.master.vibe.model.vo.Playlist;
-import com.master.vibe.model.vo.PlaylistTag;
 import com.master.vibe.model.vo.User;
+import com.master.vibe.playlistViewer.PlaylistViewer;
 import com.master.vibe.service.PlaylistService;
 import com.master.vibe.service.PlaylistTagService;
 
@@ -26,6 +26,8 @@ public class PlaylistTagController {
 	private PlaylistTagService playlistTagService;
 	@Autowired
 	private PlaylistService playlistService;
+	@Autowired
+	private PlaylistViewer playlistViewer;
 	
 	public List<Playlist> playlist(SearchDTO dto) {
 		System.out.println(dto);

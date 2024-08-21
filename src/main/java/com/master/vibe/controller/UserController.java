@@ -1,7 +1,10 @@
 package com.master.vibe.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -12,8 +15,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.master.vibe.config.DomainFailureHandler;
+import com.master.vibe.model.dto.UserDTO;
 import com.master.vibe.model.dto.UserLikeTagDTO;
+import com.master.vibe.model.vo.Playlist;
 import com.master.vibe.model.vo.User;
+import com.master.vibe.playlistViewer.PlaylistViewer;
+import com.master.vibe.service.PlaylistService;
 import com.master.vibe.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,6 +32,12 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private PlaylistService playlistService;
+	
+	@Autowired
+	private PlaylistViewer playlistViewer;
 
 	// 테스트 페이지 연결
 	@GetMapping("/test")
@@ -47,13 +61,23 @@ public class UserController {
 		return "user/registerUser";
 	}
 	@PostMapping("/registerUser")
-	public String register(User user, String birthDay) {
+	public String register(User user, String birthDay, Model model) {
 		try {
 			user.setUserBirth(new SimpleDateFormat("yyyy-MM-dd").parse(birthDay));
 		} catch (Exception e) {}
 
-		userService.register(user);
-		return "redirect:/";
+		int success = userService.register(user);
+		
+		System.err.println(success);
+		
+		if(success == 1) {
+			model.addAttribute("registerMsg", "회원가입에 성공 하였습니다.");
+			return "index";
+		}else {
+			model.addAttribute("registerMsg", "회원가입에 실패 하였습니다.");
+			return "registerUser";
+		}
+		
 	}
 
 	// 로그인
@@ -63,14 +87,16 @@ public class UserController {
 	}
 	
 	// 로그인 에러 시 리턴할 메세지
-	@PostMapping("/loginError")
-	public String loginError(Model model) {
+	@GetMapping("/loginError")
+	public String loginError(Model model, String error, String username) {
 		
-		model.addAttribute("msg", "ID 혹은 PASSWORD가 잘못 되었습니다.");
+		if(error.equals("탈퇴회원")) {
+			error = "재가입까지 " + userService.rejoinDate(username) + "일 남았습니다.";
+		}
+		
+		model.addAttribute("msg", error);
 		return "user/login";
 	}
-	// 탈퇴한 회원 재가입 남은 일수 조회 - 사용 예정
-	// userService.rejoinDate(user.getUserEmail());
 	
 	// 계정 찾기 페이지로 이동
 	@GetMapping("/findUser")
@@ -85,10 +111,20 @@ public class UserController {
 		} catch (Exception e) {}
 		
 		if(user.getUserEmail() == null) { // userEmail이 null 이면 아이디 찾기
-			model.addAttribute("userEmail", userService.findUserID(user).getUserEmail());
+			user = userService.findUserID(user);
+			if(user == null) {
+				model.addAttribute("findMsg", "회원이 존재하지 않습니다.");
+				return "user/findUser";
+			}
+			model.addAttribute("userEmail", user.getUserEmail());
 			return "user/showUserID";
 		}else {
-			model.addAttribute("user", userService.findUserPWD(user));
+			user = userService.findUserPWD(user);
+			if(user == null) {
+				model.addAttribute("findMsg", "회원이 존재하지 않습니다.");
+				return "user/findUser";
+			}
+			model.addAttribute("user", user);
 			return "user/showUserPWD";
 		}
 	}
@@ -108,6 +144,22 @@ public class UserController {
 		// 유저가 좋아하는 태그 top 5
 		List<UserLikeTagDTO> list = userService.userLikeTag(user.getUserEmail());
 		
+		// 해당유저의 좋아요가 가장 많은 플레이리스트
+		try {
+			Playlist playlist = playlistService.likeRankByUserEmail(user.getUserEmail());
+			model.addAttribute("topPlaylist", playlistViewer.onePlaylistView(playlist, user));
+		} catch(Exception e) {
+			model.addAttribute("topPlaylist", null);
+		}
+		
+		// 랜덤 플레이리스트 하나
+		try {
+			Playlist playlist = playlistService.randomPlaylist().get(0);
+			model.addAttribute("randomPlaylist", playlistViewer.onePlaylistView(playlist, user));
+		} catch(Exception e) {
+			model.addAttribute("randomPlaylist", null);
+		}
+	    
 		model.addAttribute("likeTagList", list);
 		model.addAttribute("user", user);
 		
@@ -126,7 +178,7 @@ public class UserController {
 	}
 
 	@PostMapping("/updateUser")
-	public String updateUser(User user, Model model) {
+	public String updateUser(UserDTO user, Model model) throws IllegalStateException, IOException {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		User u = (User) authentication.getPrincipal(); // 현재 접속중인 유저 정보
 		
@@ -135,6 +187,20 @@ public class UserController {
 		u.setUserPassword(user.getUserPassword());
 		u.setUserPhone(user.getUserPhone());
 		// 이미지 변경 로직 추가
+		if(!user.getFile().isEmpty()) {
+			if(u.getUserImg() != null && !u.getUserImg().equals("http://192.168.10.6:8080/img/user_img/default_user.jpg")) {
+				File deleteFile = new File("\\\\192.168.10.6\\vibe\\img\\user_img\\" + new File(u.getUserImg()).getName());
+				deleteFile.delete();
+			}
+			UUID uuid = UUID.randomUUID();
+			String fileName = uuid.toString() + "_" + user.getFile().getOriginalFilename();
+			File copyFile = new File("\\\\192.168.10.6\\vibe\\img\\user_img\\" + fileName);
+			
+			user.getFile().transferTo(copyFile); // 업로드한 파일이 지정한 path 위치로 저장
+			u.setUserImg("http://192.168.10.6:8080/img/user_img/" + fileName);
+		} else {
+			u.setUserImg(user.getUserImg());
+		}
 		
 		userService.updateUser(u);
 		

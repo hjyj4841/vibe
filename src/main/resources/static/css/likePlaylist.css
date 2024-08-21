@@ -1,0 +1,48 @@
+.myTagBox{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	
+	width: 100%;
+}
+.playlistCreateBox{
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+}
+.createBtnBox{
+	padding-left: 25px;
+}
+.createBtnBox a {
+	color: white;
+	font-size: 0.8rem;
+	transition: 0.2s;
+}
+.createBtnBox a:hover {
+	color: crimson;
+}
+.createPlaylistEmpty{
+	width: 100px;
+}
+.searchListMain{
+	width: 90%;
+}
+
+.plContentsBox i{
+	padding-left: 10px;
+	font-size:0.7rem;
+}
+
+.plContentsBox{
+	display: flex;
+	justify-content: center;
+}
+
+.fa-lock-open {
+	color: #aaa;
+}
+
+.fa-lock{
+	color: #666;
+}

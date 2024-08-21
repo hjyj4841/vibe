@@ -56,5 +56,8 @@
 		<jsp:include page="../tiles/footer.jsp"></jsp:include>
 	</div>
 	<script type="text/javascript" src="./js/userRegister.js"></script>
+	<script>
+		if('${registerMsg}' != '') alert('${registerMsg}');
+	</script>
 </body>
 </html>

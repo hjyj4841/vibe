@@ -11,24 +11,25 @@
 </head>
 <body>
 	<h1>회원 정보 수정</h1>
-	<form action="updateUser" method="post" onsubmit="return validate()">
+	<form action="updateUser" method="post" onsubmit="return validate()" enctype="multipart/form-data">
 		<table>
 			<tr>
+				<td>회원이미지 수정</td>
+				<td><input name="file" type="file" accept="image/*"></td>
+			</tr>
+			<tr>
 				<td>비밀번호 수정 :</td>
-				<td><input type=password name="userPassword"
-					required></td>
+				<td><input type=password name="userPassword" required></td>
 			</tr>
 			<tr>
 				<td>닉네임 수정 :</td>
-				<td><input type=text name="userNickname" class="nickname"
-					value="${user.userNickname }">
+				<td><input type=text name="userNickname" class="nickname" value="${user.userNickname }">
 					<button type="button" id="nicknameCheck">중복조회</button>
 					</td>
 			</tr>
 			<tr>
 				<td>전화번호 수정 :</td>
-				<td><input type=text name="userPhone"
-					value="${user.userPhone }"></td>
+				<td><input type=text name="userPhone" value="${user.userPhone }"></td>
 			</tr>
 			<tr>
 				<td></td>

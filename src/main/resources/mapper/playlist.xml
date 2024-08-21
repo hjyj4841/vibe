@@ -97,8 +97,8 @@
 	<!-- 플레이리스트 생성 --> <!-- 이미지 추가! -->
 	<insert id="createPlaylist" parameterType="CreatePlaylistDTO">
 		INSERT INTO
-		playlist(pl_title, user_email, pl_img)
-		VALUES (#{plTitle}, #{userEmail}, #{plImg})
+		playlist(pl_title, user_email)
+		VALUES (#{plTitle}, #{userEmail})
 	</insert>
 
 	<!-- user 탈퇴 시 playlist 정보 넘기기 -->
@@ -111,7 +111,9 @@
 	<!-- 회원 본인의 플레이리스트 조회 -->
 	<select id="myPlaylist" resultMap="playlistMap" parameterType="String">
 		SELECT * FROM playlist
+		JOIN user USING (user_email)
 		WHERE user_email = #{userEmail}
+		ORDER BY pl_code DESC;
 	</select>
 
 	<!-- 플레이리스트 코드로 플레이리스트 정보 조회 -->
@@ -146,6 +148,18 @@
     	WHERE pl_public_yn = 'Y'
     	GROUP BY pl_code
     	ORDER BY COUNT(like_code) DESC;
+    </select>
+    
+    <!-- 특정 회원의 최고 인기 플레이리스트 조회-->
+    <select id="likeRankByUserEmail" resultMap="playlistMap" parameterType="String">
+    	SELECT pl_code, pl_title, pl_img, pl_date, u.user_email, u.user_nickname, u.user_img
+    	FROM playlist p
+	    	JOIN user u ON (u.user_email = p.user_email)
+	    	LEFT JOIN playlist_like USING (pl_code)
+    	WHERE u.user_email = #{user_email}
+    	GROUP BY pl_code
+    	ORDER BY COUNT(like_code) DESC
+    	LIMIT 1
     </select>
 
 	<!-- 플레이리스트 코드로 태그 이름 조회 -->

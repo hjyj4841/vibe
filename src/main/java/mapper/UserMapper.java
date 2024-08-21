@@ -10,7 +10,7 @@ import com.master.vibe.model.vo.User;
 
 @Mapper
 public interface UserMapper {
-	void register(User user); // 회원가입
+	int register(User user); // 회원가입
 
 	void updateUser(User user); // 회원정보 수정
 
@@ -24,7 +24,7 @@ public interface UserMapper {
 
 	void deleteUser(String deleteUser); // 탈퇴
 
-	String rejoinDate(String userEmail); // 재가입 시도 시 남은 일 수 조회
+	int rejoinDate(String userEmail); // 재가입 시도 시 남은 일 수 조회
 
 	List<UserLikeTagDTO> userLikeTag(String userEmail); // 좋아요한 태그 조회
 
