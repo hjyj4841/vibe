@@ -57,29 +57,34 @@ public class PlaylistService {
 	public List<Music> getMusicListByPlaylistCode(int plCode) {
 		return null;
 	}
-	
+
 	// 플레이리스트 코드로 태그 이름 리스트 가져오기
-    public List<String> getTagsByPlaylistCode(int plCode) {
-        return playlistMapper.findTagsByPlaylistCode(plCode);
-    }
-    
-    // 플레이리스트 랜덤 조회
-    public List<Playlist> randomPlaylist(){
-    	return playlistMapper.randomPlaylist();
-    }
-    
-    // 검색 태그 랭킹 조회
-    public List<Playlist> searchTagRanking(String tagName){
-    	return playlistMapper.searchTagRanking(tagName);
-    }
-    
-    // 한달 동안의 플레이리스트 좋아요 랭킹 조회
-    public List<Playlist> playListRankingOnMonth(){
-    	return playlistMapper.playListRankingOnMonth();
-    }
-    
-    // 연령 그룹별 좋아요 랭킹 조회 
-    public List<Playlist> playListRankingOnAgeGroup(String ageGroup) {
-    	return playlistMapper.playListRankingOnAgeGroup(ageGroup);
-    }
+	public List<String> getTagsByPlaylistCode(int plCode) {
+		return playlistMapper.findTagsByPlaylistCode(plCode);
+	}
+
+	// 플레이리스트 랜덤 조회
+	public List<Playlist> randomPlaylist() {
+		return playlistMapper.randomPlaylist();
+	}
+
+	// 검색 태그 랭킹 조회
+	public List<Playlist> searchTagRanking(String tagName) {
+		return playlistMapper.searchTagRanking(tagName);
+	}
+
+	// 한달 동안의 플레이리스트 좋아요 랭킹 조회
+	public List<Playlist> playListRankingOnMonth() {
+		return playlistMapper.playListRankingOnMonth();
+	}
+
+	// 연령 그룹별 좋아요 랭킹 조회
+	public List<Playlist> playListRankingOnAgeGroup(String ageGroup) {
+		return playlistMapper.playListRankingOnAgeGroup(ageGroup);
+	}
+
+	// 성별 별 좋아요 랭킹
+	public List<Playlist> playListRankingOnGender(String userGender){
+		return playlistMapper.playListRankingOnGender(userGender);
+	}
 }

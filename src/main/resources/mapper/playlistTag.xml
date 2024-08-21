@@ -9,77 +9,64 @@
 			<result column="tag_name" property="tagName" />
 		</association>
 	</resultMap>
-	
-	<!-- 플레이리스트 플레이리스트코드마다 태그 가져오는 쿼리 -->
-	<select id="searchTagPlaylist" resultMap="listTagMap" parameterType="Integer">
-		SELECT * 
-		FROM playlist_tag
-			JOIN tag USING (tag_code)
-		WHERE pl_code = #{code}
-	</select>
-	
-	<!-- 플레이리스트 태그테이블에서 태그 검색 쿼리(중복 제거) -->
-	<select id="searchTag" resultType="Integer" parameterType="String">
-		SELECT distinct pl_code 
-		FROM playlist_tag
-			JOIN tag USING (tag_code)
-		WHERE tag_name LIKE CONCAT('%', #{search}, '%')
-	</select>
-	
-	<!-- 
-	 SELECT * 
-		FROM playlist_tag
-		JOIN tag USING (tag_code)
-        WHERE pl_code = 3
-        AND tag_name LIKE '%El%'
-	<select id="allPlaylist" resultMap="playlistMap" parameterType="SearchDTO">
-		SELECT * FROM playlist
-		JOIN user USING (user_email)
-		WHERE pl_public_yn = 'Y'
-		<if test="search != null">
-			AND pl_title LIKE CONCAT('%', #{search}, '%')
-		</if>
-	</select> -->
 
-	<!-- 플리 이름검색, 태그검색 -->
-	<!-- <select id="searchPlaylist" resultMap="listTagMap" parameterType="SearchDTO">
+	<!-- 플레이리스트 플레이리스트코드마다 태그 가져오는 쿼리 -->
+	<select id="searchTagPlaylist" resultMap="listTagMap"
+		parameterType="Integer">
 		SELECT *
 		FROM playlist_tag
-		RIGHT JOIN playlist USING (pl_code)
-		LEFT JOIN user USING (user_email)
-		LEFT JOIN tag USING (tag_code)
-		WHERE pl_public_yn = 'Y'
-		<choose>
-			<when test="select == 'title'">
-				AND pl_title LIKE CONCAT('%', #{search}, '%')
-			</when>
-			<when test="select == 'tag'">
-				AND tag_name LIKE CONCAT('%', #{search}, '%')
-			</when>
-		</choose>
-	</select> -->
-	
-	<!-- 태그를 DB에 삽입 -->
-    <insert id="insertTag" parameterType="com.master.vibe.model.vo.Tag">
-        INSERT INTO tag(tag_name) VALUES (#{tagName})
-    </insert>
-
-    <!-- 태그 이름으로 태그 조회 -->
-    <select id="selectTagByName" parameterType="String" resultType="com.master.vibe.model.vo.Tag">
-        SELECT * FROM tag WHERE tag_name = #{tagName}
-    </select>
-
-    <!-- 플레이리스트 태그를 DB에 삽입 -->
-    <insert id="insertPlaylistTag">
-        INSERT INTO playlist_tag(pl_code, tag_code) VALUES (#{plCode}, #{tagCode})
-    </insert>
-	
-	<select id="findTagsByPlaylistCode" resultType="String" parameterType="int">
-	    SELECT tag_name 
-	    FROM tag
-	    	JOIN playlist_tag USING (tag_code)
-	    WHERE pl_code = #{plCode}
+		JOIN tag USING (tag_code)
+		WHERE pl_code = #{code}
 	</select>
-	
-	
+
+	<!-- 플레이리스트 태그테이블에서 태그 검색 쿼리(중복 제거) -->
+	<select id="searchTag" resultType="Integer"
+		parameterType="String">
+		SELECT distinct pl_code
+		FROM playlist_tag
+		JOIN tag USING (tag_code)
+		WHERE tag_name LIKE CONCAT('%', #{search}, '%')
+	</select>
+
+	<!-- SELECT * FROM playlist_tag JOIN tag USING (tag_code) WHERE pl_code 
+		= 3 AND tag_name LIKE '%El%' <select id="allPlaylist" resultMap="playlistMap" 
+		parameterType="SearchDTO"> SELECT * FROM playlist JOIN user USING (user_email) 
+		WHERE pl_public_yn = 'Y' <if test="search != null"> AND pl_title LIKE CONCAT('%', 
+		#{search}, '%') </if> </select> -->
+
+	<!-- 플리 이름검색, 태그검색 -->
+	<!-- <select id="searchPlaylist" resultMap="listTagMap" parameterType="SearchDTO"> 
+		SELECT * FROM playlist_tag RIGHT JOIN playlist USING (pl_code) LEFT JOIN 
+		user USING (user_email) LEFT JOIN tag USING (tag_code) WHERE pl_public_yn 
+		= 'Y' <choose> <when test="select == 'title'"> AND pl_title LIKE CONCAT('%', 
+		#{search}, '%') </when> <when test="select == 'tag'"> AND tag_name LIKE CONCAT('%', 
+		#{search}, '%') </when> </choose> </select> -->
+
+	<!-- 태그를 DB에 삽입 -->
+	<insert id="insertTag"
+		parameterType="com.master.vibe.model.vo.Tag">
+		INSERT INTO tag(tag_name) VALUES (#{tagName})
+	</insert>
+
+	<!-- 태그 이름으로 태그 조회 -->
+	<select id="selectTagByName" parameterType="String"
+		resultType="com.master.vibe.model.vo.Tag">
+		SELECT * FROM tag WHERE tag_name = #{tagName}
+	</select>
+
+	<!-- 플레이리스트 태그를 DB에 삽입 -->
+	<insert id="insertPlaylistTag">
+		INSERT INTO playlist_tag(pl_code, tag_code) VALUES (#{plCode}, #{tagCode})
+	</insert>
+
+	<select id="findTagsByPlaylistCode" resultType="String"
+		parameterType="int">
+		SELECT tag_name
+		FROM playlist
+		JOIN playlist_tag ON (playlist.pl_code = playlist_tag.pl_code)
+		JOIN tag ON (playlist_tag.tag_code = tag.tag_code)
+		WHERE playlist.pl_code = #{plCode}
+	</select>
+
+
 </mapper>
