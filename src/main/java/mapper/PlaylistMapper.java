@@ -6,7 +6,9 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.master.vibe.model.dto.CreatePlaylistDTO;
 import com.master.vibe.model.dto.SearchDTO;
+import com.master.vibe.model.vo.Paging;
 import com.master.vibe.model.vo.Playlist;
+import com.master.vibe.model.vo.PlaylistTag;
 
 
 // PlaylistMapper.java는 플레이리스트를 데이터베이스에 추가하는 addPlaylist 메소드를 정의
@@ -16,6 +18,8 @@ import com.master.vibe.model.vo.Playlist;
 public interface PlaylistMapper {
 	
 	List<Playlist> allPlaylist(SearchDTO dto); // 플리 전체 조회
+	List<Integer> searchTag(String search);
+	List<PlaylistTag> searchTagPlayList(int code);
 	
 	void movePlaylist(String userEmail); // 플레이리스트 소유자를 관리자로 변경(회원 탈퇴시)
 	

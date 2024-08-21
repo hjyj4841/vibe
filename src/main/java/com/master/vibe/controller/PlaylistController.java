@@ -13,10 +13,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.master.vibe.model.dto.CreatePlaylistDTO;
 import com.master.vibe.model.vo.Music;
+import com.master.vibe.model.vo.Paging;
 import com.master.vibe.model.vo.Playlist;
 import com.master.vibe.model.vo.User;
 import com.master.vibe.model.dto.SearchDTO;
@@ -64,12 +66,20 @@ public class PlaylistController {
 	}
 
 	// 플레이리스트 전체 조회 페이지
+	@ResponseBody
 	@GetMapping("/searchHome")
 	public String searchAllPlaylist(Model model) {
 		SearchDTO dto = new SearchDTO();
 		model.addAttribute("allPlaylist", playlistService.allPlaylist(dto));
 		return "test/search/searchHome";
 	}
+	
+	// 무한스크롤 컨트롤러
+//	@ResponseBody
+//	@GetMapping("/limitList")
+//	public List<Playlist> limitList(Paging paging){
+//		return playlistService.allPlaylist(paging);
+//	}
     
     // 플레이리스트 생성
     @GetMapping("/createPlaylist")

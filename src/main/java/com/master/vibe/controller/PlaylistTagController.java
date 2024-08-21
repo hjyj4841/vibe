@@ -8,6 +8,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.master.vibe.model.dto.PlaylistDTO;
 import com.master.vibe.model.dto.SearchDTO;
@@ -25,53 +27,47 @@ public class PlaylistTagController {
 	@Autowired
 	private PlaylistService playlistService;
 	
+	public List<Playlist> playlist(SearchDTO dto) {
+		System.out.println(dto);
+		dto.setSearch(dto.getSearch().toLowerCase());
+  		System.out.println(dto.getSelect()); // title or tag
+  		//System.out.println(dto.getSearch().equals("")); // true
+  		if(dto.getCodes()!=null && dto.getCodes().get(0) == 0) {
+  			dto.setCodes(null);
+  		}
+  		
+  		// 플리 제목 검색이라면 DTO에 검색 내용 대입
+  		if(dto.getSelect().equals("tag")) {
+  			List<Integer> codes = playlistService.searchTag(dto.getSearch());
+  			if(codes.size()!=0) {
+  				dto.setCodes(codes);
+  			}
+  		}
+
+  		// 검색한 내용을 바탕으로 플레이리스트를 담는 리스트 생성
+  		List<Playlist> playlist = playlistService.allPlaylist(dto);
+  		for(Playlist play : playlist) {
+  			play.setTagList(playlistService.searchTagPlayList(play.getPlCode()));
+  			System.out.println(play);
+  		}
+  		
+  		return playlist;
+	}
+	
 	// 플레이리스트 검색 페이지 (title or tag)
   	@GetMapping("/searchPlaylist")
  	public String searchPlaylist(Model model, SearchDTO dto) {
-  		
-  		SearchDTO search = new SearchDTO();
-  		
-  		// 플리 제목 검색이라면 DTO에 검색 내용 대입
-  		if(dto.getSelect().equals("title")) {
-  			search.setSearch(dto.getSearch());
-  		// 태그 검색일 때 타이틀을 뽑아옴
-  		} else if(dto.getSelect().equals("tag")) {
-  			// 검색한 태그명이 포함된 태그를 가진 플레이리스트를 담은 List - pl_code
-  			List<Integer> codes = playlistTagService.searchTag(dto.getSearch());
-  			if(codes.size()!=0) {
-	  				search.setCodes(codes);
-	  			} else {
-	  				// 조회된 내용이 없을 경우 null 리턴
-	  				model.addAttribute("searchTag", null);
-	  		 		return "search/searchPlaylist";
-	  			}
-  		}
-  		
-  		// 검색한 내용을 바탕으로 플레이리스트를 담는 리스트 생성
-  		List<Playlist> playlist = playlistService.allPlaylist(search);
-  		
-  		// model에 담을 플레이리스트의 목록들
-  		List<PlaylistDTO> dtoList = new ArrayList<>();
-  		
-  		// 뽑아온 태그를 리스트로 만드는 코드
-  		for(Playlist play : playlist) {
-  			List<PlaylistTag> tagList = playlistTagService.searchTagPlaylist(play.getPlCode());
-  			PlaylistDTO pDto = PlaylistDTO.builder()
-  					.plCode(play.getPlCode())
-  					.plTitle(play.getPlTitle())
-  					.plImg(play.getPlImg())
-  					.tagList(tagList)
-  					.user(User.builder()
-  							.userNickname(play.getUser().getUserNickname())
-  							.userImg(play.getUser().getUserImg())
-  							.build())
-  					.build();
-  			dtoList.add(pDto);
-  		}
- 		model.addAttribute("searchTag", dtoList);
- 		
+ 		model.addAttribute("searchTag", playlist(dto));
+ 		model.addAttribute("dto", dto);
  		return "search/searchPlaylist";
  	}
+  	
+  	@ResponseBody
+  	@PostMapping("/limitList")
+  	public List<Playlist> limitList(SearchDTO dto) {
+  		System.out.println(dto);
+  		return playlist(dto);
+  	}
   	
   	//@GetMapping("/search")
 	//public String getPlaylistsByTag(String tagCode, Model model) {
