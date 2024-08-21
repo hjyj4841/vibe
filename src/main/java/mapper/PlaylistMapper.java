@@ -31,7 +31,7 @@ public interface PlaylistMapper {
 
     void deletePlaylist(int plCode); // 플레이리스트 삭제
         
-    void updatePlaylist(UpdatePlaylistDTO dto); // 플레이리스트 수정
+//    void updatePlaylist(UpdatePlaylistDTO dto); // 플레이리스트 수정
     void updatePlaylist(Playlist playlist); // 플레이리스트 수정
     
     //void updatePlaylistTitle(Playlist playlist); // 플레이리스트 제목 수정

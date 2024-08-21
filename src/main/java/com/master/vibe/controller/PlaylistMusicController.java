@@ -20,7 +20,7 @@ public class PlaylistMusicController {
 	@Autowired
 	private PlaylistMusicService playlistMusicService;
 	
-	// 선택된 음악 ID를 사용하여 플레이리스트에 추가하는 로직 구현
+	// 선택한 음악 플레이리스트에 추가하는 로직
 	// music/musicInfo.jsp : <form action="addMusicToPlaylist" method="post">
     @PostMapping("/addMusicToPlaylist")
     public String addMusicToPlaylist(@RequestParam List<String> selectedMusic, Model model, HttpServletRequest request) {

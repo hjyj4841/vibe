@@ -16,16 +16,17 @@
 			<th>플레이리스트 이름</th>
 			<th>공개여부</th>
 		</tr>
-		<c:forEach items="${playlist }" var="playlist">
-			<tr data-code="${playlist.plCode }">
-				<td><img src="http://192.168.10.6:8080/playlistImg/${playlist.plImg }" alt="이미지" style= "width: 640px; height: 640px"></td>
-				<td>${playlist.plTitle }</td>
-				<td>${playlist.plPublicYn }</td>
+		<c:forEach items="${playlist}" var="playlist">
+			<tr data-code="${playlist.plCode}">
+				<td><img src="${playlist.plImg}" alt="이미지" style= "width: 640px; height: 640px"></td>
+				<td>${playlist.plTitle}</td>
+				<td>${playlist.plPublicYn}</td>
 			</tr>
 		</c:forEach>
 	</table>
 
-	<script>
+	<script>	
+		// 테이블의 각 행에 클릭 이벤트 추가
 		const tr = document.querySelectorAll("tr");
 	
 		tr.forEach(t => {

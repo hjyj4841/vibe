@@ -50,9 +50,9 @@ public class PlaylistService {
 		playlistMapper.updatePlaylist(playlist);
 	}
 	
-	public void UpdatePlaylist(UpdatePlaylistDTO dto) {
-		playlistMapper.updatePlaylist(dto);
-	}
+//	public void updatePlaylist(UpdatePlaylistDTO dto) {
+//		playlistMapper.updatePlaylist(dto);
+//	}
 	
 	
 	/*

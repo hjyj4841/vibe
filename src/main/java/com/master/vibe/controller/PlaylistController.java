@@ -33,6 +33,9 @@ import jakarta.servlet.http.HttpServletRequest;
 @Controller
 public class PlaylistController {
 
+	// 기본 이미지 URL 상수 정의
+    private static final String DEFAULT_IMAGE_URL = "http://192.168.10.6:8080/playlistImg/defaultCD.png";
+    
 	@Autowired
 	private PlaylistService playlistService;
 	
@@ -66,7 +69,7 @@ public class PlaylistController {
 		return "test/search/searchHome";
 	}
     
-    // 플레이리스트 생성
+    // 플레이리스트 생성 페이지
     @GetMapping("/createPlaylist")
     public String createPlaylist(Model model) {
     	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -76,20 +79,31 @@ public class PlaylistController {
 		
     	return "playlist/createPlaylist";
     }
-
+    
+    // 플레이리스트 생성 처리
     @PostMapping("/createPlaylist")
     public String createPlaylist(CreatePlaylistDTO dto, HttpServletRequest request) throws IllegalStateException, IOException {
     	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		User user = (User) authentication.getPrincipal();
-        
-		System.out.println(dto.getPlUrl());
-		String fileName = fileUpload(dto.getPlUrl());
 
+//		System.out.println(dto.getPlUrl());
+//		String fileName = fileUpload(dto.getPlUrl());
+		
+		// 이미지 선택 여부 확인
+		String fileName;
+		if(dto.getPlUrl() != null && !dto.getPlUrl().isEmpty()) {
+			fileName = fileUpload(dto.getPlUrl());
+			dto.setPlImg(fileName);
+		} else {
+			// 이미지 선택하지 않은 경우 기본 이미지 URL 설정
+			dto.setPlImg(DEFAULT_IMAGE_URL);
+		}
+		
         dto.setUserEmail(user.getUserEmail());
-        
-//		dto.setPlImg("http://localhost:8081/playlistImg/" + fileName);
-		dto.setPlImg("http://192.168.10.6:8080/playlistImg//" + fileName);
 		playlistService.createPlaylist(dto);
+		
+//		dto.setPlImg("http://localhost:8081/playlistImg/" + fileName);
+//		dto.setPlImg("http://192.168.10.6:8080/playlistImg//" + fileName);
 		
         // 태그 입력값 받기
         List<String> tagNames = new ArrayList<>();
@@ -164,44 +178,40 @@ public class PlaylistController {
 
     	// 기존 플레이리스트 정보 조회
     	Playlist playlist = playlistService.selectPlaylistByPlCode(dto.getPlCode());
-
-    	// 기존 이미지 파일 삭제
-    	String existImg = playlist.getPlImg();
-    	if(existImg != null && !existImg.isEmpty()) {
-    		System.out.println("존재하는 파일 : " + existImg);
-    		File file = new File("\\\\192.168.10.6\\vibe\\playlistImg\\" + existImg); // 실제 경로로 변경
-    		if(file.exists()) {
-    			file.delete();
-    		}
-    	}
-    		
-    	/*
-    	// 기존 이미지 파일 삭제
-    	if(dto.getPlImgFile() != null && !dto.getPlImgFile().isEmpty()) {
-    	
-	    	String existImgPath = playlist.getPlImg();
-	    	if(existImgPath != null && !existImgPath.isEmpty()) {
-	    		File file = new File("http://192.168.10.6:8080/playlistImg//" + existImgPath);
-	    		
-	    		if(file.exists()) {
-	    			file.delete();
-	    		}
-	    	}
-	    	*/ 	
     	
     	// 새 이미지 파일 업로드
     	String newFileName = null;
     	if(dto.getPlImgFile() != null && !dto.getPlImgFile().isEmpty()) {
+    		
+    		// 기존 이미지 파일 삭제
+        	String existImg = playlist.getPlImg();
+        	if(existImg != null && !existImg.isEmpty()) {
+        		System.out.println("존재하는 파일 : " + existImg);
+        		File file = new File("\\\\192.168.10.6\\vibe\\playlistImg\\" + existImg); // 파일을 저장할 실제 경로로 설정
+        		if(file.exists()) {
+        			file.delete();
+        		}
+        	}
+    		
     		UUID uuid = UUID.randomUUID();
     		newFileName = uuid.toString() + "_" + dto.getPlImgFile().getOriginalFilename();
     		System.out.println("새로 들어온 파일 : " + newFileName);
-    		File newFile = new File("\\\\192.168.10.6\\vibe\\playlistImg\\" + newFileName); // 실제 경로로 변경
+    		File newFile = new File("\\\\192.168.10.6\\vibe\\playlistImg\\" + newFileName);
     		
     		System.out.println(newFile.getPath());
     		
     		dto.getPlImgFile().transferTo(newFile);
+    		newFileName = "http://192.168.10.6:8080/playlistImg/" + newFileName;
+    	
+    	// defaultImg가 null이 아니다 -> 기본 이미지 URL이(defaultCD.img) 전달되었다. defaultImg가 비어있지 않다 -> 기본 이미지 URL이 빈 문자열이 아니다.
+    	// 이 조건문이 참인 경우, 기본 이미지 URL이 폼 데이터에 포함되었음을 의미, 이를 새 이미지로 설정
+    	} else if(dto.getDefaultImg() != null && !dto.getDefaultImg().isEmpty()) {
+    		// 기본 이미지 URL이 폼에 포함된 경우로
+    		// 사용자가 "기본 이미지로" 버튼을 클릭하여 기본 이미지로 변경한 경우, 기존의 이미지 파일을 변경하지 않고 이 기본 이미지 URL을 새 이미지로 사용 -> 즉, defaultCD.img로 설정하겠다.
+    		newFileName = dto.getDefaultImg();
     	} else {
     		// 이미지 파일 변경하지 않았으면 기존 이미지 유지
+    		// 사용자가 이미지 파일을 업로드하지 않았고, 기본 이미지로 리셋하지 않은 경우에는 기존 이미지 URL을 그대로 유지
     		newFileName = playlist.getPlImg();
     	}
     	
@@ -220,7 +230,7 @@ public class PlaylistController {
     	playlistService.updatePlaylist(playlist); // 수정된 서비스 메서드 호출
         
         // 플레이리스트 수정 후 저장 시 변경한 정보로 저장 후 이전 화면으로 이동(선택한 플레이리스트 화면)
-//        return "redirect:/showPlaylistInfo?plCode=" + playlist.getPlCode();
+//      return "redirect:/showPlaylistInfo?plCode=" + playlist.getPlCode();
         return "redirect:/showPlaylistInfo?plCode=" + dto.getPlCode();
     
     }
