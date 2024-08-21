@@ -27,14 +27,15 @@ td a {
 		<a href="addMusic?plCode=${playlist.plCode }">곡 추가</a>
 		<a href="deletePlaylist?plCode=${playlist.plCode }">플레이리스트 삭제</a>
 		<a href="updatePlaylist?plCode=${playlist.plCode }">플레이리스트 수정</a>
+		<a href="${pageContext.request.contextPath}/playlist/manageTags?plCode=${playlist.plCode}">태그 관리</a>	
 	</c:if>
 	
 	<h4>태그 : </h4>
 	<ul>
-		<c:forEach items="${tagList}" var="tag">
-			<li>${tag}</li>
+		<c:forEach items="${tags}" var="playlistTag">
+			<li>#${playlistTag.tag.tagName}</li>
 		</c:forEach>
-	</ul>
+	</ul>	
 	
 	<form action="deleteMusicFromPlaylist" method="post">
 	 <input type="hidden" name="plCode" value="${playlist.plCode}">
@@ -53,7 +54,7 @@ td a {
 				<td><input type="checkbox" name="selectedDeleteMusic" value="${music.id}"></td>
 				<td>
 					<a href="musicDetail?musicId=${music.id}">
-						<img src="${music.albumUrl }" style="width: 100px">
+						<img src="${music.albumUrl }">
 					</a>
 				</td>
 				<td>

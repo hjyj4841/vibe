@@ -28,6 +28,7 @@ public interface PlaylistMapper {
     // @Select("SELECT LAST_INSERT_ID()")
     // int getLastInsertedId(); // 최근 삽입된 플레이리스트의 ID를 가져옴
 
+	void deletePlaylistTags(int plCode); // 플레이리스트 태그 삭제
     void deletePlaylist(int plCode); // 플레이리스트 삭제
     
     void updatePlaylistTitle(Playlist playlist); // 플레이리스트 제목 수정

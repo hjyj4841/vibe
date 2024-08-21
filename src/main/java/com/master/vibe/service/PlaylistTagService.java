@@ -37,4 +37,11 @@ public class PlaylistTagService {
 	//	return playlistTagMapper.getPlaylistsByTag(tagCode);
 	//}
 
+	public void addPlaylistTag(int plCode, int tagCode) {
+        playlistTagMapper.insertPlaylistTag(plCode, tagCode);
+    }
+
+    public void deletePlaylistTag(int plCode, int tagCode) {
+        playlistTagMapper.deletePlaylistTag(plCode, tagCode);
+    }
 }

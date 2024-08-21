@@ -16,7 +16,7 @@
     </select>
 
     <!-- 태그 추가 -->
-    <insert id="insertTag" parameterType="Tag">
+    <insert id="insertTag" parameterType="Tag" useGeneratedKeys="true" keyProperty="tagCode" keyColumn="tag_code">
         INSERT INTO tag (tag_code, tag_name) VALUES (#{tagCode}, #{tagName})
     </insert>
 
@@ -24,6 +24,10 @@
     <select id="findTagNameByCode" resultType="String" parameterType="int">
         SELECT tag_name FROM tag
         WHERE tag_code = #{tagCode}
+    </select>
+    
+    <select id="findAllTags" resultType="Tag">
+        SELECT * FROM tag;
     </select>
 
 </mapper>

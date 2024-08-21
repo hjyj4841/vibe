@@ -81,5 +81,9 @@
 	    WHERE pl_code = #{plCode}
 	</select>
 	
+	<delete id="deletePlaylistTag" parameterType="map">
+	    DELETE FROM playlist_tag
+	    WHERE pl_code = #{plCode} AND tag_code = #{tagCode}
+	</delete>
 	
 </mapper>
