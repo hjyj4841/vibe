@@ -101,6 +101,7 @@ td a {
 	<h4>태그 : </h4>
 	<ul>
 		<c:forEach items="${tags}" var="playlistTag">
+			${playlistTag.tag}
 			<li>#${playlistTag.tag.tagName}</li>
 		</c:forEach>
 	</ul>	

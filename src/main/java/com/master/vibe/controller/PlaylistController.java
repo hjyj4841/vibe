@@ -97,12 +97,18 @@ public class PlaylistController {
     public String createPlaylist(CreatePlaylistDTO dto, HttpServletRequest request) throws IllegalStateException, IOException {
     	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		User user = (User) authentication.getPrincipal();
-
+		
+		
+		
+		
+		//System.out.println("102 : " + dto.getTags().get(0));
+		
+		
 		String fileName = null;
 
-        dto.setUserEmail(user.getUserEmail());
+//        dto.setUserEmail(user.getUserEmail());
         
-        playlistService.createPlaylist(dto);
+//        playlistService.createPlaylist(dto);
 //		dto.setPlImg("http://localhost:8081/playlistImg/" + fileName);
 
 //		System.out.println(dto.getPlUrl());
@@ -123,16 +129,16 @@ public class PlaylistController {
 //		dto.setPlImg("http://localhost:8081/playlistImg/" + fileName);
 //		dto.setPlImg("http://192.168.10.6:8080/playlistImg//" + fileName);
 		
-        // 태그 입력값 받기
-        List<String> tagNames = new ArrayList<>();
-        for (int i = 1; i <= 5; i++) {
-            String tag = request.getParameter("tag" + i);
-            if (tag != null && !tag.trim().isEmpty()) {
-                tagNames.add(tag.trim());
-            }
-        }
+		// 태그 입력값 받기
+	    //String tags = request.getParameter("tags"); // 태그가 콤마로 구분된 문자열 형태로 전달됨
+	    List<String> newTags = new ArrayList<>();
+	    for(String tag : dto.getTags()) {
+			newTags.add(tag.split(":")[1].replace("}", "").replace("\"", "").replace("]", ""));
+		}
+	    dto.setTags(newTags);
+	    
         // 태그 서비스 호출
-        List<Integer> tagCodes = tagService.addTagsByName(tagNames);
+        List<Integer> tagCodes = tagService.addTagsByName(dto.getTags());
 
         // 플레이리스트와 태그 연동
         String plCode = dto.getPlCode(); // 생성된 플레이리스트 코드 가져오기
@@ -173,8 +179,6 @@ public class PlaylistController {
         model.addAttribute("playlist", playlist);
         return "playlist/showPlaylistInfo";
     }
-    
-    // 플레이리스트 태그값 수정
     
     // 회원본인의 플레이리스트 조회
     @GetMapping("/myPlaylist")

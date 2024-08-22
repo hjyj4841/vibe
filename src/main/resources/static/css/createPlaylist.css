@@ -1,0 +1,205 @@
+/* 전체 페이지를 수직 및 수평 중앙에 위치시키기 위한 스타일 */
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  position: absolute;
+  top: 15%;
+}
+
+/* 이미지 업로드 영역 스타일 */
+.image-preview-container {
+  width: 100%;
+  position: relative;
+  text-align: center;
+}
+
+.image-preview-container img {
+  max-width: 100%;
+  height: auto;
+  border: 0px;
+  margin-top: 30px;
+}
+
+/* 제목 스타일 */
+h1 {
+  display: flex;
+  align-items: center;
+  color: #dddddd;
+  font-size: 2.5rem;
+  background-color: #111;
+  margin-bottom: 30px;
+  justify-content: center;
+}
+
+/* 폼 섹션 스타일 */
+.title-input-container {
+  width: 100%;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.title-input-container input[type="text"] {
+  width: 100%;
+  color: white !important;
+  background-color: #111;
+  padding: 12px;
+  border: 1px solid #cccccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  font-size: 1rem;
+  placeholder-color-focus: #111;
+}
+
+/* 이미지 컨트롤 스타일 */
+.image-controls {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.image-controls input[type="file"] {
+  border: 1px solid #cccccc;
+  border-radius: 6px;
+  padding: 6px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+.image-controls button {
+  font-size: 0.8rem;
+  font-weight: bold;
+  width: 120px;
+  height: 30px;
+  border-radius: 10px;
+  border: none;
+  padding: 0;
+  margin: 10px;
+  transition: background-color 0.3s;
+}
+
+.image-controls button:hover {
+  color: white;
+  background-color: red;
+}
+
+/* 태그 입력 필드 스타일 */
+.form-tag-section {
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.form-tag-section input {
+  border: 1px solid #b3b3b3;
+  padding: 10px;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 1rem;
+}
+
+/* Tagify 라이브러리 스타일 */
+.tagify {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 5px;
+  box-sizing: border-box;
+  overflow: hidden; /* 내부 태그가 넘치지 않도록 설정 */
+  background-color: #111;
+}
+
+.tagify__tags {
+  border: none;
+}
+
+.tagify__input {
+  flex: 1;
+  min-width: 110px;
+  border: none;
+  outline: none;
+  padding: 5px;
+  box-sizing: border-box;
+  overflow-x: auto; /* 태그가 넘칠 경우 수평 스크롤 활성화 */
+  white-space: nowrap;
+}
+
+.tagify__input::before {
+    font-weight: 100;
+    color: #cccccc !important;
+}
+
+/* Tagify 태그 스타일 */
+.tagify__tag {
+  margin: 2px;
+  display: inline-flex;
+  align-items: center;
+  background-color: #e5e5e5;
+  border-radius: 3px;
+  padding: 2px 5px;
+  box-sizing: border-box;
+}
+
+.tagify__tag .tagify__tag__removeImg {
+  background-color: red;
+  border-radius: 50%;
+}
+
+/* 제출 버튼 영역 */
+.form-submit-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.form-submit-container button {
+  font-size: 1.5rem;
+  font-weight: bold;
+  width: 220px;
+  height: 45px;
+  border-radius: 10px;
+  border: none;
+  padding: 0;
+  margin: 10px;
+  transition: background-color 0.3s;
+}
+
+.form-submit-container button:hover {
+  color: white;
+  background-color: red;
+}
+
+/* 일반 버튼 스타일 */
+button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  font-weight: bold;
+  width: 200px;
+  height: 40px;
+  border-radius: 10px;
+  background-color: #e3e3e3;
+  color: black;
+  border: none;
+  padding: 0;
+  margin: 7px;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  color: white;
+  background-color: red;
+}
