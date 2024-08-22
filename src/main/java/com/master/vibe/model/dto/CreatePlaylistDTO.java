@@ -16,5 +16,4 @@ public class CreatePlaylistDTO {
 	private String plImg;
 	private List<String> tags;
 	private MultipartFile plUrl;
-
 }

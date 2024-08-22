@@ -58,6 +58,7 @@ public class PlaylistController {
 //	추합 중 오류 때문에 임시 주석으로 대체
 //	@Value("${spring.servlet.multipart.location}")
 //    private String uploadPath;
+	
 	// 플레이리스트 이미지 업로드 관련 // 서버 연결 관련 차후 보완 필요! 2024.08.16/현호
 //	@Value("${file.upload-dir}")
 //	private String uploadDir;
@@ -92,7 +93,7 @@ public class PlaylistController {
     	return "playlist/createPlaylist";
     }
     
-    // 플레이리스트 생성 처리
+ // 플레이리스트 생성 처리
     @PostMapping("/createPlaylist")
     public String createPlaylist(CreatePlaylistDTO dto, HttpServletRequest request) throws IllegalStateException, IOException {
     	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -102,24 +103,30 @@ public class PlaylistController {
 		
 		
 		//System.out.println("102 : " + dto.getTags().get(0));
-		
-		
-		String fileName = null;
 
 //        dto.setUserEmail(user.getUserEmail());
         
 //        playlistService.createPlaylist(dto);
+	       
+//		String fileName = fileUpload(dto.getPlUrl());
+       // dto.setUserEmail(user.getUserEmail());
+        
+        //playlistService.createPlaylist(dto);
 //		dto.setPlImg("http://localhost:8081/playlistImg/" + fileName);
 
 //		System.out.println(dto.getPlUrl());
 //		String fileName = fileUpload(dto.getPlUrl());
 		
 		// 이미지 선택 여부 확인
-		if(dto.getPlUrl() != null && !dto.getPlUrl().isEmpty()) {
+		String fileName;
+		System.out.println("112 : " + dto.getPlUrl().getOriginalFilename());
+		if(dto.getPlUrl() != null && !dto.getPlUrl().isEmpty() && !dto.getPlUrl().getOriginalFilename().equals("")) {
 			fileName = fileUpload(dto.getPlUrl());
 			dto.setPlImg(fileName);
 		} else {
+			System.out.println("117 : 여기 있음??");
 			// 이미지 선택하지 않은 경우 기본 이미지 URL 설정
+			System.out.println("119 : " + DEFAULT_IMAGE_URL);
 			dto.setPlImg(DEFAULT_IMAGE_URL);
 		}
 		
@@ -146,8 +153,11 @@ public class PlaylistController {
        // System.out.println(tagNames);
       tagService.addPlaylistTags(Integer.parseInt(plCode), tagCodes);
         
+        int plCode = Integer.parseInt(dto.getPlCode()); // 생성된 플레이리스트 코드 가져오기
+        tagService.addPlaylistTags(plCode, tagNames);
         return "redirect:/myPlaylist";
     }
+    
     @GetMapping("/showPlaylistInfo")
     public String showPlaylistInfo(int plCode, Model model) {
     	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

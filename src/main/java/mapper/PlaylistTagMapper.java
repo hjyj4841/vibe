@@ -27,4 +27,7 @@ public interface PlaylistTagMapper {
     // 플레이리스트 태그를 플리태그에서 삭제
     void deletePlaylistTag(int plCode, int tagCode);
 
+    // 태그 이름으로 태그 조회
+    Tag selectTagByName(String tagName);
+
 }

@@ -20,5 +20,7 @@ public interface TagMapper {
     void insert(Tag tag);
     
     List<Tag> findAllTags();
+    
+    List<String> findTagsByPlaylistCode(int plCode);
 
 }

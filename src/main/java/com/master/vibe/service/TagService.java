@@ -57,6 +57,9 @@ public class TagService {
             tagMapper.insertTag(tag);
             return tag;
         }
+    
+    public List<String> getTagsByPlaylistCode(int plCode) {
+        return tagMapper.findTagsByPlaylistCode(plCode);
     }
 
     public List<Tag> getAllTags() {
