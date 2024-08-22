@@ -53,6 +53,7 @@ public class PlaylistController {
 //	추합 중 오류 때문에 임시 주석으로 대체
 //	@Value("${spring.servlet.multipart.location}")
 //    private String uploadPath;
+	
 	// 플레이리스트 이미지 업로드 관련 // 서버 연결 관련 차후 보완 필요! 2024.08.16/현호
 //	@Value("${file.upload-dir}")
 //	private String uploadDir;
@@ -87,16 +88,16 @@ public class PlaylistController {
     	return "playlist/createPlaylist";
     }
     
-    // 플레이리스트 생성 처리
+ // 플레이리스트 생성 처리
     @PostMapping("/createPlaylist")
     public String createPlaylist(CreatePlaylistDTO dto, HttpServletRequest request) throws IllegalStateException, IOException {
     	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		User user = (User) authentication.getPrincipal();
-        
+	       
 //		String fileName = fileUpload(dto.getPlUrl());
-        dto.setUserEmail(user.getUserEmail());
+       // dto.setUserEmail(user.getUserEmail());
         
-        playlistService.createPlaylist(dto);
+        //playlistService.createPlaylist(dto);
 //		dto.setPlImg("http://localhost:8081/playlistImg/" + fileName);
 
 //		System.out.println(dto.getPlUrl());
@@ -104,11 +105,14 @@ public class PlaylistController {
 		
 		// 이미지 선택 여부 확인
 		String fileName;
-		if(dto.getPlUrl() != null && !dto.getPlUrl().isEmpty()) {
+		System.out.println("112 : " + dto.getPlUrl().getOriginalFilename());
+		if(dto.getPlUrl() != null && !dto.getPlUrl().isEmpty() && !dto.getPlUrl().getOriginalFilename().equals("")) {
 			fileName = fileUpload(dto.getPlUrl());
 			dto.setPlImg(fileName);
 		} else {
+			System.out.println("117 : 여기 있음??");
 			// 이미지 선택하지 않은 경우 기본 이미지 URL 설정
+			System.out.println("119 : " + DEFAULT_IMAGE_URL);
 			dto.setPlImg(DEFAULT_IMAGE_URL);
 		}
 		
@@ -129,10 +133,11 @@ public class PlaylistController {
         // 태그 서비스 호출
         tagService.addTagsByName(tagNames);
         // 플레이리스트와 태그 연동
-        int plCode = dto.getPlCode(); // 생성된 플레이리스트 코드 가져오기
+        int plCode = Integer.parseInt(dto.getPlCode()); // 생성된 플레이리스트 코드 가져오기
         tagService.addPlaylistTags(plCode, tagNames);
         return "redirect:/myPlaylist";
     }
+    
     @GetMapping("/showPlaylistInfo")
     public String showPlaylistInfo(int plCode, Model model) {
     	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -143,7 +148,14 @@ public class PlaylistController {
     	}
     	List<String> musicCode = playlistMusicService.showMusicList(plCode);
         Playlist playlist = playlistService.selectPlaylistByPlCode(plCode);
-//      List<String> tagList = playlistService.getTagsByPlaylistCode(plCode);
+//        List<String> tagList = playlistService.getTagsByPlaylistCode(plCode);
+        
+     // 태그 목록을 조회
+        List<PlaylistTag> tags =  playlistTagService.searchTagPlaylist(plCode);
+        //List<String> tags = playlistService.getTagsByPlaylistCode(plCode);
+        
+     // 태그 목록을 출력
+        System.out.println("태그값 " + plCode + ": " + tags);
         
         if(musicCode.size() != 0) {
     		List<Music> musicInfo = spotifyService.getMusicINfoByMusicCode(musicCode);

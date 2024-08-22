@@ -34,7 +34,7 @@ public class TagService {
             }
         }
     }
-
+    
     public List<String> getTagsByPlaylistCode(int plCode) {
         return tagMapper.findTagsByPlaylistCode(plCode);
     }

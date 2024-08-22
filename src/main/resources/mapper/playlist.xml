@@ -98,8 +98,8 @@
 	<!-- 플레이리스트 생성 시 이미지 추가 -->
 	<insert id="createPlaylist" parameterType="CreatePlaylistDTO">
 		INSERT INTO
-		playlist(pl_title, user_email)
-		VALUES (#{plTitle}, #{userEmail})
+		playlist(pl_title, user_email, pl_img)
+		VALUES (#{plTitle}, #{userEmail}, #{plImg})
 	</insert>
 	
 	

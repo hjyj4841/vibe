@@ -47,6 +47,7 @@ public class PlaylistService {
 
 	// 플레이리스트 생성
 	public void createPlaylist(CreatePlaylistDTO dto) {
+		System.out.println("service 54 : " + dto.getPlImg());
 		playlistMapper.createPlaylist(dto);
 		// return playlistMapper.getLastInsertedId(); // 최근 삽입된 플레이리스트의 ID를 반환
 	}

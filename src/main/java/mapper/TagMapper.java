@@ -15,6 +15,12 @@ public interface TagMapper {
     
     String findTagNameByCode(int tagCode);
     
-	List<String> findTagsByPlaylistCode(int plCode);
-     
+    List<Tag> findByPlCode(String plCode);
+    
+    void insert(Tag tag);
+    
+    List<Tag> findAllTags();
+    
+    List<String> findTagsByPlaylistCode(int plCode);
+
 }

@@ -4,10 +4,11 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter @AllArgsConstructor
+@Data @AllArgsConstructor
 public class CreatePlaylistDTO {
 	private String plTitle;
 	private String userEmail;
@@ -15,7 +16,4 @@ public class CreatePlaylistDTO {
 	private List<String> tags;
 	private MultipartFile plUrl;
 	
-	public int getPlCode() {
-		return 0;
-	}
 }

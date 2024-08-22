@@ -29,4 +29,7 @@ public interface PlaylistTagMapper {
     // 태그 이름으로 태그 조회
     Tag selectTagByName(String tagName);
 
+    // 태그 이름으로 태그 조회
+    Tag selectTagByName(String tagName);
+
 }
