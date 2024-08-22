@@ -36,7 +36,7 @@ public class PlaylistLikeService {
 	}
 	
 	// 내가 해당 플리를 좋아했는지 조회
-	public PlaylistLike userLikePlaylistCheck(PlaylistLikeDTO dto) {
+	public PlaylistLike showPlLikeUser(PlaylistLikeDTO dto) {
 		return playlistLikeMapper.userLikePlaylistCheck(dto);
 	}
 	

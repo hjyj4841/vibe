@@ -118,37 +118,35 @@
 			</div>
 			<div class="searchListMain">
 				<c:forEach items="${searchTag}" var="searchPlaylist">
-					<a href="/showPlaylistInfo?plCode=${searchPlaylist.plCode}">
-						<div class="playlistCon">
-							<img src="${searchPlaylist.plImg}">
-							<div class="plContentsBox">
-								<p class="plTitle">${searchPlaylist.plTitle}</p>
-								<p class="plTags">
-									<c:forEach items="${searchPlaylist.tagList}" var="tag">
+					<div class="playlistCon">
+						<img src="${searchPlaylist.plImg}"
+							data-code="${searchPlaylist.plCode}">
+						<div class="plContentsBox" data-code="${searchPlaylist.plCode}">
+							<p class="plTitle">${searchPlaylist.plTitle}</p>
+							<p class="plTags">
+								<c:forEach items="${searchPlaylist.tagList}" var="tag">
 										#${tag.tag.tagName} 
 									</c:forEach>
-								</p>
-								<div class="creatorInfo">
-									<img src="${searchPlaylist.user.userImg}">
-									<p class="creatorNickname">${searchPlaylist.user.userNickname}</p>
-								</div>
-							</div>
-							<div class="plLikeBox" data-code="${searchPlaylist.plCode}">
-								<div>
-									<c:choose>
-										<c:when test="${not empty searchPlaylist.plLike}">
-											<i class="fa-solid fa-heart" id="redHeart"></i>
-										</c:when>
-										<c:otherwise>
-											<i class="fa-regular fa-heart"></i>
-										</c:otherwise>
-									</c:choose>
-									<span>LIKE </span>
-									<span class="likeCount">${searchPlaylist.likeCount }</span>
-								</div>
+							</p>
+							<div class="creatorInfo">
+								<img src="${searchPlaylist.user.userImg}">
+								<p class="creatorNickname">${searchPlaylist.user.userNickname}</p>
 							</div>
 						</div>
-					</a>
+						<div class="plLikeBox" data-code="${searchPlaylist.plCode}" onclick="clickLike(event)">
+							<div>
+								<c:choose>
+									<c:when test="${not empty searchPlaylist.plLike}">
+										<i class="fa-solid fa-heart" id="redHeart"></i>
+									</c:when>
+									<c:otherwise>
+										<i class="fa-regular fa-heart"></i>
+									</c:otherwise>
+								</c:choose>
+								<span>LIKE </span> <span class="likeCount">${searchPlaylist.likeCount }</span>
+							</div>
+						</div>
+					</div>
 				</c:forEach>
 			</div>
 		</div>
@@ -160,6 +158,9 @@
 	let codes = "<c:out value='${dto.codes}'/>";
 	codes = codes.replace('[', '').replace(']', '').split(",");
 	codes = codes.map(Number);
+	$("#searchPlayATag").click(function(e) {
+		e.preventDefault();
+	})
 	$(".searchListMain").scroll(function(){
 		var innerHeight = $(this).innerHeight();
 		var scroll = $(this).scrollTop() + $(this).innerHeight(); 
@@ -178,10 +179,9 @@
 				success:function(searchTag){
 					let searchListMain = $(".searchListMain");
 					$.each(searchTag, function(index, searchPlaylist){
-						let searchItem = '<a href="/showPlaylistInfo?plCode=' + searchPlaylist.plCode + '">' + 
-							'<div class="playlistCon">' + 
-								'<img src="' + searchPlaylist.plImg + '">' + 
-								'<div class="plContentsBox">' + 
+						let searchItem = '<div class="playlistCon">' + 
+								'<img src="' + searchPlaylist.plImg + '" data-code="' + searchPlaylist.plCode + '">' + 
+								'<div class="plContentsBox" data-code="' + searchPlaylist.plCode + '">' + 
 									'<p class="plTitle">' + searchPlaylist.plTitle + '</p>' + 
 									'<p class="plTags">';
 									for(let tag of searchPlaylist.tagList) {
@@ -193,50 +193,59 @@
 										'<p class="creatorNickname">' + searchPlaylist.user.userNickname + '</p>' + 
 									'</div>' + 
 								'</div>' + 
-								'<div class="plLikeBox">' + 
-									'<div>' + 
-										'<i class="fa-regular fa-heart"></i> <span>LIKE 0</span>' + 
+								'<div class="plLikeBox" data-code="' + searchPlaylist.plCode + '" onclick="clickLike(event)">' + 
+									'<div>'; 
+										if(searchPlaylist.plLike!=null){
+											searchItem += '<i class="fa-solid fa-heart" id="redHeart"></i>';
+										} else {
+											searchItem += '<i class="fa-regular fa-heart"></i>';
+										}
+										searchItem += '<span>LIKE </span>' +
+										'<span class="likeCount">' + searchPlaylist.likeCount + '</span>' +
 									'</div>' + 
 								'</div>' + 
-							'</div>' + 
-						'</a>';
+							'</div>';
 						searchListMain.append(searchItem);
 					});
-					
 				}
 			});
 		}
 	});
-		const plLikeBox = document.querySelectorAll(".plLikeBox");
-		
-		plLikeBox.forEach(plLike => {
-			plLike.addEventListener("click", function(e){
-				e.preventDefault();
-				
-				$.ajax({
-					type: 'post',
-					url: '/userLike',
-					data: {
-						plCode: plLike.getAttribute("data-code")
-					},
-					success: function(data){
-						const count = plLike.querySelector('.likeCount').innerHTML;
-						if(data){
-							plLike.querySelector('i').style.color = 'red';
-							plLike.querySelector('i').setAttribute('class', 'fa-solid fa-heart');
-							plLike.querySelector('.likeCount').innerHTML = Number(count) + 1;
-						}else{
-							plLike.querySelector('i').style.color = 'white';
-							plLike.querySelector('i').setAttribute('class', 'fa-regular fa-heart');
-							plLike.querySelector('.likeCount').innerHTML = Number(count) - 1;
-						}
-					},
-					error: function(){
-						alert("로그인 후 이용해 주세요.");
-					}
-				});
-			});
+	
+	$('.playlistCon img').click((e) => {
+		location.href = "/showPlaylistInfo?plCode=" + e.target.getAttribute("data-code");
+	});
+	
+	$('.plContentsBox').click((e) => {
+		location.href = "/showPlaylistInfo?plCode=" + e.currentTarget.getAttribute("data-code");
+	})
+	
+	// <a href="/showPlaylistInfo?plCode=' + searchPlaylist.plCode + '">
+	function clickLike(event) {
+		const plLike = event.currentTarget;
+		$.ajax({
+			type: 'post',
+			url: '/userLike',
+			data: {
+				plCode: plLike.getAttribute("data-code")
+			},
+			success: function(data){
+				const count = plLike.querySelector('.likeCount').innerHTML;
+				if(data){
+					plLike.querySelector('i').style.color = 'red';
+					plLike.querySelector('i').setAttribute('class', 'fa-solid fa-heart');
+					plLike.querySelector('.likeCount').innerHTML = Number(count) + 1;
+				}else{
+					plLike.querySelector('i').style.color = 'white';
+					plLike.querySelector('i').setAttribute('class', 'fa-regular fa-heart');
+					plLike.querySelector('.likeCount').innerHTML = Number(count) - 1;
+				}
+			},
+			error: function(){
+				alert("로그인 후 이용해 주세요.");
+			}
 		});
+	}
 	</script>
 </body>
 </html>
