@@ -14,12 +14,16 @@ import com.master.vibe.model.vo.Playlist;
 import com.master.vibe.model.vo.PlaylistTag;
 
 import mapper.PlaylistMapper;
+import mapper.PlaylistTagMapper;
 
 @Service
 public class PlaylistService {
 
 	@Autowired
 	private PlaylistMapper playlistMapper;
+	
+	@Autowired
+    private PlaylistTagMapper playlistTagMapper;
 
 	// 플레이리스트 전체 조회
 	public List<Playlist> allPlaylist(SearchDTO dto) {
@@ -54,6 +58,7 @@ public class PlaylistService {
 	// 플레이리스트 삭제
 	public void deletePlaylist(int plCode) {
 		playlistMapper.deletePlaylistMusic(plCode);
+		playlistMapper.deletePlaylistTags(plCode);
 		playlistMapper.deletePlaylist(plCode);
 	}
 

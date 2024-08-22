@@ -11,4 +11,5 @@ public class PlaylistTag {
 	private Tag tag;
 	private int plCode;
 	private int tagCode;
+	private String tagName;
 }

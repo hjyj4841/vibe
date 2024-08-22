@@ -9,13 +9,11 @@ import lombok.Setter;
 
 @Getter @Setter @AllArgsConstructor
 public class CreatePlaylistDTO {
+	private String plCode;
 	private String plTitle;
 	private String userEmail;
 	private String plImg;
 	private List<String> tags;
 	private MultipartFile plUrl;
-	
-	public int getPlCode() {
-		return 0;
-	}
+
 }

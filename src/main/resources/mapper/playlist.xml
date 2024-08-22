@@ -95,8 +95,8 @@
 	</select>
  -->
 
-	<!-- 플레이리스트 생성 시 이미지 추가 -->
-	<insert id="createPlaylist" parameterType="CreatePlaylistDTO">
+	<!-- 플레이리스트 생성 --> <!-- 이미지 추가! -->
+	<insert id="createPlaylist" parameterType="CreatePlaylistDTO" useGeneratedKeys="true" keyProperty="plCode" keyColumn="pl_code">
 		INSERT INTO
 		playlist(pl_title, user_email)
 		VALUES (#{plTitle}, #{userEmail})
@@ -154,6 +154,11 @@
 		DELETE FROM playlist WHERE pl_code = #{plCode}
 	</delete>
 
+    <!-- 플레이리스트 태그 삭제 -->
+	<delete id="deletePlaylistTags" parameterType="Integer">
+	    DELETE FROM playlist_tag WHERE pl_code = #{plCode}
+	</delete>
+	
 	<!-- 플레이리스트 제목 수정 -->
     <update id="updatePlaylistTitle" parameterType="Playlist">
         UPDATE playlist
@@ -185,15 +190,14 @@
     </select>
 
 	<!-- 플레이리스트 코드로 태그 이름 조회 -->
-	<select id="findTagsByPlaylistCode" resultType="String"
-		parameterType="int">
-		SELECT tag_name
-		FROM playlist
-		JOIN playlist_tag USING (pl_code)
-		JOIN tag USING (tag_code)
-		WHERE pl_code = #{plCode}
+	<select id="findTagsByPlaylistCode" resultType="String" parameterType="int">
+	    SELECT tag_name 
+	    FROM playlist
+		    JOIN playlist_tag USING (pl_code)
+		    JOIN tag USING (tag_code)
+	    WHERE pl_code = #{plCode}
 	</select>
-
+	
 	<!-- 플레이리스트 랜덤 조회 -->
 	<select id="randomPlaylist" resultMap="playlistMap" parameterType="String">
 		SELECT *

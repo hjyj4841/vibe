@@ -20,31 +20,46 @@ public class TagService {
     @Autowired
     private PlaylistTagMapper playlistTagMapper;
 
-    public void addTagsByName(List<String> tagNames) {
+    public List<Integer> addTagsByName(List<String> tagNames) {
         if (tagNames == null) {
             tagNames = new ArrayList<>();
         }
 
+        List<Integer> tagCodes = new ArrayList<>();
         for (String tagName : tagNames) {
-            List<Tag> existingTags = tagMapper.findTagByName(tagName);
-            if (existingTags.isEmpty()) {
-                Tag tag = new Tag();
-                tag.setTagName(tagName);
-                tagMapper.insertTag(tag);
+            Tag existingTag = tagMapper.findTagByName(tagName);
+            if(existingTag!=null) {
+            	System.out.println("exist!!");
+            	tagCodes.add(existingTag.getTagCode());
+            } else {
+            	Tag tag = new Tag();
+            	tag.setTagName(tagName);
+            	tagMapper.insertTag(tag);
+            	tagCodes.add(tag.getTagCode());
             }
+        }
+        return tagCodes;
+    }
+
+    public void addPlaylistTags(int plCode, List<Integer> tagCodes) {
+        for (int code : tagCodes) {
+            playlistTagMapper.insertPlaylistTag(plCode, code);
         }
     }
 
-    public List<String> getTagsByPlaylistCode(int plCode) {
-        return tagMapper.findTagsByPlaylistCode(plCode);
+    public Tag addTag(String tagName) {
+        Tag existingTag = tagMapper.findTagByName(tagName);
+        if (existingTag != null) {
+            return existingTag;
+        } else {
+            Tag tag = new Tag();
+            tag.setTagName(tagName);
+            tagMapper.insertTag(tag);
+            return tag;
+        }
     }
 
-    public void addPlaylistTags(int plCode, List<String> tagNames) {
-        for (String tagName : tagNames) {
-            Tag tag = playlistTagMapper.selectTagByName(tagName);
-            if (tag != null) {
-                playlistTagMapper.insertPlaylistTag(plCode, tag.getTagCode());
-            }
-        }
+    public List<Tag> getAllTags() {
+        return tagMapper.findAllTags();
     }
 }

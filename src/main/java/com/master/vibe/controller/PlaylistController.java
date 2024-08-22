@@ -19,12 +19,14 @@ import com.master.vibe.model.dto.PlaylistDTO;
 import com.master.vibe.model.vo.Music;
 import com.master.vibe.model.vo.Paging;
 import com.master.vibe.model.vo.Playlist;
+import com.master.vibe.model.vo.PlaylistTag;
 import com.master.vibe.model.vo.User;
 import com.master.vibe.playlistViewer.PlaylistViewer;
 import com.master.vibe.model.dto.SearchDTO;
 import com.master.vibe.model.dto.UpdatePlaylistDTO;
 import com.master.vibe.service.PlaylistMusicService;
 import com.master.vibe.service.PlaylistService;
+import com.master.vibe.service.PlaylistTagService;
 import com.master.vibe.service.SpotifyService;
 import com.master.vibe.service.TagService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -49,6 +51,9 @@ public class PlaylistController {
 	
 	@Autowired
 	private PlaylistViewer playlistViewer;
+
+	@Autowired
+	private PlaylistTagService playlistTagService;
 	
 //	추합 중 오류 때문에 임시 주석으로 대체
 //	@Value("${spring.servlet.multipart.location}")
@@ -92,8 +97,9 @@ public class PlaylistController {
     public String createPlaylist(CreatePlaylistDTO dto, HttpServletRequest request) throws IllegalStateException, IOException {
     	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		User user = (User) authentication.getPrincipal();
-        
-//		String fileName = fileUpload(dto.getPlUrl());
+
+		String fileName = fileUpload(dto.getPlUrl());
+
         dto.setUserEmail(user.getUserEmail());
         
         playlistService.createPlaylist(dto);
@@ -127,10 +133,14 @@ public class PlaylistController {
             }
         }
         // 태그 서비스 호출
-        tagService.addTagsByName(tagNames);
+        List<Integer> tagCodes = tagService.addTagsByName(tagNames);
+
         // 플레이리스트와 태그 연동
-        int plCode = dto.getPlCode(); // 생성된 플레이리스트 코드 가져오기
-        tagService.addPlaylistTags(plCode, tagNames);
+        String plCode = dto.getPlCode(); // 생성된 플레이리스트 코드 가져오기
+      //  System.out.println(plCode);
+       // System.out.println(tagNames);
+      tagService.addPlaylistTags(Integer.parseInt(plCode), tagCodes);
+        
         return "redirect:/myPlaylist";
     }
     @GetMapping("/showPlaylistInfo")
@@ -143,7 +153,13 @@ public class PlaylistController {
     	}
     	List<String> musicCode = playlistMusicService.showMusicList(plCode);
         Playlist playlist = playlistService.selectPlaylistByPlCode(plCode);
-//      List<String> tagList = playlistService.getTagsByPlaylistCode(plCode);
+//        List<String> tagList = playlistService.getTagsByPlaylistCode(plCode);
+     // 태그 목록을 조회
+        List<PlaylistTag> tags =  playlistTagService.searchTagPlaylist(plCode);
+        //List<String> tags = playlistService.getTagsByPlaylistCode(plCode);
+        
+     // 태그 목록을 출력
+        System.out.println("태그값 " + plCode + ": " + tags);
         
         if(musicCode.size() != 0) {
     		List<Music> musicInfo = spotifyService.getMusicINfoByMusicCode(musicCode);
@@ -151,11 +167,16 @@ public class PlaylistController {
     	}
         model.addAttribute("user", user);
         model.addAttribute("playlist", playlist);
-//      model.addAttribute("tagList", tagList);
+//        model.addAttribute("tagList", tagList);
+        // 태그 목록을 모델에 추가
+        model.addAttribute("tags", tags);
         
         model.addAttribute("playlist", playlist);
         return "playlist/showPlaylistInfo";
     }
+    
+    // 플레이리스트 태그값 수정
+    
     // 회원본인의 플레이리스트 조회
     @GetMapping("/myPlaylist")
     public String myPlaylist(Model model) {

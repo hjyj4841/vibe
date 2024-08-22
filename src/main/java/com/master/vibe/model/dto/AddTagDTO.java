@@ -10,4 +10,6 @@ import java.util.List;
 public class AddTagDTO {
     private int playlistId;
     private List<Integer> tagCodes = new ArrayList<>();
+    private int plCode;
+
 }
