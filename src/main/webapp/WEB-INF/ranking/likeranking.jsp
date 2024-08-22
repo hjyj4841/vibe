@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,20 +10,38 @@
 <link rel="stylesheet" href="./css/likeranking.css" />
 </head>
 <body>
-    <h1>Ranking</h1>
-    <div class="size-test">Like Ranking</div>
-    <div id="rankingList">
-        <c:forEach var="playlist" items="${likeranking}">
-            <section class="listRank">
-                <img class="listImg" src="${playlist.plImg}" alt="Playlist Image" />
-                <div class="listRankDesc">
-                    <div class="listRankText">
-                        <div class="size-test2"><p>플레이리스트 제목 : ${playlist.plTitle}</p></div>
-                        <p>작성자 : ${playlist.user.userNickname}</p>
-                    </div>
-                </div>
-            </section>
-        </c:forEach>
-    </div>
+	<header>
+		<div class="likeHead">Like Ranking</div>
+	</header>
+	<div id="rankingList">
+		<c:forEach var="playlist" items="${likeranking}">
+			<div class="likeBox">
+				<div class="likeBox2">
+					<img class="likeImg" src="${playlist.plImg}" alt="Playlist Image" />
+					<div class="likeBox3">
+						<p class="likeTitle">${playlist.plTitle}</p>
+						<p class="likeTags">
+							#출근에바 #여름싸베바
+							<c:forEach items="${searchPlaylist.tagList}" var="tag">
+										#${tag.tag.tagName} 
+							</c:forEach>
+						</p>
+						<div class="likeBox4">
+							<p class="likeCreator">
+								<img src="/imgs/creatorImg/creatorImg5.jpg">
+								<a>${playlist.user.userNickname}</a>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+	</div>
+	</c:forEach>
+	</div>
 </body>
+<a href="" class="top">TOP</a>
 </html>
+
+
+
+
