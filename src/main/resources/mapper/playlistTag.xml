@@ -20,13 +20,15 @@
 	</select>
 
 	<!-- 플레이리스트 태그테이블에서 태그 검색 쿼리(중복 제거) -->
+
 	<select id="searchTag" resultType="Integer"
 		parameterType="String">
 		SELECT distinct pl_code
 		FROM playlist_tag
 		JOIN tag USING (tag_code)
-		WHERE tag_name LIKE CONCAT('%', #{search}, '%')
+		WHERE lower(tag_name) LIKE CONCAT('%', #{search}, '%')
 	</select>
+
 
 	<!-- SELECT * FROM playlist_tag JOIN tag USING (tag_code) WHERE pl_code 
 		= 3 AND tag_name LIKE '%El%' <select id="allPlaylist" resultMap="playlistMap" 
