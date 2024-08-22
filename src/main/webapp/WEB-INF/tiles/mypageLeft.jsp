@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div class="myProfile">
 	<div class="myImg">
 		<img alt="회원이미지" src="${user.userImg }">
@@ -29,10 +29,11 @@
 		</a>
 	</div>
 	<div>
-		<a href="mypage"> <i class="fa-solid fa-user"></i> <span>My Page</span>
+		<a href="mypage"> <i class="fa-solid fa-user"></i> <span>My
+				Page</span>
 		</a>
 	</div>
-	
+
 	<div>
 		<a href="myPlaylist"> <i class="fa-solid fa-circle-play"></i> <span>My
 				PlayList</span>
@@ -41,6 +42,11 @@
 	<div>
 		<a href="likePlaylist"> <i class="fa-brands fa-gratipay"></i> <span>Like
 				PlayList</span>
+		</a>
+	</div>
+	<div>
+		<a href="musicListen"> <i class="fa-solid fa-circle-play"></i> <span>MUSIC
+				player</span>
 		</a>
 	</div>
 </div>

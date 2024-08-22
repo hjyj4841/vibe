@@ -30,7 +30,7 @@ public class ConnectToSpotifyController {
 
 	@Autowired
 	private SpotifyService spotifyService;
-	
+
 	@Autowired
 	private PlaylistService playlistService;
 
@@ -42,7 +42,7 @@ public class ConnectToSpotifyController {
 	}
 
 	@GetMapping("/callback")
-	public String handleSpotifyCallback(@RequestParam("code") String code, Model model) {
+	public String handleSpotifyCallbackForMusicPlayer(@RequestParam("code") String code, Model model){
 		try {
 			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 			User user = (User) authentication.getPrincipal();
@@ -56,7 +56,6 @@ public class ConnectToSpotifyController {
 			return "redirect:/error"; // 오류 시 에러 페이지로 리다이렉트
 		}
 	}
-
 
 	@PostMapping("/saveDeviceId")
 	public ResponseEntity<String> saveDeviceId(@RequestParam("deviceId") String deviceId, HttpSession session) {
