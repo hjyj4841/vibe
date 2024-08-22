@@ -19,8 +19,11 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -96,7 +99,10 @@ public class SpotifyService {
         System.out.println(userEmail);
         userMapper.updateSpotifyStatus(userEmail, "Y"); // 스포티파이 연결 상태를 DB에 업데이트
     }
-	
+    
+    // 음악 재생 관련
+
+    
     // 검색한 음악정보 요청해서 받아오는 메서드
 	public ArrayList<Music> getMusicInfoForMusicName(String musicName, int offset) {
 		String accessToken = getAccessToken();

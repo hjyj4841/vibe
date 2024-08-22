@@ -90,7 +90,7 @@ public class PlaylistService {
 	public List<Music> getMusicListByPlaylistCode(int plCode) {
 		return null;
 	}
-	
+
 	// 플레이리스트 코드로 태그 이름 리스트 가져오기
     public List<String> getTagsByPlaylistCode(int plCode) {
         return playlistMapper.findTagsByPlaylistCode(plCode);
@@ -120,4 +120,9 @@ public class PlaylistService {
     public Playlist likeRankByUserEmail(String userEmail) {
     	return playlistMapper.likeRankByUserEmail(userEmail);
     }
+
+	// 성별 별 좋아요 랭킹
+	public List<Playlist> playListRankingOnGender(String userGender){
+		return playlistMapper.playListRankingOnGender(userGender);
+	}
 }

@@ -52,7 +52,9 @@ public interface PlaylistMapper {
     
     List<Playlist> playListRankingOnMonth(); // 한달 동안의 플레이리스트 좋아요 랭킹 조회
     
-    List<Playlist> playListRankingOnAgeGroup(String ageGroup);
-    
     Playlist likeRankByUserEmail(String userEmail); // 특정유저의 플레이리스트 좋아요가 가장 많은 플레이리스트
+    List<Playlist> playListRankingOnAgeGroup(String ageGroup); // 연령대별 좋아요 랭킹
+    
+    List<Playlist> playListRankingOnGender(String userGender); // 성별 별 좋아요 랭킹
+    
 }

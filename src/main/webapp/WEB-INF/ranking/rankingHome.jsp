@@ -13,6 +13,7 @@
 		<li><a href="searchTag">태그별 랭킹 조회</a></li>
 		<li><a href="playListRankingOnMonth">이번달 랭킹</a></li>
 		<li><a href="playListRankingOnAgeGroupSelect">연령대별 랭킹</a></li>
+		<li><a href="playListRankingOnGenderSelect">성별 별 랭킹</a></li>
 	</ul>
 </body>
 </html>
