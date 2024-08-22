@@ -10,20 +10,32 @@
 		window.history.back(); // 이전 페이지로 돌아가기
 	}
 	
-	/*
-	// 플레이리스트 이미지 변경하기
-	function previewImage(event) {
+	// 이미지 미리보기 기능
+	function previewImg(event) {
 		const file = event.target.files[0];
         if (file) {
+        	console.log(file);
             const reader = new FileReader();
             reader.onload = function(e) {
-                const image = document.getElementById('playlistImage');
+                const image = document.getElementById('playlistImg');
                 image.src = e.target.result;
             }
             reader.readAsDataURL(file);
         }
 	}
-	*/
+	
+	// 기본 이미지 URL 변수로 지정
+	const DEFAULT_IMAGE_URL = 'http://192.168.10.6:8080/playlistImg/defaultCD.png';
+	
+	// 기본 이미지로 리셋 및 폼 데이터 업데이트
+	function resetDefaultImg() {
+	    const img = document.getElementById('playlistImg');
+	    img.src = DEFAULT_IMAGE_URL;
+	    
+	    // 기본 이미지 정보 폼에 추가
+	    document.getElementById('imgChange').value = ""; // 파일 선택 초기화
+	    document.getElementById('defaultImg').value = DEFAULT_IMAGE_URL; // 기본 이미지 URL 추가
+	}
 </script>
 <style>
 /* 이미지 변경 클릭 시 파일 불러오기 시스템 버튼 형태 처리 */
@@ -40,14 +52,16 @@ label[for="imgChange"] {
 </head>
 <body>
     <h1>플레이리스트 수정</h1>
-    <form action="/updatePlaylist" method="post">
+    <form action="/updatePlaylist" method="post" enctype="multipart/form-data">
         <!-- 플레이리스트 코드와 수정할 제목을 입력 받음 -->
         <input type="hidden" value="${playlist.plCode }" name="plCode">
         
-        <img src="${playlist.plImg}" style="width: 200px;">
-        <!-- 이미지 변경 시도했으나 plImg 값이 default로 넣어져있더라고요.. 240814 -->
+        <img src="${playlist.plImg}" style="width: 300px;" id="playlistImg">
+        
         <label for="imgChange">이미지 변경</label>
-        <input type="file" id="imgChange" name="plImg" accept="image/*" onchange="previewImage(event)" /><br><br>
+        <input type="file" id="imgChange" name="plImgFile" accept="image/*" onchange="previewImg(event)" />
+        <input type="hidden" id="defaultImg" name="defaultImg" value="${playlist.plImg}"/> <!-- 기본 이미지 URL 필드 추가 -->
+        <button type="button" onclick="resetDefaultImg()">기본 이미지로</button><br /><br />
         
         <label for="plTitle">플레이리스트 제목:</label>
         <input type="text" id="plTitle" name="plTitle" value="${playlist.plTitle }" required />

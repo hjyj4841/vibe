@@ -94,13 +94,31 @@
 	</select>
  -->
 
-	<!-- 플레이리스트 생성 --> <!-- 이미지 추가! -->
+	<!-- 플레이리스트 생성 시 이미지 추가 -->
 	<insert id="createPlaylist" parameterType="CreatePlaylistDTO">
 		INSERT INTO
 		playlist(pl_title, user_email)
 		VALUES (#{plTitle}, #{userEmail})
 	</insert>
+	
+	
+	<!-- 플레이리스트 이미지 업데이트  
+	<update id="updatePlaylist" parameterType="Playlist">
+		UPDATE playlist
+		SET pl_img = #{plImg}
+		WHERE pl_code = #{pl_code}
+	</update>
+	-->
+	
+	<!-- 플레이리스트 제목과 이미지 동시에 업데이트 -->
+	<update id="updatePlaylist" parameterType="UpdatePlaylistDTO">
+		UPDATE playlist
+		SET pl_title = #{plTitle}, pl_img = #{plImg}
+		WHERE pl_code = #{plCode}
+	</update>
 
+	
+	
 	<!-- user 탈퇴 시 playlist 정보 넘기기 -->
 	<update id="movePlaylist" parameterType="String">
 		UPDATE playlist

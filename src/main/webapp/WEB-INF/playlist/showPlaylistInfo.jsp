@@ -16,16 +16,91 @@ td a {
 	color: black;
 }
 </style>
+<style>
+/* 임시로 설정해놓은 것 */
+/* 플리 제작자 영역*/
+.container {
+	display: flex;
+	align-items: center; /* 세로 방향 중앙 정렬 */
+	margin-bottom: 20px;
+}
+.container img {
+	border-radius: 50%;
+	height: 30px;
+	margin-right: 5px;
+}
+.container .myNick {
+	margin: 0; /* 기본 마진 제거 */
+	font-size: 14px;
+}
+</style>
+<script>
+	// 플레이리스트 삭제 클릭 시 바로 삭제되는 것 alert으로 방지
+	function confirmDelete(event, url) {
+		event.preventDefault(); // 링크 클릭 기본 동작 방지
+		if (confirm('[${playlist.plTitle}] 플레이리스트를 삭제하시겠습니까?')) {
+			window.location.href = url; // 확인 클릭 시 삭제 URL로 이동
+		}
+	}
+	
+	// [곡 삭제] 버튼 클릭 시 삭제할 곡이 있는지(체크된 곡이 있는지) 확인
+	function checkForSelectedMusic(event) {
+		const checkbox = document.querySelectorAll('input[name="selectedDeleteMusic"]:checked');
+		if(checkbox.length === 0) {
+			event.preventDefault(); // 폼 제출(삭제) 방지
+			alert('삭제할 곡이 없습니다. 확인해 주세요.');
+		}
+	}
+	
+	// 페이지 로드 시 스크롤 위치 복원
+	window.addEventListener('load', () => {
+		// 페이지가 다른 페이지에서 왔는지 확인
+		const isHistoryState = window.history.state && window.history.state.scrollRestoration;
+
+		if (isHistoryState) {
+			const scrollPosition = sessionStorage.getItem('scrollPosition');
+			if (scrollPosition !== null) {
+				window.scrollTo(0, parseInt(scrollPosition, 10));
+				sessionStorage.removeItem('scrollPosition'); // 위치 복원 후 제거
+			} else {
+				// 처음 로드할 때는 페이지 상단으로 이동
+				window.scrollTo(0, 0);
+			}
+		}
+	});
+	
+	// 페이지를 떠나기 전 스크롤 위치 저장
+	window.addEventListener('beforeunload', () => {
+		sessionStorage.setItem('scrollPosition', window.scrollY);
+		// 상태를 history에 저장
+        window.history.replaceState({scrollRestoration: true}, null);
+	});
+	
+	<!-- 플레이리스트 링크 공유 -->
+	async function onClickCopyLink() {
+		const link = window.location.href;
+		await
+		navigator.clipboard.writeText(link);
+		window.alert('클립보드에 링크가 복사되었습니다.');
+	}
+
+	document.getElementById("link-copy-icon").addEventListener("click", onClickCopyLink);
+</script>
 </head>
 <body>
 	<h3>플레이리스트 곡 조회</h3>
-	<img src="${playlist.plImg}" style="width: 200px;">
+	<img src="${playlist.plImg}" style="width: 300px;">
 	<a href="myPlaylist">목록</a>
-	<h1>${playlist.plTitle }</h1><br>
+	<h1>${playlist.plTitle }</h1>
 	
 	<c:if test="${user.userEmail eq playlist.user.userEmail}">
+		<div class="container">
+			<img src="${user.userImg }">
+			<p class="myNick">${user.userNickname }</p>
+		</div>
 		<a href="addMusic?plCode=${playlist.plCode }">곡 추가</a>
-		<a href="deletePlaylist?plCode=${playlist.plCode }">플레이리스트 삭제</a>
+		<a href="#" onclick="confirmDelete(event, 'deletePlaylist?plCode=${playlist.plCode }')">플레이리스트 삭제</a>
+		<!-- <a href="deletePlaylist?plCode=${playlist.plCode }">플레이리스트 삭제</a> -->
 		<a href="updatePlaylist?plCode=${playlist.plCode }">플레이리스트 수정</a>
 	</c:if>
 	
@@ -36,7 +111,7 @@ td a {
 		</c:forEach>
 	</ul>
 	
-	<form action="deleteMusicFromPlaylist" method="post">
+	<form action="deleteMusicFromPlaylist" method="post" onsubmit="checkForSelectedMusic(event)">
 	 <input type="hidden" name="plCode" value="${playlist.plCode}">
 	<table>
 	<i id="link-copy-icon" class="fa-solid fa-link">링크 공유하기</i>
@@ -46,7 +121,6 @@ td a {
 			<th>곡명</th>
 			<th>아티스트명</th>
 			<th>앨범명</th>
-
 		</tr>
 		<c:forEach items="${musicList }" var="music">
 			<tr>
@@ -76,19 +150,5 @@ td a {
 	</table>
 	<button type="submit">곡 삭제</button>
 	</form>
-
-
-	<!-- 플레이리스트 링크 공유 -->
-	<script>
-		async function onClickCopyLink() {
-			const link = window.location.href;
-			await
-			navigator.clipboard.writeText(link);
-			window.alert('클립보드에 링크가 복사되었습니다.');
-		}
-
-		document.getElementById("link-copy-icon").addEventListener("click",
-				onClickCopyLink);
-	</script>
 </body>
 </html>
