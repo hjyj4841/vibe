@@ -38,7 +38,7 @@ public interface PlaylistMapper {
 	
 	List<String> findTagsByPlaylistCode(int plCode);
 
-    List<Playlist> randomPlaylist(); // 플레이리스트 랜덤 조회 
+    List<Playlist> randomPlaylist(String userEmail); // 플레이리스트 랜덤 조회 
     
     List<Playlist> searchTagRanking(String tagName); // 검색 태그별 랭킹 조회 
     

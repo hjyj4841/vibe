@@ -190,15 +190,6 @@ public class PlaylistController {
 		return "ranking/likeranking";
     }
 
-	// 플레이리스트 랜덤 조회
-	@GetMapping("/randomPlaylist")
-	public String randomPlaylist(Model model) {
-		List<Playlist> randomPlaylist = playlistService.randomPlaylist();
-		System.out.println(randomPlaylist);
-		model.addAttribute("randomPlaylist", randomPlaylist);
-		return "playlist/randomPlaylist";
-	}
-
 	// 태그 검색 랭킹 조회
 	@GetMapping("/searchTag")
 	public String searchTag() {

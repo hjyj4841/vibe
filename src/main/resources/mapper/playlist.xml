@@ -125,10 +125,12 @@
 	</select>
 
 	<!-- 플레이리스트 랜덤 조회 -->
-	<select id="randomPlaylist" resultMap="playlistMap">
+	<select id="randomPlaylist" resultMap="playlistMap" parameterType="String">
 		SELECT *
 		FROM playlist
+		JOIN user USING (user_email)
 		WHERE pl_public_yn = 'Y'
+			AND user_email != #{userEmail}
 		ORDER BY RAND()
 	</select>
 

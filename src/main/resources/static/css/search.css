@@ -102,8 +102,8 @@
 	align-items: center;
 }
 .plLikeBox > div{
-	cursor: pointer;
 	font-size: 0.9rem;
+	cursor: pointer;
 }
 #redHeart{
 	color: red;
@@ -112,7 +112,6 @@
 .searchContainer{
 	height: 100vh;
 	width: 100%;
-	padding-top: 110px;
 	
 	display: flex;
 	flex-direction: column;
@@ -142,36 +141,37 @@
 	align-items: center;
 	position: relative;
 }
+.mainSearchBox > *{
+	background-color: #1E1E1E;
+	color: white;
+}
 
 .mainSearchBox select {
 	position: absolute;
-	background-color: white;
 	width: 10%;
 	height: 50px;
 	text-align: center;
 	left: 0;
 	z-index: 1;
 	border-radius: 25px 0px 0px 25px;
-	border: 3px solid #808080;
+	border: 1px solid #808080;
 	border-right: none;
 }
 
 .mainSearchBox input {
 	position: absolute;
-	background-color: white;
 	width: 100%;
 	height: 50px;
 	border-radius: 25px 25px 25px 25px;
 	padding-left: 15%;
 	padding-right: 10%;
-	border: 3px solid #808080;
-	color: #333;
+	border: 1px solid #808080;
+	color: white;
 }
 
 .mainSearchBox button {
 	position: absolute;
-	background-color: white;
-	border: 3px solid #808080;
+	border: 1px solid #808080;
 	border-left: none;
 	width: 10%;
 	height: 50px;

@@ -64,8 +64,8 @@ public class PlaylistService {
     }
     
     // 플레이리스트 랜덤 조회
-    public List<Playlist> randomPlaylist(){
-    	return playlistMapper.randomPlaylist();
+    public List<Playlist> randomPlaylist(String userEmail){
+    	return playlistMapper.randomPlaylist(userEmail);
     }
     
     // 검색 태그 랭킹 조회

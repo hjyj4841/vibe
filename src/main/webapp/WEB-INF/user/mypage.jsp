@@ -57,7 +57,7 @@
 												#${tag.tag.tagName } 
 											</c:forEach>
 										</div>
-										<div class="plLikeBox" data-code="${topPlaylist.plCode}">
+										<div class="plLikeCon" data-code="${topPlaylist.plCode}">
 											<c:choose>
 												<c:when test="${not empty topPlaylist.plLike}">
 													<i class="fa-solid fa-heart" id="redHeart"></i>
@@ -104,7 +104,7 @@
 												#${tag.tag.tagName } 
 											</c:forEach>
 										</div>
-										<div class="plLikeBox" data-code="${randomPlaylist.plCode}">
+										<div class="plLikeCon" data-code="${randomPlaylist.plCode}">
 											<c:choose>
 												<c:when test="${not empty randomPlaylist.plLike}">
 													<i class="fa-solid fa-heart" id="redHeart"></i>
@@ -138,7 +138,6 @@
           </div>
         </div>
       </div>
-      <jsp:include page="../tiles/footer.jsp"></jsp:include>
     </div>
     <script>
     	const moveTagSearch = document.querySelectorAll('.moveTagSearch');
@@ -176,8 +175,6 @@
 				});
 			});
 		});
-		
-		
     </script>
   </body>
 </html>

@@ -61,7 +61,6 @@
           </div>
         </div>
       </div>
-		<jsp:include page="../tiles/footer.jsp"></jsp:include>
 	</div>
 	<script>
 		const plLikeBox = document.querySelectorAll(".plLikeBox");

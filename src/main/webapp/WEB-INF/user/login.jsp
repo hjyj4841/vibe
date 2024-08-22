@@ -30,13 +30,10 @@
 				</div>
 			</div>
 		</div>
-		<jsp:include page="../tiles/footer.jsp"></jsp:include>
 	</div>
 	
 	<script>
-		if('${msg }' != ''){
-			alert('${msg}');
-		}
+		if('${msg }' != '') alert('${msg}');
 	</script>
 </body>
 </html>

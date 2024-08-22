@@ -11,11 +11,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
-import com.master.vibe.config.DomainFailureHandler;
 import com.master.vibe.model.dto.UserDTO;
 import com.master.vibe.model.dto.UserLikeTagDTO;
 import com.master.vibe.model.vo.Playlist;
@@ -154,7 +155,7 @@ public class UserController {
 		
 		// 랜덤 플레이리스트 하나
 		try {
-			Playlist playlist = playlistService.randomPlaylist().get(0);
+			Playlist playlist = playlistService.randomPlaylist(user.getUserEmail()).get(0);
 			model.addAttribute("randomPlaylist", playlistViewer.onePlaylistView(playlist, user));
 		} catch(Exception e) {
 			model.addAttribute("randomPlaylist", null);
@@ -182,9 +183,14 @@ public class UserController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		User u = (User) authentication.getPrincipal(); // 현재 접속중인 유저 정보
 		
+		System.err.println("nickName : " + user.getUserNickname());
+		System.err.println("phone : " + user.getUserPhone());
+		System.err.println("password : " + user.getUserPassword());
+		System.err.println("file : " + user.getFile().isEmpty());
+		System.err.println("img : " + user.getUserImg());
+		
 		// 변경할 정보들을 현재접속한 유저 정보에 담아서 서비스로 처리
 		u.setUserNickname(user.getUserNickname());
-		u.setUserPassword(user.getUserPassword());
 		u.setUserPhone(user.getUserPhone());
 		// 이미지 변경 로직 추가
 		if(!user.getFile().isEmpty()) {
@@ -207,30 +213,24 @@ public class UserController {
 		model.addAttribute("user", u);
 		
 		// 변경된 정보로 session에 다시 담기
-		return "user/mypage";
+		return "redirect:/mypage";
 	}
-
-	// 회원 탈퇴
-	@GetMapping("/deleteUser")
-	public String deleteUser() {
-		return "user/deleteUser";
-	}
+	
+	// 회원탈퇴
+	@ResponseBody
 	@PostMapping("/deleteUser")
-	public String deleteUser(String userPassword, Model model, HttpServletRequest request) {
+	public boolean deleteUser(String userPassword, Model model, HttpServletRequest request) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		User user = (User) authentication.getPrincipal();
 		
-		HttpSession session = request.getSession(false);
-				
 		if(userService.deleteUser(user, userPassword)) {
-			model.addAttribute("deleteUser", "회원탈퇴 처리되었습니다.");
-			
+			HttpSession session = request.getSession(false);
 			session.invalidate();
+			
 			SecurityContextHolder.getContext().setAuthentication(null);
-			return "index";
+			return true;
 		}
-		model.addAttribute("deleteUser", "비밀번호가 일치하지 않습니다.");
-		return "user/deleteUser";
+		return false;
 	}
 
 	// 내 프로필 공유하기
@@ -277,5 +277,20 @@ public class UserController {
 		u.setUserNickname(userNickname);
 		
 		return userService.nicknameUpdate(u);
+	}
+	
+	// ajax - 회원정보 수정시 회원 이미지 바꿔서 보여줌
+	@ResponseBody
+	@PostMapping("/previewImg")
+	public String previewImg(MultipartFile file) throws IllegalStateException, IOException {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		User user = (User) authentication.getPrincipal();
+		
+		String fileName = user.getUserEmail() + "_userImg."
+				+ StringUtils.getFilenameExtension(file.getOriginalFilename());
+		File copyFile = new File("\\\\192.168.10.6\\vibe\\img\\preview_img\\" + fileName);
+		
+		file.transferTo(copyFile); // 업로드한 파일이 지정한 path 위치로 저장
+		return "http://192.168.10.6:8080/img/preview_img/" + fileName;
 	}
 }
