@@ -15,18 +15,20 @@
 	</header>
 	<div id="rankingList">
 		<c:forEach var="playlist" items="${likeranking}">
-			<div class="likeBox">
+			<div class="likeBox1">
 				<div class="likeBox2">
 					<img class="likeImg" src="${playlist.plImg}" alt="Playlist Image" />
 					<div class="likeBox3">
-						<p class="likeTitle">${playlist.plTitle}</p>
-						<p class="likeTags">
-							#출근에바 #여름싸베바
-							<c:forEach items="${searchPlaylist.tagList}" var="tag">
-										#${tag.tag.tagName} 
-							</c:forEach>
-						</p>
 						<div class="likeBox4">
+							<p class="likeTitle">${playlist.plTitle}</p>
+							<p class="likeTag">
+								#여름에바 #여름싸베바 #이건사계절이 #아니야
+								<c:forEach items="${searchPlaylist.tagList}" var="tag">
+											#${tag.tag.tagName} 
+								</c:forEach>
+							</p>
+						</div>
+						<div class="likeBox5">
 							<p class="likeCreator">
 								<img src="/imgs/creatorImg/creatorImg5.jpg">
 								<a>${playlist.user.userNickname}</a>
