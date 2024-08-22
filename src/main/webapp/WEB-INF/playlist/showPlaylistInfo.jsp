@@ -27,6 +27,25 @@ td a {
 		<a href="deletePlaylist?plCode=${playlist.plCode }">플레이리스트 삭제</a>
 		<a href="updatePlaylist?plCode=${playlist.plCode }">플레이리스트 수정</a>
 	</c:if>
+	
+	<h4>태그 : </h4>
+	<ul>
+		<c:forEach items="${tags}" var="playlistTag">
+			${playlistTag.tag}
+			<li>#${playlistTag.tag.tagName}</li>
+		</c:forEach>
+	</ul>	
+	
+	<form action="deleteMusicFromPlaylist" method="post">
+	 <input type="hidden" name="plCode" value="${playlist.plCode}">
+	<table>
+	<i id="link-copy-icon" class="fa-solid fa-link">링크 공유하기</i>
+		<tr>
+			<th>선택</th>
+			<th>앨범커버</th>
+			<th>곡명</th>
+			<th>아티스트명</th>
+			<th>앨범명</th>
 
 	<h4>태그 :</h4>
 	<ul>
