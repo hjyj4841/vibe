@@ -185,16 +185,13 @@
 		}
 	
 		document.getElementById("link-copy-icon").addEventListener("click", onClickCopyLink);
-	</script>
 
-    <script>
         // 곡을 재생하는 함수 (전역 범위에서 정의)
         function playMusic(trackId) {
             const iframe = document.getElementById("main_frame");
             iframe.src = "https://open.spotify.com/embed/track/" + trackId;
         }
 
-	<script>
 
     // 음악을 재생하는 함수
     function playMusic(trackId) {

@@ -35,7 +35,7 @@ public class PlaylistViewer {
 			PlaylistLikeDTO plDto = new PlaylistLikeDTO();
 			plDto.setPlCode(play.getPlCode());
 			plDto.setUserEmail(user.getUserEmail());
-			PlaylistLike pLike = playlistLikeService.userLikePlaylistCheck(plDto);
+			PlaylistLike pLike = playlistLikeService.showPlLikeUser(plDto);
 			
 			int lCount = playlistLikeService.showLikeCount(play.getPlCode());
 			
@@ -71,7 +71,7 @@ public class PlaylistViewer {
 		plLikeDto.setUserEmail(user.getUserEmail());
 		
 		// 회원이 해당 플레이리스트를 좋아요 표시했는지 조회
-		PlaylistLike pLike = playlistLikeService.userLikePlaylistCheck(plLikeDto);
+		PlaylistLike pLike = playlistLikeService.showPlLikeUser(plLikeDto);
 		
 		int lCount = playlistLikeService.showLikeCount(playlist.getPlCode());
 			
