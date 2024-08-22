@@ -8,7 +8,10 @@ import org.springframework.stereotype.Service;
 import com.master.vibe.model.dto.CreatePlaylistDTO;
 import com.master.vibe.model.dto.SearchDTO;
 import com.master.vibe.model.vo.Music;
+import com.master.vibe.model.vo.Paging;
 import com.master.vibe.model.vo.Playlist;
+import com.master.vibe.model.vo.PlaylistTag;
+
 import mapper.PlaylistMapper;
 
 @Service
@@ -19,9 +22,18 @@ public class PlaylistService {
 
 	// 플레이리스트 전체 조회
 	public List<Playlist> allPlaylist(SearchDTO dto) {
+		dto.setOffset(dto.getLimit() * (dto.getPage() - 1));
 		return playlistMapper.allPlaylist(dto);
 	}
-
+	
+	public List<Integer> searchTag(String search) {
+		return playlistMapper.searchTag(search);
+	}
+	
+	public List<PlaylistTag> searchTagPlayList(int code) {
+		return playlistMapper.searchTagPlayList(code);
+	}
+	
 	// 내가 생성한 플레이리스트 조회
 	public List<Playlist> myPlaylist(String userEmail) {
 		return playlistMapper.myPlaylist(userEmail);

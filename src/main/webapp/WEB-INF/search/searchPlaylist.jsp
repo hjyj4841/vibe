@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,8 +28,7 @@
 				</div>
 				<div class="plLikeBox">
 					<div>
-						<i class="fa-regular fa-heart"></i>
-						<span>LIKE 2,132</span>
+						<i class="fa-regular fa-heart"></i> <span>LIKE 2,132</span>
 					</div>
 				</div>
 			</div>
@@ -46,8 +45,7 @@
 				</div>
 				<div class="plLikeBox">
 					<div>
-						<i class="fa-regular fa-heart"></i>
-						<span>LIKE 1,852</span>
+						<i class="fa-regular fa-heart"></i> <span>LIKE 1,852</span>
 					</div>
 				</div>
 			</div>
@@ -64,8 +62,7 @@
 				</div>
 				<div class="plLikeBox">
 					<div>
-						<i class="fa-regular fa-heart"></i>
-						<span>LIKE 1,808</span>
+						<i class="fa-regular fa-heart"></i> <span>LIKE 1,808</span>
 					</div>
 				</div>
 			</div>
@@ -82,8 +79,7 @@
 				</div>
 				<div class="plLikeBox">
 					<div>
-						<i class="fa-regular fa-heart"></i>
-						<span>LIKE 1,581</span>
+						<i class="fa-regular fa-heart"></i> <span>LIKE 1,581</span>
 					</div>
 				</div>
 			</div>
@@ -100,8 +96,7 @@
 				</div>
 				<div class="plLikeBox">
 					<div>
-						<i class="fa-regular fa-heart"></i>
-						<span>LIKE 1,375</span>
+						<i class="fa-regular fa-heart"></i> <span>LIKE 1,375</span>
 					</div>
 				</div>
 			</div>
@@ -115,8 +110,7 @@
 					<select name="select">
 						<option value="title">Title</option>
 						<option value="tag">Tag</option>
-					</select>
-					<input type="text" placeholder="Search Playlist..." name="search">
+					</select> <input type="text" placeholder="Search Playlist..." name="search">
 					<button id="searchPlBtn" type="submit">
 						<i class="fa-solid fa-magnifying-glass"></i>
 					</button>
@@ -160,6 +154,59 @@
 		</div>
 	</div>
 	<script>
+	let page = 1;
+	let select = "<c:out value='${dto.select}'/>";
+	let search = "<c:out value='${dto.search}'/>";
+	let codes = "<c:out value='${dto.codes}'/>";
+	codes = codes.replace('[', '').replace(']', '').split(",");
+	codes = codes.map(Number);
+	$(".searchListMain").scroll(function(){
+		var innerHeight = $(this).innerHeight();
+		var scroll = $(this).scrollTop() + $(this).innerHeight(); 
+		var height = $(this)[0].scrollHeight;
+		if(height === scroll){
+			page++;
+			$.ajax({
+				url: "/limitList",
+				type: "POST",
+				data: {
+					page: page,
+					select: select,
+					search: search,
+					codes: codes
+				},
+				success:function(searchTag){
+					let searchListMain = $(".searchListMain");
+					$.each(searchTag, function(index, searchPlaylist){
+						let searchItem = '<a href="/showPlaylistInfo?plCode=' + searchPlaylist.plCode + '">' + 
+							'<div class="playlistCon">' + 
+								'<img src="' + searchPlaylist.plImg + '">' + 
+								'<div class="plContentsBox">' + 
+									'<p class="plTitle">' + searchPlaylist.plTitle + '</p>' + 
+									'<p class="plTags">';
+									for(let tag of searchPlaylist.tagList) {
+										searchItem += '#' + tag.tag.tagName;
+									}
+								searchItem += '</p>' +
+									'<div class="creatorInfo">' + 
+										'<img src="' + searchPlaylist.user.userImg + '">' + 
+										'<p class="creatorNickname">' + searchPlaylist.user.userNickname + '</p>' + 
+									'</div>' + 
+								'</div>' + 
+								'<div class="plLikeBox">' + 
+									'<div>' + 
+										'<i class="fa-regular fa-heart"></i> <span>LIKE 0</span>' + 
+									'</div>' + 
+								'</div>' + 
+							'</div>' + 
+						'</a>';
+						searchListMain.append(searchItem);
+					});
+					
+				}
+			});
+		}
+	});
 		const plLikeBox = document.querySelectorAll(".plLikeBox");
 		
 		plLikeBox.forEach(plLike => {

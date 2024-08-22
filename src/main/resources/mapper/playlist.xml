@@ -26,6 +26,14 @@
 			<result column="age_group" property="ageGroup" />
 		</association>
 	</resultMap>
+	
+	<resultMap type="PlayListTag" id="listTagMap">
+		<id column="pl_tag_code" property="plTagCode" />
+		<association property="tag" javaType="Tag">
+			<id column="tag_code" property="tagCode" />
+			<result column="tag_name" property="tagName" />
+		</association>
+	</resultMap>
 
 	<!-- 전체플리 조회 -->
 	<select id="allPlaylist" resultMap="playlistMap"
@@ -34,10 +42,48 @@
 		JOIN user USING (user_email)
 		WHERE pl_public_yn = 'Y'
 		<!-- 타이틀로 검색 쿼리 -->
+		<if test="select == 'title' and search != ''">
+			AND lower(pl_title) LIKE CONCAT('%', #{search}, '%')
+		</if>
+		<if test="codes != null">
+			AND pl_code IN
+			<foreach collection="codes" item="code" open="(" close=")"
+				separator=",">
+				#{code}
+			</foreach>
+		</if>
+		LIMIT #{offset}, #{limit}
+	</select>
+	
+	<!-- 플레이리스트 태그테이블에서 태그 검색 쿼리(중복 제거) -->
+	<select id="searchTag" resultType="Integer" parameterType="String">
+		SELECT distinct pl_code 
+		FROM playlist_tag
+			JOIN tag USING (tag_code)
+		WHERE lower(tag_name) LIKE CONCAT('%', #{search}, '%')
+	</select>
+	
+	<!-- 플레이리스트 플레이리스트코드마다 태그 가져오는 쿼리 -->
+	<select id="searchTagPlayList" resultMap="listTagMap" parameterType="Integer">
+		SELECT * 
+		FROM playlist_tag
+			JOIN tag USING (tag_code)
+		WHERE pl_code = #{code}
+	</select>
+	
+	
+	<!-- 무한스크롤 --> 
+	<!-- 
+	<select id="limitAllPlaylist" resultMap="playlistMap"
+		parameterType="Paging">
+		SELECT * FROM playlist
+		JOIN user USING (user_email)
+		WHERE pl_public_yn = 'Y'
+		 타이틀로 검색 쿼리
 		<if test="search != null">
 			AND pl_title LIKE CONCAT('%', #{search}, '%')
 		</if>
-		<!-- 태그로 검색 쿼리 -->
+		 태그로 검색 쿼리 
 		<if test="codes != null">
 			AND pl_code IN
 			<foreach collection="codes" item="code" open="(" close=")"
@@ -46,6 +92,7 @@
 			</foreach>
 		</if>
 	</select>
+ -->
 
 	<!-- 플레이리스트 생성 --> <!-- 이미지 추가! -->
 	<insert id="createPlaylist" parameterType="CreatePlaylistDTO">

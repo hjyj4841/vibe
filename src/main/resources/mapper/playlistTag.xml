@@ -2,29 +2,9 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mapper.PlaylistTagMapper">
 
-	<resultMap type="PlayListTag" id="listTagMap">
-		<id column="pl_tag_code" property="plTagCode" />
-		<association property="tag" javaType="Tag">
-			<id column="tag_code" property="tagCode" />
-			<result column="tag_name" property="tagName" />
-		</association>
-	</resultMap>
 	
-	<!-- 플레이리스트 플레이리스트코드마다 태그 가져오는 쿼리 -->
-	<select id="searchTagPlaylist" resultMap="listTagMap" parameterType="Integer">
-		SELECT * 
-		FROM playlist_tag
-			JOIN tag USING (tag_code)
-		WHERE pl_code = #{code}
-	</select>
 	
-	<!-- 플레이리스트 태그테이블에서 태그 검색 쿼리(중복 제거) -->
-	<select id="searchTag" resultType="Integer" parameterType="String">
-		SELECT distinct pl_code 
-		FROM playlist_tag
-			JOIN tag USING (tag_code)
-		WHERE tag_name LIKE CONCAT('%', #{search}, '%')
-	</select>
+	
 	
 	<!-- 
 	 SELECT * 

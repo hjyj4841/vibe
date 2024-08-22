@@ -1,6 +1,7 @@
 package com.master.vibe.model.vo;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,6 +19,8 @@ public class Playlist {
 	
 	// 랭킹 : 좋아요순
 	private int likeCode;
+	
+	private List<PlaylistTag> tagList;
 	
 }
 
