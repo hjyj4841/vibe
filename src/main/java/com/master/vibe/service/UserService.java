@@ -52,7 +52,6 @@ public class UserService implements UserDetailsService{
 
 	// 회원 정보 수정
 	public void updateUser(User user) {
-		user.setUserPassword(bcpe.encode(user.getUserPassword()));
 		userMapper.updateUser(user); // 회원정보 수정
 	}
 
@@ -96,6 +95,11 @@ public class UserService implements UserDetailsService{
 	public boolean nicknameUpdate(User user) {
 		if(userMapper.sameNickname(user) == null) return true;
 		return false;
+	}
+	
+	// 회원정보 수정 시 패스워드 확인
+	public boolean passwordCheck(User user, String userPassword) {
+		return bcpe.matches(userPassword, user.getUserPassword());
 	}
 
 	@Override

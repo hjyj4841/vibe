@@ -35,7 +35,7 @@ public class PlaylistViewer {
 			PlaylistLikeDTO plDto = new PlaylistLikeDTO();
 			plDto.setPlCode(play.getPlCode());
 			plDto.setUserEmail(user.getUserEmail());
-			PlaylistLike pLike = playlistLikeService.showPlLikeUser(plDto);
+			PlaylistLike pLike = playlistLikeService.userLikePlaylistCheck(plDto);
 			
 			int lCount = playlistLikeService.showLikeCount(play.getPlCode());
 			
@@ -64,14 +64,19 @@ public class PlaylistViewer {
 		
 		// 뽑아온 태그를 리스트로 만드는 코드
 		List<PlaylistTag> tagList = playlistTagService.searchTagPlaylist(playlist.getPlCode());
-			
-		PlaylistLikeDTO plDto = new PlaylistLikeDTO();
-		plDto.setPlCode(playlist.getPlCode());
-		plDto.setUserEmail(user.getUserEmail());
-		PlaylistLike pLike = playlistLikeService.showPlLikeUser(plDto);
-			
+		
+		// DTO에 담아서 서비스로 처리
+		PlaylistLikeDTO plLikeDto = new PlaylistLikeDTO();
+		plLikeDto.setPlCode(playlist.getPlCode());
+		plLikeDto.setUserEmail(user.getUserEmail());
+		
+		// 회원이 해당 플레이리스트를 좋아요 표시했는지 조회
+		PlaylistLike pLike = playlistLikeService.userLikePlaylistCheck(plLikeDto);
+		
 		int lCount = playlistLikeService.showLikeCount(playlist.getPlCode());
 			
+		System.err.println(lCount);
+		
 		PlaylistDTO pDto = PlaylistDTO.builder()
 				.plCode(playlist.getPlCode())
 				.plTitle(playlist.getPlTitle())
@@ -86,6 +91,8 @@ public class PlaylistViewer {
 				.likeCount(lCount)
 				.build();
 			
+		System.err.println(pDto);
+		
 		return pDto;
 	}
 }

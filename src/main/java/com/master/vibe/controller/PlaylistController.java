@@ -102,7 +102,7 @@ public class PlaylistController {
 
         dto.setUserEmail(user.getUserEmail());
         
-        playlistService.createPlaylist(dto);
+//        playlistService.createPlaylist(dto);
 //		dto.setPlImg("http://localhost:8081/playlistImg/" + fileName);
 
 //		System.out.println(dto.getPlUrl());

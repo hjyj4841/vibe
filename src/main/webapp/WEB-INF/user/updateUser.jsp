@@ -44,11 +44,11 @@
               		<i class="fa-solid fa-pen" id="phoneNumChangeBtn"></i>
               	</div>
               	<div>
-              		<input type="password" placeholder="Password" name="userPassword" required />
+              		<input type="password" placeholder="Password" name="userPassword" class="userPassword" required />
               	</div>
               	<div class="editButtonBox">
 	              	<div>
-	              		<button type="submit">수정</button>
+	              		<button type="submit" class="editBtn">수정</button>
 	              		<button type="button" id="editCancle">취소</button>
 	              	</div>
               		<a>change Password</a>
@@ -62,6 +62,7 @@
 	<script>
 		let nicknameCheck = true;
 		let phoneCheck = true;
+		let passwordCheck = false;
 		
 		$("#nicknanmeChangeBtn").click(() => {
 			$(".nickname").attr('readonly', false)
@@ -125,6 +126,19 @@
 				}
 			}
 		});
+
+		$(".userPassword").keyup(() => {
+			$.ajax({
+				type: 'post',
+				url: '/passwordCheck',
+				data:{
+					userPassword: $(".userPassword").val()
+				},
+				success: function(data){
+					passwordCheck = data;
+				}
+			});
+		});
 		
 		$(".imgFile").change(() => {
 			 const form = $('.editForm')[0];
@@ -141,10 +155,12 @@
 			});
 		});
 		
+		
 		function validate(){
 			if(!nicknameCheck) alert("현재 닉네임은 사용 불가능 합니다.");
 			if(!phoneCheck) alert("알맞은 전화번호 형식을 입력해주세요.");
-			return nicknameCheck && phoneCheck;
+			if(!passwordCheck) alert("패스워드가 일치하지 않습니다.");
+			return nicknameCheck && phoneCheck && passwordCheck;
 		}
 	</script>
 </body>

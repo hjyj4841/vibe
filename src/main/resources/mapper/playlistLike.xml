@@ -77,8 +77,9 @@
 	</delete>
 	<!-- 해당 플리의 좋아요 수 조회 -->
 	<select id="showLikeCount" parameterType="Integer" resultType="Integer">
-	SELECT COUNT(*) FROM playlist_like 
-	WHERE pl_code = #{plCode};
+	SELECT COUNT(*) 
+	FROM playlist_like 
+	WHERE pl_code = #{plCode}
 	</select>
 	
 </mapper>

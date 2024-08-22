@@ -7,11 +7,12 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -39,7 +40,7 @@ public class UserController {
 	
 	@Autowired
 	private PlaylistViewer playlistViewer;
-
+	
 	// 테스트 페이지 연결
 	@GetMapping("/test")
 	public String testPage() {
@@ -148,6 +149,7 @@ public class UserController {
 		// 해당유저의 좋아요가 가장 많은 플레이리스트
 		try {
 			Playlist playlist = playlistService.likeRankByUserEmail(user.getUserEmail());
+			
 			model.addAttribute("topPlaylist", playlistViewer.onePlaylistView(playlist, user));
 		} catch(Exception e) {
 			model.addAttribute("topPlaylist", null);
@@ -179,38 +181,56 @@ public class UserController {
 	}
 
 	@PostMapping("/updateUser")
-	public String updateUser(UserDTO user, Model model) throws IllegalStateException, IOException {
+	public String updateUser(UserDTO dto, Model model) throws IllegalStateException, IOException {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		User u = (User) authentication.getPrincipal(); // 현재 접속중인 유저 정보
+		User user = (User) authentication.getPrincipal(); // 현재 접속중인 유저 정보
 		
-		System.err.println("nickName : " + user.getUserNickname());
-		System.err.println("phone : " + user.getUserPhone());
-		System.err.println("password : " + user.getUserPassword());
-		System.err.println("file : " + user.getFile().isEmpty());
-		System.err.println("img : " + user.getUserImg());
+		User changeUser = null;
 		
-		// 변경할 정보들을 현재접속한 유저 정보에 담아서 서비스로 처리
-		u.setUserNickname(user.getUserNickname());
-		u.setUserPhone(user.getUserPhone());
+		try {
+			changeUser = user.clone();
+		} catch (CloneNotSupportedException e) {}
+		
+		// 변경할 정보들을 현재접속한 유저 객체 담아서 서비스로 처리
+		changeUser.setUserNickname(dto.getUserNickname());
+		changeUser.setUserPhone(dto.getUserPhone());
+		
 		// 이미지 변경 로직 추가
-		if(!user.getFile().isEmpty()) {
-			if(u.getUserImg() != null && !u.getUserImg().equals("http://192.168.10.6:8080/img/user_img/default_user.jpg")) {
-				File deleteFile = new File("\\\\192.168.10.6\\vibe\\img\\user_img\\" + new File(u.getUserImg()).getName());
+		if(!dto.getFile().isEmpty()) {
+			// 프리뷰 폴더 삭제 로직
+			File dir = new File("\\\\192.168.10.6\\vibe\\img\\preview_img\\" + user.getUserEmail());
+			
+			while(dir.exists()) {
+				File[] dir_list = dir.listFiles();
+				for(int i = 0; i < dir_list.length; i++) dir_list[i].delete();
+				
+				if(dir_list.length == 0 && dir.isDirectory()) dir.delete();
+			}
+			
+			// 이전에 가지고 있던 유저 이미지가 기본이미지가 아니라면 삭제
+			if(!user.getUserImg().equals("http://192.168.10.6:8080/img/user_img/default_user.jpg")) {
+				File deleteFile = new File("\\\\192.168.10.6\\vibe\\img\\user_img\\" + new File(user.getUserImg()).getName());
 				deleteFile.delete();
 			}
-			UUID uuid = UUID.randomUUID();
-			String fileName = uuid.toString() + "_" + user.getFile().getOriginalFilename();
-			File copyFile = new File("\\\\192.168.10.6\\vibe\\img\\user_img\\" + fileName);
 			
-			user.getFile().transferTo(copyFile); // 업로드한 파일이 지정한 path 위치로 저장
-			u.setUserImg("http://192.168.10.6:8080/img/user_img/" + fileName);
+			// 파일 이름 랜덤으로 새로 생성
+			UUID uuid = UUID.randomUUID();
+			String fileName = uuid.toString() + "_" + dto.getFile().getOriginalFilename();
+			File copyFile = new File("\\\\192.168.10.6\\vibe\\img\\user_img\\" + fileName);
+			dto.getFile().transferTo(copyFile);
+			
+			// 서비스 넘기기 전에 user 객체에 db에 들어갈 img 경로 지정
+			changeUser.setUserImg("http://192.168.10.6:8080/img/user_img/" + fileName);
 		} else {
-			u.setUserImg(user.getUserImg());
+			changeUser.setUserImg(dto.getUserImg());
 		}
 		
-		userService.updateUser(u);
+		userService.updateUser(changeUser);
 		
-		model.addAttribute("user", u);
+		UserDetails updateUserDetails = changeUser;
+		UsernamePasswordAuthenticationToken newAuth = new UsernamePasswordAuthenticationToken(updateUserDetails, authentication.getCredentials(), updateUserDetails.getAuthorities());
+		
+		SecurityContextHolder.getContext().setAuthentication(newAuth);
 		
 		// 변경된 정보로 session에 다시 담기
 		return "redirect:/mypage";
@@ -279,6 +299,21 @@ public class UserController {
 		return userService.nicknameUpdate(u);
 	}
 	
+	// 회원정보 변경 시 패스워드 확인 - ajax
+	@ResponseBody
+	@PostMapping("/passwordCheck")
+	public boolean passwordCheck(String userPassword){
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		User user = (User) authentication.getPrincipal();
+		User u = null; 
+		
+		try {
+			u = user.clone();
+		} catch (CloneNotSupportedException e) {}
+		
+		return userService.passwordCheck(u, userPassword);
+	}
+	
 	// ajax - 회원정보 수정시 회원 이미지 바꿔서 보여줌
 	@ResponseBody
 	@PostMapping("/previewImg")
@@ -286,11 +321,18 @@ public class UserController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		User user = (User) authentication.getPrincipal();
 		
-		String fileName = user.getUserEmail() + "_userImg."
-				+ StringUtils.getFilenameExtension(file.getOriginalFilename());
-		File copyFile = new File("\\\\192.168.10.6\\vibe\\img\\preview_img\\" + fileName);
+		String path = "\\\\192.168.10.6\\vibe\\img\\preview_img\\" + user.getUserEmail(); // 각 유저별 프리뷰 이미지 저장할 폴더 
+		
+		File dir = new File(path);
+		if(!dir.exists()) dir.mkdir(); // 없으면 폴더 생성
+		
+		UUID uuid = UUID.randomUUID();
+		String fileName = uuid.toString() + "_" + file.getOriginalFilename();
+		
+		File copyFile = new File(path + "\\" + fileName);
 		
 		file.transferTo(copyFile); // 업로드한 파일이 지정한 path 위치로 저장
-		return "http://192.168.10.6:8080/img/preview_img/" + fileName;
+		return "http://192.168.10.6:8080/img/preview_img/" + user.getUserEmail() + "/" + fileName;
 	}
+	
 }
