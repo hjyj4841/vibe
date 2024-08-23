@@ -16,7 +16,6 @@ public class PlaylistTagService {
 	private PlaylistTagMapper playlistTagMapper;
 	
 	public List<PlaylistTag> searchTagPlaylist(int code) {
-		System.out.println("19 : " + playlistTagMapper.searchTagPlaylist(code));
 		return playlistTagMapper.searchTagPlaylist(code);
 	}
 	
