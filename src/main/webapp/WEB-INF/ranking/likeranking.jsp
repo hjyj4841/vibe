@@ -10,9 +10,7 @@
 <link rel="stylesheet" href="./css/likeranking.css" />
 </head>
 <body>
-	<header>
-		<div class="likeHead">Like Ranking</div>
-	</header>
+	<div class="likeHead">Like Ranking</div>
 	<div id="rankingList">
 		<c:forEach var="playlist" items="${likeranking}">
 			<div class="likeBox1">
@@ -30,17 +28,15 @@
 						</div>
 						<div class="likeBox5">
 							<p class="likeCreator">
-								<img src="/imgs/creatorImg/creatorImg5.jpg">
-								<a>${playlist.user.userNickname}</a>
+								<img src="/imgs/creatorImg/creatorImg5.jpg"> <a>${playlist.user.userNickname}</a>
 							</p>
 						</div>
 					</div>
 				</div>
 			</div>
+
+		</c:forEach>
 	</div>
-	</c:forEach>
-	</div>
-	
 </body>
 <a href="" class="top">TOP</a>
 </html>
