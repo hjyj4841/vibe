@@ -3,6 +3,7 @@ package com.master.vibe.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.master.vibe.model.vo.PlaylistTag;
 import com.master.vibe.model.vo.Tag;
 
 import mapper.PlaylistTagMapper;
@@ -47,6 +48,8 @@ public class TagService {
         }
     }
 
+    private static final int MAX_TAGS = 5;
+    
     public Tag addTag(String tagName) {
         Tag existingTag = tagMapper.findTagByName(tagName);
         if (existingTag != null) {
@@ -65,5 +68,15 @@ public class TagService {
 
     public List<Tag> getAllTags() {
         return tagMapper.findAllTags();
+    }
+    
+    public boolean isTagExistsInPlaylist(int plCode, String tagName) {
+        List<String> existingTags = tagMapper.findTagsByPlaylistCode(plCode);
+        return existingTags.contains(tagName);
+    }
+
+    public boolean canAddMoreTags(int plCode) {
+        List<PlaylistTag> existingTags = playlistTagMapper.searchTagPlaylist(plCode);
+        return existingTags.size() < MAX_TAGS;
     }
 }

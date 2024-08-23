@@ -6,8 +6,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.master.vibe.service.PlaylistService;
 import com.master.vibe.service.PlaylistTagService;
 import com.master.vibe.service.TagService;
 import com.master.vibe.model.vo.PlaylistTag;
@@ -24,9 +24,6 @@ public class TagController {
     @Autowired
     private PlaylistTagService playlistTagService;
 
-    @Autowired
-    private PlaylistService playlistService;
-
     @GetMapping("/playlist/manageTags")
     public String manageTags(Integer plCode, Model model) {
         model.addAttribute("playlistCode", plCode);
@@ -39,21 +36,32 @@ public class TagController {
         List<Tag> allTags = tagService.getAllTags();
         model.addAttribute("allTags", allTags);
 
-        return "playlist/insertAndDeleteTag";
+        return "playlist/manageTags";
     }
 
     @PostMapping("/playlist/addTag")
-    public String addTag(Integer plCode, String newTag) {
+    public String addTag(Integer plCode, String newTag, RedirectAttributes redirectAttributes) {
+        // 중복 태그 체크
+        if (tagService.isTagExistsInPlaylist(plCode, newTag)) {
+            redirectAttributes.addFlashAttribute("errorMessage", "이미 존재하는 태그입니다.");
+            return "redirect:/playlist/manageTags?plCode=" + plCode;
+        }
+
+        // 태그 추가 가능 여부 체크
+        if (!tagService.canAddMoreTags(plCode)) {
+            redirectAttributes.addFlashAttribute("errorMessage", "더 이상 추가할 수 없습니다.");
+            return "redirect:/playlist/manageTags?plCode=" + plCode;
+        }
+
         Tag tag = tagService.addTag(newTag);
         playlistTagService.addPlaylistTag(plCode, tag.getTagCode());
-        
+
         return "redirect:/playlist/manageTags?plCode=" + plCode;
     }
 
     @PostMapping("/playlist/deleteTags")
     public String deleteTags(Integer plCode, @RequestParam List<Integer> tagCodes) {
-
-    	if (tagCodes != null) {
+        if (tagCodes != null) {
             for (int tagCode : tagCodes) {
                 playlistTagService.deletePlaylistTag(plCode, tagCode);
             }

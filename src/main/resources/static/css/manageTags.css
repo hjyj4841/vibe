@@ -1,0 +1,113 @@
+/* 기본 스타일 설정 */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #111;
+  color: #dddddd;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 컨테이너 스타일 */
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #222;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* 제목 스타일 */
+h1, h2 {
+  color: #dddddd;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 50px;
+}
+
+h2 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  margin-top: 80px;
+}
+
+/* 폼 섹션 스타일 */
+.form-section {
+  margin-bottom: 30px;
+}
+
+.form-tag-section input[type="text"] {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #cccccc;
+  border-radius: 6px;
+  background-color: #111;
+  color: white;
+  box-sizing: border-box;
+  font-size: 1rem;
+  margin-bottom: 5px;
+}
+
+.form-tag-section button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  background-color: #e3e3e3;
+  color: black;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s;
+  margin-bottom: 20px;
+  float: right;
+  margin-right: 15px;
+}
+
+.form-tag-section button:hover {
+  background-color: red;
+  color: white;
+}
+
+/* 테이블 섹션 스타일 */
+.table-section table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.table-section th, .table-section td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #444;
+}
+
+.table-section input[type="checkbox"] {
+  transform: scale(1.5);
+  margin-right: 10px;
+}
+
+.table-section button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  background-color: #e3e3e3;
+  color: black;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  float: right;
+  margin-right: 15px;
+}
+
+.table-section button:hover {
+  background-color: red;
+  color: white;
+}
