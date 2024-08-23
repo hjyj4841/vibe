@@ -64,7 +64,8 @@
 #userEmail,
 #userPassword {
 	border: none;
-	background-color: #e5e5e5;
+	background-color: white;
+	border-bottom: 1px solid gray;
 	width: 280px;
 	height: 30px;
 	padding: 20px;
@@ -73,6 +74,7 @@
 .loginBoxLeft a{
 	color: gray;
 	margin: 10px;
+	transition: 0.3s;
 }
 
 .loginBoxLeft a:hover{
@@ -114,4 +116,13 @@
 .loginBoxRight a:hover{
 	background-color: red;
 	border: 1px solid red;
+}
+input:focus {
+	outline: none;
+}
+input:-webkit-autofill,input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+   -webkit-box-shadow: 0 0 0 1000px white inset;
+   box-shadow: 0 0 0 1000px white inset;
 }

@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,51 +15,63 @@
 <body>
 	<jsp:include page="../tiles/header.jsp"></jsp:include>
 	<div class="container">
-      <div class="con">
-        <div class="mypageBox">
-          <div class="myLeft">
-            <jsp:include page="../tiles/mypageLeft.jsp"></jsp:include>
-          </div>
-          <div class="myRight">
-            <div class="myTagBox">
-              <div>Edit Profile</div>
-              <form class="editForm" action="updateUser" method="post" onsubmit="return validate()" enctype="multipart/form-data">
-              	<input type="hidden" value="${user.userImg }" name="userImg" class="userImg">
-              	<div class="editUserImgBox">
-              		<div>
-              			<input name="file" type="file" accept="image/*" class="imgFile">
-              			<img src="${user.userImg }" class="userImgView">
-              			<div>
-              				<p>empty</p>
-              				<i class="fa-solid fa-camera-rotate"></i>
-              				<p>Change Image</p>
-              			</div>
-              		</div>
-              	</div>
-              	<div>
-              		<input type="text" name="userNickname" class="nickname" value="${user.userNickname }" placeholder="${user.userNickname }" readonly required/>
-              		<i class="fa-solid fa-pen" id="nicknanmeChangeBtn"></i>
-              	</div>
-              	<div>
-              		<input type=text name="userPhone" value="${user.userPhone }" class="phoneNum" placeholder="${user.userPhone }" maxlength="13" readonly required/>
-              		<i class="fa-solid fa-pen" id="phoneNumChangeBtn"></i>
-              	</div>
-              	<div>
-              		<input type="password" placeholder="Password" name="userPassword" class="userPassword" required />
-              	</div>
-              	<div class="editButtonBox">
-	              	<div>
-	              		<button type="submit" class="editBtn">수정</button>
-	              		<button type="button" id="editCancle">취소</button>
-	              	</div>
-              		<a>change Password</a>
-              	</div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+		<div class="con">
+			<div class="mypageBox">
+				<div class="myLeft">
+					<jsp:include page="../tiles/mypageLeft.jsp"></jsp:include>
+				</div>
+				<div class="myRight">
+					<div class="myTagBox">
+						<div>Edit Profile</div>
+						<sec:authorize access="isAuthenticated()" var="principal">
+							<sec:authentication property="principal" var="user" />
+							<form class="editForm" action="updateUser" method="post"
+								onsubmit="return validate()" enctype="multipart/form-data">
+								<input type="hidden" value="${user.userImg }" name="userImg"
+									class="userImg">
+								<div class="editUserImgBox">
+									<div>
+										<input name="file" type="file" accept="image/*"
+											class="imgFile"> <img src="${user.userImg }"
+											class="userImgView">
+										<div>
+											<p>empty</p>
+											<i class="fa-solid fa-camera-rotate"></i>
+											<p>Change Image</p>
+										</div>
+									</div>
+								</div>
+								<div>
+									<input type="text" name="userNickname" class="nickname"
+										value="${user.userNickname }"
+										placeholder="${user.userNickname }" readonly required /> <i
+										class="fa-solid fa-pen" id="nicknanmeChangeBtn"></i>
+								</div>
+								<div>
+									<input type=text name="userPhone" value="${user.userPhone }"
+										class="phoneNum" placeholder="${user.userPhone }"
+										maxlength="13" readonly required /> <i class="fa-solid fa-pen"
+										id="phoneNumChangeBtn"></i>
+								</div>
+								<div>
+									<input type="password" placeholder="Password"
+										name="userPassword" class="userPassword" required />
+								</div>
+								<div class="editButtonBox">
+									<div>
+										<button type="submit" class="editBtn">Save</button>
+										<button type="button" class="editCancle"
+											onclick="location.href='/cancelUpdate'">Cancel</button>
+									</div>
+									<a href="/changePassword">change Password</a>
+								</div>
+							</form>
+						</sec:authorize>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 	<script>
 		let nicknameCheck = true;
 		let phoneCheck = true;
@@ -154,7 +167,6 @@
 				}
 			});
 		});
-		
 		
 		function validate(){
 			if(!nicknameCheck) alert("현재 닉네임은 사용 불가능 합니다.");

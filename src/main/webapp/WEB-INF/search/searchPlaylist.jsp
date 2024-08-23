@@ -207,6 +207,13 @@
 							'</div>';
 						searchListMain.append(searchItem);
 					});
+					$('.playlistCon img').click((e) => {
+						location.href = "/showPlaylistInfo?plCode=" + e.target.getAttribute("data-code");
+					});
+					
+					$('.plContentsBox').click((e) => {
+						location.href = "/showPlaylistInfo?plCode=" + e.currentTarget.getAttribute("data-code");
+					})
 				}
 			});
 		}

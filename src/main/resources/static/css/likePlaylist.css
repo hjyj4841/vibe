@@ -151,9 +151,30 @@
 .editButtonBox > div > button {
 	width: 100px;
 	cursor: pointer;
-}	
+	background-color: white;
+	border-radius: 5px;
+	border: none;
+	font-weight: bold;
+	transition: 0.5s;
+}
+.editBtn{
+	color: #2868B0;
+}
+.editBtn:hover{
+	box-shadow: 0px 0px 8px 3px #2868B0;
+}
+.editCancle{
+	color: #333;
+}
+.editCancle:hover{
+	box-shadow: 0px 0px 8px 3px darkred;
+}
 .editButtonBox > a{
 	color: white;
 	width: 200px;
 	cursor: pointer;
+	transition: 0.2s;
+}
+.editButtonBox > a:hover{
+	color: red;
 }

@@ -18,7 +18,7 @@ uri="http://www.springframework.org/security/tags" %>
         <p id="chant">Vibe that I want to BE</p>
         <p id="maintitle">VIBEMASTER</p>
       </div>
-
+      
       <nav id="mainnav">
         <sec:authorize access="!isAuthenticated()">
           <a href="login" class="signIn">Sign In</a>
@@ -100,6 +100,7 @@ uri="http://www.springframework.org/security/tags" %>
     <script src="./js/main.js"></script>
     <script>
       if('${registerMsg}' != '') alert('${registerMsg}');
+      if('${pwdChange}' != '') alert('${pwdChange}');
     </script>
   </body>
 </html>

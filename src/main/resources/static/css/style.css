@@ -213,8 +213,11 @@ html {
 .listRank:nth-of-type(3) .listRankText{
 	color: #cd7f32;
 }
-
 /* 우측 빈 공간 */
 .emptyRight{
 	width: 20%;
+}
+
+input:focus{
+	outline: none;
 }
