@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="./css/mypage.css" />
 <link rel="stylesheet" href="./css/showPlaylistInfo.css" />
 <script src="https://kit.fontawesome.com/df04184d5c.js" crossorigin="anonymous"></script>
+<script src="showPlaylistInfo.js" defer></script>
 <title>플레이리스트 곡 조회</title>
 </head>
 <body>
@@ -36,17 +37,38 @@
 					</c:otherwise>
 				</c:choose>
 				</p>
+				<div class="playlistTagBox">
+					<ul class="plTags">
+						<p> #태그 영역 #태그 #해시태그 #집에가고싶다 </p>
+		        		<c:forEach items="${tagList}" var="tag">
+							<li>${tag}</li>
+						</c:forEach>
+					</ul>
+				</div>
 			<c:if test="${user.userEmail eq playlist.user.userEmail}">
-			<div class="creatorInfoBox">
+			<div class="playlistInfoBox">
 				<div class="creatorInfo">
 					<img src="${user.userImg}">
 					<p class="creatorNickname">${user.userNickname}</p>
-				<div class="playlistMenu">
-					<i class="fa-solid fa-ellipsis"></i>
-				</div>
+					<!-- 링크 공유하기 -->
+					<div class="playlistShareBtn">
+						<i id="link-copy-icon" class="fa-solid fa-link" style="cursor:pointer;"></i>
+						<span id="copy-message">링크가 복사되었습니다!</span>
+					</div>
+					<nav class="playlistMenuBox">
+						<div class="playlistmenuBtn">
+							<a href="#" class="plMenuBtn"><i class="fa-solid fa-minus"></i></a>
+						</div>
+						<div class="playlistMenu">
+							<div class="plUpdateMenu"><a href="updatePlaylist?plCode=${playlist.plCode }">수정하기</a></div>
+							<div class="plTagUpdateMenu"><a href="${pageContext.request.contextPath}/playlist/manageTags?plCode=${playlist.plCode}">태그 수정</a></div>
+							<div class="plDeleteMenu"><a href="#" onclick="confirmDelete(event, 'deletePlaylist?plCode=${playlist.plCode }')">플레이리스트 삭제하기</a></div>
+						</div>
+					</nav>
 				</div>
 			</div>
-		<div class="addMusicBtnBox">
+			</c:if>
+		<div class="addMusicBtnBox" onclick="location.href='addMusic?plCode=${playlist.plCode}'">
 			<div class="addMusicBtnIcon">
 				<a href="addMusic?plCode=${playlist.plCode}"><i class="fa-solid fa-plus"></i></a>
 			</div>
@@ -54,72 +76,34 @@
 				<a href="addMusic?plCode=${playlist.plCode}">이 플레이리스트에 추가</a>
 			</div>
 		</div>
-		
-		<br><br><br><br><br><br><br><br><br><br><br>
-		<div class="bin">
-		<a href="myPlaylist">목록</a>
-		<a href="#" onclick="confirmDelete(event, 'deletePlaylist?plCode=${playlist.plCode }')">플레이리스트 삭제</a>
-		<!-- <a href="deletePlaylist?plCode=${playlist.plCode }">플레이리스트 삭제</a> -->
-		<a href="updatePlaylist?plCode=${playlist.plCode }">플레이리스트 수정</a>
-		<a href="${pageContext.request.contextPath}/playlist/manageTags?plCode=${playlist.plCode}">태그 관리</a>	
-	</c:if>
-</div>
-	<h4>태그 :</h4>
-    <ul>
-        <c:forEach items="${tagList}" var="tag">
-            <li>${tag}</li>
-        </c:forEach>
-    </ul>
-	
+	<!-- 플레이리스트 목록으로 -->
+	<a href="myPlaylist" class="goPlaylistListBtn"><i class="fa-solid fa-arrow-left"></a></i>
+
 	<form action="deleteMusicFromPlaylist" method="post" onsubmit="checkForSelectedMusic(event)">
 	<input type="hidden" name="plCode" value="${playlist.plCode}">
-	<table>
-	<i id="link-copy-icon" class="fa-solid fa-link">링크 공유하기</i>
-		<tr>
-			<th>선택</th>
-			<th>앨범커버</th>
-			<th>곡명</th>
-			<th>아티스트명</th>
-			<th>앨범명</th>
-
-			<h4>태그 :</h4>
-	<ul>
-		<c:forEach items="${tagList}" var="tag">
-			<li>${tag}</li>
-		</c:forEach>
-	</ul>
-
-	<form action="deleteMusicFromPlaylist" method="post">
-		<input type="hidden" name="plCode" value="${playlist.plCode}">
-		<table>
-			<!-- 링크 공유하기 -->
-			<tr>
-				<td colspan="5">
-					<i id="link-copy-icon" class="fa-solid fa-link" style="cursor:pointer;"> 링크 공유하기</i>
-					<span id="copy-message" style="display:none; color: green; margin-left: 10px;">링크가 복사되었습니다!</span>
-				</td>
-			</tr>
-			<tr>
-				<th>선택</th>
-				<th>앨범커버</th>
-				<th>곡명</th>
-				<th>아티스트명</th>
-				<th>앨범명</th>
-			</tr>
-			<c:forEach items="${musicList}" var="music" varStatus="status">
-				<tr>
-					<td><input type="checkbox" name="selectedDeleteMusic"
-						value="${music.id}"></td>
-					<td><a href="musicDetail?musicId=${music.id}"><img
-							src="${music.albumUrl}" style="width: 100px"></a></td>
-					<td><a href="musicDetail?musicId=${music.id}">${music.musicTitle}</a></td>
-					<td><a href="musicDetail?musicId=${music.id}">${music.artistName}</a></td>
-					<td><a href="musicDetail?musicId=${music.id}">${music.albumName}</a></td>
-					<td><a href="#" onclick="playMusic('${music.id}')">재생하기</a></td>
-				</tr>
-			</c:forEach>
-		</table>
-		<button type="submit">곡 삭제</button>
+		<div class="playlistListBox">
+	        <c:forEach items="${musicList}" var="music" varStatus="status">
+	            <div class="playlistList">
+	            <!-- 주석 지우면 안 됨! 체크박스 작업중
+		            <div class="radioCheckBox">
+						<input type="checkbox" name="selectedDeleteMusic" value="${music.id}" id="radioCheck">
+						<label for="radioCheck"></label>
+					</div>
+				-->
+	                <img src="${music.albumUrl}" class="albumImg">
+	                <div class="plMusicInfo">
+	                    <div class="musicTitle">${music.musicTitle}</div>
+	                    <div class="artistName">${music.artistName}</div>
+	                    <!-- <a href="musicDetail?musicId=${music.id}">${music.albumName}</a> -->
+	                </div>
+	                <div class="plMusicAction">
+						<a href="#" onclick="playMusic('${music.id}')" class="musicPlayBtn"><i class="fa-solid fa-circle-play"></i></a>
+	                    <a href="#"><i class="fa-solid fa-ellipsis-vertical"></i></a>
+	                </div>
+	            </div>
+	        </c:forEach>
+	    </div>
+	<button type="submit">곡 삭제</button>
 	</form>
 
 	<!-- 플레이어가 표시될 위치 -->
@@ -127,14 +111,38 @@
 		<iframe id="main_frame" src="" width="300" height="380"
 			frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
 	</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 
-	</div>
-</div>
-</div>
-</div>
-</div>
+<script>
+    document.querySelector('.plMenuBtn').addEventListener('click', function(event) {
+        event.preventDefault(); // 링크 기본 동작 방지
+        const menu = document.querySelector('.playlistMenu');
+        // 메뉴가 보이는 상태인지 확인하고, 보이거나 숨기기
+        if (menu.style.display === 'block') {
+            menu.style.display = 'none';
+        } else {
+            menu.style.display = 'block';
+        }
+    });
 
-	<script>
+    // 페이지 클릭 시 메뉴를 숨기기 (메뉴 외부 클릭 시)
+    document.addEventListener('click', function(event) {
+        const menu = document.querySelector('.playlistMenu');
+        const menuBtn = document.querySelector('.plMenuBtn');
+        if (!menu.contains(event.target) && !menuBtn.contains(event.target)) {
+            menu.style.display = 'none';
+        }
+    });
+
+    document.querySelector('.addMusicBtnBox').addEventListener('click', function() {
+        window.location.href = 'addMusic?plCode=${playlist.plCode}';
+    });
+
 		// 플레이리스트 삭제 클릭 시 바로 삭제되는 것 alert으로 방지
 		function confirmDelete(event, url) {
 			event.preventDefault(); // 링크 클릭 기본 동작 방지

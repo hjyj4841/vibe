@@ -4,46 +4,56 @@ a {
 }
 
 /* 플레이리스트 정보 화면 메인 */
+/* 플레이리스트 이미지 영역 */
 .playlistImg {
-	padding-bottom: 20px;
+	padding-bottom: 10px;
 }
 .playlistImg img{
 	display: flex;
-	width: 300px;
-    height: 300px;
+	width: 250px;
+    height: 250px;
     justify-content: center;
     align-items: center;
 	border-radius: 10px;
-	margin-left: 30px;
+	margin-left: 10px;
 }
-
+/* 플레이리스트 제목 영역 */
 .PlaylistInfoBox p.plTitle {
 	font-size: 2rem;
 	font-weight: 600;
-	padding-bottom: 15px;
+	padding: 10px;
 }
+/* 자물쇠 lock(플리 공개여부) */
 .PlaylistInfoBox .plTitle i{
 	padding-left: 10px;
 	font-size: 0.7rem;
 	justify-content: center;
 }
-
 .fa-lock-open {
 	color: #aaa;
 }
-
 .fa-lock{
 	color: #666;
 }
 
+/* 태그 영역 */
+.playlistTagBox {
+	padding: 5px 5px 5px 10px;
+}
+.plTags {
+	font-size: 0.7rem;
+    color: #808080;
+    font-weight: bold;
+}
+
 /* 플리 제작자 영역(search.css 플리 메인) + α */
-.creatorInfoBox {
+.playlistInfoBox {
 	display: flex;
+	padding: 10px;
 }
 .creatorInfo {
 	display: flex;
 	align-items: center;
-	padding-bottom: 15px;
 }
 .creatorInfo > img {
 	width: 30px;
@@ -56,57 +66,195 @@ a {
 	font-weight: bold; 
 	color: white;
 }
-.playlistMenu i {
+
+/* 플레이리스트 메뉴 영역 */
+/* 링크 공유하기 */
+.playlistShareBtn {
 	display: flex;
 	align-items: center;
-	padding-left: 30px;
+	padding-left: 20px;
+} 
+.playlistShareBtn #copy-message {
+    display: none;
+    color: lightgreen; 
+    font-size: 0.7rem;
+    margin-left: 10px;
 }
 
+.playlistMenuBox {
+    position: relative; /* 위치를 상대적으로 설정하여 메뉴 팝업을 절대 위치로 할 수 있게 함 */
+}
+/* 플레이리스트 메뉴 버튼 */
+.plMenuBtn {
+    padding-left: 20px;
+}
+/* 플레이리스트 메뉴 */
+.playlistMenu {
+	background-color: rgba(153, 153, 153, 0.4);
+	border-radius: 4px;
+	padding: 10px;
+	position: relative;
+	left: 50px;
+	margin-top: -108px;
+	top: 90px;
+	display: none;
+}
+.playlistMenu > div {
+    padding: 5px;
+}
+.playlistMenu div:hover {
+ 	background-color: rgba(153, 153, 153, 0.8);
+ 	border-radius: 4px;
+}
+.playlistMenu div a {
+    text-decoration: none;
+    font-size: 0.8rem;
+    color: white;
+}
+
+
+/* 플레이리스트 음악 추가 영역 */
 .addMusicBtnBox {
 	display: flex;
 	align-items: center;
 	color: white;
+	padding: 10px;
+	cursor: pointer;
+}
+.addMusicBtnBox:hover {
+	background-color: rgba(153, 153, 153, 0.1);
+ 	border-radius: 4px;
 }
 .addMusicBtnIcon {
-	width: 40px;
-	height: 40px;
+	width: 50px;
+	height: 50px;
 	border-radius: 5px;
-	background-color: #999;
-	/* 0.0 (투명) ~ 1.0 (불투명) */
-	opacity: 0.2;
+	background-color: rgba(153, 153, 153, 0.2);
 	display: flex;
 	align-items: center;
 	justify-content: center;
 }
+/* + 플러스 아이콘 */
 .addMusicBtnIcon i {
-	font-size: 1.5rem;
+	font-size: 1.3rem;
 	color: white;
+	opacity: 0.6;
 	position: relative;
-	z-index: 1;
 }
 .addMusicBtn {
 	padding-left: 10px;
 	font-size: 1rem;
 }
 
+/* 플리 목록으로 돌아가기 버튼(화살표) */
+.goPlaylistListBtn {
+	position: fixed;
+	top: 120px; /* 화면 상단에서의 거리 */
+	right: 320px; /* 화면 오른쪽에서의 거리 */
+	width: 50px;
+	height: 50px;
+	background-color: white;
+	border-radius: 50%;
+	text-decoration: none;
+	color: black;
+	display: flex;
+	align-items: center; /* 세로 중앙 정렬 */
+	justify-content: center; /* 가로 중앙 정렬 */
+	font-size: 1.3rem; /* 아이콘 크기 조절 */
+	box-shadow: 0 10px 35px rgba(0, 0, 0, 0.05), 0 6px 6px rgba(0, 0, 0, 0.1);
+}
+.goPlaylistListBtn:hover {
+ 	background-color: #e0e0e0;
+}
+
+/* 플레이리스트 음악 리스트 영역 */
+.playlistListBox {
+	display: flex;
+	flex-direction: column;
+}
+.playlistList {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    /*border: 1px solid #ddd;*/
+    /*border-radius: 5px;*/
+}
+.albumImg {
+    width: 50px;
+    height: auto;
+    border-radius: 5px;    
+}
+.plMusicInfo {
+    display: flex;
+    flex-direction: column; /* 텍스트 세로로 정렬 */
+    justify-content: center;
+    padding: 10px;
+    gap: 5px;
+}
+.musicTitle {
+	font-size: 1rem;
+    color: white;
+}
+.artistName {
+	font-size: 0.7rem;
+    color: white;
+}
+
+.plMusicAction {
+    margin-left: auto; /* 오른쪽으로 정렬 */
+    display: flex;
+    gap: 20px; /* 버튼 사이의 간격 */
+    align-items: center;
+}
+.plMusicAction .musicPlayBtn {
+	color: #666;
+	font-size: 1rem;
+}
+.plMusicAction i {
+	color: #666;
+	font-size: 1rem;
+}
+
+/* 라디오 체크 박스 처리
+.radioCheckBox {
+	position: relative;
+	display: flex; 
+	align-items: center; 
+	justify-content: center;
+}
+.radioCheckBox label {
+	background-color: #fff;
+	border: 1px solid #fff;
+	border-radius: 50%;
+	cursor: pointer;
+	width: 20px;
+	height: 20px;
+}
+.radioCheckBox label:after {
+  border: 2px solid #fff;
+  border-top: none;
+  border-right: none;
+  content: "";
+  height: 6px;
+  width: 12px;
+  opacity: 0;
+  transform: rotate(-45deg);
+}
+.radioCheckBox input[type="checkbox"] {
+  visibility: hidden;
+}
+.radioCheckBox input[type="checkbox"]:checked + label {
+  background-color: #90f642;
+  border-color: #90f642;
+}
+.radioCheckBox input[type="checkbox"]:checked + label:after {
+  opacity: 1;
+}
+*/
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-/**/
 .myRight{
 	max-height: 600px;
 	overflow-y: scroll; 
