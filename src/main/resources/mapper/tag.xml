@@ -20,10 +20,12 @@
         INSERT INTO tag (tag_code, tag_name) VALUES (#{tagCode}, #{tagName})
     </insert>
 
-    <!-- 태그 코드로 태그 이름 조회 -->
-    <select id="findTagNameByCode" resultType="String" parameterType="int">
-        SELECT tag_name FROM tag
-        WHERE tag_code = #{tagCode}
+    <select id="findTagsByPlaylistCode" resultType="String" parameterType="int">
+        SELECT tag_name
+        FROM playlist
+        JOIN playlist_tag USING (pl_code)
+        JOIN tag USING (tag_code)
+        WHERE playlist.pl_code = #{plCode}
     </select>
     
     <select id="findAllTags" resultType="Tag">

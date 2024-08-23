@@ -6,7 +6,11 @@
     <title>Create Playlist</title>
     <link rel="stylesheet" href="./css/style.css" />
     <link rel="stylesheet" href="./css/reset.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tagify/4.9.2/tagify.min.css">
+    <link rel="stylesheet" href="./css/createPlaylist.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tagify/4.9.6/tagify.min.js"></script>
     <script type="text/javascript">
+    
         // 기본 이미지 URL 변수로 지정
         const DEFAULT_IMAGE_URL = 'http://192.168.10.6:8080/playlistImg/defaultCD.png';
 
@@ -50,7 +54,7 @@
         <form action="createPlaylist" method="post" autocomplete="off" enctype="multipart/form-data">
             <!-- 제목 입력 필드 -->
             <div class="title-input-container">
-                <input type="text" id="plTitle" name="plTitle" class="hidden-value" placeholder="플레이리스트 제목 입력" />
+                <input type="text" id="plTitle" name="plTitle" class="hidden-value" placeholder="Type your Playlist's title" />
             </div>
 
             <!-- 이미지 미리보기 및 기본 이미지 -->
@@ -64,7 +68,7 @@
             
             <!-- 태그 입력 필드 -->
             <div class="form-tag-section">
-                <input type="text" id="tags" name="tags" placeholder="태그 입력" />
+                <input type="text" id="tags" name="tags" placeholder="Type your Tags" />
             </div>
             
             <!-- 제출 버튼 -->
@@ -73,11 +77,7 @@
             </div>
         </form>
     </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tagify/4.9.6/tagify.min.js"></script>
     <script src="./js/tag.js"></script>
-    <link rel="stylesheet" href="./css/createPlaylist.css" />
-    <link rel="stylesheet" href="./css/tagify.css" />
 </body>
 </html>
 
