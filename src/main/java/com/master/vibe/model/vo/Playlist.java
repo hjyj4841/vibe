@@ -17,7 +17,6 @@ public class Playlist {
 	private String plImg;
 	private Date plDate;
 	private char plPublicYn;
-	private int likeCount;
 	
 	// 플레이리스트 이미지 파일 업로드
 	private MultipartFile file; // 사실 DTO 따로 만들어서 사용하는 게 원칙!

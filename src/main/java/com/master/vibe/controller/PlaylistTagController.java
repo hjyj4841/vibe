@@ -35,17 +35,15 @@ public class PlaylistTagController {
 	@Autowired
 	private PlaylistLikeService playlistLikeService;
 	
-	public List<PlaylistDTO> playlist(SearchDTO dto, User user) {
+	public List<PlaylistDTO> playlist(SearchDTO dto, User user, String rankYn) {
 		
-		System.out.println(dto);
 		dto.setSearch(dto.getSearch().toLowerCase());
-  		System.out.println(dto.getSelect()); // title or tag
-  		//System.out.println(dto.getSearch().equals("")); // true
+		
   		if(dto.getCodes()!=null && dto.getCodes().get(0) == 0) {
   			dto.setCodes(null);
   		}
   		
-  		// 플리 제목 검색이라면 DTO에 검색 내용 대입
+  		// 플리 태그 검색이라면 DTO에 검색 내용 대입
   		if(dto.getSelect().equals("tag")) {
   			List<Integer> codes = playlistService.searchTag(dto.getSearch());
   			if(codes.size()!=0) {
@@ -54,7 +52,13 @@ public class PlaylistTagController {
   		}
 
   		// 검색한 내용을 바탕으로 플레이리스트를 담는 리스트 생성
-  		List<Playlist> playlist = playlistService.allPlaylist(dto);
+  		List<Playlist> playlist = new ArrayList<Playlist>();
+		if(rankYn.equals("N")) {
+			playlist = playlistService.allPlaylist(dto);
+		}else {
+			playlist = playlistService.rankPlaylist(dto);
+		}
+  				
   		List<PlaylistDTO> list = new ArrayList<>();
   		for(Playlist play : playlist) {
   			PlaylistDTO dtoPlay = PlaylistDTO.builder()
@@ -74,13 +78,14 @@ public class PlaylistTagController {
   			dtoPlay.setTagList(playlistService.searchTagPlayList(play.getPlCode()));
   			list.add(dtoPlay);
   			
-  			System.out.println(dtoPlay);
-  			System.out.println(list);
-  			System.out.println(plDto);
+//  			System.out.println("dtoPlay : " + dtoPlay);
+//  				System.out.println("list : " + list);
+//  			System.out.println("plDto : " + plDto);
   		}
-  		
   		return list;
 	}
+	
+	
 	
 	// 플레이리스트 검색 페이지 (title or tag)
   	@GetMapping("/searchPlaylist")
@@ -94,12 +99,14 @@ public class PlaylistTagController {
     		model.addAttribute("user", user);
   		}
   		
- 		model.addAttribute("searchTag", playlist(dto, user));
+ 		model.addAttribute("searchTag", playlist(dto, user, "N"));
+ 		model.addAttribute("searchRank", playlist(dto, user, "Y"));
  		model.addAttribute("dto", dto);
+ 		
  		return "search/searchPlaylist";
  	}
   	
-  	
+  	// 무한스크롤 컨트롤러
   	@ResponseBody
   	@PostMapping("/limitList")
   	public List<PlaylistDTO> limitList(SearchDTO dto, Model model) {
@@ -112,7 +119,7 @@ public class PlaylistTagController {
   		}
   		
   		System.out.println(dto);
-  		return playlist(dto, user);
+  		return playlist(dto, user, "N");
   	}
   	
   	//@GetMapping("/search")

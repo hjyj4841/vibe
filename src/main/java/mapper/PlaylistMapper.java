@@ -19,6 +19,9 @@ import com.master.vibe.model.vo.PlaylistTag;
 public interface PlaylistMapper {
 	
 	List<Playlist> allPlaylist(SearchDTO dto); // 플리 전체 조회
+	
+	List<Playlist> rankPlaylist(SearchDTO dto); // 검색한 플리 좋아요 TOP 5
+
 	List<Integer> searchTag(String search);
 	List<PlaylistTag> searchTagPlayList(int code);
 	
