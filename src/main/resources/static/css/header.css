@@ -18,6 +18,8 @@ body {
 	height: 100%;
 	background-color: #111;
 	color: white;
+}
+html, body, a, button, input{
 	font-family: "Noto Sans KR", sans-serif;
 	font-optical-sizing: auto;
 	font-weight: normal;

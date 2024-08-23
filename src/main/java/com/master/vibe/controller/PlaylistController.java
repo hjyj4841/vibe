@@ -256,9 +256,24 @@ public class PlaylistController {
 
 	}
 
-	// 랭킹 관련
+	// 랭킹 관련 - 수정중
 	@GetMapping("/rankingHome")
-	public String rankingHome() {
+	public String rankingHome(String select, Model model) {
+		System.out.println(select);
+		switch(select) {
+		case "like" :
+			model.addAttribute("likeranking", playlistService.likerankingPlaylist());
+			return "ranking/rankingHome";
+		case "tag" :
+			return "ranking/searchTag";
+		case "month" :
+			model.addAttribute("likeranking", playlistService.playListRankingOnMonth());
+			return "ranking/playListRankingOnMonth";
+		case "age" :
+			return "ranking/playListRankingOnAgeGroupSelect";
+		case "gender" :
+			return "ranking/playListRankingOnGenderSelect";
+		}
 		return "ranking/rankingHome";
 	}
 
@@ -269,6 +284,7 @@ public class PlaylistController {
 		return "ranking/likeranking";
 	}
 
+	// mypage에서 직접 조회 처리
 	// 플레이리스트 랜덤 조회
 	// @GetMapping("/randomPlaylist")
 	// public String randomPlaylist(Model model) {
@@ -325,7 +341,7 @@ public class PlaylistController {
 		model.addAttribute("userGender", userGender);
 		return "ranking/playListRankingOnGender";
 	}
-
+	
 	/*
 	 * @PostMapping("/updatePlaylist") public String updatePlaylist(@ModelAttribute
 	 * PlaylistDTO playlistDTO) { MultipartFile file = playlistDTO.getPlImg(); if

@@ -45,8 +45,7 @@
 		#{search}, '%') </when> </choose> </select> -->
 
 	<!-- 태그를 DB에 삽입 -->
-	<insert id="insertTag"
-		parameterType="com.master.vibe.model.vo.Tag">
+	<insert id="insertTag" parameterType="Tag">
 		INSERT INTO tag(tag_name) VALUES (#{tagName})
 	</insert>
 
@@ -61,6 +60,12 @@
 		INSERT INTO playlist_tag(pl_code, tag_code) VALUES (#{plCode}, #{tagCode})
 	</insert>
 
+	<delete id="deletePlaylistTag" parameterType="map">
+	    DELETE FROM playlist_tag
+	    WHERE pl_code = #{plCode} AND tag_code = #{tagCode}
+	</delete>
+	
+	<!-- 
 	<select id="findTagsByPlaylistCode" resultType="String"
 		parameterType="int">
 		SELECT tag_name
@@ -69,10 +74,5 @@
 		JOIN tag ON (playlist_tag.tag_code = tag.tag_code)
 		WHERE playlist.pl_code = #{plCode}
 	</select>
-
-	<delete id="deletePlaylistTag" parameterType="map">
-	    DELETE FROM playlist_tag
-	    WHERE pl_code = #{plCode} AND tag_code = #{tagCode}
-	</delete>
-	
+	 -->
 </mapper>

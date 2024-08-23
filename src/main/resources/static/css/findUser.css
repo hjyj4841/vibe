@@ -1,0 +1,89 @@
+.container{
+	min-height: 100vh;
+	width: 100%;
+	padding-top: 100px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+.container > h1{
+	padding: 20px;
+	font-size: 1.2rem;
+}
+.container > div{
+	width: 100%;
+	height: 650px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.container > div > div{
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.emailFind{
+	border-right: 1px solid white;
+}
+.container > div > div > h2{
+	font-size: 1.1rem;
+	padding: 20px;
+}
+.emailFrm,
+.passwordFrm{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+input,
+button{
+	width: 300px;
+	padding: 15px;
+	height: 50px;
+	margin-bottom: 30px;
+	border: none;
+	border-bottom: 1px solid white;
+	background-color: transparent;
+	color: white;
+}
+input:focus{
+	outline: none;
+}
+input:-webkit-autofill,input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+   -webkit-box-shadow: 0 0 0 1000px #111111 inset;
+   box-shadow: 0 0 0 1000px #111111 inset;
+   -webkit-text-fill-color: white;	
+}
+input[type=date]::before {
+	content: attr(data-placeholder);
+	width: 100%;
+	color: #787775;
+}
+input[type=date]:focus::before,
+input[type=date]:valid::before {
+	display: none;
+}
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="date"]::-webkit-inner-spin-button {
+    filter: brightness(0) invert(1);
+}
+
+button{
+	border: none;
+	background-color: white;
+	color: #333;
+	border-radius: 20px;
+	cursor: pointer;
+	font-size: 1rem;
+	transition: 0.2s;
+}
+button:hover{
+	background-color: #7eaee2;
+	color: white;
+}

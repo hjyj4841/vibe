@@ -45,7 +45,7 @@
 									<label for="nonbinary">Nonbinary</label>
 								</div>
 								<div><input type="date" name="birthDay" data-placeholder="Date of Birth" max="9999-12-31" required></div>
-								<div><input type="text" name="userPhone" placeholder="PhoneNum : 000-0000-0000" id="userPhone" maxlength="13" required></div>
+								<div><input type="text" name="userPhone" placeholder="PhoneNum" id="userPhone" maxlength="13" required></div>
 							</div>
 						</div>
 					</div>

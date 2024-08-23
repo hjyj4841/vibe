@@ -46,7 +46,7 @@
 	<!-- 유저 정보 수정 -->
 	<update id="updateUser" parameterType="User">
 		UPDATE user
-		SET user_password = #{userPassword},
+		SET user_phone = #{userPhone},
 			user_nickname = #{userNickname},
 			user_img = #{userImg}
 		WHERE user_email = #{userEmail}

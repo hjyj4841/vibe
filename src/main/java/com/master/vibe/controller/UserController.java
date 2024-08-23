@@ -28,6 +28,8 @@ import com.master.vibe.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Controller
 public class UserController {
@@ -70,8 +72,6 @@ public class UserController {
 
 		int success = userService.register(user);
 		
-		System.err.println(success);
-		
 		if(success == 1) {
 			model.addAttribute("registerMsg", "회원가입에 성공 하였습니다.");
 			return "index";
@@ -106,35 +106,35 @@ public class UserController {
 		return "user/findUser";
 	}
 	// 계정 찾기 - ID or PASSWORD
+	@ResponseBody
 	@PostMapping("/findUser")
 	public String findUserID(User user, String birthDay, Model model) {
+		
 		try {
 			user.setUserBirth(new SimpleDateFormat("yyyy-MM-dd").parse(birthDay));
 		} catch (Exception e) {}
 		
-		if(user.getUserEmail() == null) { // userEmail이 null 이면 아이디 찾기
+		// userEmail이 null 이면 아이디 찾기
+		if(user.getUserEmail() == null) { 
 			user = userService.findUserID(user);
-			if(user == null) {
-				model.addAttribute("findMsg", "회원이 존재하지 않습니다.");
-				return "user/findUser";
-			}
-			model.addAttribute("userEmail", user.getUserEmail());
-			return "user/showUserID";
-		}else {
+			if(user == null) return null;
+			else return user.getUserEmail();
+		}
+		// userEmail이 null이 아니면 비밀번호 찾기
+		else {
 			user = userService.findUserPWD(user);
 			if(user == null) {
-				model.addAttribute("findMsg", "회원이 존재하지 않습니다.");
-				return "user/findUser";
+				return null;
 			}
-			model.addAttribute("user", user);
-			return "user/showUserPWD";
+			return userService.findUserPWD(user).getUserEmail();
 		}
 	}
+	
 	// 비밀번호 수정 - PASSWORD 찾기 이후 이어지는 메서드
+	@ResponseBody
 	@PostMapping("/updateUserPWD")
-	public String updateUserPWD(User user) {
+	public void updateUserPWD(User user) {
 		userService.updateUserPWD(user);
-		return "user/login";
 	}
 
 	// 마이페이지
@@ -155,7 +155,7 @@ public class UserController {
 			model.addAttribute("topPlaylist", null);
 		}
 		
-		// 랜덤 플레이리스트 하나
+		// 랜덤 플레이리스트 하나 보여주기
 		try {
 			Playlist playlist = playlistService.randomPlaylist(user.getUserEmail()).get(0);
 			model.addAttribute("randomPlaylist", playlistViewer.onePlaylistView(playlist, user));
@@ -164,19 +164,13 @@ public class UserController {
 		}
 	    
 		model.addAttribute("likeTagList", list);
-		model.addAttribute("user", user);
 		
 		return "user/mypage";
 	}
 
 	// 회원 수정
 	@GetMapping("/updateUser")
-	public String updateUser(Model model) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		User user = (User) authentication.getPrincipal();
-		
-		model.addAttribute("user", user);
-		
+	public String updateUser() {
 		return "user/updateUser";
 	}
 
@@ -227,13 +221,59 @@ public class UserController {
 		
 		userService.updateUser(changeUser);
 		
+		// 변경된 정보로 session에 다시 담기
 		UserDetails updateUserDetails = changeUser;
 		UsernamePasswordAuthenticationToken newAuth = new UsernamePasswordAuthenticationToken(updateUserDetails, authentication.getCredentials(), updateUserDetails.getAuthorities());
 		
 		SecurityContextHolder.getContext().setAuthentication(newAuth);
 		
-		// 변경된 정보로 session에 다시 담기
 		return "redirect:/mypage";
+	}
+	
+	// 수정 취소
+	@GetMapping("/cancelUpdate")
+	public String cancelUpdate() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		User user = (User) authentication.getPrincipal();
+		
+		// 프리뷰 폴더 삭제 로직
+		File dir = new File("\\\\192.168.10.6\\vibe\\img\\preview_img\\" + user.getUserEmail());
+		
+		while(dir.exists()) {
+			File[] dir_list = dir.listFiles();
+			for(int i = 0; i < dir_list.length; i++) dir_list[i].delete();
+			
+			if(dir_list.length == 0 && dir.isDirectory()) dir.delete();
+		}
+		
+		return "redirect:/mypage";
+	}
+	
+	// 비밀번호 변경
+	@GetMapping("/changePassword")
+	public String changePassword() {
+		return "user/changePwd";
+	}
+	
+	@PostMapping("/changePassword")
+	public String changePassword(String changePassword, Model model, HttpServletRequest request) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		User user = (User) authentication.getPrincipal();
+		User u = new User();
+		
+		u.setUserEmail(user.getUserEmail());
+		u.setUserPassword(changePassword);
+		
+		userService.updateUserPWD(u);
+		model.addAttribute("pwdChange", "패스워드가 변경되었습니다. 다시 로그인 해주세요.");
+		
+		// 패스워드 변경하면 세션 죽여서 로그아웃 시키기
+		HttpSession session = request.getSession(false);
+		session.invalidate();
+		
+		SecurityContextHolder.getContext().setAuthentication(null);
+		
+		return "index";
 	}
 	
 	// 회원탈퇴
@@ -259,7 +299,6 @@ public class UserController {
 		return "user/shareMyProfile";
 	}
 
-	
 	// ajax - 회원가입시 아이디 중복 조회
 	@ResponseBody
 	@PostMapping("/emailCheck")

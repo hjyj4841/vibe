@@ -16,23 +16,23 @@ $("#emailCheck").click(() => {
 		success: function(checkOk){
 			if(!checkOk) {
 				alert("중복된 이메일 입니다.");
-				$("#userEmail").css("background-color", "#E69E8F");
+				$("#userEmail").css("border-bottom", "1px solid red");
 				emailCheck = false;
 			}else if($("#userEmail").val() === ""){
 				alert("이메일을 입력해주세요.");
-				$("#userEmail").css("background-color", "#E69E8F");
+				$("#userEmail").css("border-bottom", "1px solid red");
 				emailCheck = false;
 			}else if(!regEmailCheck){
 				alert("이메일 형식으로 입력해주세요.");
-				$("#userEmail").css("background-color", "#E69E8F");
+				$("#userEmail").css("border-bottom", "1px solid red");
 				emailCheck = false;
 			}else{
 				alert("사용가능한 이메일 입니다.");
 				emailCheck = true;
-				$("#userEmail").css("background-color", "#AEEBB8");
-				$("#emailCheck").val("✔")
+				$("#userEmail").css("border-bottom", "1px solid green");
+				$("#emailCheck").val("✓")
 					.css({"color": "black",
-						"font-size": "1.3rem"});
+						"font-size": "1rem"});
 			}
 		}
 	});
@@ -48,19 +48,19 @@ $("#nicknameCheck").click(() => {
 		success: function(checkOk){
 			if(!checkOk){
 				alert("중복된 닉네임 입니다.");
-				$("#userNickname").css("background-color", "#E69E8F");
+				$("#userNickname").css("border-bottom", "1px solid red");
 				nicknameCheck = false;
 			} else if($("#userNickname").val() === ""){
 				alert("닉네임을 입력해주세요.");
-				$("#userNickname").css("background-color", "#E69E8F");
+				$("#userNickname").css("border-bottom", "1px solid red");
 				nicknameCheck = false;
 			}else{
 				alert("사용가능한 닉네임 입니다.");
 				nicknameCheck = true;
-				$("#userNickname").css("background-color", "#AEEBB8");
-				$("#nicknameCheck").val("✔")
+				$("#userNickname").css("border-bottom", "1px solid green");
+				$("#nicknameCheck").val("✓")
 					.css({"color": "black",
-						"font-size": "1.3rem"});
+						"font-size": "1rem"});
 			}
 		}
 	});
@@ -70,21 +70,21 @@ $("#userEmail").keyup(() => {
 	emailCheck = false;
 	const regExp = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 	$("#emailCheck").val("Check")
-		.css({"color": "#b6b6b6",
+		.css({"color": "#787775",
 			"font-size": "0.8rem"});
 	if(regExp.test($("#userEmail").val())){
 		regEmailCheck = true;
-		$("#userEmail").css("background-color", "#AEEBB8");
+		$("#userEmail").css("border-bottom", "1px solid green");
 	}else{
 		regEmailCheck = false;
-		$("#userEmail").css("background-color", "#E69E8F");
+		$("#userEmail").css("border-bottom", "1px solid red");
 	}
 
 });
 $("#userNickname").keyup(() => {
 	nicknameCheck = false;
 	$("#nicknameCheck").val("Check")
-		.css({"color": "#b6b6b6",
+		.css({"color": "#787775",
 			"font-size": "0.8rem"});
 });
 
@@ -92,27 +92,27 @@ $("#userPassword").keyup(() => {
 	const regExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,14}$/;
 	
 	if(regExp.test($("#userPassword").val())){
-		$("#userPassword").css("background-color", "#AEEBB8");
+		$("#userPassword").css("border-bottom", "1px solid green");
 		regPasswordCheck = true;
 	}else{
-		$("#userPassword").css("background-color", "#E69E8F");
+		$("#userPassword").css("border-bottom", "1px solid red");
 		regPasswordCheck = false;
 	}
 	if($("#userPassword").val() == $("#passwordCheck").val() && $("#userPassword").val() != ""){
-		$("#passwordCheck").css("background-color", "#AEEBB8");
+		$("#passwordCheck").css("border-bottom", "1px solid green");
 		passwordSameCheck = true;
 	}else{
-		$("#passwordCheck").css("background-color", "#E69E8F");
+		$("#passwordCheck").css("border-bottom", "1px solid red");
 		passwordSameCheck = false;
 	}
 });
 
 $("#passwordCheck").keyup(() => {
 	if($("#userPassword").val() == $("#passwordCheck").val() && $("#userPassword").val() != ""){
-		$("#passwordCheck").css("background-color", "#AEEBB8");
+		$("#passwordCheck").css("border-bottom", "1px solid green");
 		passwordSameCheck = true;
 	}else{
-		$("#passwordCheck").css("background-color", "#E69E8F");
+		$("#passwordCheck").css("border-bottom", "1px solid red");
 		passwordSameCheck = false;
 	}
 });
@@ -124,10 +124,10 @@ $("#userPhone").keyup(() => {
 	$("#userPhone").val($("#userPhone").val().replace(/[^0-9]/gi, "").replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`));
 	
 	if(regExp.test($("#userPhone").val())){
-		$("#userPhone").css("background-color", "#AEEBB8");
+		$("#userPhone").css("border-bottom", "1px solid green");
 		phoneCheck = true;
 	}else{
-		$("#userPhone").css("background-color", "#E69E8F");
+		$("#userPhone").css("border-bottom", "1px solid red");
 		phoneCheck = false;
 	}
 });

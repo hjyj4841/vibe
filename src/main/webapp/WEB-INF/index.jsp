@@ -18,7 +18,7 @@ uri="http://www.springframework.org/security/tags" %>
         <p id="chant">Vibe that I want to BE</p>
         <p id="maintitle">VIBEMASTER</p>
       </div>
-
+      
       <nav id="mainnav">
         <sec:authorize access="!isAuthenticated()">
           <a href="login" class="signIn">Sign In</a>
@@ -26,7 +26,7 @@ uri="http://www.springframework.org/security/tags" %>
         <sec:authorize access="isAuthenticated()">
           <a href="mypage" class="signIn">My Page</a>
         </sec:authorize>
-        <a href="rankingHome" class="ranking">Ranking</a>
+        <a href="rankingHome?select=like" class="ranking">Ranking</a>
       </nav>
       <form class="mainSearchBox" action="searchPlaylist">
         <select name="select">
@@ -100,6 +100,7 @@ uri="http://www.springframework.org/security/tags" %>
     <script src="./js/main.js"></script>
     <script>
       if('${registerMsg}' != '') alert('${registerMsg}');
+      if('${pwdChange}' != '') alert('${pwdChange}');
     </script>
   </body>
 </html>

@@ -6,7 +6,6 @@
 <script src="https://kit.fontawesome.com/df04184d5c.js"
 	crossorigin="anonymous"></script>
 <link rel="stylesheet" href="./css/header.css" />
-<link rel="stylesheet" href="./css/footer.css" />
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
 </style>

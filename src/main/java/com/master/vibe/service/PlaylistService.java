@@ -27,9 +27,15 @@ public class PlaylistService {
 
 	// 플레이리스트 전체 조회
 	public List<Playlist> allPlaylist(SearchDTO dto) {
+		// 무한스크롤 페이징 처리
 		dto.setOffset(dto.getLimit() * (dto.getPage() - 1));
 		return playlistMapper.allPlaylist(dto);
-	}
+	} 
+	
+	// 검색한 플리 좋아요 TOP 5
+	public List<Playlist> rankPlaylist(SearchDTO dto){
+		return playlistMapper.rankPlaylist(dto);
+	} 
 	
 	public List<Integer> searchTag(String search) {
 		return playlistMapper.searchTag(search);
