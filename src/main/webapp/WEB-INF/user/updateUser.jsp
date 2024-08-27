@@ -41,17 +41,17 @@
 										</div>
 									</div>
 								</div>
-								<div>
+									<div class="textAndIcon">
 									<input type="text" name="userNickname" class="nickname"
 										value="${user.userNickname }"
-										placeholder="${user.userNickname }" readonly required /> <i
-										class="fa-solid fa-pen" id="nicknanmeChangeBtn"></i>
+										placeholder="${user.userNickname }" readonly required /> 
+										<i class="fa-solid fa-pen" id="nicknanmeChangeBtn"></i>
 								</div>
-								<div>
+								<div class="textAndIcon">
 									<input type=text name="userPhone" value="${user.userPhone }"
 										class="phoneNum" placeholder="${user.userPhone }"
-										maxlength="13" readonly required /> <i class="fa-solid fa-pen"
-										id="phoneNumChangeBtn"></i>
+										maxlength="13" readonly required /> 
+										<i class="fa-solid fa-pen" id="phoneNumChangeBtn"></i>
 								</div>
 								<div>
 									<input type="password" placeholder="Password"

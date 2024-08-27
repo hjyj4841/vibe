@@ -29,6 +29,7 @@
 	width: 90%;
 }
 
+
 .plContentsBox i{
 	padding-left: 10px;
 	font-size:0.7rem;
@@ -63,6 +64,19 @@
 	width: 500px;
 	padding: 10px;
 }
+.editForm > .textAndIcon{
+	position: relative;
+	height: 60px;
+}
+.editForm > .textAndIcon > *{
+	position: absolute;
+}
+.editForm > .textAndIcon > input{
+	width: 480px;	
+}
+.editForm > .textAndIcon > i{
+	right: 10px;
+}
 .editForm > div > i{
 	cursor: pointer;
 	color: #999;
@@ -83,7 +97,6 @@
 	align-items: center;
 	width: 300px;
 	height: 300px;
-	
 }
 .editUserImgBox > div > *{
 	position: absolute;
@@ -114,7 +127,7 @@
 }
 .editUserImgBox > div > div > i{
 	font-size: 2.5rem;
-	padding: 20px;
+	padding: 10px;
 }
 .editUserImgBox > div > div > p:nth-child(1){
 	opacity: 0;

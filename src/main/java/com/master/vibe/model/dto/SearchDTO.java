@@ -13,6 +13,7 @@ public class SearchDTO {
 	private String select;
 	private String search;
 	private List<Integer> codes;
+	private String userEmail;
 	
 	private int page = 1;
 	private int offset = 0;

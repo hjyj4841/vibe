@@ -9,6 +9,7 @@
 		<result column="pl_img" property="plImg" />
 		<result column="pl_date" property="plDate" />
 		<result column="pl_public_yn" property="plPublicYn" />
+		<result column="pl_code_count" property="likeCount"/>
 		<association property="user" javaType="User">
 			<id column="user_email" property="userEmail" />
 			<result column="user_password" property="userPassword" />
@@ -39,8 +40,7 @@
 	</resultMap>
 
 	<!-- 전체플리 조회 -->
-	<select id="allPlaylist" resultMap="playlistMap"
-		parameterType="SearchDTO">
+	<select id="allPlaylist" resultMap="playlistMap" parameterType="SearchDTO">
 		SELECT * FROM playlist
 		JOIN user USING (user_email)
 		WHERE pl_public_yn = 'Y'
@@ -99,7 +99,6 @@
 		WHERE pl_code = #{code}
 	</select>
 	
-	
 	<!-- 무한스크롤 --> 
 	<!-- 
 	<select id="limitAllPlaylist" resultMap="playlistMap"
@@ -145,8 +144,6 @@
 		WHERE pl_code = #{plCode}
 	</update>
 
-	
-	
 	<!-- user 탈퇴 시 playlist 정보 넘기기 -->
 	<update id="movePlaylist" parameterType="String">
 		UPDATE playlist
@@ -156,12 +153,12 @@
 	</update>
 
 	<!-- 회원 본인의 플레이리스트 조회 -->
-	<select id="myPlaylist" resultMap="playlistMap"
-		parameterType="String">
+	<select id="myPlaylist" resultMap="playlistMap" parameterType="SearchDTO">
 		SELECT * FROM playlist
 		JOIN user USING (user_email)
 		WHERE user_email = #{userEmail}
-		ORDER BY pl_code DESC;
+		ORDER BY pl_code DESC
+		LIMIT #{offset}, #{limit};
 	</select>
 
 	<!-- 플레이리스트 코드로 플레이리스트 정보 조회 -->
