@@ -141,13 +141,8 @@ public class PlaylistController {
 		}
 		List<String> musicCode = playlistMusicService.showMusicList(plCode);
 		Playlist playlist = playlistService.selectPlaylistByPlCode(plCode);
-//        List<String> tagList = playlistService.getTagsByPlaylistCode(plCode);
-		// 태그 목록을 조회
-		List<PlaylistTag> tags = playlistTagService.searchTagPlaylist(plCode);
-		// List<String> tags = playlistService.getTagsByPlaylistCode(plCode);
 
-		// 태그 목록을 출력
-		System.out.println("태그값 " + plCode + ": " + tags);
+		List<PlaylistTag> tags = playlistTagService.searchTagPlaylist(plCode);
 
 		if (musicCode.size() != 0) {
 			List<Music> musicInfo = spotifyService.getMusicINfoByMusicCode(musicCode);
@@ -155,11 +150,10 @@ public class PlaylistController {
 		}
 		model.addAttribute("user", user);
 		model.addAttribute("playlist", playlist);
-//        model.addAttribute("tagList", tagList);
+
 		// 태그 목록을 모델에 추가
 		model.addAttribute("tags", tags);
 
-		model.addAttribute("playlist", playlist);
 		return "playlist/showPlaylistInfo";
 	}
 

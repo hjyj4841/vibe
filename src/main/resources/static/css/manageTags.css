@@ -14,7 +14,7 @@ body {
 /* 컨테이너 스타일 */
 .container {
   max-width: 800px;
-  margin: 0 auto;
+  margin: 200px;
   background-color: #222;
   padding: 20px;
   border-radius: 8px;
@@ -34,7 +34,7 @@ h1 {
 h2 {
   font-size: 1.8rem;
   margin-bottom: 20px;
-  margin-top: 80px;
+  margin-top: 60px;
 }
 
 /* 폼 섹션 스타일 */

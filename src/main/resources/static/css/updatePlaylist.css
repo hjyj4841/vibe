@@ -1,0 +1,50 @@
+/* 전체 페이지를 수직 및 수평 중앙에 위치시키기 위한 스타일 */
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  position: relative; /* absolute 대신 relative 사용 */
+  width: 80%; /* 너비를 설정하여 중앙에 정렬 */
+  max-width: 800px; /* 최대 너비 설정 */
+  padding: 20px; /* 내부 여백 */
+  border-radius: 10px;
+}
+
+/* 제목 스타일 */
+h1 {
+  display: flex;
+  align-items: center;
+  color: #dddddd;
+  font-size: 2.5rem;
+  background-color: #111;
+  margin-bottom: 30px;
+  justify-content: center;
+}
+
+/* 일반 버튼 스타일 */
+button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  font-weight: bold;
+  width: 200px;
+  height: 40px;
+  border-radius: 10px;
+  background-color: #e3e3e3;
+  color: black;
+  border: none;
+  padding: 0;
+  margin: 7px;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  color: white;
+  background-color: red;
+}
