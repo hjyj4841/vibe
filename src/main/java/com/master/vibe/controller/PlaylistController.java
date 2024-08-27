@@ -260,12 +260,6 @@ public class PlaylistController {
 
 	}
 
-	// 랭킹 관련 - 수정중
-	@GetMapping("/rankingHome")
-	public String rankingHome(String select, Model model) {
-		return "ranking/rankingHome";
-	}
-
 	// 랭킹 : 좋아요순
 	@GetMapping("/likeranking")
 	public String likeranking(Model model) {

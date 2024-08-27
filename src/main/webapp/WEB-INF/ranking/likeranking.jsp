@@ -10,6 +10,8 @@
 <link rel="stylesheet" href="./css/likeranking.css" />
 </head>
 <body>
+	<jsp:include page="../tiles/header.jsp"></jsp:include>
+	<jsp:include page="../tiles/rankingHeader.jsp"></jsp:include>
 	<div class="likeHead">Like Ranking</div>
 	<div id="rankingList">
 		<c:forEach var="playlist" items="${likeranking}">
