@@ -101,13 +101,11 @@ public class PlaylistController {
 
 		// 이미지 선택 여부 확인
 		String fileName;
-		System.out.println("112 : " + dto.getPlUrl().getOriginalFilename());
 		if (dto.getPlUrl() != null && !dto.getPlUrl().isEmpty() && !dto.getPlUrl().getOriginalFilename().equals("")) {
 			fileName = fileUpload(dto.getPlUrl());
 			dto.setPlImg("http://192.168.10.6:8080/playlistImg/" + fileName);
 		} else {
 			// 이미지 선택하지 않은 경우 기본 이미지 URL 설정
-			System.out.println("119 : " + DEFAULT_IMAGE_URL);
 			dto.setPlImg(DEFAULT_IMAGE_URL);
 		}
 
@@ -299,6 +297,7 @@ public class PlaylistController {
 	// model.addAttribute("randomPlaylist", randomPlaylist);
 	// return "playlist/randomPlaylist";
 	// }
+	
 	// 태그 검색 랭킹 조회
 	@GetMapping("/searchTag")
 	public String searchTag() {
