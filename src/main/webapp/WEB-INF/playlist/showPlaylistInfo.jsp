@@ -18,9 +18,12 @@
 	<div class="container">
       <div class="con">
         <div class="mypageBox">
-          <div class="myLeft">
-            <jsp:include page="../tiles/mypageLeft.jsp"></jsp:include>
-          </div>
+		<!-- 로그인한 유저만 mypageLeft.jsp 보이게 -->
+        <c:if test="${not empty user}">
+			<div class="myLeft">
+				<jsp:include page="../tiles/mypageLeft.jsp"></jsp:include>
+			</div>
+        </c:if>
       <div class="myRight">
       <div class="myTagBox">
       	<div class="PlaylistInfoBox">
@@ -45,6 +48,7 @@
 						</c:forEach>
 					</ul>
 				</div>
+		
 			<c:if test="${user.userEmail eq playlist.user.userEmail}">
 			<div class="playlistInfoBox">
 				<div class="creatorInfo">
@@ -68,14 +72,21 @@
 				</div>
 			</div>
 			</c:if>
-		<div class="addMusicBtnBox" onclick="location.href='addMusic?plCode=${playlist.plCode}'">
-			<div class="addMusicBtnIcon">
-				<a href="addMusic?plCode=${playlist.plCode}"><i class="fa-solid fa-plus"></i></a>
-			</div>
-			<div class="addMusicBtn">
-				<a href="addMusic?plCode=${playlist.plCode}">이 플레이리스트에 추가</a>
-			</div>
 		</div>
+		<!-- 사용자 로그인 상태에 따라 버튼 표시 -->
+		<c:if test="${not empty user}">
+		  <!-- 현재 사용자가 생성자와 동일할 때만 표시 -->
+		  <c:if test="${user.userEmail eq playlist.user.userEmail}">
+			<div class="addMusicBtnBox" onclick="location.href='addMusic?plCode=${playlist.plCode}'">
+				<div class="addMusicBtnIcon">
+					<a href="addMusic?plCode=${playlist.plCode}"><i class="fa-solid fa-plus"></i></a>
+				</div>
+				<div class="addMusicBtn">
+					<a href="addMusic?plCode=${playlist.plCode}">이 플레이리스트에 추가</a>
+				</div>
+			</div>
+		  </c:if>
+		</c:if>
 	<!-- 플레이리스트 목록으로 -->
 	<a href="myPlaylist" class="goPlaylistListBtn"><i class="fa-solid fa-arrow-left"></a></i>
 
@@ -96,27 +107,48 @@
 	                    <div class="artistName">${music.artistName}</div>
 	                    <!-- <a href="musicDetail?musicId=${music.id}">${music.albumName}</a> -->
 	                </div>
+	                
 	                <div class="plMusicAction">
-						<a href="#" onclick="playMusic('${music.id}')" class="musicPlayBtn"><i class="fa-solid fa-circle-play"></i></a>
+						<a href="#" onclick="playMusic('${music.id}')" class="musicPlayBtn" data-track-id="${music.id}"><i class="fa-solid fa-circle-play"></i></a>
 	                    <a href="#"><i class="fa-solid fa-ellipsis-vertical"></i></a>
 	                </div>
+	                
+	                <!-- 
+	                <nav class="playlistSubMenuBox">
+	                	<div class="plMusicActionBtn">
+							<a href="#" onclick="playMusic('${music.id}')" class="musicPlayBtn"><i class="fa-solid fa-circle-play"></i></a>
+	                	</div>
+	                	<div class="playlistSubMenuBtn">
+							<a href="#" class="plSubMenuBtn"><i class="fa-solid fa-ellipsis-vertical"></i></a>
+						</div>
+	                	<div class="playlistSubMenu">
+	                		<div class="plUpdateMenu"><a href="updatePlaylist?plCode=${playlist.plCode }">수정하기</a></div>
+							<div class="plTagUpdateMenu"><a href="${pageContext.request.contextPath}/playlist/manageTags?plCode=${playlist.plCode}">태그 수정</a></div>
+							<div class="plDeleteMenu"><a href="#" onclick="confirmDelete(event, 'deletePlaylist?plCode=${playlist.plCode }')">플레이리스트 삭제하기</a></div>
+						</div>
+	                </nav>
+	                 -->
+	                 
 	            </div>
 	        </c:forEach>
 	    </div>
 	<button type="submit">곡 삭제</button>
 	</form>
-
-	<!-- 플레이어가 표시될 위치 -->
-	<div id="playerContainer" style="margin-top: 20px;">
-		<iframe id="main_frame" src="" width="300" height="380"
-			frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+	<!-- 플레이어 모달 -->
+	<div id="playerModal" class="playerModal">
+	  <div class="modal-content">
+	    <span class="close">&times;</span>
+	    <iframe id="main_frame" src="" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+	  </div>
 	</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
+	
+
 
 <script>
     document.querySelector('.plMenuBtn').addEventListener('click', function(event) {
@@ -227,6 +259,47 @@
             copyMessage.style.display = 'none';
         }, 2000); // 2초 후 메시지 숨김
     });
+    
+    
+    // 플레이어 모달을 열고 닫는 기능 추가
+    document.addEventListener('DOMContentLoaded', () => {
+    	  const modal = document.getElementById('playerModal');
+    	  const span = document.querySelector('.close');
+
+    	  function openModal(trackId) {
+    	    const iframe = document.getElementById('main_frame');
+    	    iframe.src = "https://open.spotify.com/embed/track/" + trackId + "?autoplay=1";
+    	    modal.style.display = 'block';
+    	  }
+
+    	  function closeModal() {
+    	    modal.style.display = 'none';
+    	    const iframe = document.getElementById('main_frame');
+    	    iframe.src = ""; // 비우기 (혹은 stop 재생)
+    	  }
+
+    	  // 모달을 열도록 하는 예시
+    	  document.querySelectorAll('.musicPlayBtn').forEach(button => {
+    	    button.addEventListener('click', (event) => {
+    	      event.preventDefault(); // 링크 기본 동작 방지
+    	      const trackId = button.getAttribute('data-track-id'); // trackId를 버튼에서 가져온다고 가정
+    	      openModal(trackId);
+    	    });
+    	  });
+
+    	  // 닫기 버튼 클릭 시 모달 닫기
+    	  span.addEventListener('click', () => {
+    	    closeModal();
+    	  });
+
+    	  // 모달 외부 클릭 시 모달 닫기
+    	  window.addEventListener('click', (event) => {
+    	    if (event.target === modal) {
+    	      closeModal();
+    	    }
+    	  });
+    	});
+    
 </script>
 </body>
 </html>

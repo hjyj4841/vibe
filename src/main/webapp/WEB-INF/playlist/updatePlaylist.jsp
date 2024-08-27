@@ -3,6 +3,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="./css/reset.css" />
+<link rel="stylesheet" href="./css/search.css" />
+<link rel="stylesheet" href="./css/mypage.css" />
+<link rel="stylesheet" href="./css/updatePlaylist.css" />
 <title>플레이리스트 수정하기</title>
 <script type="text/javascript">
 	// [취소하기] 버튼 클릭 시 수정 취소 동시에 이전 화면으로
@@ -51,6 +55,19 @@ label[for="imgChange"] {
 </style>
 </head>
 <body>
+<jsp:include page="../tiles/header.jsp"></jsp:include>
+	<div class="container">
+      <div class="con">
+        <div class="mypageBox">
+          <div class="myLeft">
+            <jsp:include page="../tiles/mypageLeft.jsp"></jsp:include>
+          </div>
+      <div class="myRight">
+      <div class="myTagBox">
+
+
+
+
     <h1>플레이리스트 수정</h1>
     <form action="/updatePlaylist" method="post" enctype="multipart/form-data">
         <!-- 플레이리스트 코드와 수정할 제목을 입력 받음 -->
@@ -69,5 +86,12 @@ label[for="imgChange"] {
         <button type="submit">저장하기</button>
         <button type="button" onclick="cancel()">취소하기</button>
     </form>
+    
+    
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
 </body>
 </html>
