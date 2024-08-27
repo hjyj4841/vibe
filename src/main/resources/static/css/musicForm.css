@@ -1,0 +1,8 @@
+.myRight{
+	max-height: 600px;
+	overflow-y: scroll; 
+}
+
+.mainSearchBox input {
+    padding-left: 5%;
+}
