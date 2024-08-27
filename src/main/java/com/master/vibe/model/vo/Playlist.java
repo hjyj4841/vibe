@@ -26,4 +26,6 @@ public class Playlist {
 	
 	private List<PlaylistTag> tagList;
 	
+	private int likeCount;
+	
 }

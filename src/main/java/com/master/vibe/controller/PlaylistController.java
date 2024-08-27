@@ -165,17 +165,28 @@ public class PlaylistController {
 
 	// 회원본인의 플레이리스트 조회
 	@GetMapping("/myPlaylist")
-	public String myPlaylist(Model model) {
+	public String myPlaylist(SearchDTO dto, Model model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		User user = (User) authentication.getPrincipal();
-
-		List<Playlist> playlist = playlistService.myPlaylist(user.getUserEmail());
-
-		model.addAttribute("searchTag", playlistViewer.playlistView(playlist, user));
-
-		model.addAttribute("user", user);
+		dto.setUserEmail(user.getUserEmail());
+		
+		List<Playlist> playlist = playlistService.myPlaylist(dto);
+		
+		model.addAttribute("searchTag", playlistViewer.playlistView(playlist));
 		return "playlist/myPlaylist";
 	}
+	
+  	@ResponseBody
+  	@PostMapping("/limitMyList")
+  	public List<PlaylistDTO> limitMyList(SearchDTO dto) {
+  		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		User user = (User) authentication.getPrincipal();
+		dto.setUserEmail(user.getUserEmail());
+		
+  		List<Playlist> playlist = playlistService.myPlaylist(dto);
+  		
+  		return playlistViewer.playlistView(playlist);
+  	}
 
 	// 플레이리스트 삭제
 	@GetMapping("/deletePlaylist")
@@ -267,7 +278,8 @@ public class PlaylistController {
 		case "tag" :
 			return "ranking/searchTag";
 		case "month" :
-			model.addAttribute("likeranking", playlistService.playListRankingOnMonth());
+			List<Playlist> list = playlistService.playListRankingOnMonth();
+			model.addAttribute("likeranking", list);
 			return "ranking/playListRankingOnMonth";
 		case "age" :
 			return "ranking/playListRankingOnAgeGroupSelect";

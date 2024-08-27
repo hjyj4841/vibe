@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.master.vibe.model.dto.PlaylistDTO;
 import com.master.vibe.model.dto.PlaylistLikeDTO;
+import com.master.vibe.model.dto.SearchDTO;
 import com.master.vibe.model.vo.Playlist;
 import com.master.vibe.model.vo.User;
 import com.master.vibe.playlistViewer.PlaylistViewer;
@@ -28,16 +30,29 @@ public class PlaylistLikeController {
 	
 	// 내가 좋아요한 플리 조회
 	@GetMapping("/likePlaylist")
-	public String likePlaylist(Model model) {
+	public String likePlaylist(SearchDTO dto, Model model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		User user = (User) authentication.getPrincipal();
+		dto.setUserEmail(user.getUserEmail());
 		
-		List<Playlist> playlist = playlistLikeService.likePlaylist(user.getUserEmail());
+		List<Playlist> playlist = playlistLikeService.likePlaylist(dto);
 		
-		model.addAttribute("searchTag", playlistViewer.playlistView(playlist, user));
-		model.addAttribute("user", user);
+		model.addAttribute("searchTag", playlistViewer.playlistView(playlist));
 		
 		return "playlist/myLikeList";
+	}
+	
+	@ResponseBody
+	@PostMapping("/limitLikeList")
+	public List<PlaylistDTO> limitLikeList(SearchDTO dto) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		User user = (User) authentication.getPrincipal();
+		dto.setUserEmail(user.getUserEmail());
+		
+		List<Playlist> playlist = playlistLikeService.likePlaylist(dto);
+		
+		return playlistViewer.playlistView(playlist);
+		
 	}
 	
 	@ResponseBody

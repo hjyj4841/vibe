@@ -20,14 +20,16 @@ public class SecurityConfig {
 				.formLogin(login ->
 					login.loginPage("/login")
 					.defaultSuccessUrl("/", true)
-//					.failureForwardUrl("/loginError")
 					.failureHandler(new DomainFailureHandler())
 					.permitAll())
 				.logout(logout ->
 					logout.logoutUrl("/logout")
 					.logoutSuccessUrl("/")
 					.permitAll())
-				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
+				.sessionManagement(
+						session -> 
+						session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+						.invalidSessionUrl("/"))
 				.authorizeHttpRequests(authorize ->
 					authorize
 						// .requestMatchers("/mypage").authenticated() // 회원만 접속할 수 있는 주소가 있다면 추가

@@ -14,10 +14,19 @@
 	<!-- 랭킹화면 후에 jstl 처리로 간결해질 예정... -->
 	<div class="rankContainer">
 		<div class="rankBox">
-			<h1>PlayList Ranking Sort By Popular TOP 5</h1>
-			<c:forEach items="${searchRank}" var="searchPlaylist" begin="0" end="4">
+			<c:if test="${not empty searchRank }">
+				<c:if test="${dto.search == '' }">
+					<h1>Popular TOP 5</h1>
+				</c:if>
+				<c:if test="${dto.search != '' }">
+					<h1>'${dto.search }' By Popular TOP 5</h1>
+				</c:if>
+				
+				<c:forEach items="${searchRank}" var="searchPlaylist" begin="0" end="4">
 					<div class="playlistCon">
-						<img src="${searchPlaylist.plImg}" data-code="${searchPlaylist.plCode}">
+						<div class="plImgBox">
+							<img src="${searchPlaylist.plImg}" data-code="${searchPlaylist.plCode}">
+						</div>
 						<div class="plContentsBox" data-code="${searchPlaylist.plCode}">
 							<p class="plTitle">${searchPlaylist.plTitle}</p>
 							<p class="plTags">
@@ -45,6 +54,10 @@
 					</div>
 				</div>
 			</c:forEach>
+			</c:if>
+			<c:if test="${empty searchRank }">
+				<h1>'${dto.search }' is empty...</h1>
+			</c:if>
 		</div>
 	</div>
 	<!-- 검색한 플레이리스트 전체 조회 -->
@@ -55,7 +68,7 @@
 					<select name="select">
 						<option value="title">Title</option>
 						<option value="tag">Tag</option>
-					</select> <input type="text" placeholder="Search Playlist..." name="search">
+					</select> <input type="text" placeholder="Search Playlist..." name="search" value="${dto.search }">
 					<button id="searchPlBtn" type="submit">
 						<i class="fa-solid fa-magnifying-glass"></i>
 					</button>
@@ -64,8 +77,10 @@
 			<div class="searchListMain">
 				<c:forEach items="${searchTag}" var="searchPlaylist">
 					<div class="playlistCon">
-						<img src="${searchPlaylist.plImg}"
+						<div class="plImgBox">
+							<img src="${searchPlaylist.plImg}"
 							data-code="${searchPlaylist.plCode}">
+						</div>
 						<div class="plContentsBox" data-code="${searchPlaylist.plCode}">
 							<p class="plTitle">${searchPlaylist.plTitle}</p>
 							<p class="plTags">
@@ -104,9 +119,11 @@
 	let codes = "<c:out value='${dto.codes}'/>";
 	codes = codes.replace('[', '').replace(']', '').split(",");
 	codes = codes.map(Number);
+	
 	$("#searchPlayATag").click(function(e) {
 		e.preventDefault();
-	})
+	});
+	
 	$(".searchListMain").scroll(function(){
 		var innerHeight = $(this).innerHeight();
 		var scroll = $(this).scrollTop() + $(this).innerHeight(); 
@@ -126,7 +143,9 @@
 					let searchListMain = $(".searchListMain");
 					$.each(searchTag, function(index, searchPlaylist){
 						let searchItem = '<div class="playlistCon">' + 
-								'<img src="' + searchPlaylist.plImg + '" data-code="' + searchPlaylist.plCode + '">' + 
+								'<div class="plImgBox">' +
+									'<img src="' + searchPlaylist.plImg + '" data-code="' + searchPlaylist.plCode + '">' + 
+								'</div>' +
 								'<div class="plContentsBox" data-code="' + searchPlaylist.plCode + '">' + 
 									'<p class="plTitle">' + searchPlaylist.plTitle + '</p>' + 
 									'<p class="plTags">';
@@ -173,7 +192,6 @@
 		location.href = "/showPlaylistInfo?plCode=" + e.currentTarget.getAttribute("data-code");
 	})
 	
-	// <a href="/showPlaylistInfo?plCode=' + searchPlaylist.plCode + '">
 	function clickLike(event) {
 		const plLike = event.currentTarget;
 		$.ajax({

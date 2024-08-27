@@ -4,15 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import com.master.vibe.model.dto.PlaylistDTO;
 import com.master.vibe.model.dto.PlaylistLikeDTO;
+import com.master.vibe.model.dto.SearchDTO;
 import com.master.vibe.model.vo.Playlist;
 import com.master.vibe.model.vo.PlaylistLike;
 import com.master.vibe.model.vo.PlaylistTag;
 import com.master.vibe.model.vo.User;
 import com.master.vibe.service.PlaylistLikeService;
+import com.master.vibe.service.PlaylistService;
 import com.master.vibe.service.PlaylistTagService;
 
 @Component
@@ -24,44 +28,88 @@ public class PlaylistViewer {
 	@Autowired
 	private PlaylistLikeService playlistLikeService;
 	
-	public List<PlaylistDTO> playlistView(List<Playlist> playlist, User user){
-		// model에 담을 플레이리스트의 목록들
-		List<PlaylistDTO> dtoList = new ArrayList<>();
+	@Autowired
+	private PlaylistService playlistService;
+	
+	public List<PlaylistDTO> showPlaylistAll(SearchDTO dto, String rankYn) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+  		User user = new User();
+  		if(!authentication.getName().equals("anonymousUser")) {
+    		user = (User) authentication.getPrincipal();
+  		}
 		
-		// 뽑아온 태그를 리스트로 만드는 코드
-		for(Playlist play : playlist) {
-			List<PlaylistTag> tagList = playlistTagService.searchTagPlaylist(play.getPlCode());
-			
-			PlaylistLikeDTO plDto = new PlaylistLikeDTO();
-			plDto.setPlCode(play.getPlCode());
-			plDto.setUserEmail(user.getUserEmail());
-			PlaylistLike pLike = playlistLikeService.showPlLikeUser(plDto);
-			
-			int lCount = playlistLikeService.showLikeCount(play.getPlCode());
-			
-			PlaylistDTO pDto = PlaylistDTO.builder()
-					.plCode(play.getPlCode())
-					.plTitle(play.getPlTitle())
-					.plImg(play.getPlImg())
-					.plPublicYn(play.getPlPublicYn())
-					.tagList(tagList)
-					.user(User.builder()
-							.userNickname(play.getUser().getUserNickname())
-							.userImg(play.getUser().getUserImg())
-							.build())
-					.plLike(pLike)
-					.likeCount(lCount)
-					.build();
-			
-			dtoList.add(pDto);
+		dto.setSearch(dto.getSearch().toLowerCase());
+		
+  		if(dto.getCodes()!=null && dto.getCodes().get(0) == 0) {
+  			dto.setCodes(null);
+  		}
+  		
+  		// 플리 태그 검색이라면 DTO에 검색 내용 대입
+  		if(dto.getSelect().equals("tag")) {
+  			List<Integer> codes = playlistService.searchTag(dto.getSearch());
+  			if(codes.size()!=0) {
+  				dto.setCodes(codes);
+  			}
+  		}
+
+  		// 검색한 내용을 바탕으로 플레이리스트를 담는 리스트 생성
+  		List<Playlist> playlist = new ArrayList<Playlist>();
+		if(rankYn.equals("N")) {
+			playlist = playlistService.allPlaylist(dto);
+		}else {
+			playlist = playlistService.rankPlaylist(dto);
 		}
+  				
+  		List<PlaylistDTO> list = new ArrayList<>();
+  		for(Playlist play : playlist) {
+  			PlaylistDTO dtoPlay = PlaylistDTO.builder()
+  					.plCode(play.getPlCode())
+  					.plDate(play.getPlDate())
+  					.plTitle(play.getPlTitle())
+  					.plImg(play.getPlImg())
+  					.plPublicYn(play.getPlPublicYn())
+  					.user(play.getUser())
+  					.build();
+  			
+  			PlaylistLikeDTO plDto = new PlaylistLikeDTO();
+  			plDto.setPlCode(play.getPlCode());
+  			plDto.setUserEmail(user.getUserEmail());
+  			dtoPlay.setLikeCount(playlistLikeService.showLikeCount(play.getPlCode()));
+  			dtoPlay.setPlLike(playlistLikeService.showPlLikeUser(plDto));
+  			dtoPlay.setTagList(playlistService.searchTagPlayList(play.getPlCode()));
+  			list.add(dtoPlay);
+  		}
+  		return list;
+	}
+	
+	public List<PlaylistDTO> playlistView(List<Playlist> playlist){
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		User user = (User) authentication.getPrincipal();
 		
-		return dtoList;
+		// model에 담을 플레이리스트의 목록들
+		List<PlaylistDTO> list = new ArrayList<>();
+  		for(Playlist play : playlist) {
+  			PlaylistDTO dtoPlay = PlaylistDTO.builder()
+  					.plCode(play.getPlCode())
+  					.plDate(play.getPlDate())
+  					.plTitle(play.getPlTitle())
+  					.plImg(play.getPlImg())
+  					.plPublicYn(play.getPlPublicYn())
+  					.user(play.getUser())
+  					.build();
+  			
+  			PlaylistLikeDTO plDto = new PlaylistLikeDTO();
+  			plDto.setPlCode(play.getPlCode());
+  			plDto.setUserEmail(user.getUserEmail());
+  			dtoPlay.setLikeCount(playlistLikeService.showLikeCount(play.getPlCode()));
+  			dtoPlay.setPlLike(playlistLikeService.showPlLikeUser(plDto));
+  			dtoPlay.setTagList(playlistService.searchTagPlayList(play.getPlCode()));
+  			list.add(dtoPlay);
+  		}
+  		return list;
 	}
 	
 	public PlaylistDTO onePlaylistView(Playlist playlist, User user){
-		// model에 담을 플레이리스트의 목록들
-		
 		// 뽑아온 태그를 리스트로 만드는 코드
 		List<PlaylistTag> tagList = playlistTagService.searchTagPlaylist(playlist.getPlCode());
 		
@@ -74,8 +122,6 @@ public class PlaylistViewer {
 		PlaylistLike pLike = playlistLikeService.showPlLikeUser(plLikeDto);
 		
 		int lCount = playlistLikeService.showLikeCount(playlist.getPlCode());
-			
-		System.err.println(lCount);
 		
 		PlaylistDTO pDto = PlaylistDTO.builder()
 				.plCode(playlist.getPlCode())
@@ -91,8 +137,6 @@ public class PlaylistViewer {
 				.likeCount(lCount)
 				.build();
 			
-		System.err.println(pDto);
-		
 		return pDto;
 	}
 }
