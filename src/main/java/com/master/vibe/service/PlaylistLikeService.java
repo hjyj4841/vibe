@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.master.vibe.model.dto.PlaylistLikeDTO;
+import com.master.vibe.model.dto.SearchDTO;
 import com.master.vibe.model.vo.Playlist;
 import com.master.vibe.model.vo.PlaylistLike;
 
@@ -18,8 +19,9 @@ public class PlaylistLikeService {
 	private PlaylistLikeMapper playlistLikeMapper;
 	
 	// 내가 좋아요한 플리 조회
-	public List<Playlist> likePlaylist(String userEmail) {
-		return playlistLikeMapper.likePlaylist(userEmail);
+	public List<Playlist> likePlaylist(SearchDTO dto) {
+		dto.setOffset(dto.getLimit() * (dto.getPage() - 1));
+		return playlistLikeMapper.likePlaylist(dto);
 	}
 
 	// 좋아요

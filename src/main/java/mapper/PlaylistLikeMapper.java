@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.master.vibe.model.dto.PlaylistLikeDTO;
+import com.master.vibe.model.dto.SearchDTO;
 import com.master.vibe.model.vo.Playlist;
 import com.master.vibe.model.vo.PlaylistLike;
 
@@ -12,7 +13,7 @@ import com.master.vibe.model.vo.PlaylistLike;
 public interface PlaylistLikeMapper {
 	
 	// 내가 좋아요한 플리 조회
-	List<Playlist> likePlaylist(String userEmail);
+	List<Playlist> likePlaylist(SearchDTO dto);
 	
 	// 회원이 해당 플레이리스트를 좋아요 표시했는지 조회
 	PlaylistLike userLikePlaylistCheck(PlaylistLikeDTO dto);

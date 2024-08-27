@@ -20,7 +20,6 @@
 						<div class="likeBox4">
 							<p class="likeTitle">${playlist.plTitle}</p>
 							<p class="likeTag">
-								#여름에바 #여름싸베바 #이건사계절이 #아니야
 								<c:forEach items="${searchPlaylist.tagList}" var="tag">
 											#${tag.tag.tagName} 
 								</c:forEach>

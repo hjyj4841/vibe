@@ -46,7 +46,7 @@
 	</resultMap>
 
 	<!-- 회원이 좋아한 플레이리스트 조회 -->
-	<select id="likePlaylist" parameterType="String" resultMap="playlistMap">
+	<select id="likePlaylist" parameterType="SearchDTO" resultMap="playlistMap">
 		SELECT p.pl_code, p.pl_title, p.pl_img, p.pl_date, p.pl_public_yn, c.user_email, c.user_nickname, c.user_img
 		FROM playlist_like l
 			JOIN user m ON (m.user_email = l.user_email)
@@ -55,6 +55,7 @@
 		WHERE pl_public_yn = 'Y'
 			AND m.user_email = #{userEmail}
 		ORDER BY l.like_code DESC
+		LIMIT #{offset}, #{limit}
 	</select>
 
 	<!-- 좋아요 했는지 확인 -->

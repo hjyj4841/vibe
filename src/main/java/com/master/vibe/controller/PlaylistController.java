@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import com.master.vibe.model.dto.CreatePlaylistDTO;
@@ -101,13 +102,11 @@ public class PlaylistController {
 
 		// 이미지 선택 여부 확인
 		String fileName;
-		System.out.println("112 : " + dto.getPlUrl().getOriginalFilename());
 		if (dto.getPlUrl() != null && !dto.getPlUrl().isEmpty() && !dto.getPlUrl().getOriginalFilename().equals("")) {
 			fileName = fileUpload(dto.getPlUrl());
 			dto.setPlImg("http://192.168.10.6:8080/playlistImg/" + fileName);
 		} else {
 			// 이미지 선택하지 않은 경우 기본 이미지 URL 설정
-			System.out.println("119 : " + DEFAULT_IMAGE_URL);
 			dto.setPlImg(DEFAULT_IMAGE_URL);
 		}
 
@@ -141,13 +140,8 @@ public class PlaylistController {
 		}
 		List<String> musicCode = playlistMusicService.showMusicList(plCode);
 		Playlist playlist = playlistService.selectPlaylistByPlCode(plCode);
-//        List<String> tagList = playlistService.getTagsByPlaylistCode(plCode);
-		// 태그 목록을 조회
-		List<PlaylistTag> tags = playlistTagService.searchTagPlaylist(plCode);
-		// List<String> tags = playlistService.getTagsByPlaylistCode(plCode);
 
-		// 태그 목록을 출력
-		System.out.println("태그값 " + plCode + ": " + tags);
+		List<PlaylistTag> tags = playlistTagService.searchTagPlaylist(plCode);
 
 		if (musicCode.size() != 0) {
 			List<Music> musicInfo = spotifyService.getMusicINfoByMusicCode(musicCode);
@@ -155,27 +149,37 @@ public class PlaylistController {
 		}
 		model.addAttribute("user", user);
 		model.addAttribute("playlist", playlist);
-//        model.addAttribute("tagList", tagList);
+
 		// 태그 목록을 모델에 추가
 		model.addAttribute("tags", tags);
 
-		model.addAttribute("playlist", playlist);
 		return "playlist/showPlaylistInfo";
 	}
 
 	// 회원본인의 플레이리스트 조회
 	@GetMapping("/myPlaylist")
-	public String myPlaylist(Model model) {
+	public String myPlaylist(SearchDTO dto, Model model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		User user = (User) authentication.getPrincipal();
-
-		List<Playlist> playlist = playlistService.myPlaylist(user.getUserEmail());
-
-		model.addAttribute("searchTag", playlistViewer.playlistView(playlist, user));
-
-		model.addAttribute("user", user);
+		dto.setUserEmail(user.getUserEmail());
+		
+		List<Playlist> playlist = playlistService.myPlaylist(dto);
+		
+		model.addAttribute("searchTag", playlistViewer.playlistView(playlist));
 		return "playlist/myPlaylist";
 	}
+	
+  	@ResponseBody
+  	@PostMapping("/limitMyList")
+  	public List<PlaylistDTO> limitMyList(SearchDTO dto) {
+  		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		User user = (User) authentication.getPrincipal();
+		dto.setUserEmail(user.getUserEmail());
+		
+  		List<Playlist> playlist = playlistService.myPlaylist(dto);
+  		
+  		return playlistViewer.playlistView(playlist);
+  	}
 
 	// 플레이리스트 삭제
 	@GetMapping("/deletePlaylist")
@@ -259,21 +263,6 @@ public class PlaylistController {
 	// 랭킹 관련 - 수정중
 	@GetMapping("/rankingHome")
 	public String rankingHome(String select, Model model) {
-		System.out.println(select);
-		switch(select) {
-		case "like" :
-			model.addAttribute("likeranking", playlistService.likerankingPlaylist());
-			return "ranking/rankingHome";
-		case "tag" :
-			return "ranking/searchTag";
-		case "month" :
-			model.addAttribute("likeranking", playlistService.playListRankingOnMonth());
-			return "ranking/playListRankingOnMonth";
-		case "age" :
-			return "ranking/playListRankingOnAgeGroupSelect";
-		case "gender" :
-			return "ranking/playListRankingOnGenderSelect";
-		}
 		return "ranking/rankingHome";
 	}
 
@@ -293,6 +282,7 @@ public class PlaylistController {
 	// model.addAttribute("randomPlaylist", randomPlaylist);
 	// return "playlist/randomPlaylist";
 	// }
+	
 	// 태그 검색 랭킹 조회
 	@GetMapping("/searchTag")
 	public String searchTag() {

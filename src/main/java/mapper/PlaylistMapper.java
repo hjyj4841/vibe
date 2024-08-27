@@ -29,7 +29,7 @@ public interface PlaylistMapper {
 	
 	void createPlaylist(CreatePlaylistDTO dto); // 플레이리스트 생성
 	
-	List<Playlist> myPlaylist(String userEmail); // 회원 본인의 플레이리스트 조회
+	List<Playlist> myPlaylist(SearchDTO dto); // 회원 본인의 플레이리스트 조회
 	
 	Playlist selectPlaylistByPlCode(int plCode); // plCode로 플레이리스트 조회
 

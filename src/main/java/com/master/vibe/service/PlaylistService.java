@@ -22,9 +22,6 @@ public class PlaylistService {
 	@Autowired
 	private PlaylistMapper playlistMapper;
 	
-	@Autowired
-    private PlaylistTagMapper playlistTagMapper;
-
 	// 플레이리스트 전체 조회
 	public List<Playlist> allPlaylist(SearchDTO dto) {
 		// 무한스크롤 페이징 처리
@@ -46,8 +43,9 @@ public class PlaylistService {
 	}
 	
 	// 내가 생성한 플레이리스트 조회
-	public List<Playlist> myPlaylist(String userEmail) {
-		return playlistMapper.myPlaylist(userEmail);
+	public List<Playlist> myPlaylist(SearchDTO dto) {
+		dto.setOffset(dto.getLimit() * (dto.getPage() - 1));
+		return playlistMapper.myPlaylist(dto);
 	}
 
 	// plcode로 플레이리스트 정보 조회

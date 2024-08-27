@@ -1,14 +1,13 @@
 body {
-	background-color: white;
-}
-ul {
-	width: 100%;
-	position: fixed;
-	top: 0;
-	display: flex;
-	justify-content: space-evenly;
-	background-color: #808080;
-}
-header a {
+	background-color: black;
 	color: white;
+	padding-top: 70px;
+}
+#content {
+	padding: 15px;
+}
+@media only screen and (max-width: 300px) {
+	#content {
+		padding: 10px;
+	}
 }

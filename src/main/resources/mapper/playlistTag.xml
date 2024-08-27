@@ -20,7 +20,6 @@
 	</select>
 
 	<!-- 플레이리스트 태그테이블에서 태그 검색 쿼리(중복 제거) -->
-
 	<select id="searchTag" resultType="Integer"
 		parameterType="String">
 		SELECT distinct pl_code

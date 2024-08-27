@@ -174,3 +174,7 @@ button:hover {
 .tagify__tag {
 	background-color: white;
 }
+
+.tagify__tag>div::before {
+	content: none;
+}

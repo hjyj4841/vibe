@@ -42,11 +42,10 @@
 				</p>
 				<div class="playlistTagBox">
 					<ul class="plTags">
-						<p> #태그 영역 #태그 #해시태그 #집에가고싶다 </p>
-		        		<c:forEach items="${tagList}" var="tag">
-							<li>${tag}</li>
-						</c:forEach>
-					</ul>
+                        <c:forEach items="${tags}" var="tag">
+                            <li>#${tag.tag.tagName}</li>
+                        </c:forEach>
+                    </ul>
 				</div>
 		
 			<c:if test="${user.userEmail eq playlist.user.userEmail}">

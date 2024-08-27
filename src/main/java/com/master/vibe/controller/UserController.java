@@ -366,4 +366,13 @@ public class UserController {
 		return "http://192.168.10.6:8080/img/preview_img/" + user.getUserEmail() + "/" + fileName;
 	}
 	
+	// ajax - 회원정보 수정 중 기본 이미지로 변경
+	@ResponseBody
+	@PostMapping("/changeDefaultImg")
+	public String changeDefaultImg() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		User user = (User) authentication.getPrincipal();
+		
+		return "http://192.168.10.6:8080/img/user_img/default_user.jpg";
+	}
 }
