@@ -5,16 +5,13 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://kit.fontawesome.com/df04184d5c.js"
 	crossorigin="anonymous"></script>
-<link rel="stylesheet" href="./css/header.css" />
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
-</style>
+<link rel="stylesheet" href="/css/header.css" />
 	<!-- 헤더 영역 -->
 	<header>
 		<!-- 로고 -->
 		<div id="logo">
 			<a href="/">
-				<img src="./imgs/logo/logoW.png"/>
+				<img src="/imgs/logo/logoW.png"/>
 			</a>
 		</div>
 		
