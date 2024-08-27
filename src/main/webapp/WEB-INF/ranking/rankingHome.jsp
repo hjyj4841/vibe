@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,13 +8,26 @@
 <link rel="stylesheet" href="./css/rankingHome.css" />
 </head>
 <body>
-	<ul>
-		<li><a href="/rankingHome?select=like">Like Ranking</a></li>
-		<li><a href="rankingHome?select=tag">Tag Ranking</a></li>
-		<li><a href="/rankingHome?select=month">Month Ranking</a></li>
-		<li><a href="/rankingHome?select=age">Age Ranking</a></li>
-		<li><a href="/rankingHome?select=gender">Gender Ranking</a></li>
-	</ul>
-	${likeranking}
+	<jsp:include page="../tiles/header.jsp"></jsp:include>
+	<jsp:include page="../tiles/rankingHeader.jsp"></jsp:include>
+	<div id="content">
+		<c:choose>
+			<c:when test="${param.select == 'like' }">
+				<jsp:include page="likeranking.jsp" />
+			</c:when>
+			<c:when test="${param.select == 'tag' }">
+				<jsp:include page="searchTagRanking.jsp" />
+			</c:when>
+			<c:when test="${param.select == 'month' }">
+				<jsp:include page="playListRankingOnMonth.jsp"/>
+			</c:when>
+			<c:when test="${param.select == 'age' }">
+				<jsp:include page="playListRankingOnAgeGroup.jsp"/>
+			</c:when>
+			<c:when test="${param.select == 'gender'}">
+				<jsp:include page="playListRankingOnGender.jsp"/>
+			</c:when>
+		</c:choose>
+	</div>
 </body>
 </html>
