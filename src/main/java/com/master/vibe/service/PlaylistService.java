@@ -122,8 +122,9 @@ public class PlaylistService {
     }
     
     // 연령 그룹별 좋아요 랭킹 조회 
-    public List<Playlist> playListRankingOnAgeGroup(String ageGroup) {
-    	return playlistMapper.playListRankingOnAgeGroup(ageGroup);
+    public List<Playlist> playListRankingOnAgeGroup(SearchDTO dto) {
+    	dto.setOffset(dto.getLimit() * (dto.getPage() - 1));
+    	return playlistMapper.playListRankingOnAgeGroup(dto);
     }
     
     // 특정유저의 플레이리스트 좋아요가 가장 많은 플레이리스트
@@ -132,7 +133,8 @@ public class PlaylistService {
     }
 
 	// 성별 별 좋아요 랭킹
-	public List<Playlist> playListRankingOnGender(String userGender){
-		return playlistMapper.playListRankingOnGender(userGender);
+	public List<Playlist> playListRankingOnGender(SearchDTO dto){
+		dto.setOffset(dto.getLimit() * (dto.getPage() - 1));
+		return playlistMapper.playListRankingOnGender(dto);
 	}
 }

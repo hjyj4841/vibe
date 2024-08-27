@@ -84,7 +84,11 @@ public class PlaylistViewer {
 	
 	public List<PlaylistDTO> playlistView(List<Playlist> playlist){
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		User user = (User) authentication.getPrincipal();
+		User user = new User();
+		if(!authentication.getName().equals("anonymousUser")) {
+    		user = (User) authentication.getPrincipal();
+  		}
+		
 		
 		// model에 담을 플레이리스트의 목록들
 		List<PlaylistDTO> list = new ArrayList<>();

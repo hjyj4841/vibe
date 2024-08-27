@@ -1,0 +1,53 @@
+.container{
+	width: 100%;
+	min-height: 100vh;
+	padding-top: 100px;
+	
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+.container > h2 {
+	padding: 20px;
+	font-size: 1.5rem;
+}
+.ageCon{
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	width: 100%;
+	height: 100%;
+}
+.ageLink{
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	width: 20%;
+	padding-right: 30px;
+}
+.ageLink li{
+	padding: 10px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.ageLink a{
+	color: white;
+	transition: 0.2s;
+}
+.ageLink a:hover{
+	color: red;
+}
+.searchContainer{
+	height: 100%;
+	padding: 0;
+	min-height: 0%;
+	width: 800px;
+}
+.searchCon > div{
+	width: 100%;
+}
+.emtpyRight{
+	width: 20%;
+}

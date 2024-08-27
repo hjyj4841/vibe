@@ -298,34 +298,41 @@ public class PlaylistController {
 		return "ranking/playListRankingOnMonth";
 	}
 
-	// 연령별 좋아요 랭킹 조회
-	@GetMapping("/playListRankingOnAgeGroupSelect")
-	public String playListRankingOnAgeGroupSelect() {
-		return "ranking/playListRankingOnAgeGroupSelect";
-	}
-
-	@PostMapping("/playListRankingOnAgeGroup")
-	public String playListRankingOnAgeGroup(String ageGroup, Model model) {
-		List<Playlist> playlist = playlistService.playListRankingOnAgeGroup(ageGroup);
-		model.addAttribute("playListRankingOnAgeGroup", playlist);
-		model.addAttribute("ageGroup", ageGroup);
+	// 연령별 좋아요 랭킹 조회	
+	@GetMapping("/playListRankingOnAgeGroup")
+	public String playListRankingOnAgeGroup(SearchDTO dto, Model model) {
+		List<Playlist> playlist = playlistService.playListRankingOnAgeGroup(dto);
+		
+		model.addAttribute("searchTag", playlistViewer.playlistView(playlist));
+		model.addAttribute("ageGroup", dto.getAgeGroup());
 		return "ranking/playListRankingOnAgeGroup";
+	}
+	
+	@ResponseBody
+	@GetMapping("/limitAgeRankList")
+	public List<PlaylistDTO> limitAgeRankList(SearchDTO dto) {
+		List<Playlist> playlist = playlistService.playListRankingOnAgeGroup(dto);
+		
+		return playlistViewer.playlistView(playlist);
 	}
 
 	// 성별 별 좋아요 랭킹 조회
-	@GetMapping("/playListRankingOnGenderSelect")
-	public String playListRankingOnGenderSelect() {
-		return "ranking/playListRankingOnGenderSelect";
-	}
-
-	@PostMapping("/playListRankingOnGender")
-	public String playListRankingOnGender(String userGender, Model model) {
-		List<Playlist> playlist = playlistService.playListRankingOnGender(userGender);
-		model.addAttribute("playListRankingOnGender", playlist);
-		model.addAttribute("userGender", userGender);
+	@GetMapping("/playListRankingOnGender")
+	public String playListRankingOnGender(SearchDTO dto, Model model) {
+		List<Playlist> playlist = playlistService.playListRankingOnGender(dto);
+		
+		model.addAttribute("searchTag", playlistViewer.playlistView(playlist));
+		model.addAttribute("userGender", dto.getUserGender());
 		return "ranking/playListRankingOnGender";
 	}
 	
+	@ResponseBody
+	@GetMapping("/limitGenderRankList")
+	public List<PlaylistDTO> limitGenderRankList(SearchDTO dto) {
+		List<Playlist> playlist = playlistService.playListRankingOnGender(dto);
+		
+		return playlistViewer.playlistView(playlist);
+	}
 	/*
 	 * @PostMapping("/updatePlaylist") public String updatePlaylist(@ModelAttribute
 	 * PlaylistDTO playlistDTO) { MultipartFile file = playlistDTO.getPlImg(); if

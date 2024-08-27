@@ -58,8 +58,8 @@ public interface PlaylistMapper {
     
     Playlist likeRankByUserEmail(String userEmail); // 특정유저의 플레이리스트 좋아요가 가장 많은 플레이리스트
     
-    List<Playlist> playListRankingOnAgeGroup(String ageGroup); // 연령대별 좋아요 랭킹
+    List<Playlist> playListRankingOnAgeGroup(SearchDTO dto); // 연령대별 좋아요 랭킹
     
-    List<Playlist> playListRankingOnGender(String userGender); // 성별 별 좋아요 랭킹
+    List<Playlist> playListRankingOnGender(SearchDTO dto); // 성별 별 좋아요 랭킹
     
 }

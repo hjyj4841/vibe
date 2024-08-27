@@ -14,6 +14,8 @@ public class SearchDTO {
 	private String search;
 	private List<Integer> codes;
 	private String userEmail;
+	private String ageGroup;
+	private String userGender;
 	
 	private int page = 1;
 	private int offset = 0;

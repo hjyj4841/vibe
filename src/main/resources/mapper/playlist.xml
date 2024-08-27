@@ -257,59 +257,57 @@
 		p.pl_public_yn, u.user_nickname,
 		COUNT(*) AS pl_code_count
 		FROM playlist p
-		JOIN user u ON p.user_email = u.user_email
-		JOIN playlist_like pl ON p.pl_code = pl.pl_code
-		JOIN playlist_tag pt ON p.pl_code = pt.pl_code
-		JOIN tag t ON pt.tag_code = t.tag_code
+			JOIN user u ON p.user_email = u.user_email
+			JOIN playlist_like pl ON p.pl_code = pl.pl_code
+			JOIN playlist_tag pt ON p.pl_code = pt.pl_code
+			JOIN tag t ON pt.tag_code = t.tag_code
 		WHERE p.pl_date BETWEEN
-		DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH) AND CURRENT_DATE()
-		GROUP BY
-		p.pl_code, u.user_nickname
+			DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH) AND CURRENT_DATE()
+			AND pl_public_yn = 'Y'
+		GROUP BY p.pl_code, u.user_nickname
 		ORDER BY pl_code_count DESC;
 	</select>
 	<!-- 연령대별 좋아요 랭킹 -->
-	<select id="playListRankingOnAgeGroup" parameterType="String"
+	<select id="playListRankingOnAgeGroup" parameterType="SearchDTO"
 		resultMap="playlistMap">
 		SELECT
 		CASE
-		WHEN FLOOR(DATEDIFF(CURDATE(), u.user_birth) / 365.25) BETWEEN 10 AND 19
-		THEN '10대'
-		WHEN FLOOR(DATEDIFF(CURDATE(), u.user_birth) / 365.25) BETWEEN 20 AND 29
-		THEN '20대'
-		WHEN FLOOR(DATEDIFF(CURDATE(), u.user_birth) / 365.25) BETWEEN 30 AND 39
-		THEN '30대'
-		WHEN FLOOR(DATEDIFF(CURDATE(), u.user_birth) / 365.25) BETWEEN 40 AND 49
-		THEN '40대'
-		WHEN FLOOR(DATEDIFF(CURDATE(), u.user_birth) / 365.25) BETWEEN 50 AND 59
-		THEN '50대'
-		ELSE '기타'
-		END AS age_group, p.pl_code, p.pl_title, p.pl_img,
-		p.pl_date, p.pl_public_yn, u.user_nickname, COUNT(*) AS pl_code_count
-		FROM
-		playlist p
-		JOIN user u ON p.user_email = u.user_email
-		JOIN playlist_like pl ON p.pl_code = pl.pl_code
-		JOIN playlist_tag pt ON p.pl_code = pt.pl_code
-		JOIN tag t ON pt.tag_code = t.tag_code
-		GROUP BY age_group, p.pl_code,
-		u.user_nickname
+			WHEN FLOOR(DATEDIFF(CURDATE(), u.user_birth) / 365.25) BETWEEN 10 AND 19
+				THEN '10'
+			WHEN FLOOR(DATEDIFF(CURDATE(), u.user_birth) / 365.25) BETWEEN 20 AND 29
+				THEN '20'
+			WHEN FLOOR(DATEDIFF(CURDATE(), u.user_birth) / 365.25) BETWEEN 30 AND 39
+				THEN '30'
+			WHEN FLOOR(DATEDIFF(CURDATE(), u.user_birth) / 365.25) BETWEEN 40 AND 49
+				THEN '40'
+			WHEN FLOOR(DATEDIFF(CURDATE(), u.user_birth) / 365.25) BETWEEN 50 AND 59
+				THEN '50'
+			ELSE 'etc'
+				END AS age_group, 
+			p.pl_code, p.pl_title, p.pl_img, p.pl_date, p.pl_public_yn, u.user_nickname, u.user_email, u.user_img, COUNT(*) AS pl_code_count
+		FROM playlist p
+			JOIN user u ON p.user_email = u.user_email
+			JOIN playlist_like pl ON p.pl_code = pl.pl_code
+		WHERE pl_public_yn = 'Y'
+		GROUP BY age_group, p.pl_code, u.user_nickname
 		HAVING age_group = #{ageGroup}
-		ORDER BY age_group,
-		pl_code_count DESC;
+		ORDER BY age_group, pl_code_count DESC
+		LIMIT #{offset}, #{limit}
 	</select>
 
 	<!-- 성별 별 좋아요 랭킹 -->
-	<select id="playListRankingOnGender" parameterType="String"
+	<select id="playListRankingOnGender" parameterType="SearchDTO"
 		resultMap="playlistMap">
-		SELECT pl_title, pl_img, user_nickname, COUNT(like_code) AS pl_code_count
+		SELECT p.pl_code, p.pl_title, p.pl_img, p.pl_date, p.pl_public_yn, 
+			u.user_nickname, u.user_email, u.user_img, COUNT(like_code) AS pl_code_count
 		FROM user u
-		JOIN playlist p ON (u.user_email = p.user_email)
-		JOIN playlist_like USING (pl_code)
-		JOIN playlist_tag USING (pl_code)
-		JOIN tag USING (tag_code)
+			JOIN playlist p ON (u.user_email = p.user_email)
+			JOIN playlist_like USING (pl_code)
 		WHERE user_gender = #{userGender}
+			AND pl_public_yn = 'Y'
 		GROUP BY pl_code
-		order BY pl_code_count desc;
+		ORDER BY pl_code_count desc
+		LIMIT #{offset}, #{limit}
 	</select>
 
 </mapper>
