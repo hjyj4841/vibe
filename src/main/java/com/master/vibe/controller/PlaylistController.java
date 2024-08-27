@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import com.master.vibe.model.dto.CreatePlaylistDTO;
@@ -259,21 +260,6 @@ public class PlaylistController {
 	// 랭킹 관련 - 수정중
 	@GetMapping("/rankingHome")
 	public String rankingHome(String select, Model model) {
-		System.out.println(select);
-		switch(select) {
-		case "like" :
-			model.addAttribute("likeranking", playlistService.likerankingPlaylist());
-			return "ranking/rankingHome";
-		case "tag" :
-			return "ranking/searchTag";
-		case "month" :
-			model.addAttribute("likeranking", playlistService.playListRankingOnMonth());
-			return "ranking/playListRankingOnMonth";
-		case "age" :
-			return "ranking/playListRankingOnAgeGroupSelect";
-		case "gender" :
-			return "ranking/playListRankingOnGenderSelect";
-		}
 		return "ranking/rankingHome";
 	}
 

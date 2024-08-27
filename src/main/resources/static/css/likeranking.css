@@ -4,7 +4,7 @@ body {
 /* fixed 헤더 */
 header {
 	background-color: black;
-	position: fixed;
+	position: sticky;
 	width: 100%;
 	height: 85px;
 	top: 0;
