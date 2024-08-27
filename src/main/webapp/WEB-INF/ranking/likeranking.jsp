@@ -11,6 +11,7 @@
 </head>
 <body>
 	<div class="likeHead">Like Ranking</div>
+	</ul>
 	<div id="rankingList">
 		<c:forEach var="playlist" items="${likeranking}">
 			<div class="likeBox1">
@@ -33,7 +34,6 @@
 					</div>
 				</div>
 			</div>
-
 		</c:forEach>
 	</div>
 </body>
