@@ -57,7 +57,6 @@ public class PlaylistController {
 	@Autowired
 	private PlaylistTagService playlistTagService;
 
-
 	public String fileUpload(MultipartFile file) throws IllegalStateException, IOException {
 		UUID uuid = UUID.randomUUID();
 		String fileName = uuid.toString() + "_" + file.getOriginalFilename();
@@ -97,7 +96,6 @@ public class PlaylistController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		User user = (User) authentication.getPrincipal();
 
-
 //		String fileName = fileUpload(dto.getPlUrl());
 
 		// 이미지 선택 여부 확인
@@ -112,7 +110,6 @@ public class PlaylistController {
 
 		dto.setUserEmail(user.getUserEmail());
 		playlistService.createPlaylist(dto);
-
 
 		// 태그 입력값 받기
 		// String tags = request.getParameter("tags"); // 태그가 콤마로 구분된 문자열 형태로 전달됨
@@ -162,24 +159,24 @@ public class PlaylistController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		User user = (User) authentication.getPrincipal();
 		dto.setUserEmail(user.getUserEmail());
-		
+
 		List<Playlist> playlist = playlistService.myPlaylist(dto);
-		
+
 		model.addAttribute("searchTag", playlistViewer.playlistView(playlist));
 		return "playlist/myPlaylist";
 	}
-	
-  	@ResponseBody
-  	@PostMapping("/limitMyList")
-  	public List<PlaylistDTO> limitMyList(SearchDTO dto) {
-  		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+	@ResponseBody
+	@PostMapping("/limitMyList")
+	public List<PlaylistDTO> limitMyList(SearchDTO dto) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		User user = (User) authentication.getPrincipal();
 		dto.setUserEmail(user.getUserEmail());
-		
-  		List<Playlist> playlist = playlistService.myPlaylist(dto);
-  		
-  		return playlistViewer.playlistView(playlist);
-  	}
+
+		List<Playlist> playlist = playlistService.myPlaylist(dto);
+
+		return playlistViewer.playlistView(playlist);
+	}
 
 	// 플레이리스트 삭제
 	@GetMapping("/deletePlaylist")
@@ -263,7 +260,9 @@ public class PlaylistController {
 	// 랭킹 : 좋아요순
 	@GetMapping("/likeranking")
 	public String likeranking(Model model) {
-		model.addAttribute("likeranking", playlistService.likerankingPlaylist());
+		List<Playlist> playlist = playlistService.likerankingPlaylist();
+		System.err.println(playlist);
+		model.addAttribute("searchTag", playlistViewer.playlistView(playlist));
 		return "ranking/likeranking";
 	}
 
@@ -276,7 +275,7 @@ public class PlaylistController {
 	// model.addAttribute("randomPlaylist", randomPlaylist);
 	// return "playlist/randomPlaylist";
 	// }
-	
+
 	// 태그 검색 랭킹 조회
 	@GetMapping("/searchTag")
 	public String searchTag() {

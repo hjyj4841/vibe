@@ -89,7 +89,6 @@ public class PlaylistViewer {
     		user = (User) authentication.getPrincipal();
   		}
 		
-		
 		// model에 담을 플레이리스트의 목록들
 		List<PlaylistDTO> list = new ArrayList<>();
   		for(Playlist play : playlist) {

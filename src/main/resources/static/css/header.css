@@ -140,3 +140,8 @@ header {
 	background-color: red;
 	color: white;
 }
+@media (max-width: 740px) {
+	header {
+		top: 46px;
+	} 
+}
