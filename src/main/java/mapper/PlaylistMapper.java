@@ -46,6 +46,8 @@ public interface PlaylistMapper {
     
     List<Playlist> likerankingPlaylist(); // 랭킹 : 좋아요순
     
+    List<Playlist> rankTop(); // index Top3
+    
 	void deletePlaylistMusic(int plCode);
 	
 	List<String> findTagsByPlaylistCode(int plCode);

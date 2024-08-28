@@ -55,7 +55,9 @@ public class UserController {
 
 	// 메인페이지 연결
 	@GetMapping("/")
-	public String index() {
+	public String index(Model model) {
+		List<Playlist> playlist = playlistService.rankTop();
+		model.addAttribute("rankTop", playlistViewer.playlistView(playlist));
 		return "index";
 	}
 

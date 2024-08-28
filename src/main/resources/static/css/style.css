@@ -209,26 +209,43 @@ html {
 	font-size: 1.5rem;
 }
 .listRank:nth-of-type(1) .listRankText{
-	color: #ffd700;
+	color: #ffffff;
 }
 .listRank:nth-of-type(2) .listRankText{
-	color: #a3a3a3;
+	color: #ffffff;
 }
 .listRank:nth-of-type(3) .listRankText{
-	color: #cd7f32;
+	color: #ffffff;
 }
 /* 우측 빈 공간 */
 .emptyRight{
 	width: 20%;
 }
 
+/* 화살표 흰색 */
 .emptyRight > img{
-	filter: invert(1);
+	filter: invert(100%) 
+			sepia(100%) 
+			saturate(0%)
+			hue-rotate(288deg) 
+			brightness(102%) 
+			contrast(102%);
 	width: 50px;
 	height: 60px;
 	padding-left: 20px;
 }
 
+/* 화살표 빨간색 */
+.emptyRight > img:hover {
+	filter: invert(11%) 
+			sepia(80%) 
+			saturate(6630%) 
+			hue-rotate(358deg) 
+			brightness(106%) 
+			contrast(113%);
+	cursor: pointer;
+	transition: 0.5s;
+}
 
 input:focus{
 	outline: none;

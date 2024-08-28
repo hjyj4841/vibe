@@ -30,15 +30,14 @@
 				<c:forEach items="${searchTag}" var="searchPlaylist">
 					<div class="playlistCon">
 						<div class="plImgBox">
-							<img src="${searchPlaylist.plImg}"
-							data-code="${searchPlaylist.plCode}">
+							<img src="${searchPlaylist.plImg}" data-code="${searchPlaylist.plCode}">
 						</div>
 						<div class="plContentsBox" data-code="${searchPlaylist.plCode}">
 							<p class="plTitle">${searchPlaylist.plTitle}</p>
 							<p class="plTags">
 								<c:forEach items="${searchPlaylist.tagList}" var="tag">
 										#${tag.tag.tagName} 
-									</c:forEach>
+								</c:forEach>
 							</p>
 							<div class="creatorInfo">
 								<img src="${searchPlaylist.user.userImg}">

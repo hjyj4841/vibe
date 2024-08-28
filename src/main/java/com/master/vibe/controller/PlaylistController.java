@@ -261,11 +261,10 @@ public class PlaylistController {
 	@GetMapping("/likeranking")
 	public String likeranking(Model model) {
 		List<Playlist> playlist = playlistService.likerankingPlaylist();
-		System.err.println(playlist);
 		model.addAttribute("searchTag", playlistViewer.playlistView(playlist));
 		return "ranking/likeranking";
 	}
-
+	
 	// mypage에서 직접 조회 처리
 	// 플레이리스트 랜덤 조회
 	// @GetMapping("/randomPlaylist")
