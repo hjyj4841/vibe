@@ -1,3 +1,16 @@
+.searchContainer {
+	width: 100%;
+	min-height: 100vh;
+	padding-top: 100px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+.searchCon {
+	width: 100%;
+	height: 100%;
+}
 .searchListMain {
 	max-height: 700px;
 }
@@ -95,17 +108,4 @@ input:focus{
 .likeBox5 a {
 	font-size: 12.5px;
 	padding-left: 4%;
-}
-.top {
-	position: fixed;
-	bottom: 20px;
-	right: 3.5px;
-	width: 50px;
-	height: 50px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	border-radius: 80px;
-	background-color: #121212;
-	color: #36FF14;
 }

@@ -15,17 +15,6 @@
 <jsp:include page="../tiles/rankingHeader.jsp"></jsp:include>
 <div class="searchContainer">
 		<div class="searchCon">
-			<div class="searchBox">
-				<form class="mainSearchBox" action="searchPlaylist">
-					<select name="select">
-						<option value="title">Title</option>
-						<option value="tag">Tag</option>
-					</select> <input type="text" placeholder="Search Playlist..." name="search" value="${dto.search }">
-					<button id="searchPlBtn" type="submit">
-						<i class="fa-solid fa-magnifying-glass"></i>
-					</button>
-				</form>
-			</div>
 			<div class="searchListMain">
 				<c:forEach items="${searchTag}" var="searchPlaylist">
 					<div class="playlistCon">
@@ -91,7 +80,6 @@
 		</c:forEach>
 	</div>
 </body>
-<a href="" class="top">TOP</a>
 </html>
 
 
