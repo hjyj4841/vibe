@@ -10,7 +10,8 @@ body {
 
 .container {
   position: absolute;
-  top: 15%;
+  top: 2%;
+  width: 70%;
 }
 
 /* 이미지 업로드 영역 스타일 */

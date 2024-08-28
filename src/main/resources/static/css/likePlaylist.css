@@ -1,193 +1,205 @@
-.myTagBox{
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	
-	width: 100%;
+.myTagBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
 }
-.playlistCreateBox{
-	width: 100%;
-	display: flex;
-	justify-content: space-between;
+.playlistCreateBox {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
-.createBtnBox{
-	padding-left: 25px;
+.createBtnBox {
+  padding-left: 25px;
 }
 .createBtnBox a {
-	color: white;
-	font-size: 0.8rem;
-	transition: 0.2s;
+  color: white;
+  font-size: 0.8rem;
+  transition: 0.2s;
 }
 .createBtnBox a:hover {
-	color: crimson;
+  color: crimson;
 }
-.createPlaylistEmpty{
-	width: 100px;
+.createPlaylistEmpty {
+  width: 100px;
 }
-.searchListMain{
-	width: 90%;
-}
-
-
-.plContentsBox i{
-	padding-left: 10px;
-	font-size:0.7rem;
+.searchListMain {
+  width: 90%;
 }
 
-.plContentsBox{
-	display: flex;
-	justify-content: center;
+.plContentsBox i {
+  padding-left: 10px;
+  font-size: 0.7rem;
+}
+
+.plContentsBox {
+  display: flex;
+  justify-content: center;
 }
 
 .fa-lock-open {
-	color: #aaa;
+  color: #aaa;
 }
 
-.fa-lock{
-	color: #666;
+.fa-lock {
+  color: #666;
 }
 
-.editForm{
-	width: 100%;
-	height: 100%;
-	
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
+.editForm {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
-.editForm > div{
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 500px;
-	padding: 10px;
+.editForm > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 500px;
+  padding: 10px;
 }
-.editForm > .textAndIcon{
-	position: relative;
-	height: 60px;
+.editForm > .textAndIcon {
+  position: relative;
+  height: 60px;
 }
-.editForm > .textAndIcon > *{
-	position: absolute;
+.editForm > .textAndIcon > * {
+  position: absolute;
 }
-.editForm > .textAndIcon > input{
-	width: 480px;	
+.editForm > .textAndIcon > input {
+  width: 480px;
 }
-.editForm > .textAndIcon > i{
-	right: 10px;
+.editForm > .textAndIcon > i {
+  right: 10px;
 }
-.editForm > div > i{
-	cursor: pointer;
-	color: #999;
-	transition: 0.2s;
-	font-size: 1.5rem;
-	padding-left: 10px;
+.editForm > div > i {
+  cursor: pointer;
+  color: #999;
+  transition: 0.2s;
+  font-size: 1.5rem;
+  padding-left: 10px;
 }
-.editForm > div > i:hover{
-	color: white;
+.editForm > div > i:hover {
+  color: white;
 }
-.editUserImgBox > div:hover > div{
-	opacity: 1;
+.editUserImgBox > div:hover > div {
+  opacity: 1;
 }
-.editUserImgBox > div{
-	position: relative;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 300px;
-	height: 300px;
+.editUserImgBox > div {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 300px;
+  height: 300px;
 }
-.editUserImgBox > div > *{
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	border-radius: 50%;
+.editUserImgBox > div > * {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
 }
-.editUserImgBox > div > input{
-	opacity: 0;
-	z-index: 3;
-	cursor: pointer;
+.editUserImgBox > div > input {
+  opacity: 0;
+  z-index: 3;
+  cursor: pointer;
 }
-.editUserImgBox > div > img{
-	object-fit: cover;
-	z-index: 1;
+.editUserImgBox > div > img {
+  object-fit: cover;
+  z-index: 1;
 }
-.editUserImgBox > div > div{
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	z-index: 2;
-	
-	background-color: rgba(0,0,0,0.8);
-	color: #999;
-	opacity: 0;
-	transition: 0.3s;
+.editUserImgBox > div > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #999;
+  opacity: 0;
+  transition: 0.3s;
 }
-.editUserImgBox > div > div > i{
-	font-size: 2.5rem;
-	padding: 10px;
+.editUserImgBox > div > div > i {
+  font-size: 2.5rem;
+  padding: 10px;
 }
-.editUserImgBox > div > div > p:nth-child(1){
-	opacity: 0;
+.editUserImgBox > div > div > p:nth-child(1) {
+  opacity: 0;
 }
-.editUserImgBox > div > div > p{
-	font-size: 0.8rem;
+.editUserImgBox > div > div > p {
+  font-size: 0.8rem;
+}
+
+.editUserImgBox {
+	display: grid;
+}
+.editUserImgBox > button {
+  align-self: flex-end;
+  width: 20%;
+/*   margin-bottom: 10%; */
+}
+
+.editUserImgBox > .hiddenButton {
+	opacity : 0;
 }
 .editForm > div > input {
-	width: 100%;
-	padding: 5px;
-	text-align: center;
-	border: none;
-	border-bottom: 2px solid #333;
-	background-color: transparent;
-	color: white;
-	font-size: 1.2rem;
+  width: 100%;
+  padding: 5px;
+  text-align: center;
+  border: none;
+  border-bottom: 2px solid #333;
+  background-color: transparent;
+  color: white;
+  font-size: 1.2rem;
 }
-.editForm > div > input[type=text]{
-	color: #757575;
+.editForm > div > input[type="text"] {
+  color: #757575;
 }
-.editForm > div > input:focus{
-	outline: none;
+.editForm > div > input:focus {
+  outline: none;
 }
-.editButtonBox{
-	display: flex;
-	justify-content: space-between;
-}	
+.editButtonBox {
+  display: flex;
+  justify-content: space-between;
+}
 .editButtonBox > div {
-	width: 100%;
+  width: 100%;
 }
-.editButtonBox > div > *{
-	padding: 10px;
+.editButtonBox > div > * {
+  padding: 10px;
 }
 .editButtonBox > div > button {
-	width: 100px;
-	cursor: pointer;
-	background-color: white;
-	border-radius: 5px;
-	border: none;
-	font-weight: bold;
-	transition: 0.5s;
+  width: 100px;
+  cursor: pointer;
+  background-color: white;
+  border-radius: 5px;
+  border: none;
+  font-weight: bold;
+  transition: 0.5s;
 }
-.editBtn{
-	color: #2868B0;
+.editBtn {
+  color: #2868b0;
 }
-.editBtn:hover{
-	box-shadow: 0px 0px 8px 3px #2868B0;
+.editBtn:hover {
+  box-shadow: 0px 0px 8px 3px #2868b0;
 }
-.editCancle{
-	color: #333;
+.editCancle {
+  color: #333;
 }
-.editCancle:hover{
-	box-shadow: 0px 0px 8px 3px darkred;
+.editCancle:hover {
+  box-shadow: 0px 0px 8px 3px darkred;
 }
-.editButtonBox > a{
-	color: white;
-	width: 200px;
-	cursor: pointer;
-	transition: 0.2s;
+.editButtonBox > a {
+  color: white;
+  width: 200px;
+  cursor: pointer;
+  transition: 0.2s;
 }
-.editButtonBox > a:hover{
-	color: red;
+.editButtonBox > a:hover {
+  color: red;
 }
