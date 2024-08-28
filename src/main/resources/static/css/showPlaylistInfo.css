@@ -244,30 +244,14 @@ a {
 
 /* 플레이리스트 서브 메뉴 버튼 */
 .plSubMenuBtn {
-	padding-left: 20px;
 	color: #666;
-	cursor: pointer;
+	padding-right: 20px;
 }
-.playlistSubMenu {
-	background-color: rgba(100, 100, 100, 0.8);
-	border-radius: 4px;
-	padding: 10px;
-	position: relative;
-	left: -220px;
-	display: none;
-}
-.playlistSubMenu > div {
-    padding: 5px;
-}
-.playlistSubMenu div:hover {
- 	background-color: rgba(153, 153, 153, 0.8);
- 	border-radius: 4px;
-}
-.playlistSubMenu div a {
-    text-decoration: none;
-    font-size: 0.8rem;
-    color: white;
-}
+
+.playlistSubMenu {	
+
+	}
+
 
 
 /* 뮤직 플레이어 버튼 */

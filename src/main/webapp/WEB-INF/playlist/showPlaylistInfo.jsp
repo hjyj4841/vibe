@@ -63,9 +63,9 @@
 							<a href="#" class="plMenuBtn"><i class="fa-solid fa-minus"></i></a>
 						</div>
 						<div class="playlistMenu">
-							<div class="plUpdateMenu"><a href="updatePlaylist?plCode=${playlist.plCode }">수정하기</a></div>
-							<div class="plTagUpdateMenu"><a href="${pageContext.request.contextPath}/playlist/manageTags?plCode=${playlist.plCode}">태그 수정</a></div>
-							<div class="plDeleteMenu"><a href="#" onclick="confirmDelete(event, 'deletePlaylist?plCode=${playlist.plCode }')">플레이리스트 삭제하기</a></div>
+							<div class="plUpdateMenu"><a href="updatePlaylist?plCode=${playlist.plCode }">Edit</a></div>
+							<div class="plTagUpdateMenu"><a href="${pageContext.request.contextPath}/playlist/manageTags?plCode=${playlist.plCode}">Tag Edit</a></div>
+							<div class="plDeleteMenu"><a href="#" onclick="confirmDelete(event, 'deletePlaylist?plCode=${playlist.plCode }')">Delete playlist</a></div>
 						</div>
 					</nav>
 				</div>
@@ -81,7 +81,7 @@
 					<a href="addMusic?plCode=${playlist.plCode}"><i class="fa-solid fa-plus"></i></a>
 				</div>
 				<div class="addMusicBtn">
-					<a href="addMusic?plCode=${playlist.plCode}">이 플레이리스트에 추가</a>
+					<a href="addMusic?plCode=${playlist.plCode}">Add to playlist</a>
 				</div>
 			</div>
 		  </c:if>
@@ -112,8 +112,8 @@
 							<a href="#" class="plSubMenuBtn"><i class="fa-solid fa-ellipsis-vertical"></i></a>
 						</div>
 	                	<div class="playlistSubMenu">
-	                		<div class=""><a href="updatePlaylist?plCode=${playlist.plCode }">공유</a></div>
-							<div class="plDeleteMenu"><a href="#" onclick="confirmDelete(event, 'deletePlaylist?plCode=${playlist.plCode }')">이 플레이리스트에서 삭제하기</a></div>
+	                		<div class=""><a href="">Share</a></div>
+							<div class="plDeleteMenu"><a href="#" onclick="confirmDelete(event, 'deletePlaylist?plCode=${playlist.plCode }')">Remove from this playlist</a></div>
 						</div>
 	                </nav>
 	                <div class="playlistMusicActionBtn">
@@ -122,7 +122,7 @@
 	            </div>
 	        </c:forEach>
 	    </div>
-	<button type="submit">곡 삭제</button>
+	<button type="submit">Remove from this playlist</button>
 	</form>
 </div>
 </div>
