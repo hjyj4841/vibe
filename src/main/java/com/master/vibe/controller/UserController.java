@@ -167,87 +167,7 @@ public class UserController {
 		
 		return "user/mypage";
 	}
-
-	// 회원 수정
-	@GetMapping("/updateUser")
-	public String updateUser() {
-		return "user/updateUser";
-	}
-
-	@PostMapping("/updateUser")
-	public String updateUser(UserDTO dto, Model model) throws IllegalStateException, IOException {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		User user = (User) authentication.getPrincipal(); // 현재 접속중인 유저 정보
-		
-		User changeUser = null;
-		
-		try {
-			changeUser = user.clone();
-		} catch (CloneNotSupportedException e) {}
-		
-		// 변경할 정보들을 현재접속한 유저 객체 담아서 서비스로 처리
-		changeUser.setUserNickname(dto.getUserNickname());
-		changeUser.setUserPhone(dto.getUserPhone());
-		
-		// 이미지 변경 로직 추가
-		if(!dto.getFile().isEmpty()) {
-			// 프리뷰 폴더 삭제 로직
-			File dir = new File("\\\\192.168.10.6\\vibe\\img\\preview_img\\" + user.getUserEmail());
-			
-			while(dir.exists()) {
-				File[] dir_list = dir.listFiles();
-				for(int i = 0; i < dir_list.length; i++) dir_list[i].delete();
-				
-				if(dir_list.length == 0 && dir.isDirectory()) dir.delete();
-			}
-			
-			// 이전에 가지고 있던 유저 이미지가 기본이미지가 아니라면 삭제
-			if(!user.getUserImg().equals("http://192.168.10.6:8080/img/user_img/default_user.jpg")) {
-				File deleteFile = new File("\\\\192.168.10.6\\vibe\\img\\user_img\\" + new File(user.getUserImg()).getName());
-				deleteFile.delete();
-			}
-			
-			// 파일 이름 랜덤으로 새로 생성
-			UUID uuid = UUID.randomUUID();
-			String fileName = uuid.toString() + "_" + dto.getFile().getOriginalFilename();
-			File copyFile = new File("\\\\192.168.10.6\\vibe\\img\\user_img\\" + fileName);
-			dto.getFile().transferTo(copyFile);
-			
-			// 서비스 넘기기 전에 user 객체에 db에 들어갈 img 경로 지정
-			changeUser.setUserImg("http://192.168.10.6:8080/img/user_img/" + fileName);
-		} else {
-			changeUser.setUserImg(dto.getUserImg());
-		}
-		
-		userService.updateUser(changeUser);
-		
-		// 변경된 정보로 session에 다시 담기
-		UserDetails updateUserDetails = changeUser;
-		UsernamePasswordAuthenticationToken newAuth = new UsernamePasswordAuthenticationToken(updateUserDetails, authentication.getCredentials(), updateUserDetails.getAuthorities());
-		
-		SecurityContextHolder.getContext().setAuthentication(newAuth);
-		
-		return "redirect:/mypage";
-	}
 	
-	// 수정 취소
-	@GetMapping("/cancelUpdate")
-	public String cancelUpdate() {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		User user = (User) authentication.getPrincipal();
-		
-		// 프리뷰 폴더 삭제 로직
-		File dir = new File("\\\\192.168.10.6\\vibe\\img\\preview_img\\" + user.getUserEmail());
-		
-		while(dir.exists()) {
-			File[] dir_list = dir.listFiles();
-			for(int i = 0; i < dir_list.length; i++) dir_list[i].delete();
-			
-			if(dir_list.length == 0 && dir.isDirectory()) dir.delete();
-		}
-		
-		return "redirect:/mypage";
-	}
 	
 	// 비밀번호 변경
 	@GetMapping("/changePassword")
@@ -363,16 +283,103 @@ public class UserController {
 		File copyFile = new File(path + "\\" + fileName);
 		
 		file.transferTo(copyFile); // 업로드한 파일이 지정한 path 위치로 저장
-		return "http://192.168.10.6:8080/img/preview_img/" + user.getUserEmail() + "/" + fileName;
+		return "http://192.168.10.6:8080/img/preview_img/" + user.getUserEmail() + "/" ;
+				
 	}
-	
+
+	// 회원 수정
+	@GetMapping("/updateUser")
+	public String updateUser() {
+		return "user/updateUser";
+	}
+
+	@PostMapping("/updateUser")
+	public String updateUser(UserDTO dto, Model model) throws IllegalStateException, IOException {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		User user = (User) authentication.getPrincipal(); // 현재 접속중인 유저 정보
+		
+		User changeUser = null;
+		
+		try {
+			changeUser = user.clone();
+		} catch (CloneNotSupportedException e) {}
+		
+		// 변경할 정보들을 현재접속한 유저 객체에 담아서 서비스로 처리
+		changeUser.setUserNickname(dto.getUserNickname());
+		changeUser.setUserPhone(dto.getUserPhone());
+		
+		// 이미지 변경 로직 추가
+		if(!dto.getFile().isEmpty()) {
+			// 프리뷰 폴더 삭제 로직
+			File dir = new File("\\\\192.168.10.6\\vibe\\img\\preview_img\\" + user.getUserEmail());
+			while(dir.exists()) {
+				File[] dir_list = dir.listFiles();
+				for(int i = 0; i < dir_list.length; i++) dir_list[i].delete();
+				if(dir_list.length == 0 && dir.isDirectory()) dir.delete();
+			}
+			
+			// 이전에 가지고 있던 유저 이미지가 기본이미지가 아니라면 삭제
+			if(!user.getUserImg().equals("http://192.168.10.6:8080/img/user_img/default_user.jpg")) {
+				File deleteFile = new File("\\\\192.168.10.6\\vibe\\img\\user_img\\" + new File(user.getUserImg()).getName());
+				deleteFile.delete();
+			}
+			
+			// 파일 이름 랜덤으로 새로 생성
+			UUID uuid = UUID.randomUUID();
+			String fileName = uuid.toString() + "_" + dto.getFile().getOriginalFilename();
+			File copyFile = new File("\\\\192.168.10.6\\vibe\\img\\user_img\\" + fileName);
+			dto.getFile().transferTo(copyFile);
+			
+			// 서비스 넘기기 전에 user 객체에 DB에 들어갈 img 경로 지정
+			changeUser.setUserImg("http://192.168.10.6:8080/img/user_img/" + fileName);
+		} else {
+			changeUser.setUserImg(dto.getUserImg());
+		}
+		
+		userService.updateUser(changeUser);
+		
+		// 변경된 정보로 session에 다시 담기
+		UserDetails updateUserDetails = changeUser;
+		UsernamePasswordAuthenticationToken newAuth = new UsernamePasswordAuthenticationToken(updateUserDetails, authentication.getCredentials(), updateUserDetails.getAuthorities());
+		SecurityContextHolder.getContext().setAuthentication(newAuth);
+		
+		return "redirect:/mypage";
+	}
+
 	// ajax - 회원정보 수정 중 기본 이미지로 변경
-	@ResponseBody
 	@PostMapping("/changeDefaultImg")
 	public String changeDefaultImg() {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		User user = (User) authentication.getPrincipal();
-		
-		return "http://192.168.10.6:8080/img/user_img/default_user.jpg";
+	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	    User user = (User) authentication.getPrincipal();
+	    
+	    // 기본 이미지 URL
+	    String defaultImgUrl = "http://192.168.10.6:8080/img/user_img/default_user.jpg";
+	    user.setUserImg(defaultImgUrl);
+	    
+	    // 세션을 업데이트하여 변경된 사용자 정보를 반영
+	    UserDetails updateUserDetails = user;
+	    UsernamePasswordAuthenticationToken newAuth = new UsernamePasswordAuthenticationToken(updateUserDetails, authentication.getCredentials(), updateUserDetails.getAuthorities());
+	    SecurityContextHolder.getContext().setAuthentication(newAuth);
+	    
+	    return defaultImgUrl; // 프론트엔드로 기본 이미지 URL을 반환
 	}
+	
+	// 수정 취소
+		@GetMapping("/cancelUpdate")
+		public String cancelUpdate() {
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			User user = (User) authentication.getPrincipal();
+			
+			// 프리뷰 폴더 삭제 로직
+			File dir = new File("\\\\192.168.10.6\\vibe\\img\\preview_img\\" + user.getUserEmail());
+			
+			while(dir.exists()) {
+				File[] dir_list = dir.listFiles();
+				for(int i = 0; i < dir_list.length; i++) dir_list[i].delete();
+				
+				if(dir_list.length == 0 && dir.isDirectory()) dir.delete();
+			}
+			
+			return "redirect:/mypage";
+		}
 }
