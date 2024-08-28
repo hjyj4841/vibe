@@ -218,6 +218,14 @@ html {
 	width: 20%;
 }
 
+.emptyRight > img{
+	filter: invert(1);
+	width: 50px;
+	height: 60px;
+	padding-left: 20px;
+}
+
+
 input:focus{
 	outline: none;
 }
