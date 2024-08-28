@@ -45,12 +45,14 @@ uri="http://www.springframework.org/security/tags" %>
     <div id="listBox">
       <div class="listTop">
         <div class="rankButtonBox">
+        <c:if test="">
           <div>
             <h2>TOP Rank</h2>
             <button>1st</button>
             <button>2nd</button>
             <button>3rd</button>
           </div>
+          </c:if>
         </div>
         <div class="listContainer">
           <!-- 랭크 1위 - 후에 jstl 사용해서 상위 리스트 3개만 표출 -->
@@ -93,7 +95,9 @@ uri="http://www.springframework.org/security/tags" %>
             </div>
           </section>
         </div>
-        <div class="emptyRight"></div>
+        <div class="emptyRight">
+			<img src="/imgs/listLogo/2931159_arrow_forward_right_move_navigation_icon.png">
+        </div>
       </div>
     </div>
     <script src="./js/scroll.js"></script>
