@@ -159,7 +159,9 @@
 	border: 1px solid #808080;
 	border-right: none;
 }
-
+.mainSearchBox select:focus{
+	outline: none;
+}
 .mainSearchBox input {
 	position: absolute;
 	width: 100%;

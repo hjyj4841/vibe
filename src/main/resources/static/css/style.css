@@ -77,6 +77,10 @@ html {
 	line-height: 20px;
 }
 
+.mainSearchBox select:focus{
+	outline: none;
+}
+
 .mainSearchBox input {
 	position: absolute;
 	background-color: white;

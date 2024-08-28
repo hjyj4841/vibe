@@ -45,13 +45,14 @@ header {
 #logo {
 	flex: 1;
 	display: flex;
-	width: 100px;
+	width: 80px;
 	justify-content: flex-start;
 	align-items: center;
+	padding-left: 10px;
 }
 
 #logo img {
-	width: 100px;
+	width: 80px;
 }
 
 /* nav 중간 단 */
@@ -65,7 +66,7 @@ header {
 }
 
 #nav1 a {
-	font-size: 1.2rem;
+	font-size: 1rem;
 	color: white;
 	padding: 20px;
 	transition: 0.3s;
@@ -92,7 +93,7 @@ header {
 	font-size: 1.05rem;
 	font-weight: bold;
 	width: 100px;
-	height: 40px;
+	padding: 13px;
 	border-radius: 10px;
 	margin: 10px;
 }
