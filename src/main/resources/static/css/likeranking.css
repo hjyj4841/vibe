@@ -1,15 +1,36 @@
-.searchContainer {
+.container {
 	width: 100%;
 	min-height: 100vh;
-	padding-top: 100px;
+	padding-top: 80px;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 }
+.container > h2 {
+	padding: 20px;
+	font-size: 1.5rem;
+	opacity: 0;
+}
+.ageCon{
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	width: 100%;
+	height: 100%;
+}
+.searchContainer{
+	height: 100%;
+	padding: 0;
+	min-height: 0%;
+	width: 800px;
+}
 .searchCon {
 	width: 100%;
 	height: 100%;
+}
+.searchCon > div{
+	width: 100%;
 }
 .searchListMain {
 	max-height: 700px;
@@ -31,81 +52,4 @@
 }
 input:focus{
 	outline: none;
-}
-
-.likeBox1 {
-	background-color: #111;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-.likeBox2 {
-	background-color: #111;
-	width: 60%;
-	height: 20%;
-	max-width: 700px;
-	min-width: 450px;
-	min-height: 100px;
-	height: 13vh;
-	display: flex;
-	align-items: center;
-	border-radius: 12px;
-	border-top: 4px solid black;
-	padding-left: 10px;
-	margin-bottom: 10px;
-}
-/* 플리 이미지 */
-.likeImg {
-	width: 14.5%;
-	height: 75%;
-	min-width: 100px;
-	min-height: 100px;
-	border-radius: 9px;
-	flex-direction: row;
-}
-.likeBox3 {
-	width: 60%;
-	background-color: #111;
-}
-/* 플리 제목 */
-.likeTitle {
-	background-color: #111;
-	color: white;
-	width: 80%;
-	height: 1px;
-	display: flex;
-	align-items: flex-start;
-	justify-content: column;
-	padding-left: 4%;
-}
-/* 플리 태그 */
-.likeTag {
-	color: #808080;
-	font-size: 11px;
-	font-weight: bold;
-	flex-direction: column-reverse;
-	padding-left: 4%;
-	padding-top: 4px;
-}
-.likeBox5 {
-	height: 55px;
-	display: flex;
-}
-/* 플리 작성자 */
-.likeCreator {
-	color: #999999;
-	font-weight: bold;
-	width: 30%;
-	display: flex;
-	align-items: center;
-	padding-left: 4%;
-}
-.likeBox5 img {
-	width: 31px;
-	border-radius: 80%;
-	align-items: flex-end;
-}
-.likeBox5 a {
-	font-size: 12.5px;
-	padding-left: 4%;
 }
