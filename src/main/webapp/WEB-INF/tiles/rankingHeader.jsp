@@ -8,10 +8,8 @@
 <link rel="stylesheet" href="./css/rankingHeader.css" />
 </head>
 <body>
-	<ul>
+	<ul class="rankingHead">
 		<li><a href="/likeranking">Like Ranking</a></li>
-		<li><a href="/searchTagRanking">Tag Ranking</a></li>
-		<li><a href="/playListRankingOnMonth">Month Ranking</a></li>
 		<li><a href="/playListRankingOnAgeGroupSelect">Age Ranking</a></li>
 		<li><a href="/playListRankingOnGenderSelect">Gender Ranking</a></li>
 	</ul>

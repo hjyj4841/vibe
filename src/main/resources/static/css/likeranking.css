@@ -1,22 +1,27 @@
-.likeHead {
-	height: 17%;
-	min-width: 150px;
-	display: flex;
-	background-color: black;
-	color: #39FF14;
-	font-size: 20px;
-	justify-content: center;
-	align-items: center;
-	margin-top: 4%;
-	margin-bottom: 4%;
-	padding-top: 10px;
-	padding-bottom: 11px;
-	border-radius: 6px;
-	border: 2px solid #333333;
-	padding-top: 180px;
+.searchListMain {
+	max-height: 700px;
 }
+/* 스크롤바 스타일 */
+.searchListMain::-webkit-scrollbar {
+    width: 5px;  /* 스크롤바의 너비 */
+}
+.searchListMain::-webkit-scrollbar-thumb {
+    height: 10%; /* 스크롤바의 길이 */
+    background: black; /* 스크롤바의 색상 */
+    border-radius: 10px;
+}
+.searchListMain::-webkit-scrollbar-track {
+    background: #111;  /*스크롤바 뒷 배경 색상*/
+}
+.playlistCon img, .plContentsBox, .plLikeBox {
+	cursor: pointer;
+}
+input:focus{
+	outline: none;
+}
+
 .likeBox1 {
-	background-color: black;
+	background-color: #111;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -93,8 +98,8 @@
 }
 .top {
 	position: fixed;
-	bottom: 10px;
-	right: 10px;
+	bottom: 20px;
+	right: 3.5px;
 	width: 50px;
 	height: 50px;
 	display: flex;

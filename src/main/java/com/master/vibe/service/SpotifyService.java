@@ -42,7 +42,6 @@ public class SpotifyService {
 	// token 발급 받는 메서드
 	
 	
-	
 	private String getAccessToken() {
 		
 		String clientId = "d0a1ae63ef0149c08c1d1e32cfc89a0c";
