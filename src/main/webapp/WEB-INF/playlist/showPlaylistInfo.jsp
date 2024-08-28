@@ -25,7 +25,7 @@
 			</div>
         </c:if>
       <div class="myRight">
-      <div class="myTagBox">
+      <div class="playlistInfoMain">
       	<div class="PlaylistInfoBox">
     		<div class="playlistImg">
 				<img src="${playlist.plImg}">
@@ -63,9 +63,9 @@
 							<a href="#" class="plMenuBtn"><i class="fa-solid fa-minus"></i></a>
 						</div>
 						<div class="playlistMenu">
-							<div class="plUpdateMenu"><a href="updatePlaylist?plCode=${playlist.plCode }">수정하기</a></div>
-							<div class="plTagUpdateMenu"><a href="${pageContext.request.contextPath}/playlist/manageTags?plCode=${playlist.plCode}">태그 수정</a></div>
-							<div class="plDeleteMenu"><a href="#" onclick="confirmDelete(event, 'deletePlaylist?plCode=${playlist.plCode }')">플레이리스트 삭제하기</a></div>
+							<div class="plUpdateMenu"><a href="updatePlaylist?plCode=${playlist.plCode }">Edit</a></div>
+							<div class="plTagUpdateMenu"><a href="${pageContext.request.contextPath}/playlist/manageTags?plCode=${playlist.plCode}">Tag Edit</a></div>
+							<div class="plDeleteMenu"><a href="#" onclick="confirmDelete(event, 'deletePlaylist?plCode=${playlist.plCode }')">Delete playlist</a></div>
 						</div>
 					</nav>
 				</div>
@@ -81,7 +81,7 @@
 					<a href="addMusic?plCode=${playlist.plCode}"><i class="fa-solid fa-plus"></i></a>
 				</div>
 				<div class="addMusicBtn">
-					<a href="addMusic?plCode=${playlist.plCode}">이 플레이리스트에 추가</a>
+					<a href="addMusic?plCode=${playlist.plCode}">Add to playlist</a>
 				</div>
 			</div>
 		  </c:if>
@@ -94,12 +94,12 @@
 		<div class="playlistListBox">
 	        <c:forEach items="${musicList}" var="music" varStatus="status">
 	            <div class="playlistList">
-	            <!-- 주석 지우면 안 됨! 체크박스 작업중
+	            <!-- 주석 지우면 안 됨! 체크박스 작업중 -->
 		            <div class="radioCheckBox">
-						<input type="checkbox" name="selectedDeleteMusic" value="${music.id}" id="radioCheck">
-						<label for="radioCheck"></label>
+						<input type="checkbox" name="selectedDeleteMusic" value="${music.id}" id="radioCheck${status.index}">
+						<label for="radioCheck${status.index}"></label>
 					</div>
-				-->
+				
 	                <img src="${music.albumUrl}" class="albumImg">
 	                <div class="plMusicInfo">
 	                    <div class="musicTitle">${music.musicTitle}</div>
@@ -107,31 +107,22 @@
 	                    <!-- <a href="musicDetail?musicId=${music.id}">${music.albumName}</a> -->
 	                </div>
 	                
-	                <div class="plMusicAction">
-						<a href="#" onclick="playMusic('${music.id}')" class="musicPlayBtn" data-track-id="${music.id}"><i class="fa-solid fa-circle-play"></i></a>
-	                    <a href="#"><i class="fa-solid fa-ellipsis-vertical"></i></a>
-	                </div>
-	                
-	                <!-- 
 	                <nav class="playlistSubMenuBox">
-	                	<div class="plMusicActionBtn">
-							<a href="#" onclick="playMusic('${music.id}')" class="musicPlayBtn"><i class="fa-solid fa-circle-play"></i></a>
-	                	</div>
 	                	<div class="playlistSubMenuBtn">
 							<a href="#" class="plSubMenuBtn"><i class="fa-solid fa-ellipsis-vertical"></i></a>
 						</div>
 	                	<div class="playlistSubMenu">
-	                		<div class="plUpdateMenu"><a href="updatePlaylist?plCode=${playlist.plCode }">수정하기</a></div>
-							<div class="plTagUpdateMenu"><a href="${pageContext.request.contextPath}/playlist/manageTags?plCode=${playlist.plCode}">태그 수정</a></div>
-							<div class="plDeleteMenu"><a href="#" onclick="confirmDelete(event, 'deletePlaylist?plCode=${playlist.plCode }')">플레이리스트 삭제하기</a></div>
+	                		<div class=""><a href="">Share</a></div>
+							<div class="plDeleteMenu"><a href="#" onclick="confirmDelete(event, 'deletePlaylist?plCode=${playlist.plCode }')">Remove from this playlist</a></div>
 						</div>
 	                </nav>
-	                 -->
-	                 
+	                <div class="playlistMusicActionBtn">
+						<a href="#" onclick="playMusic('${music.id}')" class="musicPlayBtn" data-track-id="${music.id}"><i class="fa-solid fa-circle-play"></i></a>
+	                </div>
 	            </div>
 	        </c:forEach>
 	    </div>
-	<button type="submit">곡 삭제</button>
+	<button type="submit">Remove from this playlist</button>
 	</form>
 </div>
 </div>
@@ -147,8 +138,6 @@
 	  </div>
 	</div>
 	
-
-
 <script>
     document.querySelector('.plMenuBtn').addEventListener('click', function(event) {
         event.preventDefault(); // 링크 기본 동작 방지

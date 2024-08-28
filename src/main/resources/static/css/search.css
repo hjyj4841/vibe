@@ -202,7 +202,7 @@
     border-radius: 10px;
 }
 .searchListMain::-webkit-scrollbar-track {
-    background: #111;  /*스크롤바 뒷 배경 색상*/
+    background: #111;  /* 스크롤바 뒷 배경 색상 */
 }
 .playlistCon img, .plContentsBox, .plLikeBox {
 	cursor: pointer;
