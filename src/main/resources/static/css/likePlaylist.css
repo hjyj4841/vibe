@@ -203,3 +203,154 @@
 .editButtonBox > a:hover {
   color: red;
 }
+
+a{
+	cursor: pointer;
+}
+#createFormBox{
+	background-color: #333;
+	cursor: default;
+}
+.image-preview-container{
+	width: 100px;
+	height: 100px;
+}
+.image-preview-container > div{
+	position: relative;
+	width: 100px;
+	height: 100%;
+	border-radius: 10px;
+	overflow: hidden;
+}
+.image-preview-container > div > *{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+.image-controls > *{
+	width: 100%;
+	height: 50%;
+	background-color: rgba(0, 0, 0, 0.6);
+	cursor: pointer;
+	opacity: 0;
+	transition: 0.2s;
+}
+.image-controls > *:hover{
+	opacity: 1;
+}
+.image-controls > div{
+	border-radius: 10px 10px 0 0;
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-content: center;
+}
+.image-controls > div > *{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+.image-controls > div > input{
+	z-index: 5;
+	opacity: 0;
+	cursor: pointer;
+}
+.image-controls > div > p{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	font-size: 0.8rem;
+}
+.image-controls > button{
+	border-radius: 0 0 10px 10px;
+	border: none;
+	color: white;
+}
+#createConBox{
+	width: 100%;
+	padding-left: 20px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+}
+#createConBox > input[type=text] {
+	background-color: #111;
+	color: white;
+	border: none;
+	border-bottom: 1px solid #cccccc;
+	height: 40px;
+	padding: 5px 0 5px 10px;
+	align-self: flex-start;
+	width: 80%;
+}
+tags{
+	background-color: #111;
+	color: white;
+	border: none;
+	padding: 5px; 
+	align-self: flex-start;
+	border-radius: 0px;
+	overflow-x: scroll;
+	white-space: nowrap;
+}
+.tagify.tagify {
+	--tag-invalid-color: white;
+    --tag-invalid-bg: white;
+    --tag-remove-bg: white;
+    --placeholder-color: grey;
+    border-radius: 0px;
+	border: none;
+	border-bottom: 1px solid #cccccc;
+	--input-color: white;
+	--tag-bg: white;
+	width: 80%;
+	height: 40px;
+	flex-wrap: nowrap;
+	white-space: nowrap;
+}
+.tagify.tagify--focus{
+	--tags-focus-border-color: #cccccc
+}
+.tagify__tag {
+	background-color: white;
+}
+.tagify__tag > div::before {
+	content: none;
+}
+.tagify__input{
+	white-space: nowrap;
+}
+.form-submit-container{
+	width: 200px;
+	display: flex;
+	justify-content: center;
+	align-items: flex-end;
+}
+.form-submit-container > button{
+	padding: 10px;
+	width: 90px;
+	border: none;
+	background-color: transparent;
+	border-radius: 5px;
+	font-size: 0.8rem;
+	transition: 0.2s;
+	cursor: pointer;
+	color: white;
+}
+.form-submit-container > button:hover{
+	color: red;
+}
+/* 스크롤바 스타일 */
+tags::-webkit-scrollbar {
+    width: 0px;  /* 스크롤바의 너비 */
+    height: 0px;
+}
+tags::-webkit-scrollbar-thumb {
+    width: 10%; /* 스크롤바의 길이 */
+    background: black; /* 스크롤바의 색상 */
+    border-radius: 10px;
+}
+tags::-webkit-scrollbar-track {
+    background: #111;  /* 스크롤바 뒷 배경 색상 */
+}

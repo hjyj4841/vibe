@@ -8,14 +8,9 @@
 <link rel="stylesheet" href="./css/reset.css" />
 <link rel="stylesheet" href="./css/search.css" />
 <link rel="stylesheet" href="./css/mypage.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tagify/4.9.2/tagify.min.css"/>
 <link rel="stylesheet" href="./css/likePlaylist.css" />
- <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/tagify/4.9.2/tagify.min.css"
-    />
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/tagify/4.9.6/tagify.min.js"></script>
-<script src="./js/createPlaylist.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tagify/4.9.6/tagify.min.js"></script>
 <title>My Playlist</title>
 </head>
 <body>
@@ -30,8 +25,13 @@
 					<div class="myTagBox">
 						<div class="playlistCreateBox">
 							<div class="createBtnBox">
+							<!-- 
 								<a href="createPlaylist" id="createPlaylistLink"> <i
 									class="fa-solid fa-plus"></i> Create Playlist
+								</a>
+							 -->
+							 	<a id="createPlaylistLink" onclick="createPlaylistView()">
+							 		<i class="fa-solid fa-plus"></i> Create Playlist
 								</a>
 							</div>
 							<div>My Playlist</div>
@@ -146,7 +146,7 @@
 						
 						$('.plContentsBox').click((e) => {
 							location.href = "/showPlaylistInfo?plCode=" + e.currentTarget.getAttribute("data-code");
-						})
+						});
 					}
 				});
 			}
@@ -185,73 +185,74 @@
 				}
 			});
 		}
+
+		const createForm = 
+			'<form class="playlistCon" id="createFormBox" action="createPlaylist" method="post" autocomplete="off" enctype="multipart/form-data">' +
+			'<div class="plImgBox image-preview-container">' +
+			'<div>' + 
+			'<img src="http://192.168.10.6:8080/playlistImg/defaultCD.png" id="createPlaylistImg">' +
+			'<div class="image-controls">' +
+			'<div>' +
+			'<input type="file" id="plUrl" name="plUrl" accept="image/*" />' +
+			'<p>Change</p>' +
+			'</div>' + 
+			'<button type="button">Default</button>' + 
+			'</div>' +
+			'</div>' +
+			'</div>' +
+			'<div class="plContentsBox" id="createConBox">' +
+			'<input type="text" class="plTitle" id="plTitle" name="plTitle" placeholder="Type your Playlist title">' +
+			'<input type="text" class="plTags" id="tags" name="tags" placeholder="add Tags">' +
+			'</div>' +
+			'<div class="form-submit-container">' +
+			'<button type="submit">Create</button>'
+			'</div>' +
+			'</form>';
+			
+		function createPlaylistView(){
+			$('#createPlaylistLink').css({'opacity': 0, 'cursor': 'default'}).attr('onclick', '');
+			$('.searchListMain').prepend(createForm);
+			initializeImagePreviewAndTagify();
+			
+			const DEFAULT_IMAGE_URL = 'http://192.168.10.6:8080/playlistImg/defaultCD.png';
+		 	const imgElement = document.getElementById('createPlaylistImg');
+	        const fileInput = document.getElementById('plUrl');
+	        const resetButton = document.querySelector('button[type="button"]');
+	        
+	     	// 이미지 미리보기 기능
+	        function previewImg(event) {
+	            const file = event.target.files[0];
+	            if (file) {
+	                const reader = new FileReader();
+	                reader.onload = function(e) {
+	                    imgElement.src = e.target.result;
+	                }
+	                reader.readAsDataURL(file);
+	            } else {
+	                imgElement.src = DEFAULT_IMAGE_URL;
+	            }
+	        }
+
+	        // 기본 이미지로 리셋 기능
+	        function resetDefaultImg() {
+	            imgElement.src = DEFAULT_IMAGE_URL;
+	            fileInput.value = ""; // 파일 선택 초기화
+	        }
+	        
+			// 이미지 미리보기 및 기본 이미지 리셋 이벤트 연결
+	        fileInput.addEventListener('change', previewImg);
+	        resetButton.addEventListener('click', resetDefaultImg);
+		}
 		
-		document.addEventListener('DOMContentLoaded', function () {
-		    // 플레이리스트 생성 버튼 클릭 시 이벤트 처리
-		    document.getElementById('createPlaylistLink').addEventListener('click', function(e) {
-		        e.preventDefault(); // 기본 링크 이동 방지
-
-		        $.ajax({
-		            url: "createPlaylist", // 여기에 플레이리스트 생성 폼을 제공하는 URL을 입력하세요.
-		            type: "GET",
-		            success: function(response) {
-		                // AJAX 요청이 성공하면 response에 폼 HTML이 포함됩니다.
-		                // 해당 폼을 페이지의 특정 영역에 삽입
-		                document.querySelector('.myRight').innerHTML = response;
-
-		                // 삽입된 폼 내의 스크립트가 실행되도록 처리
-		                const scripts = document.querySelector('.myRight').getElementsByTagName('script');
-		                for (let i = 0; i < scripts.length; i++) {
-		                    eval(scripts[i].innerText);
-		                }
-
-		                // 기본 이미지 설정 및 태그 기능 초기화
-		                initializeImagePreviewAndTagify();
-		            },
-		            error: function() {
-		                alert("플레이리스트 생성 폼을 불러오는데 실패했습니다.");
-		            }
-		        });
-		    });
-
-		    function initializeImagePreviewAndTagify() {
-		        const DEFAULT_IMAGE_URL = 'http://192.168.10.6:8080/playlistImg/defaultCD.png';
-		        const imgElement = document.getElementById('createPlaylistImg');
-		        const fileInput = document.getElementById('plUrl');
-		        const resetButton = document.querySelector('button[type="button"]');
-
-		        // 이미지 미리보기 기능
-		        function previewImg(event) {
-		            const file = event.target.files[0];
-		            if (file) {
-		                const reader = new FileReader();
-		                reader.onload = function(e) {
-		                    imgElement.src = e.target.result;
-		                }
-		                reader.readAsDataURL(file);
-		            } else {
-		                imgElement.src = DEFAULT_IMAGE_URL;
-		            }
-		        }
-
-		        // 기본 이미지로 리셋 기능
-		        function resetDefaultImg() {
-		            imgElement.src = DEFAULT_IMAGE_URL;
-		            fileInput.value = ""; // 파일 선택 초기화
-		        }
-
-		        // 태그 입력 필드 초기화
-		        const input = document.querySelector('#tags');
-		        new Tagify(input);
-
-		        // 이미지 미리보기 및 기본 이미지 리셋 이벤트 연결
-		        fileInput.addEventListener('change', previewImg);
-		        resetButton.addEventListener('click', resetDefaultImg);
-
-		        // 페이지 로드 시 기본 이미지 설정
-		        imgElement.src = DEFAULT_IMAGE_URL;
-		    }
-		});
-		</script>
+		function initializeImagePreviewAndTagify(){
+			// 태그 입력 필드 초기화
+	        const input = document.querySelector('#tags');
+	        new Tagify(input, {
+	            delimiters: " ",
+	            maxTags: 5, 
+	    		tagTextProp: 'value' // 태그의 텍스트 값 설정
+	        });
+		}
+	</script>
 </body>
 </html>

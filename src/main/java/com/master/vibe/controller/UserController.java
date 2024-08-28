@@ -179,12 +179,9 @@ public class UserController {
 	public String changePassword(String changePassword, Model model, HttpServletRequest request) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		User user = (User) authentication.getPrincipal();
-		User u = new User();
+		user.setUserPassword(changePassword);
 		
-		u.setUserEmail(user.getUserEmail());
-		u.setUserPassword(changePassword);
-		
-		userService.updateUserPWD(u);
+		userService.updateUserPWD(user);
 		model.addAttribute("pwdChange", "패스워드가 변경되었습니다. 다시 로그인 해주세요.");
 		
 		// 패스워드 변경하면 세션 죽여서 로그아웃 시키기

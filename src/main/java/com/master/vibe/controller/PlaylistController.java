@@ -78,20 +78,9 @@ public class PlaylistController {
 		return "test/search/searchHome";
 	}
 
-	// 플레이리스트 생성
-	@GetMapping("/createPlaylist")
-	public String createPlaylist(Model model) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		User user = (User) authentication.getPrincipal();
-
-		model.addAttribute("user", user);
-
-		return "playlist/createPlaylist";
-	}
-
 	// 플레이리스트 생성 처리
 	@PostMapping("/createPlaylist")
-	public String createPlaylist(CreatePlaylistDTO dto, HttpServletRequest request)
+	public String createPlaylist(CreatePlaylistDTO dto, Model model)
 			throws IllegalStateException, IOException {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		User user = (User) authentication.getPrincipal();
@@ -124,6 +113,7 @@ public class PlaylistController {
 
 		// 플레이리스트와 태그 연동
 		tagService.addPlaylistTags(Integer.parseInt(dto.getPlCode()), tagCodes);
+		
 		return "redirect:/myPlaylist";
 	}
 
