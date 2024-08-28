@@ -1,29 +1,25 @@
 .rankingHead {
-  background-color: #111;
-  width: 100%;
-  height: 55px;
-  position: fixed;
-  top: 80px;
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  margin-top: 0;
-  z-index: 30;
-  list-style-type: none;
+	background-color: #111;
+	width: 100%;
+	height: 55px;
+	position: fixed;
+	top: 80px;
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+	margin-top: 0;
+	z-index: 30;
+	list-style-type: none;
 }
-
 .rankingHead a {
-  color: white;
-  text-decoration: none;
-  padding: 0 15px;
-  transition: 0.2s;
+	color: white;
+	text-decoration: none;
+	padding: 0 15px;
+	transition: 0.2s;
 }
 .rankingHead a:hover {
-  color: #39ff14;
+	color: #ff1818;
 }
-
-@media (max-width: 740px) {
-  rankingHead {
-    top: 46px;
-  }
+.rankingHead a.active {
+	color: #ff1818;
 }
