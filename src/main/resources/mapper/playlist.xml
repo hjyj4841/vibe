@@ -191,7 +191,7 @@
     
     <!-- 랭킹 : 좋아요순 -->
     <select id="likerankingPlaylist" resultMap="playlistMap">
-    	SELECT pl_code, pl_title, pl_img, pl_date, u.user_email, u.user_nickname, count(pl_code)
+    	SELECT pl_code, pl_title, pl_img, pl_date, u.user_email, u.user_nickname, u.user_img, count(pl_code)
     	FROM playlist p
 	    	JOIN user u ON (u.user_email = p.user_email)
 	    	LEFT JOIN playlist_like USING (pl_code)
@@ -308,5 +308,4 @@
 		ORDER BY pl_code_count desc
 		LIMIT #{offset}, #{limit}
 	</select>
-
 </mapper>
