@@ -5,6 +5,11 @@ const rightArrow = document.querySelector(".emptyRight img");
 const leftArrow = document.querySelector(".emptyLeft img");
 const listRankDesc = document.querySelectorAll(".listRankDesc")
 
+rightArrow.addEventListener("click", function (){
+	listRankDesc[0].style.opacity = 0;
+	listRankDesc[0].style.zIndex = 0;
+	});
+	
 for (let i = 0; i <= buttons.length; i++) {
   buttons[i].addEventListener("click", function () {
     ranklists[i].style.opacity = 1;

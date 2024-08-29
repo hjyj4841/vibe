@@ -222,7 +222,7 @@ html {
 	width: 20%;
 }
 
-/* 화살표 흰색 */
+/* 왼쪽 화살표 흰색 */
 .emptyRight > img{
 	filter: invert(100%) 
 			sepia(100%) 
@@ -235,7 +235,7 @@ html {
 	padding-left: 20px;
 }
 
-/* 화살표 빨간색 */
+/* 왼쪽 화살표 빨간색 */
 .emptyRight > img:hover {
 	filter: invert(11%) 
 			sepia(80%) 
@@ -245,6 +245,31 @@ html {
 			contrast(113%);
 	cursor: pointer;
 	transition: 0.5s;
+}
+
+/* 오른쪽 화살표 흰색 */
+.emptyLeft > img{
+	filter: invert(100%) 
+			sepia(100%) 
+			saturate(0%)
+			hue-rotate(288deg) 
+			brightness(102%) 
+			contrast(102%);
+	width: 50px;
+	height: 60px;
+	padding-left: 20px;
+}
+
+/* 오른쪽 화살표 빨간색 */
+.emptyLeft > img:hover {
+	filter: invert(11%) 
+			sepia(80%) 
+			saturate(6630%) 
+			hue-rotate(358deg) 
+			brightness(106%) 
+			contrast(113%);
+	cursor: pointer;
+	transition: 0.5s;	
 }
 
 input:focus{
