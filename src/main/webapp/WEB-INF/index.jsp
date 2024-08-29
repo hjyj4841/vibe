@@ -86,8 +86,9 @@
 								<p>${searchPlaylist.user.userNickname}</p>
 							</div>
 						</div>
-
 					</c:forEach>
+					
+					
 				</section>
 
 				<!-- 랭크 2위 -->
