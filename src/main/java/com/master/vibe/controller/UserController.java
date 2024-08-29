@@ -72,6 +72,7 @@ public class UserController {
 
 		int success = userService.register(user);
 		
+		
 		if(success == 1) {
 			model.addAttribute("registerMsg", "회원가입에 성공 하였습니다.");
 			return "index";

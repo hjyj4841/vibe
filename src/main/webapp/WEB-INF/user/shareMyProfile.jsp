@@ -57,6 +57,20 @@ if (userImg!==null){
 		document.getElementById("link-copy-icon").addEventListener("click",
 				onClickCopyLink);
 	</script>
+	
+	<!-- 내 프로필 공유 -->
+	<i id="link-copy-icon" class="fa-solid fa-link"></i>
+	<script>
+		async function onClickCopyLink() {
+			const link = window.location.href;
+			await
+			navigator.clipboard.writeText(link);
+			window.alert('클립보드에 링크가 복사되었습니다.');
+		}
+
+		document.getElementById("link-copy-icon").addEventListener("click",
+				onClickCopyLink);
+	</script>
 
 </body>
 </html>
