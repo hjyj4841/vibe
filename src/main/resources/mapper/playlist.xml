@@ -190,14 +190,15 @@
     </update>
     
     <!-- 랭킹 : 좋아요순 -->
-    <select id="likerankingPlaylist" resultMap="playlistMap">
+    <select id="likerankingPlaylist" resultMap="playlistMap" parameterType="SearchDTO">
     	SELECT pl_code, pl_title, pl_img, pl_date, u.user_email, u.user_nickname, u.user_img, count(pl_code)
     	FROM playlist p
 	    	JOIN user u ON (u.user_email = p.user_email)
 	    	LEFT JOIN playlist_like USING (pl_code)
     	WHERE pl_public_yn = 'Y'
     	GROUP BY pl_code
-    	ORDER BY COUNT(like_code) DESC;
+    	ORDER BY COUNT(like_code) DESC
+    	LIMIT #{offset}, #{limit}
     </select>
     
     <!-- 랭킹 : 좋아요 TOP3 -->

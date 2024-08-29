@@ -68,11 +68,10 @@
 			if(height === scroll){
 				page++;
 				$.ajax({
-					url: "/limitAgeRankList",
+					url: "/limitLikeRankList",
 					type: "get",
 					data: {
-						page: page,
-						ageGroup: '${ageGroup}'
+						page: page
 					},
 					success:function(searchTag){
 						let searchListMain = $(".searchListMain");

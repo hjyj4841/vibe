@@ -1,17 +1,19 @@
 /* 스크롤바 스타일 */
 html::-webkit-scrollbar {
-	width: 10px; /* 스크롤바의 너비 */
+	width:0px; /* 스크롤바의 너비 */
 }
 
+/*
 html::-webkit-scrollbar-thumb {
-	height: 30%; /* 스크롤바의 길이 */
-	background: #333; /* 스크롤바의 색상 */
+	height: 30%;  
+	background: #333; 
 	border-radius: 10px;
 }
 
 html::-webkit-scrollbar-track {
-	background: #111; /*스크롤바 뒷 배경 색상*/
+	background: #111; 
 }
+*/
 
 body {
 	width: 100%;

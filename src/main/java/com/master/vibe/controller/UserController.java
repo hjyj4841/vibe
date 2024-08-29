@@ -60,6 +60,12 @@ public class UserController {
 		model.addAttribute("rankTop", playlistViewer.playlistView(playlist));
 		return "index";
 	}
+	
+	// alert msg 띄워줄 페이지
+	@GetMapping("/msgPage")
+	public String msgPage() {
+		return "msgPage";
+	}
 
 	// 회원가입
 	@GetMapping("/registerUser")
@@ -77,7 +83,7 @@ public class UserController {
 		
 		if(success == 1) {
 			model.addAttribute("registerMsg", "회원가입에 성공 하였습니다.");
-			return "index";
+			return "msgPage";
 		}else {
 			model.addAttribute("registerMsg", "회원가입에 실패 하였습니다.");
 			return "registerUser";
@@ -193,7 +199,7 @@ public class UserController {
 		
 		SecurityContextHolder.getContext().setAuthentication(null);
 		
-		return "index";
+		return "msgPage";
 	}
 	
 	// 회원탈퇴

@@ -247,22 +247,20 @@ public class PlaylistController {
 
 	// 랭킹 : 좋아요순
 	@GetMapping("/likeranking")
-	public String likeranking(Model model) {
-		List<Playlist> playlist = playlistService.likerankingPlaylist();
+	public String likeranking(SearchDTO dto, Model model) {
+		List<Playlist> playlist = playlistService.likerankingPlaylist(dto);
 		model.addAttribute("searchTag", playlistViewer.playlistView(playlist));
 		return "ranking/likeranking";
 	}
 	
-	// mypage에서 직접 조회 처리
-	// 플레이리스트 랜덤 조회
-	// @GetMapping("/randomPlaylist")
-	// public String randomPlaylist(Model model) {
-	// List<Playlist> randomPlaylist = playlistService.randomPlaylist();
-	// System.out.println(randomPlaylist);
-	// model.addAttribute("randomPlaylist", randomPlaylist);
-	// return "playlist/randomPlaylist";
-	// }
-
+	@ResponseBody
+	@GetMapping("/limitLikeRankList")
+	public List<PlaylistDTO> limitLikeRankList(SearchDTO dto) {
+		List<Playlist> playlist = playlistService.likerankingPlaylist(dto);
+		
+		return playlistViewer.playlistView(playlist);
+	}
+	
 	// 태그 검색 랭킹 조회
 	@GetMapping("/searchTag")
 	public String searchTag() {
@@ -275,7 +273,7 @@ public class PlaylistController {
 		model.addAttribute("searchTagRanking", playlist);
 		return "ranking/searchTagRanking";
 	}
-
+	
 	// 한달 동안의 플레이리스트 좋아요 랭킹 조회
 	@GetMapping("/playListRankingOnMonth")
 	public String playListRankingOnMonth(Model model) {

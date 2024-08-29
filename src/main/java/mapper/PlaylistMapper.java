@@ -44,7 +44,7 @@ public interface PlaylistMapper {
     
     //void updatePlaylistTitle(Playlist playlist); // 플레이리스트 제목 수정
     
-    List<Playlist> likerankingPlaylist(); // 랭킹 : 좋아요순
+    List<Playlist> likerankingPlaylist(SearchDTO dto); // 랭킹 : 좋아요순
     
     List<Playlist> rankTop(); // index Top3
     

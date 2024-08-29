@@ -329,12 +329,14 @@ tags{
 	align-items: center;
 }
 .privateBox {
-	width: 80px;
+	width: 60px;
+	align-self: flex-end;
+	margin-right: 20px;
 	display: flex;
 	justify-content: flex-end;
 	align-items: center;
 	position: relative;
-	height: 30px;
+	height: 25px;
 	border-radius: 10px;
 	cursor: pointer;
 	background-color: #B42021;
@@ -347,13 +349,13 @@ tags{
 	position: absolute;
 }
 .privateBox > i{
-	width: 40px;
+	width: 30px;
 	height: 100%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	color: white;
-	font-size: 0.75rem;
+	font-size: 0.7rem;
 }
 .privateBox > i:first-of-type{
 	left: 0;
@@ -363,7 +365,7 @@ tags{
 	background-color: #810000;
 	border-radius: 5px;
 	z-index: 1;
-	width: 40px;
+	width: 30px;
 	height: 100%;
 	left: 0;
 	top: 0;

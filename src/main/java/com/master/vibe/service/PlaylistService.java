@@ -91,8 +91,9 @@ public class PlaylistService {
 //	}
 
 	// 랭킹 : 좋아요순
-	public List<Playlist> likerankingPlaylist() {
-		return playlistMapper.likerankingPlaylist();
+	public List<Playlist> likerankingPlaylist(SearchDTO dto) {
+		dto.setOffset(dto.getLimit() * (dto.getPage() - 1));
+		return playlistMapper.likerankingPlaylist(dto);
 	}
 	
 	// index Top3

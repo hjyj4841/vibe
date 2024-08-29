@@ -269,7 +269,7 @@
 	        	
 	        	if($('#privateRadio').is(':checked')){
 	        		$('#publicRadio').prop('checked', true);
-	        		$('.toggleHidden').animate({left: '40px'})
+	        		$('.toggleHidden').animate({left: '30px'})
 	        			.css('background-color', '#315B52');
 	        		$('.privateBox').css('background-color', '#018B00');
 	        	}else{
