@@ -291,3 +291,25 @@
 #redHeart{
 	color: red;
 }
+
+/* 프로필 공유 관련 */
+
+.shareProfile {
+	display: flex;
+	align-items: center;
+	text-align: center;
+	
+}
+
+#kakaotalk-sharing-btn > img {
+	width:20px;
+	height: 20px;
+	margin-right: 5px;
+	margin-top: 5px;
+}
+
+.sharProfile > i{
+	display: flex;
+	align-items: center;
+	text-align: center;
+}
