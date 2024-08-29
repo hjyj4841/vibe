@@ -94,6 +94,11 @@ public class PlaylistService {
 	public List<Playlist> likerankingPlaylist() {
 		return playlistMapper.likerankingPlaylist();
 	}
+	
+	// index Top3
+	public List<Playlist> rankTop() {
+		return playlistMapper.rankTop();
+	}
 
 	public List<Music> getMusicListByPlaylistCode(int plCode) {
 		return null;
