@@ -85,8 +85,6 @@ public class PlaylistController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		User user = (User) authentication.getPrincipal();
 
-//		String fileName = fileUpload(dto.getPlUrl());
-
 		// 이미지 선택 여부 확인
 		String fileName;
 		if (dto.getPlUrl() != null && !dto.getPlUrl().isEmpty() && !dto.getPlUrl().getOriginalFilename().equals("")) {

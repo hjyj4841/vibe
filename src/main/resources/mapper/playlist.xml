@@ -124,8 +124,8 @@
 	<!-- 플레이리스트 생성 --> <!-- 이미지 추가! -->
 	<insert id="createPlaylist" parameterType="CreatePlaylistDTO" useGeneratedKeys="true" keyProperty="plCode" keyColumn="pl_code">
 		INSERT INTO
-		playlist(pl_title, user_email, pl_img)
-		VALUES (#{plTitle}, #{userEmail}, #{plImg})
+		playlist(pl_title, user_email, pl_img, pl_public_yn)
+		VALUES (#{plTitle}, #{userEmail}, #{plImg}, #{plPublicYn})
 	</insert>
 	
 	

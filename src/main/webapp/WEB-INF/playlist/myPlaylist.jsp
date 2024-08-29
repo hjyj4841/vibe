@@ -196,7 +196,7 @@
 			'<input type="file" id="plUrl" name="plUrl" accept="image/*" />' +
 			'<p>Change</p>' +
 			'</div>' + 
-			'<button type="button">Default</button>' + 
+			'<button type="button" class="defaultBtn">Default</button>' + 
 			'</div>' +
 			'</div>' +
 			'</div>' +
@@ -204,8 +204,22 @@
 			'<input type="text" class="plTitle" id="plTitle" name="plTitle" placeholder="Type your Playlist title">' +
 			'<input type="text" class="plTags" id="tags" name="tags" placeholder="add Tags">' +
 			'</div>' +
+			
+			'<div class="createPlaylistRight">' +
+			
+			'<div class="privateBox">' +
+			'<input type="radio" name="plPublicYn" value="Y" id="publicRadio">' +
+			'<input type="radio" name="plPublicYn" value="N" id="privateRadio" checked>' +
+			'<i class="fa-solid fa-lock-open"></i>' +
+			'<i class="fa-solid fa-lock"></i>' +
+			'<div class="toggleHidden"></div>' +
+			'</div>' +
+			
 			'<div class="form-submit-container">' +
-			'<button type="submit">Create</button>'
+			'<button type="submit" class="successBtn">Create</button>' +
+			'<button type="button" class="cancelBtn">Cancel</button>' +
+			'</div>' +
+			
 			'</div>' +
 			'</form>';
 			
@@ -217,7 +231,9 @@
 			const DEFAULT_IMAGE_URL = 'http://192.168.10.6:8080/playlistImg/defaultCD.png';
 		 	const imgElement = document.getElementById('createPlaylistImg');
 	        const fileInput = document.getElementById('plUrl');
-	        const resetButton = document.querySelector('button[type="button"]');
+	        const resetButton = document.querySelector('.defaultBtn');
+	        const cancelButton = document.querySelector('.cancelBtn');
+	        const publicSelect = document.querySelector('.privateBox');
 	        
 	     	// 이미지 미리보기 기능
 	        function previewImg(event) {
@@ -226,6 +242,7 @@
 	                const reader = new FileReader();
 	                reader.onload = function(e) {
 	                    imgElement.src = e.target.result;
+	                    imgElement.style.objectFit = 'cover';
 	                }
 	                reader.readAsDataURL(file);
 	            } else {
@@ -239,9 +256,35 @@
 	            fileInput.value = ""; // 파일 선택 초기화
 	        }
 	        
+	        // 취소 버튼
+	        function cancelFrom(){
+	        	location.reload();
+	        }
+	        
+	        // 공개 범위 선택
+	        function selectPublicBox(){
+	        	const moveRight = {transform: ['translate(40px, 0)']};
+	        	const moveLeft = {transform: ['translate(-40px, 0)']};
+	        	const option = {duration: 500};
+	        	
+	        	if($('#privateRadio').is(':checked')){
+	        		$('#publicRadio').prop('checked', true);
+	        		$('.toggleHidden').animate({left: '40px'})
+	        			.css('background-color', '#315B52');
+	        		$('.privateBox').css('background-color', '#018B00');
+	        	}else{
+	        		$('#privateRadio').prop('checked', true);
+	        		$('.toggleHidden').animate({left: '0px'})
+	        			.css('background-color', '#810000');
+	        		$('.privateBox').css('background-color', '#B42021');
+	        	}
+	        }
+	        
 			// 이미지 미리보기 및 기본 이미지 리셋 이벤트 연결
 	        fileInput.addEventListener('change', previewImg);
 	        resetButton.addEventListener('click', resetDefaultImg);
+	        cancelButton.addEventListener('click', cancelFrom);
+	        publicSelect.addEventListener('click', selectPublicBox);
 		}
 		
 		function initializeImagePreviewAndTagify(){

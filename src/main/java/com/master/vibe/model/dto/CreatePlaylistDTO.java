@@ -14,6 +14,7 @@ public class CreatePlaylistDTO {
 	private String plTitle;
 	private String userEmail;
 	private String plImg;
+	private String plPublicYn;
 	private List<String> tags;
 	private MultipartFile plUrl;
 }

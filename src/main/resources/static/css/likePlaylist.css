@@ -321,8 +321,56 @@ tags{
 .tagify__input{
 	white-space: nowrap;
 }
-.form-submit-container{
+.createPlaylistRight{
 	width: 200px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+}
+.privateBox {
+	width: 80px;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	position: relative;
+	height: 30px;
+	border-radius: 10px;
+	cursor: pointer;
+	background-color: #B42021;
+	transition: 0.2s;
+}
+.privateBox > input[type=radio]{
+	display: none;
+}
+.privateBox > *{
+	position: absolute;
+}
+.privateBox > i{
+	width: 40px;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: white;
+	font-size: 0.75rem;
+}
+.privateBox > i:first-of-type{
+	left: 0;
+	top: 0;
+}
+.privateBox > .toggleHidden{
+	background-color: #810000;
+	border-radius: 5px;
+	z-index: 1;
+	width: 40px;
+	height: 100%;
+	left: 0;
+	top: 0;
+	transition: 0.2s;
+}
+.form-submit-container{
+	width: 100%;
 	display: flex;
 	justify-content: center;
 	align-items: flex-end;
@@ -338,7 +386,10 @@ tags{
 	cursor: pointer;
 	color: white;
 }
-.form-submit-container > button:hover{
+.successBtn:hover{
+	color: green;
+}
+.cancelBtn:hover{
 	color: red;
 }
 /* 스크롤바 스타일 */
