@@ -1,74 +1,54 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>Create Playlist</title>
-    <link rel="stylesheet" href="./css/style.css" />
-    <link rel="stylesheet" href="./css/reset.css" />
-   
-    <link rel="stylesheet" href="./css/createPlaylist.css" />
-    
-  </head>
-  <body>
-    <jsp:include page="../tiles/header.jsp"></jsp:include>
+<head>
+<meta charset="UTF-8" />
+<title>Create Playlist</title>
+<link rel="stylesheet" href="./css/style.css" />
+<link rel="stylesheet" href="./css/reset.css" />
 
-    <div class="container">
-      <h1>Create Playlist</h1>
+<link rel="stylesheet" href="./css/createPlaylist.css" />
 
-      <form
-        action="createPlaylist"
-        method="post"
-        autocomplete="off"
-        enctype="multipart/form-data"
-      >
-        <!-- 제목 입력 필드 -->
-        <div class="title-input-container">
-          <input
-            type="text"
-            id="plTitle"
-            name="plTitle"
-            class="hidden-value"
-            placeholder="Type your Playlist's title"
-          />
-        </div>
+</head>
+<body>
+	<jsp:include page="../tiles/header.jsp"></jsp:include>
 
-        <!-- 이미지 미리보기 및 기본 이미지 -->
-        <div class="image-preview-container">
-          <img src="" style="width: 300px" id="createPlaylistImg" />
-          <div class="image-controls">
-            <input
-              type="file"
-              id="plUrl"
-              name="plUrl"
-              accept="image/*"
-              onchange="previewImg(event)"
-            />
-            <button type="button" onclick="resetDefaultImg()">
-              기본 이미지로
-            </button>
-          </div>
-        </div>
+	<div class="container">
+		<h1>Create Playlist</h1>
 
-        <!-- 태그 입력 필드 -->
-        <div class="form-tag-section">
-          <input
-            type="text"
-            id="tags"
-            name="tags"
-            placeholder="Type your Tags"
-          />
-        </div>
+		<form action="createPlaylist" method="post" autocomplete="off"
+			enctype="multipart/form-data">
+			<!-- 제목 입력 필드 -->
+			<div class="title-input-container">
+				<input type="text" id="plTitle" name="plTitle" class="hidden-value"
+					placeholder="Type your Playlist's title" />
+			</div>
 
-        <!-- 제출 버튼 -->
-        <div class="form-submit-container">
-          <button type="submit">Create Playlist</button>
-        </div>
-      </form>
-    </div>
-    <script src="./js/tag.js"></script>
-  </body>
+			<!-- 이미지 미리보기 및 기본 이미지 -->
+			<div class="image-preview-container">
+				<img src="" style="width: 300px" id="createPlaylistImg" />
+				<div class="image-controls">
+					<input type="file" id="plUrl" name="plUrl" accept="image/*"
+						onchange="previewImg(event)" />
+					<button type="button" onclick="resetDefaultImg()">Default Image</button>
+				</div>
+			</div>
+
+			<!-- 태그 입력 필드 -->
+			<div class="form-tag-section">
+				<input type="text" id="tags" name="tags"
+					placeholder="Type your Tags" />
+			</div>
+
+			<!-- 제출 버튼 -->
+			<div class="form-submit-container">
+				<button type="submit">Create Playlist</button>
+			</div>
+		</form>
+	</div>
+	<script src="./js/tag.js"></script>
+</body>
 </html>
 
 <!-- 삭제 금지! -->
