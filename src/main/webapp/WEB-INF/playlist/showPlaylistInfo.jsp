@@ -47,8 +47,8 @@
                         </c:forEach>
                     </ul>
 				</div>
-		
-			<c:if test="${user.userEmail eq playlist.user.userEmail}">
+	
+	<!-- <c:if test="${user.userEmail eq playlist.user.userEmail}"> -->
 			<div class="playlistInfoBox">
 				<div class="creatorInfo">
 					<img src="${user.userImg}">
@@ -63,15 +63,16 @@
 							<a href="#" class="plMenuBtn"><i class="fa-solid fa-minus"></i></a>
 						</div>
 						<div class="playlistMenu">
-							<div class="plUpdateMenu"><a href="updatePlaylist?plCode=${playlist.plCode }">Edit</a></div>
-							<div class="plTagUpdateMenu"><a href="${pageContext.request.contextPath}/playlist/manageTags?plCode=${playlist.plCode}">Tag Edit</a></div>
-							<div class="plDeleteMenu"><a href="#" onclick="confirmDelete(event, 'deletePlaylist?plCode=${playlist.plCode }')">Delete playlist</a></div>
+							<div class="plUpdateMenu"><a href="updatePlaylist?plCode=${playlist.plCode }"><i class="fa-solid fa-pen"></i>Edit</a></div>
+							<div class="plTagUpdateMenu"><a href="${pageContext.request.contextPath}/playlist/manageTags?plCode=${playlist.plCode}"><i class="fa-solid fa-hashtag"></i>Tag Edit</a></div>
+							<div class="plDeletePlMenu"><a href="#" onclick="confirmDelete(event, 'deletePlaylist?plCode=${playlist.plCode }')"><i class="fa-solid fa-minus"></i>Delete playlist</a></div>
 						</div>
 					</nav>
 				</div>
 			</div>
-			</c:if>
+	<!-- </c:if> -->
 		</div>
+	
 		<!-- 사용자 로그인 상태에 따라 버튼 표시 -->
 		<c:if test="${not empty user}">
 		  <!-- 현재 사용자가 생성자와 동일할 때만 표시 -->
@@ -94,9 +95,16 @@
 		<div class="playlistListBox">
 	        <c:forEach items="${musicList}" var="music" varStatus="status">
 	            <div class="playlistList">
-	            <!-- 주석 지우면 안 됨! 체크박스 작업중 -->
 		            <div class="radioCheckBox">
-						<input type="checkbox" name="selectedDeleteMusic" value="${music.id}" id="radioCheck${status.index}">
+		            	<!-- 사용자가 자신의 플레이리스트인지 확인 -->
+		            	<c:choose>
+	            			<c:when test="${user.userEmail eq playlist.user.userEmail}">
+								<input type="checkbox" name="selectedDeleteMusic" value="${music.id}" id="radioCheck${status.index}">
+	 						</c:when>
+	            			<c:otherwise>
+	            				<input type="checkbox" name="selectedDeleteMusic" value="${music.id}" id="radioCheck${status.index}" class="hidden-checkbox">
+							</c:otherwise>
+						</c:choose>
 						<label for="radioCheck${status.index}"></label>
 					</div>
 				
@@ -112,8 +120,8 @@
 							<a href="#" class="plSubMenuBtn"><i class="fa-solid fa-ellipsis-vertical"></i></a>
 						</div>
 	                	<div class="playlistSubMenu">
-	                		<div class=""><a href="">Share</a></div>
-							<div class="plDeleteMenu"><a href="#" onclick="confirmDelete(event, 'deletePlaylist?plCode=${playlist.plCode }')">Remove from this playlist</a></div>
+	                		<div class="playlistShareBtn"><a href="#" class="plSharedMenu"><i id="link-copy-icon" class="fa-solid fa-link"></i>Share</a></div>
+							<div class="plDeleteMenu"><a href="#" onclick="confirmDelete(event, 'deletePlaylist?plCode=${playlist.plCode }')"><i class="fa-solid fa-minus"></i>Remove from this playlist</a></div>
 						</div>
 	                </nav>
 	                <div class="playlistMusicActionBtn">
@@ -122,14 +130,13 @@
 	            </div>
 	        </c:forEach>
 	    </div>
-	<button type="submit">Remove from this playlist</button>
+	<button type="submit" class="deleteMusicBtn" onclick="checkForSelectedMusic(event)"><i class="fa-solid fa-trash-can-arrow-up"></i></button>
 	</form>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 	<!-- 플레이어 모달 -->
 	<div id="playerModal" class="playerModal">
 	  <div class="modal-content">
@@ -214,18 +221,12 @@
 	
 		document.getElementById("link-copy-icon").addEventListener("click", onClickCopyLink);
 
-        // 곡을 재생하는 함수 (전역 범위에서 정의)
-        function playMusic(trackId) {
-            const iframe = document.getElementById("main_frame");
-            iframe.src = "https://open.spotify.com/embed/track/" + trackId;
-        }
-
-
     // 음악을 재생하는 함수
     function playMusic(trackId) {
         const iframe = document.getElementById("main_frame");
         // 자동 재생을 위해 autoplay 파라미터 추가
         iframe.src = "https://open.spotify.com/embed/track/" + trackId + "?autoplay=1";
+        // iframe.src = "https://open.spotify.com/embed/track/" + trackId;
     }
 
   
@@ -287,6 +288,82 @@
     	    }
     	  });
     	});
+	
+	
+	// 페이지 로드 시 체크박스 상태를 초기화하는 함수
+    function resetCheckboxes() {
+        const checkboxes = document.querySelectorAll('input[name="selectedDeleteMusic"]');
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = false; // 체크박스를 초기화합니다.
+        });
+    }
+
+    // 페이지 로드 시 체크박스 상태 초기화
+    window.addEventListener('load', resetCheckboxes);
+    
+    
+    <!-- 체크박스 체크 상태 감지하고 deleteMusicBtn 버튼 표시 -->
+ 	// 페이지 로드 시 체크박스 상태를 확인하고 버튼 표시 여부 결정
+    document.addEventListener('DOMContentLoaded', () => {
+        updateDeleteButtonVisibility();
+    });
+
+    // 체크박스 상태가 변경될 때 버튼 표시 여부를 업데이트하는 함수
+    function updateDeleteButtonVisibility() {
+        const checkboxes = document.querySelectorAll('input[name="selectedDeleteMusic"]');
+        const deleteButton = document.querySelector('.deleteMusicBtn');
+        
+        // 하나라도 체크된 체크박스가 있으면 버튼을 보이게 함
+        let anyChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+        if (anyChecked) {
+            deleteButton.classList.add('showDeleteBtn');
+        } else {
+            deleteButton.classList.remove('showDeleteBtn');
+        }
+    }
+	
+    // 체크박스 상태가 변경될 때마다 버튼 표시 여부를 업데이트
+    document.addEventListener('change', (event) => {
+        if (event.target.name === 'selectedDeleteMusic') {
+            updateDeleteButtonVisibility();
+        }
+    });
+    
+    
+    /*
+    // 사용자가 자신의 플레이리스트가 아닌 경우 체크박스 클릭 못 함
+    window.addEventListener('DOMContentLoaded', () => {
+        // 사용자와 플레이리스트 소유자 확인
+        const userEmail = '${user.userEmail}';
+        const playlistOwnerEmail = '${playlist.user.userEmail}';
+
+        if (userEmail !== playlistOwnerEmail) {
+            // 사용자 이메일과 플레이리스트 소유자 이메일이 다르면 체크박스 비활성화
+            document.querySelectorAll('input[name="selectedDeleteMusic"]').forEach(checkbox => {
+                checkbox.disabled = true;
+            });
+        }
+    });
+    */
+    /*
+ 	// 체크박스 상태와 삭제 버튼의 표시 여부를 업데이트하는 함수
+    function updateCheckboxState() {
+        const userEmail = '${user.userEmail}';
+        const playlistOwnerEmail = '${playlist.user.userEmail}';
+
+        document.querySelectorAll('input[name="selectedDeleteMusic"]').forEach(checkbox => {
+            if (userEmail !== playlistOwnerEmail) {
+                checkbox.disabled = true;
+            }
+        });
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+        updateCheckboxState();
+    });
+    */
+    
+    
     
 </script>
 </body>

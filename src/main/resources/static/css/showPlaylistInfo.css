@@ -97,10 +97,12 @@ a {
 	display: flex;
 	align-items: center;
 	padding-left: 20px;
+	cursor: pointer;
+	color: #999;
 } 
 .playlistShareBtn #copy-message {
     display: none;
-    color: lightgreen; 
+    color: #02f958;
     font-size: 0.7rem;
     margin-left: 10px;
 }
@@ -111,6 +113,7 @@ a {
 /* 플레이리스트 메뉴 버튼 */
 .plMenuBtn {
     padding-left: 20px;
+	color: #999;
 }
 /* 플레이리스트 메뉴 */
 .playlistMenu {
@@ -119,7 +122,7 @@ a {
 	padding: 10px;
 	position: relative;
 	left: 50px;
-	margin-top: -98px;
+	margin-top: -100px;
 	top: 90px;
 	display: none;
 }
@@ -135,7 +138,12 @@ a {
     font-size: 0.8rem;
     color: white;
 }
-
+.plUpdateMenu i,
+.plTagUpdateMenu i,
+.plDeletePlMenu i {
+	font-size: 0.7rem;
+	padding-right: 7px;
+}
 
 /* 플레이리스트 음악 추가 영역 */
 .addMusicBtnBox {
@@ -166,7 +174,7 @@ a {
 	position: relative;
 }
 .addMusicBtn {
-	padding-left: 10px;
+	padding-left: 15px;
 	font-size: 1rem;
 }
 
@@ -174,7 +182,7 @@ a {
 .goPlaylistListBtn {
 	position: fixed;
 	top: 120px; /* 화면 상단에서의 거리 */
-	right: 320px; /* 화면 오른쪽에서의 거리 */
+	right: 350px; /* 화면 오른쪽에서의 거리 */
 	width: 50px;
 	height: 50px;
 	background-color: white;
@@ -244,14 +252,56 @@ a {
 
 /* 플레이리스트 서브 메뉴 버튼 */
 .plSubMenuBtn {
-	color: #666;
-	padding-right: 20px;
+	color: #999;
+}
+.playlistSubMenu {
+	background-color: rgba(100, 100, 100, 0.8);
+	border-radius: 4px;
+	padding: 10px;
+	position: relative;
+	left: -220px;
+	display: none;
+}
+.playlistSubMenu > div {
+    padding: 5px;
+}
+.playlistSubMenu div:hover {
+ 	background-color: rgba(153, 153, 153, 0.8);
+ 	border-radius: 4px;
+}
+.playlistSubMenu div a {
+    text-decoration: none;
+    font-size: 0.8rem;
+    color: white;
+}
+.plSharedMenu i,
+.plDeleteMenu i {
+	font-size: 0.7rem;
+	padding-right: 5px;
 }
 
-.playlistSubMenu {	
+/* 플레이리스트 음악 삭제 버튼 */
+.deleteMusicBtn {
+	width: 920px;
+	height: 50px;
+	border-radius: 4px;
+	background-color: rgba(2, 249, 88, 0.8);
+	/* background-color: #02f958; */
+	color: #fff;
+	border: none;
+	font-weight: bold;
+	font-size: 1.2rem;
+	position: fixed;
+    bottom: 100px;
+    display: none;
+    z-index: 1000;
+    cursor: pointer;
+}
 
-	}
-
+/* 체크박스 선택 시 스타일 업데이트를 위한 클래스 추가 */
+.showDeleteBtn {
+    display: block;
+}
 
 
 /* 뮤직 플레이어 버튼 */
@@ -263,11 +313,11 @@ a {
 	position: relative;
 }
 .playlistMusicActionBtn .musicPlayBtn {
-	color: #666;
+	color: #999;
 	font-size: 1rem;
 }
 .musicPlayBtn i {
-	color: #666;
+	color: #999;
 	font-size: 1rem;
 }
 
@@ -302,7 +352,7 @@ a {
 	/* 배경색과 테두리 색상 0.3초 동안 부드럽게 전환 */
 }
 .radioCheckBox input[type="checkbox"]:checked + label {
-	background: #90f642; /* 체크되었을 때 레이블의 배경색 설정 */
+	background: #02f958; /* 체크되었을 때 레이블의 배경색 설정 */
 }
 .radioCheckBox input[type="checkbox"]:checked + label::after {
 	content: '✔';
@@ -312,49 +362,6 @@ a {
 	line-height: 20px;
 	font-size: 14px;
 }
-
-
-/* 라디오 체크 박스 처리 
-.radioCheckBox {
-	position: relative;
-	display: flex;
-	align-items: center; 
-	justify-content: center;
-	
-}
-.radioCheckBox label {
-background-color: #fff;
-	border: 1px solid #fff;
-	border-radius: 50%;
-	cursor: pointer;
-	width: 20px;
-	height: 20px;
-}
-
-.radioCheckBox label:after {
-  border: 2px solid #fff;
-  border-top: none;
-  border-right: none;
-  content: "";
-  height: 6px;
-  width: 12px;
-  opacity: 0;
-  transform: rotate(-45deg);
-}
-
-.radioCheckBox input[type="checkbox"] {
-  visibility: hidden;
-}
-.radioCheckBox input[type="checkbox"]:checked + label {
-  background-color: #90f642;
-  border-color: #90f642;
-}
-.radioCheckBox input[type="checkbox"]:checked + label:after {
-  opacity: 1;
-}
-*/
-
-
 
 
 /* 플레이어 모달 배경 */
@@ -388,11 +395,9 @@ background-color: #fff;
   font-size: 28px;
   font-weight: bold;
 }
-
 .close:hover,
 .close:focus {
   color: #666;
   text-decoration: none;
   cursor: pointer;
 }
-
