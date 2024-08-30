@@ -41,7 +41,7 @@ a {
 
 /* 플레이리스트 제목 영역 */
 .PlaylistInfoBox p.plTitle {
-	font-size: 2rem;
+	font-size: 2.5rem;
 	font-weight: 600;
 	padding: 10px;
 }
@@ -60,11 +60,11 @@ a {
 
 /* 태그 영역 */
 .playlistTagBox {
-	padding: 5px 10px;
+	padding: 5px 15px;
 }
 .plTags {
 	display: flex;
-	gap: 5px;
+	gap: 10px;
 	font-size: 0.8rem;
     color: #808080;
     font-weight: bold;   
@@ -214,6 +214,14 @@ a {
     /*border: 1px solid #ddd;*/
     /*border-radius: 5px;*/
 }
+.playlistList:hover {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    position: relative;
+    background-color: rgba(153, 153, 153, 0.3);
+ 	border-radius: 4px;
+}
 .albumImg {
     width: 50px;
     height: auto;
@@ -237,48 +245,24 @@ a {
 }
 
 
-
-.platlistSubMenuBox {
-	position: relative;
-}
-/* 음악 액션 버튼과 서브 메뉴 박스 */
-.playlistSubMenuBox,
+/* 뮤직 플레이어 버튼 */
 .playlistMusicActionBtn {
     display: flex;
     align-items: center;
     position: relative; /* 부모 요소를 기준으로 배치 */
     margin-left: auto; /* 오른쪽으로 정렬 */
+    padding-right: 5px;
 }
-
-/* 플레이리스트 서브 메뉴 버튼 */
-.plSubMenuBtn {
+.musicPlayBtn {
+    margin-left: auto;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+	position: relative;
+	font-size: 1.2rem;
 	color: #999;
 }
-.playlistSubMenu {
-	background-color: rgba(100, 100, 100, 0.8);
-	border-radius: 4px;
-	padding: 10px;
-	position: relative;
-	left: -220px;
-	display: none;
-}
-.playlistSubMenu > div {
-    padding: 5px;
-}
-.playlistSubMenu div:hover {
- 	background-color: rgba(153, 153, 153, 0.8);
- 	border-radius: 4px;
-}
-.playlistSubMenu div a {
-    text-decoration: none;
-    font-size: 0.8rem;
-    color: white;
-}
-.plSharedMenu i,
-.plDeleteMenu i {
-	font-size: 0.7rem;
-	padding-right: 5px;
-}
+
 
 /* 플레이리스트 음악 삭제 버튼 */
 .deleteMusicBtn {
@@ -292,33 +276,15 @@ a {
 	font-weight: bold;
 	font-size: 1.2rem;
 	position: fixed;
-    bottom: 100px;
-    display: none;
-    z-index: 1000;
-    cursor: pointer;
+	bottom: 110px;
+	display: none;
+	z-index: 1000;
+	cursor: pointer;
 }
 
 /* 체크박스 선택 시 스타일 업데이트를 위한 클래스 추가 */
 .showDeleteBtn {
     display: block;
-}
-
-
-/* 뮤직 플레이어 버튼 */
-.musicPlayBtn {
-    margin-left: auto;
-    display: flex;
-    gap: 20px;
-    align-items: center;
-	position: relative;
-}
-.playlistMusicActionBtn .musicPlayBtn {
-	color: #999;
-	font-size: 1rem;
-}
-.musicPlayBtn i {
-	color: #999;
-	font-size: 1rem;
 }
 
 
@@ -357,7 +323,7 @@ a {
 .radioCheckBox input[type="checkbox"]:checked + label::after {
 	content: '✔';
 	display: block;
-	color: white;
+	color: black;
 	text-align: center;
 	line-height: 20px;
 	font-size: 14px;

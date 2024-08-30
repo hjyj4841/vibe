@@ -1,136 +1,88 @@
-body {
-	margin-top: 30px;
-	height: 100vh;
+/* 플레이리스트 이미지 영역 */
+.updatePlInfoBox {
+	padding: 20px 20px 10px 20px;
+}
+
+.updatePlImg {
+	padding-bottom: 10px;
+}
+.updatePlImg img {
 	display: flex;
-	align-items: center;
+	width: 250px;
+    height: 250px;
 	justify-content: center;
-}
-
-.container {
-	position: relative;
-	width: 80%;
-	max-width: 800px;
-	padding: 20px;
-	border-radius: 10px;
-}
-
-h1 {
-	display: flex;
-	align-items: center;
-	color: #dddddd;
-	font-size: 2.5rem;
-	background-color: #111;
-	margin-bottom: 30px;
-	justify-content: center;
-}
-
-.form-section-img {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	margin-bottom: 20px;
-}
-
-.form-section-img-content {
-    display: flex;
     align-items: center;
-    gap: 20px; /* label과 button 사이의 간격 */
-    margin-top: 10px;
-}
-
-.form-section-img img {
-	margin-bottom: 20px;
-}
-
-.form-section-img label {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	font-size: 0.8rem;
-	border: none;
-	font-weight: bold;
-	width: 120px;
-	height: 30px;
-	border-radius: 8px;
-	padding: 0;
-	margin: 5px;
-	background-color: #e3e3e3; color : black;
-	transition: background-color 0.3s;
-	color: black;
-}
-
-.form-section-img label:hover {
-	color: white;
-	background-color: red;
-}
-
-.form-section-img button {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	font-size: 0.8rem;
-	font-weight: bold;
-	width: 120px;
-	height: 30px;
-	border-radius: 8px;
-	border: none;
-	padding: 0;
-	margin: 5px;
-	transition: background-color 0.3s;
-}
-
-.form-section-img-buttons {
-	display: flex;
-	justify-content: space-between;
-	margin-bottom: 40px;
-}
-
-.form-section {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-direction: column;
-	text-align: center;
-	margin-bottom: 20px;
-}
-
-.form-section label {
-	font-size: 1rem;
-	text-align: center;
-}
-
-.form-section input[type="text"] {
-width: 100%;
-  color: white !important;
-  background-color: #111;
-  padding: 12px;
-  border: 1px solid #cccccc;
-  border-radius: 6px;
-  box-sizing: border-box;
-  font-size: 1rem;
-  margin-top: 20px;
-}
-
-.button-group {
-	display: flex;
-	justify-content: space-between;
-	margin-top: 50px;
-}
-
-.button-group button {
-	font-size: 1rem;
-	font-weight: bold;
-	width: 130px;
-	height: 40px;
 	border-radius: 10px;
-	background-color: #e3e3e3;
-	color: black;
-	border: none;
-	margin: 7px;
-	transition: background-color 0.3s;
+	margin-left: 10px;
+}
+.updatePlTitle {
+	font-size: 2.5rem;
+    font-weight: 600;
+}
+.updatePlTitle input[type="text"] {
+    border: none;
+    background-color: transparent;
+    color: white;
+    font-size: 2.5rem;
+    font-weight: 600;
+    padding-left: 10px;
+    padding-top: 3px;
+    width: 80%;
+}
+.updatePlTitle input[type="text"]::placeholder {
+    color: white;
+    font-size: 2.5rem;
+    font-weight: bold;
+    opacity: 0.1;
 }
 
-button:hover {
-	color: white;
-	background-color: red;
+/* 자물쇠 lock(플리 공개여부) */
+.PlaylistInfoBox .plTitle i{
+	padding-left: 10px;
+	font-size: 0.7rem;
+	justify-content: center;
+}
+.fa-lock-open {
+	color: #aaa;
+}
+.fa-lock{
+	color: #666;
+}
+
+
+.goPlaylistBtn {
+	position: fixed;
+	top: 120px; /* 화면 상단에서의 거리 */
+	right: 350px; /* 화면 오른쪽에서의 거리 */
+	width: 50px;
+	height: 50px;
+	background-color: white;
+	border-radius: 50%;
+	text-decoration: none;
+	color: black;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 1.3rem;
+	box-shadow: 0 10px 35px rgba(0, 0, 0, 0.05), 0 6px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+
+
+
+
+
+
+
+
+/* 이미지 변경 클릭 시 파일 불러오기 시스템 버튼 형태 처리 */
+/* 파일 입력 요소 숨기기 */
+#imgChange {
+	display: none;
+}
+/* label 스타일링 */
+label[for="imgChange"] {
+	cursor: pointer;
+	text-decoration: none;
 }
