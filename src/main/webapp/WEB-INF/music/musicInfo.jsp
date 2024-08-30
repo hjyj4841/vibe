@@ -9,23 +9,24 @@
 <link rel="stylesheet" href="./css/search.css" />
 <link rel="stylesheet" href="./css/mypage.css" />
 <link rel="stylesheet" href="./css/musicInfo.css" />
-<title>음악 정보</title>
+<script src="https://kit.fontawesome.com/df04184d5c.js" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<title>음악 정보</title>
 </head>
 <body>
 	<jsp:include page="../tiles/header.jsp"></jsp:include>
 		<div class="container">
 	      <div class="con">
 	        <div class="mypageBox">
-	          <div class="myLeft">
-	            <jsp:include page="../tiles/mypageLeft.jsp"></jsp:include>
-	          </div>
+			<!-- 로그인한 유저만 mypageLeft.jsp 보이게 -->
+        	<c:if test="${not empty user}">
+				<div class="myLeft">
+	            	<jsp:include page="../tiles/mypageLeft.jsp"></jsp:include>
+	          	</div>
+			</c:if>
 	      <div class="myRight">
-	      <div class="myTagBox">
+	      <div class="musicListInfoMain">
 
-
-	<%-- artistInfo.jsp에서 선택한 음악 정보를 playlist.jsp로 전달하고, 플레이리스트를 추가할 때 선택된 음악의 정보를 처리하는 것 --%>
-	<h1>음악 정보</h1>
 	<form action="addMusicToPlaylist" method="post">
 		<input type="hidden" name="plCode" value="${plCode }" id="plCode">
 		<table>

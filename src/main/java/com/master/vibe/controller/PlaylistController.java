@@ -177,7 +177,13 @@ public class PlaylistController {
 	// 플레이리스트 수정 -- 현재는 이름만 수정 가능
 	@GetMapping("/updatePlaylist")
 	public String updatePlaylist(String plCode, Model model) {
-
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		User user = null;
+		if (!authentication.getName().equals("anonymousUser")) {
+			user = (User) authentication.getPrincipal();
+			model.addAttribute("user", user);
+		}
+		
 		model.addAttribute("playlist", playlistService.selectPlaylistByPlCode(Integer.parseInt(plCode)));
 
 		return "playlist/updatePlaylist";
