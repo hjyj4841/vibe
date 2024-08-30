@@ -111,7 +111,7 @@ html {
 #listBox {
 	height: 100vh;
 	width: 100%;
-	padding-top: 110px;
+	padding-top: 150px;
 	display: flex;
 	flex-direction:column;
 	align-content: center;
@@ -121,37 +121,27 @@ html {
 	width: 100%;
 	height: 100%;
 	display: flex;
-	align-items: center;
 	justify-content: center;
+	align-items: center;
 }
-/* 좌측 랭크 버튼 */
+
+/* 위쪽 랭크*/
 .rankButtonBox{
-	width: 20%;
-	display: flex;
-  	justify-content: flex-end;
+  	display: flex;
   	align-items: center;
-  	text-align: center;
-  	padding-right: 20px;
+	justify-content: center;
+	text-align: center;
+	padding-top: 50px;
 }
-.rankButtonBox > div{
-	display: flex;
-	flex-direction: column;
-}
-.rankButtonBox h2 {
- 	 margin-bottom: 20px;
- 	 font-size: 1.2rem;
-}
-.rankButtonBox button {
+
+.rankButtonBox div {
 	  width: 100px;
 	  border: none;
 	  background: none;
 	  color: white;
-	  padding: 20px;
 	  cursor: pointer;
 	  transition: 0.5s;
-}
-.rankButtonBox button:hover {
- 	 color: red;
+ 	  font-size: 1rem;
 }
 
 /* 중앙 메인 컨텐츠 */
@@ -188,7 +178,7 @@ html {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-around;
-	align-items: center;
+	align-items: center ;
 	z-index: 1;
 }
 .listRankDesc > img{
@@ -196,6 +186,7 @@ html {
 	height: 40%;
 	object-fit: cover;
 	box-shadow: 3px 3px 3px black;
+	
 }
 .listRankText{
 	text-shadow: 3px 3px 3px black;
@@ -217,12 +208,13 @@ html {
 .listRank:nth-of-type(3) .listRankText{
 	color: #ffffff;
 }
-/* 우측 빈 공간 */
+
 .emptyRight{
-	width: 20%;
+	display: flex;
+	align-items: center ;
 }
 
-/* 왼쪽 화살표 흰색 */
+/* 오른쪽에 있는 화살표 흰색 */
 .emptyRight > img{
 	filter: invert(100%) 
 			sepia(100%) 
@@ -230,12 +222,13 @@ html {
 			hue-rotate(288deg) 
 			brightness(102%) 
 			contrast(102%);
-	width: 50px;
-	height: 60px;
+	width: 60px;
+	height: 70px;
+	margin-left: 40px; 
 	padding-left: 20px;
 }
 
-/* 왼쪽 화살표 빨간색 */
+/* 오른쪽에 있는 화살표 빨간색 */
 .emptyRight > img:hover {
 	filter: invert(11%) 
 			sepia(80%) 
@@ -247,7 +240,12 @@ html {
 	transition: 0.5s;
 }
 
-/* 오른쪽 화살표 흰색 */
+.emptyLeft{
+	display: flex;
+	align-items: center ;
+}
+
+/* 왼쪽에 있는 화살표 흰색 */
 .emptyLeft > img{
 	filter: invert(100%) 
 			sepia(100%) 
@@ -255,12 +253,13 @@ html {
 			hue-rotate(288deg) 
 			brightness(102%) 
 			contrast(102%);
-	width: 50px;
-	height: 60px;
-	padding-left: 20px;
+	width: 60px;
+	height: 70px;
+	margin-right: 40px;
+	padding-right: 20px;
 }
 
-/* 오른쪽 화살표 빨간색 */
+/* 왼쪽에 있는 화살표 빨간색 */
 .emptyLeft > img:hover {
 	filter: invert(11%) 
 			sepia(80%) 
@@ -271,6 +270,34 @@ html {
 	cursor: pointer;
 	transition: 0.5s;	
 }
+
+/* 왼쪽에 있는 화살표 안보이게 */
+/*
+.emptyLeft > img {
+	visibility: hidden;
+	position: absolute;
+	opacity: 0;
+}
+*/
+
+/* 오른쪽에 있는 화살표 클릭하면 왼쪽 랭킹박스 안보이게 */
+/*
+.rankButtonBox {
+	visibility: hidden;
+	position: absolute;
+	opacity: 0;
+}
+*/
+
+/* 오른쪽에 있는 화살표 클릭하면 왼쪽에 있는 화살표 보이게 */
+/*
+.emptyLeft > img{
+	position: static;
+	opacity: 1;
+	visibility: visible;
+	transition: visibility 0s, opacity 0.5s ease;	
+}
+*/
 
 input:focus{
 	outline: none;

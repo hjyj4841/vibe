@@ -12,4 +12,3 @@ public class VibeApplication {
 		SpringApplication.run(VibeApplication.class, args);
 	}
 }
-
