@@ -1,121 +1,58 @@
-// listRank div 바뀌는 이벤트
-const buttons = document.querySelectorAll(".rankButtonBox div");
-const ranklists = document.querySelectorAll(".listRank");
+const rankButton = document.querySelectorAll("rankButtonBox div")
+const rankList = document.querySelectorAll(".listRank");
 const rightArrow = document.querySelector(".emptyRight");
 const leftArrow = document.querySelector(".emptyLeft");
 const listRankDesc = document.querySelectorAll(".listRankDesc");
-const rankBox = document.querySelectorAll(".rankButtonBox");
+const rankBox = document.querySelector(".rankButtonBox");
 
-for (i = 0; i <= ranklists.length; i++) {
-		ranklists[i].style.opacity = 1;
-		ranklists[i].style.zIndex = 1;
-		if(i = 0){
-			rightArrow.addEventListener("click", function() {
-				ranklists[0].style.opacity = 0;
-				ranklists[0].style.zIndex = 0;
-				ranklists[1].style.opacity = 1;
-				ranklists[1].style.zIndex = 1;
-				ranklists[2].style.opacity = 0;
-				ranklists[2].style.zIndex = 0;
-			});
-		}
-};
+const first = document.querySelector("#fir");
+const second = document.querySelector("#sec");
+const third = document.querySelector("#thi");
 
-/*
-for (let i = 0; i <= buttons.length; i++) {
-	rightArrow.addEventListener("click", function() {
-		listRankDesc[0].style.opacity = 0;
-		listRankDesc[0].style.zIndex = 0;
-	});
-	leftArrow.addEventListener("click", function() {
-		listRankDesc[0].style.opacity = 1;
-		listRankDesc[0].style.zIndex = 1;
-	});
-	buttons[i].addEventListener("click", function() {
-		ranklists[i].style.opacity = 1;
-		ranklists[i].style.zIndex = 1;
-		switch (i) {
+function togglleActRank() {
+	
+	const check = listRankDesc[i].classList.contains("hidden");
+
+	for(let i = 0; i <= rankButton.length; i++){
+		switch(i){
 			case 0:
-				ranklists[1].style.opacity = 0;
-				ranklists[1].style.zIndex = 0;
-				ranklists[2].style.opacity = 0;
-				ranklists[2].style.zIndex = 0;
-				rightArrow.addEventListener("click", function() {
-					listRankDesc[0].style.opacity = 0;
-					listRankDesc[0].style.zIndex = 0;
-				});
-				leftArrow.addEventListener("click", function() {
-					listRankDesc[0].style.opacity = 1;
-					listRankDesc[0].style.zIndex = 1;
-				});
+				listRankDesc[i].classList.add("hidden");
+				rankButton[i+1].classList.add("black");
+				rankButton[i+2].classList.add("black");
+				if(check){
+					listRankDesc[i].classList.remove("hidden");
+					rankButton[i+1].classList.remove("black");
+					rankButton[i+2].classList.remove("black");
+				}
 				break;
 			case 1:
-				ranklists[0].style.opacity = 0;
-				ranklists[0].style.zIndex = 0;
-				ranklists[2].style.opacity = 0;
-				ranklists[2].style.zIndex = 0;
-				rightArrow.addEventListener("click", function() {
-					listRankDesc[1].style.opacity = 0;
-					listRankDesc[1].style.zIndex = 0;
-				});
-				leftArrow.addEventListener("click", function() {
-					listRankDesc[1].style.opacity = 1;
-					listRankDesc[1].style.zIndex = 1;
-				});
+				listRankDesc[i].classList.add("hidden");
+				rankButton[i+1].classList.add("black");
+				rankButton[i-1].classList.add("black");
+				if(check){
+					listRankDesc[i].classList.remove("hidden");
+					rankButton[i+1].classList.remove("black");
+					rankButton[i-1].classList.remove("black");
+				}
 				break;
 			case 2:
-				ranklists[0].style.opacity = 0;
-				ranklists[0].style.zIndex = 0;
-				ranklists[1].style.opacity = 0;
-				ranklists[1].style.zIndex = 0;
-				rightArrow.addEventListener("click", function() {
-					listRankDesc[2].style.opacity = 0;
-					listRankDesc[2].style.zIndex = 0;
-				});
-				leftArrow.addEventListener("click", function() {
-					listRankDesc[2].style.opacity = 1;
-					listRankDesc[2].style.zIndex = 1;
-				});
+				listRankDesc[i].classList.add("hidden");
+				rankButton[i-2].classList.add("black");
+				rankButton[i-1].classList.add("black");
+				if(check){
+					listRankDesc[i].classList.remove("hidden");
+					rankButton[i-2].classList.remove("black");
+					rankButton[i-1].classList.remove("black");
+				}
 				break;
 		}
-	});
+	}
 }
-*/
+
+rankList[0].addEventListener("click", togglleActRank);
 
 /*
-
-rightArrow.addEventListener("click", function (){
-	listRankDesc[0].style.opacity = 0;
-	listRankDesc[0].style.zIndex = 0;
-	});
-	
-leftArrow.addEventListener("click", function (){
-	listRankDesc[0].style.opacity = 1;
-	listRankDesc[0].style.zIndex = 1;
-	});	
-	
-rightArrow.addEventListener("click", function (){
-	listRankDesc[1].style.opacity = 0;
-	listRankDesc[1].style.zIndex = 0;
-	});
-	
-leftArrow.addEventListener("click", function (){
-	listRankDesc[1].style.opacity = 1;
-	listRankDesc[1].style.zIndex = 1;
-	});
-
-rightArrow.addEventListener("click", function (){
-	listRankDesc[2].style.opacity = 0;
-	listRankDesc[2].style.zIndex = 0;
-	});
-			
-leftArrow.addEventListener("click", function (){
-	listRankDesc[2].style.opacity = 1;
-	listRankDesc[2].style.zIndex = 1;
-	});
-
+for(let i = 0; i <= rankList.length; i++){
+	rankList[i].addEventListener("click", togglleActRank);
+}
 */
-
-
-
-

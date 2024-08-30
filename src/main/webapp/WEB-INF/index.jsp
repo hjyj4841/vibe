@@ -45,8 +45,8 @@
 	<div id="listBox">
 		<div class="rankButtonBox">
 			<div id="fir">1st</div>
-			<div id="sec">2nd</div>
-			<div id="thi">3rd</div>
+			<div class="black" id="sec">2nd</div>
+			<div class="black" id="thi">3rd</div>
 		</div>
 		<div class="listTop">
 			<div class="emptyLeft">
@@ -77,8 +77,6 @@
 							</div>
 						</div>
 					</c:forEach>
-
-
 				</section>
 
 				<!-- 랭크 2위 -->

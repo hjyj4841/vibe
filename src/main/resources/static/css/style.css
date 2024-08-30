@@ -132,6 +132,7 @@ html {
 	justify-content: center;
 	text-align: center;
 	padding-top: 50px;
+	position: relative;
 }
 
 .rankButtonBox div {
@@ -142,6 +143,27 @@ html {
 	  cursor: pointer;
 	  transition: 0.5s;
  	  font-size: 1rem;
+ 	  position: absolute;
+}
+
+#fir {
+	z-index: 3;
+}
+#sec {
+	z-index: 2;
+}
+#thi {
+	z-index: 1;
+}
+
+.rankButtonBox .black {
+	background-color: #111111;
+	color: #111111;
+}
+
+section .listRankDesc.black{
+	opacity: 0;
+	z-index: 0;
 }
 
 /* 중앙 메인 컨텐츠 */
@@ -180,6 +202,9 @@ html {
 	justify-content: space-around;
 	align-items: center ;
 	z-index: 1;
+}
+.listRankDesc.hidden {
+	display: none;
 }
 .listRankDesc > img{
 	width: 40%;
