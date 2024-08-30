@@ -29,17 +29,21 @@
                                 onsubmit="return validate()" enctype="multipart/form-data">
                                 <input type="hidden" value="${user.userImg}" name="userImg" class="userImg">
                                 <div class="editUserImgBox">
-                                    <button type="button" class="hiddenButton">empty</button>
                                     <div>
-                                        <input name="file" type="file" accept="image/*" class="imgFile"> 
-                                        <img src="${user.userImg}" class="userImgView">
-                                        <div>
-                                            <p>empty</p>
-                                            <i class="fa-solid fa-camera-rotate"></i>
-                                            <p>Change Image</p>
+                                    	<img src="${user.userImg}" class="userImgView">
+                                    	<div class="changeUserImg">
+                                    		<input name="file" type="file" accept="image/*" class="imgFile"> 
+	                                        <div>
+	                                            <p>empty</p>
+	                                            <i class="fa-solid fa-camera-rotate"></i>
+	                                            <p>Change Image</p>
+	                                        </div>
+                                    	</div>
+                                        <div class="defaultUserImg">
+                                        	<button type="button" class="deleteImgBtn">Default Image</button>
                                         </div>
                                     </div>
-                                    <button type="button" class="deleteImgBtn">Delete Img</button>
+                                    
                                 </div>
                                 <div class="textAndIcon">
                                     <input type="text" name="userNickname" class="nickname"
@@ -165,7 +169,7 @@
                 contentType: false,
                 processData: false,
                 success: function(fileUrl){
-                    $(".userImgView").attr('src', fileUrl + '?' + new Date().getTime());
+                    $(".userImgView").attr('src', fileUrl);
                 }
             });
         });

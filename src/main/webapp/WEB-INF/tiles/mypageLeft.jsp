@@ -20,46 +20,12 @@
 			<!-- 일반 공유 -->
 			<i id="link-copy-icon" class="fa-solid fa-link"></i>
 		</div>
-
-		<!-- 프로필 공유 관련 스크립트 -->
-		<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"
-			integrity="sha384-TiCUE00h649CAMonG018J2ujOgDKW/kVWlChEuu4jK2vxfAAD0eZxzCKakxg55G4"
-			crossorigin="anonymous"></script>
-		<script>
-		Kakao.init('73e5ba36f398f0540e77e864991716b4');
-	</script>
-		<script>
-		var userNickname = "${user.userNickname}";
-		var userImg = "${user.userImg}";
-		document.getElementById("kakaotalk-sharing-btn").addEventListener(
-				"click", function() {
-					Kakao.Share.sendCustom({
-						templateId : 111024,
-						templateArgs : {
-							'userNickname' : userNickname,
-							'userImg' : userImg
-						}
-					});
-				});
-	</script>
-		<script>
-		async function onClickCopyLink() {
-			const link = window.location.href;
-			await
-			navigator.clipboard.writeText(link);
-			window.alert('클립보드에 링크가 복사되었습니다.');
-		}
-
-		document.getElementById("link-copy-icon").addEventListener("click",
-				onClickCopyLink);
-	</script>
-	
 	
 		<p class="myNick">${user.userNickname }</p>
 		<p class="myEmail">${user.userEmail }</p>
 		<c:choose>
 			<c:when test="${user.userSpotifyYn == 89}">
-				<div class="confrnectSpotify spotifyInfo">
+				<div class="connectSpotify spotifyInfo">
 					<i class="fa-brands fa-spotify"></i> <span>connected</span>
 				</div>
 			</c:when>
@@ -110,6 +76,10 @@
 	</div>
 </div>
 
+<!-- 프로필 공유 관련 스크립트 -->
+<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"
+	integrity="sha384-TiCUE00h649CAMonG018J2ujOgDKW/kVWlChEuu4jK2vxfAAD0eZxzCKakxg55G4"
+	crossorigin="anonymous"></script>
 <script>
 const deletTxt =
 `※회원탈퇴 시 주의사항※
@@ -143,4 +113,29 @@ const deletTxt =
 			} else alert('회원탈퇴 취소');
 		} else alert('회원탈퇴 취소'); 
 	});
+
+	Kakao.init('73e5ba36f398f0540e77e864991716b4');
+	
+	var userNickname = "${user.userNickname}";
+	var userImg = "${user.userImg}";
+	document.getElementById("kakaotalk-sharing-btn").addEventListener(
+			"click", function() {
+				Kakao.Share.sendCustom({
+					templateId : 111024,
+					templateArgs : {
+						'userNickname' : userNickname,
+						'userImg' : userImg
+					}
+				});
+			});
+	
+	async function onClickCopyLink() {
+		const link = window.location.href;
+		await
+		navigator.clipboard.writeText(link);
+		window.alert('클립보드에 링크가 복사되었습니다.');
+	}
+
+	document.getElementById("link-copy-icon").addEventListener("click",
+			onClickCopyLink);
 </script>

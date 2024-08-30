@@ -83,12 +83,7 @@
   font-size: 1.5rem;
   padding-left: 10px;
 }
-.editForm > div > i:hover {
-  color: white;
-}
-.editUserImgBox > div:hover > div {
-  opacity: 1;
-}
+
 .editUserImgBox > div {
   position: relative;
   display: flex;
@@ -96,23 +91,20 @@
   align-items: center;
   width: 300px;
   height: 300px;
-}
-.editUserImgBox > div > * {
-  position: absolute;
-  width: 100%;
-  height: 100%;
   border-radius: 50%;
+  overflow: hidden;
 }
-.editUserImgBox > div > input {
-  opacity: 0;
-  z-index: 3;
-  cursor: pointer;
+.editUserImgBox > div > *{
+	position: absolute;
+ 	width: 100%;
 }
 .editUserImgBox > div > img {
+  height: 100%;
   object-fit: cover;
   z-index: 1;
 }
 .editUserImgBox > div > div {
+	height: 50%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -124,28 +116,54 @@
   opacity: 0;
   transition: 0.3s;
 }
-.editUserImgBox > div > div > i {
+.changeUserImg{
+	top:0;
+	position: relative;
+}
+.changeUserImg > *{
+	position: absolute;
+}
+.changeUserImg input {
+	height: 100%;
+	width: 100%;
+	opacity: 0;
+	z-index: 3;
+	cursor: pointer;
+}
+.changeUserImg > div {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+.changeUserImg > div > i {
   font-size: 2.5rem;
   padding: 10px;
 }
-.editUserImgBox > div > div > p:nth-child(1) {
-  opacity: 0;
-}
-.editUserImgBox > div > div > p {
+.changeUserImg > div > p {
   font-size: 0.8rem;
 }
-
-.editUserImgBox {
-	display: grid;
-}
-.editUserImgBox > button {
-  align-self: flex-end;
-  width: 20%;
-/*   margin-bottom: 10%; */
+.changeUserImg > div > p:nth-child(1) {
+  opacity: 0;
 }
 
-.editUserImgBox > .hiddenButton {
-	opacity : 0;
+.editUserImgBox > div > div:hover {
+  opacity: 1;
+}
+
+.defaultUserImg{
+	bottom:0;
+}
+.defaultUserImg > button{
+	width: 100%;
+	height: 100%;
+	cursor: pointer;
+	background: transparent;
+	border: none;
+	color: #999;
+}
+.editForm > div > i:hover {
+  color: white;
 }
 .editForm > div > input {
   width: 100%;

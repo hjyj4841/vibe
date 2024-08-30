@@ -27,6 +27,7 @@
 	<%-- artistInfo.jsp에서 선택한 음악 정보를 playlist.jsp로 전달하고, 플레이리스트를 추가할 때 선택된 음악의 정보를 처리하는 것 --%>
 	<h1>음악 정보</h1>
 	<form action="addMusicToPlaylist" method="post">
+		<input type="hidden" name="plCode" value="${plCode }" id="plCode">
 		<table>
 			<tr>
 				<th>선택</th>
@@ -73,7 +74,10 @@
             $.ajax({
                 type: "post",
                 url: "/checkMusicInPlaylist",
-                data: { musicId: selectedMusicId },
+                data: { 
+                	musicId: selectedMusicId,
+                	plCode: $('#plCode').val()
+                	},
                 traditional: true, // 배열 전송 시 필요
                 success: function(response) {
                     // 응답에 따라 사용자에게 결과를 알림

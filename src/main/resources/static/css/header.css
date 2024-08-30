@@ -3,25 +3,13 @@ html::-webkit-scrollbar {
 	width:0px; /* 스크롤바의 너비 */
 }
 
-/*
-html::-webkit-scrollbar-thumb {
-	height: 30%;  
-	background: #333; 
-	border-radius: 10px;
-}
-
-html::-webkit-scrollbar-track {
-	background: #111; 
-}
-*/
-
 body {
 	width: 100%;
 	height: 100%;
 	background-color: #111;
 	color: white;
 }
-html, body, a, button, input{
+html, body, a, button, input {
 	font-family: "Noto Sans KR", sans-serif;
 	font-optical-sizing: auto;
 	font-weight: normal;

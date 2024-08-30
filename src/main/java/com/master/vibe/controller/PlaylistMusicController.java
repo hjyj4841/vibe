@@ -1,10 +1,12 @@
 package com.master.vibe.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,16 +22,26 @@ public class PlaylistMusicController {
 	@Autowired
 	private PlaylistMusicService playlistMusicService;
 	
-	// 선택한 음악 플레이리스트에 추가하는 로직
-	// music/musicInfo.jsp : <form action="addMusicToPlaylist" method="post">
+	@ResponseBody
     @PostMapping("/addMusicToPlaylist")
-    public String addMusicToPlaylist(@RequestParam List<String> selectedMusic, Model model, HttpServletRequest request) {
-    	HttpSession session = request.getSession();
-    	
-    	playlistMusicService.addMusicToPlaylist(selectedMusic, Integer.parseInt(session.getAttribute("plCode").toString())); // session에 지정되어 있는 pl 코드 넘겨줌
+    public void addMusicToPlaylist(@RequestParam List<String> selectedMusic, Model model, String plCode) {
+		playlistMusicService.addMusicToPlaylist(selectedMusic, Integer.parseInt(plCode));
         model.addAttribute("selectedMusic", selectedMusic);
-        
-        return "redirect:/showPlaylistInfo?plCode=" + session.getAttribute("plCode");
+    }
+    
+    @ResponseBody
+    @GetMapping("/addOneMusic")
+    public boolean addOneMusic(String plCode, String musicId) {
+    	List<String> musicList = new ArrayList<String>();
+    	musicList.add(musicId);
+    	
+    	List<String> userGotMusic = playlistMusicService.getExistingMusicIdInPlaylist(Integer.parseInt(plCode), musicList);
+    	if(userGotMusic.contains(musicId)) {
+    		return false;
+    	}
+    	
+    	playlistMusicService.addMusicToPlaylist(musicList, Integer.parseInt(plCode));
+        return true;
     }
         
     // 선택한 음악 플레이리스트에서 삭제
@@ -54,25 +66,13 @@ public class PlaylistMusicController {
     // 사용자가 플레이리스트에 음악 추가 시 추가하려는 음악이 해당 플레이리스트에 이미 있는 곡인지 중복 체크
     @ResponseBody
     @PostMapping("/checkMusicInPlaylist")
-    public List<String> checkMusicInPlaylist(@RequestParam List<String> musicId, HttpServletRequest request) {
-    	HttpSession session = request.getSession();
-    	int plCode = Integer.parseInt(session.getAttribute("plCode").toString());
+    public List<String> checkMusicInPlaylist(@RequestParam List<String> musicId, HttpServletRequest request, String plCode) {
     	
     	// Map 형태로 전달
-        return playlistMusicService.getExistingMusicIdInPlaylist(plCode, musicId);
+        return playlistMusicService.getExistingMusicIdInPlaylist(Integer.parseInt(plCode), musicId);
         
         // List로 실패
 //    	List<String> existingMusicId = playlistMusicService.getExistingMusicIdInPlaylist(plCode, musicId);
 //    	return existingMusicId;
     }
-    
-    
-    /* test 페이지 코드
-    // 플레이리스트 추가 폼 불러오기
-    @GetMapping("/playlistMusic")
-    public String showAddPlaylistForm(Model model, @RequestParam(value = "selectedMusic", required = false) List<String> selectedMusic) {
-        model.addAttribute("selectedMusic", selectedMusic);
-        return "test/playlist/playlistMusic";
-    }
-    */
 }

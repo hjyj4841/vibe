@@ -289,7 +289,7 @@ public class UserController {
 		File copyFile = new File(path + "\\" + fileName);
 		
 		file.transferTo(copyFile); // 업로드한 파일이 지정한 path 위치로 저장
-		return "http://192.168.10.6:8080/img/preview_img/" + user.getUserEmail() + "/" ;
+		return "http://192.168.10.6:8080/img/preview_img/" + user.getUserEmail() + "/" + fileName;
 				
 	}
 
@@ -314,15 +314,16 @@ public class UserController {
 		changeUser.setUserNickname(dto.getUserNickname());
 		changeUser.setUserPhone(dto.getUserPhone());
 		
+		// 프리뷰 폴더 삭제 로직
+		File dir = new File("\\\\192.168.10.6\\vibe\\img\\preview_img\\" + user.getUserEmail());
+		while(dir.exists()) {
+			File[] dir_list = dir.listFiles();
+			for(int i = 0; i < dir_list.length; i++) dir_list[i].delete();
+			if(dir_list.length == 0 && dir.isDirectory()) dir.delete();
+		}
+		
 		// 이미지 변경 로직 추가
 		if(!dto.getFile().isEmpty()) {
-			// 프리뷰 폴더 삭제 로직
-			File dir = new File("\\\\192.168.10.6\\vibe\\img\\preview_img\\" + user.getUserEmail());
-			while(dir.exists()) {
-				File[] dir_list = dir.listFiles();
-				for(int i = 0; i < dir_list.length; i++) dir_list[i].delete();
-				if(dir_list.length == 0 && dir.isDirectory()) dir.delete();
-			}
 			
 			// 이전에 가지고 있던 유저 이미지가 기본이미지가 아니라면 삭제
 			if(!user.getUserImg().equals("http://192.168.10.6:8080/img/user_img/default_user.jpg")) {
@@ -371,21 +372,21 @@ public class UserController {
 	}
 	
 	// 수정 취소
-		@GetMapping("/cancelUpdate")
-		public String cancelUpdate() {
-			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-			User user = (User) authentication.getPrincipal();
+	@GetMapping("/cancelUpdate")
+	public String cancelUpdate() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		User user = (User) authentication.getPrincipal();
+		
+		// 프리뷰 폴더 삭제 로직
+		File dir = new File("\\\\192.168.10.6\\vibe\\img\\preview_img\\" + user.getUserEmail());
+		
+		while(dir.exists()) {
+			File[] dir_list = dir.listFiles();
+			for(int i = 0; i < dir_list.length; i++) dir_list[i].delete();
 			
-			// 프리뷰 폴더 삭제 로직
-			File dir = new File("\\\\192.168.10.6\\vibe\\img\\preview_img\\" + user.getUserEmail());
-			
-			while(dir.exists()) {
-				File[] dir_list = dir.listFiles();
-				for(int i = 0; i < dir_list.length; i++) dir_list[i].delete();
-				
-				if(dir_list.length == 0 && dir.isDirectory()) dir.delete();
-			}
-			
-			return "redirect:/mypage";
+			if(dir_list.length == 0 && dir.isDirectory()) dir.delete();
 		}
+		
+		return "redirect:/mypage";
+	}
 }
