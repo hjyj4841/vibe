@@ -1,49 +1,37 @@
-/* 기본 스타일 설정 */
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #111;
-  color: #dddddd;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* 컨테이너 스타일 */
-.container {
-  max-width: 800px;
-  margin: 200px;
-  background-color: #222;
-  padding: 20px;
+/* myRight 섹션 스타일 */
+.myRight {
+  padding: 30px;
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  width: 60%;
+  background-color: #333;
+  margin: auto;
 }
 
 /* 제목 스타일 */
-h1, h2 {
-  color: #dddddd;
-}
-
-h1 {
+.myRight h1 {
   font-size: 2.5rem;
-  margin-bottom: 50px;
+  color: #dddddd;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
-h2 {
+.myRight h2 {
   font-size: 1.8rem;
-  margin-bottom: 20px;
-  margin-top: 60px;
+  color: #dddddd;
+  margin-bottom: 15px;
+  margin-top: 20px;
 }
 
 /* 폼 섹션 스타일 */
-.form-section {
+.form-tag-section {
+  padding: 15px;
+  border-radius: 6px;
   margin-bottom: 30px;
 }
 
+/* 태그 입력 필드 스타일 */
 .form-tag-section input[type="text"] {
-  width: 100%;
+  width: calc(100% - 24px);
   padding: 12px;
   border: 1px solid #cccccc;
   border-radius: 6px;
@@ -51,9 +39,10 @@ h2 {
   color: white;
   box-sizing: border-box;
   font-size: 1rem;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
 
+/* 버튼 스타일 */
 .form-tag-section button {
   padding: 10px 20px;
   font-size: 1rem;
@@ -63,11 +52,9 @@ h2 {
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  margin-top: 10px;
   transition: background-color 0.3s;
-  margin-bottom: 20px;
+  margin-top: 10px;
   float: right;
-  margin-right: 15px;
 }
 
 .form-tag-section button:hover {
@@ -76,21 +63,25 @@ h2 {
 }
 
 /* 테이블 섹션 스타일 */
+.table-section {
+  padding: 15px;
+  border-radius: 6px;
+}
+
 .table-section table {
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 20px;
 }
 
 .table-section th, .table-section td {
   padding: 10px;
   text-align: left;
-  border-bottom: 1px solid #444;
+  border-bottom: 1px solid #555;
 }
 
 .table-section input[type="checkbox"] {
-  transform: scale(1.5);
-  margin-right: 10px;
+  transform: scale(1.2);
+  margin-left: auto;
 }
 
 .table-section button {
@@ -103,11 +94,30 @@ h2 {
   border-radius: 10px;
   cursor: pointer;
   transition: background-color 0.3s;
+  margin-top: 10px;
   float: right;
-  margin-right: 15px;
 }
 
 .table-section button:hover {
   background-color: red;
   color: white;
+}
+
+.tag-list-wrapper {
+  max-height: 500px;
+  overflow-y: auto;
+  margin-bottom: 20px;
+}
+
+/* 스크롤바 스타일 */
+.tag-list-wrapper::-webkit-scrollbar {
+    width: 5px;  /* 스크롤바의 너비 */
+}
+.tag-list-wrapper::-webkit-scrollbar-thumb {
+    height: 100%; /* 스크롤바의 길이 */
+    background: black; /* 스크롤바의 색상 */
+    border-radius: 10px;
+}
+.tag-list-wrapper::-webkit-scrollbar-track {
+    background: #111;  /* 스크롤바 뒷 배경 색상 */
 }

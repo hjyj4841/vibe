@@ -41,3 +41,32 @@ document.addEventListener('DOMContentLoaded', function() {
 		}
 	});
 });
+
+$(document).ready(function() {
+    let page = 1;
+
+    $(".tag-list-wrapper").scroll(function() {
+        var innerHeight = $(this).innerHeight();
+        var scroll = $(this).scrollTop() + innerHeight;
+        var height = $(this)[0].scrollHeight;
+
+        if (height === scroll) {
+            page++;
+            $.ajax({
+                url: "/loadMoreTags",
+                type: "POST",
+                data: { page: page },
+                success: function(tags) {
+                    let tagListBody = $(".tag-list-body");
+                    $.each(tags, function(index, tag) {
+                        let tagItem = '<tr>' +
+                            '<td>' + tag.tagName + '</td>' +
+                            '<td><input type="checkbox" name="tagCodes[]" value="' + tag.tagCode + '" /></td>' +
+                            '</tr>';
+                        tagListBody.append(tagItem);
+                    });
+                }
+            });
+        }
+    });
+});
