@@ -1,6 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core"
-prefix="c"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
   <head>
@@ -9,10 +7,7 @@ prefix="c"%>
     <link rel="stylesheet" href="./css/search.css" />
     <link rel="stylesheet" href="./css/mypage.css" />
     <link rel="stylesheet" href="./css/musicForm.css" />
-    <script
-      src="https://kit.fontawesome.com/df04184d5c.js"
-      crossorigin="anonymous"
-    ></script>
+    <script src="https://kit.fontawesome.com/df04184d5c.js" crossorigin="anonymous"></script>
     <script src="/js/searchMusic.js"></script>
     <title>검색하기</title>
   </head>
@@ -59,9 +54,6 @@ prefix="c"%>
         </div>
       </div>
     </div>
-    <%--
-    <script src="/js/searchMusic.js"></script>
-    --%>
     <script>
       let offset = 0;
       let plCode = "<c:out value='${plCode}'/>";
