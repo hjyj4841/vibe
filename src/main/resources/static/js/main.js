@@ -1,53 +1,58 @@
-// listRank div 바뀌는 이벤트
-const buttons = document.querySelectorAll(".rankButtonBox button");
-const ranklists = document.querySelectorAll(".listRank");
-const rightArrow = document.querySelector(".emptyRight img");
-const leftArrow = document.querySelector(".emptyLeft img");
-const listRankDesc = document.querySelectorAll(".listRankDesc")
+const rankButton = document.querySelectorAll("rankButtonBox div")
+const rankList = document.querySelectorAll(".listRank");
+const rightArrow = document.querySelector(".emptyRight");
+const leftArrow = document.querySelector(".emptyLeft");
+const listRankDesc = document.querySelectorAll(".listRankDesc");
+const rankBox = document.querySelector(".rankButtonBox");
 
-for (let i = 0; i <= buttons.length; i++) {
-  buttons[i].addEventListener("click", function () {
-    ranklists[i].style.opacity = 1;
-    ranklists[i].style.zIndex = 1;
-    switch (i) {
-      case 0:
-        ranklists[1].style.opacity = 0;
-        ranklists[1].style.zIndex = 0;
-        ranklists[2].style.opacity = 0;
-        ranklists[2].style.zIndex = 0;
-		rightArrow.addEventListener("click", function (){
-			listRankDesc[0].style.opacity = 0;
-			listRankDesc[0].style.zIndex = 0;
-			});	
-		
-        break;
-      case 1:
-        ranklists[0].style.opacity = 0;
-        ranklists[0].style.zIndex = 0;
-        ranklists[2].style.opacity = 0;
-        ranklists[2].style.zIndex = 0;
-		rightArrow.addEventListener("click", function (){
-			listRankDesc[1].style.opacity = 0;
-			listRankDesc[1].style.zIndex = 0;
-			});
-		
-        break;
-      case 2:
-        ranklists[0].style.opacity = 0;
-        ranklists[0].style.zIndex = 0;
-        ranklists[1].style.opacity = 0;
-        ranklists[1].style.zIndex = 0;
-		rightArrow.addEventListener("click", function (){
-			listRankDesc[2].style.opacity = 0;
-			listRankDesc[2].style.zIndex = 0;
-			});
-		
-        break;
-    }
-  });
+const first = document.querySelector("#fir");
+const second = document.querySelector("#sec");
+const third = document.querySelector("#thi");
+
+function togglleActRank() {
+	
+	const check = listRankDesc[i].classList.contains("hidden");
+
+	for(let i = 0; i <= rankButton.length; i++){
+		switch(i){
+			case 0:
+				listRankDesc[i].classList.add("hidden");
+				rankButton[i+1].classList.add("black");
+				rankButton[i+2].classList.add("black");
+				if(check){
+					listRankDesc[i].classList.remove("hidden");
+					rankButton[i+1].classList.remove("black");
+					rankButton[i+2].classList.remove("black");
+				}
+				break;
+			case 1:
+				listRankDesc[i].classList.add("hidden");
+				rankButton[i+1].classList.add("black");
+				rankButton[i-1].classList.add("black");
+				if(check){
+					listRankDesc[i].classList.remove("hidden");
+					rankButton[i+1].classList.remove("black");
+					rankButton[i-1].classList.remove("black");
+				}
+				break;
+			case 2:
+				listRankDesc[i].classList.add("hidden");
+				rankButton[i-2].classList.add("black");
+				rankButton[i-1].classList.add("black");
+				if(check){
+					listRankDesc[i].classList.remove("hidden");
+					rankButton[i-2].classList.remove("black");
+					rankButton[i-1].classList.remove("black");
+				}
+				break;
+		}
+	}
 }
 
-// 오른쪽 화살표를 누르면 플리에 들어있는 음악 5개 보이게
+rankList[0].addEventListener("click", togglleActRank);
 
-
-
+/*
+for(let i = 0; i <= rankList.length; i++){
+	rankList[i].addEventListener("click", togglleActRank);
+}
+*/

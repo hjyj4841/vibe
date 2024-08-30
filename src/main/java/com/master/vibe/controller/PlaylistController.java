@@ -115,6 +115,7 @@ public class PlaylistController {
 		return "redirect:/myPlaylist";
 	}
 
+	// 음악 리스트
 	@GetMapping("/showPlaylistInfo")
 	public String showPlaylistInfo(int plCode, Model model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

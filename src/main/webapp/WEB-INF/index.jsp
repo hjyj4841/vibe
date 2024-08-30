@@ -43,38 +43,28 @@
 	<!-- DB에 따라 바뀔 부분 -->
 	<!-- 리스트 박스 -->
 	<div id="listBox">
+		<div class="rankButtonBox">
+			<div id="fir">1st</div>
+			<div class="black" id="sec">2nd</div>
+			<div class="black" id="thi">3rd</div>
+		</div>
 		<div class="listTop">
-			<div class="rankButtonBox">
-				<c:choose>
-					<c:when test="">
-					<div class="emptyLeft">
-						<img src="/imgs/listLogo/2931162_arrow_back_left_direction_move_icon.png">
-					</div>
-					</c:when>
-					<c:otherwise>
-						<div>
-							<h2>TOP Rank</h2>
-							<button>1st</button>
-							<button>2nd</button>
-							<button>3rd</button>
-						</div>
-					</c:otherwise>
-				</c:choose>
+			<div class="emptyLeft">
+				<img src="/imgs/listLogo/2931162_arrow_back_left_direction_move_icon.png">
 			</div>
 			<div class="listContainer">
 				<!-- 랭크 1위 - 상위 리스트 3개만 표출 -->
 				<section class="listRank">
-					<c:forEach items="${rankTop}" var="searchPlaylist" begin="0"
-						end="0">
+					<c:forEach items="${rankTop}" var="searchPlaylist" begin="0" end="0">
 						<img src="${searchPlaylist.plImg}"
 							data-code="${searchPlaylist.plCode}">
 						<div class="listRankDesc">
 							<img src="${searchPlaylist.plImg}"
 								data-code="${searchPlaylist.plCode}">
-							<div class="rankTag">			
+							<div class="rankTag">
 								<c:forEach items="${searchPlaylist.tagList}" var="tag">
 									<c:if test="${empty tag.tag.tagName}">
-										<div style="opacity: 0"> dddd </div>
+										<div style="opacity: 0">&nbsp</div>
 									</c:if>
 									<c:if test="${not empty tag.tag.tagName}">
 										#${tag.tag.tagName}
@@ -87,23 +77,20 @@
 							</div>
 						</div>
 					</c:forEach>
-					
-					
 				</section>
 
 				<!-- 랭크 2위 -->
 				<section class="listRank">
-					<c:forEach items="${rankTop}" var="searchPlaylist" begin="1"
-						end="1">
+					<c:forEach items="${rankTop}" var="searchPlaylist" begin="1" end="1">
 						<img src="${searchPlaylist.plImg}"
 							data-code="${searchPlaylist.plCode}">
 						<div class="listRankDesc">
 							<img src="${searchPlaylist.plImg}"
 								data-code="${searchPlaylist.plCode}">
-							<div class="rankTag">			
+							<div class="rankTag">
 								<c:forEach items="${searchPlaylist.tagList}" var="tag">
 									<c:if test="${empty tag.tag.tagName}">
-										<div style="opacity: 0"> dddd </div>
+										<div style="opacity: 0">&nbsp</div>
 									</c:if>
 									<c:if test="${not empty tag.tag.tagName}">
 										#${tag.tag.tagName}
@@ -120,17 +107,16 @@
 
 				<!-- 랭크 3위 -->
 				<section class="listRank">
-					<c:forEach items="${rankTop}" var="searchPlaylist" begin="2"
-						end="2">
+					<c:forEach items="${rankTop}" var="searchPlaylist" begin="2" end="2">
 						<img src="${searchPlaylist.plImg}"
 							data-code="${searchPlaylist.plCode}">
 						<div class="listRankDesc">
 							<img src="${searchPlaylist.plImg}"
 								data-code="${searchPlaylist.plCode}">
-							<div class="rankTag">			
+							<div class="rankTag">
 								<c:forEach items="${searchPlaylist.tagList}" var="tag">
 									<c:if test="${empty tag.tag.tagName}">
-										<div style="opacity: 0"> dddd </div>
+										<div style="opacity: 0">&nbsp</div>
 									</c:if>
 									<c:if test="${not empty tag.tag.tagName}">
 										#${tag.tag.tagName}
@@ -146,8 +132,7 @@
 				</section>
 			</div>
 			<div class="emptyRight">
-				<img
-					src="/imgs/listLogo/2931159_arrow_forward_right_move_navigation_icon.png">
+				<img src="/imgs/listLogo/2931159_arrow_forward_right_move_navigation_icon.png">
 			</div>
 		</div>
 	</div>
