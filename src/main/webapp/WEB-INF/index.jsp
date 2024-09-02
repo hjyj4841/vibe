@@ -56,8 +56,16 @@
 				<!-- 랭크 1위 - 상위 리스트 3개만 표출 -->
 				<section class="listRank">
 					<c:forEach items="${rankTop}" var="searchPlaylist" begin="0" end="0">
-						<img src="${searchPlaylist.plImg}"
-							data-code="${searchPlaylist.plCode}">
+						<img src="${searchPlaylist.plImg}" data-code="${searchPlaylist.plCode}">
+						<div class="plDesc">
+							<div>
+								<img src="${searchPlaylist.plImg}" data-code="${searchPlaylist.plCode}">
+								<div>
+									Music
+								</div>
+							</div>
+						</div>
+						
 						<div class="listRankDesc">
 							<img src="${searchPlaylist.plImg}"
 								data-code="${searchPlaylist.plCode}">
