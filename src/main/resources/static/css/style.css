@@ -192,6 +192,40 @@ html {
 	filter: brightness(30%);
 }
 
+.plDesc {
+	position: absolute;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.plDesc > div{
+	position: relative;
+	width: 65%;
+	height: 65%;
+}
+
+.plDesc > div > img{
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	box-shadow: 3px 3px 5px black;
+	position: absolute;
+}
+
+.plDesc > div > div{
+	background-color: rgba(0, 0, 0, 0.6);
+	position: absolute;
+	width: 35%;
+	height: 100%;
+	right: 0;
+	top: 0;
+}
+
+.plDesc.hidden{
+	display: none;
+}
+
 .listRankDesc {
 	display: flex;
 	flex-direction: column;
