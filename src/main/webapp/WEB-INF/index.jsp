@@ -33,7 +33,7 @@
 			<select name="select">
 				<option value="title">Title</option>
 				<option value="tag">Tag</option>
-			</select> <input type="text" placeholder="Search Playlist..." name="search" />
+			</select> <input type="text" autocomplete="off" placeholder="Search Playlist..." name="search" />
 			<button id="searchPlBtn" type="submit">
 				<i class="fa-solid fa-magnifying-glass"></i>
 			</button>
@@ -44,9 +44,9 @@
 	<!-- 리스트 박스 -->
 	<div id="listBox">
 		<div class="rankButtonBox">
-			<div id="fir">1st</div>
-			<div class="black" id="sec">2nd</div>
-			<div class="black" id="thi">3rd</div>
+			<div>1st</div>
+			<div>2nd</div>
+			<div>3rd</div>
 		</div>
 		<div class="listTop">
 			<div class="emptyLeft">
