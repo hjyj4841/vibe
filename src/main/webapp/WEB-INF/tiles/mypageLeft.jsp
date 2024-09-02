@@ -43,35 +43,35 @@
 		</a>
 	</div>
 	<div>
-		<a href="mypage"> <i class="fa-solid fa-user"></i> <span>My
+		<a href="/mypage"> <i class="fa-solid fa-user"></i> <span>My
 				Page</span>
 		</a>
 	</div>
 
 	<div>
-		<a href="myPlaylist"> <i class="fa-solid fa-circle-play"></i> <span>My
+		<a href="/myPlaylist"> <i class="fa-solid fa-circle-play"></i> <span>My
 				PlayList</span>
 		</a>
 	</div>
 	<div>
-		<a href="likePlaylist"> <i class="fa-brands fa-gratipay"></i> <span>Like
+		<a href="/likePlaylist"> <i class="fa-brands fa-gratipay"></i> <span>Like
 				PlayList</span>
 		</a>
 	</div>
 	<div>
-		<a href="musicListen"> <i class="fa-solid fa-circle-play"></i> <span>MUSIC
+		<a href="/musicListen"> <i class="fa-solid fa-circle-play"></i> <span>MUSIC
 				player</span>
 		</a>
 	</div>
 </div>
 <div class="myChangeInfo">
 	<div>
-		<a href="updateUser"> <i class="fa-solid fa-gear"></i> <span>Edit
+		<a href="/updateUser"> <i class="fa-solid fa-gear"></i> <span>Edit
 				Profile</span>
 		</a>
 	</div>
 	<div>
-		<a class="deleteUser"> <span>delete ID</span>
+		<a class="/deleteUser"> <span>delete ID</span>
 		</a>
 	</div>
 </div>

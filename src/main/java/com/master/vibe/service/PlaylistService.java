@@ -7,9 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.master.vibe.model.dto.CreatePlaylistDTO;
 import com.master.vibe.model.dto.SearchDTO;
-import com.master.vibe.model.dto.UpdatePlaylistDTO;
 import com.master.vibe.model.vo.Music;
-import com.master.vibe.model.vo.Paging;
 import com.master.vibe.model.vo.Playlist;
 import com.master.vibe.model.vo.PlaylistTag;
 

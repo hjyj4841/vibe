@@ -141,17 +141,8 @@
 											<sec:authentication property="principal" var="user" />
 											<c:if test="${user.userEmail eq playlist.user.userEmail}">
 												<div class="radioCheckBox">
-													<c:choose>
-														<c:when test="${user.userEmail eq playlist.user.userEmail}">
-															<input type="checkbox" name="selectedDeleteMusic"
-																value="${music.id}" id="radioCheck${status.index}">
-														</c:when>
-														<c:otherwise>
-															<input type="checkbox" name="selectedDeleteMusic"
-																value="${music.id}" id="radioCheck${status.index}"
-																class="hidden-checkbox">
-														</c:otherwise>
-													</c:choose>
+													<input type="checkbox" name="selectedDeleteMusic"
+														value="${music.id}" id="radioCheck${status.index}">
 													<label for="radioCheck${status.index}"></label>
 												</div>
 											</c:if>
@@ -212,7 +203,7 @@
 		var scroll = $(this).scrollTop() + $(this).innerHeight() + 1;
 		var height = $(this)[0].scrollHeight;
 		
-		if(height === scroll){
+		if(height <= scroll){
 			page++;
 			$.ajax({
 				url: '/limitPlaylistMusicList',
@@ -256,8 +247,6 @@
 			});
 		}
 	});
-	
-	
 	
 	// 좋아요 기능
 	function clickLike(event) {

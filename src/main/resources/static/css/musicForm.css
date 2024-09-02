@@ -7,11 +7,35 @@
   justify-content: center;
   align-items: center;
   width: 100%;
+  position: relative;
 }
 .myTagBox > h2 {
   padding: 20px;
   font-size: 1.2rem;
 }
+
+/* 플리 목록으로 돌아가기 버튼(화살표) */
+.goPlaylistListBtn {
+	top: 0; /* 화면 상단에서의 거리 */
+	right: 0; /* 화면 오른쪽에서의 거리 */
+	width: 50px;
+	height: 50px;
+	background-color: white;
+	border-radius: 50%;
+	text-decoration: none;
+	color: black;
+	display: flex;
+	position: absolute;
+	z-index: 10;
+	align-items: center; /* 세로 중앙 정렬 */
+	justify-content: center; /* 가로 중앙 정렬 */
+	font-size: 1.3rem; /* 아이콘 크기 조절 */
+	box-shadow: 0 10px 35px rgba(0, 0, 0, 0.05), 0 6px 6px rgba(0, 0, 0, 0.1);
+}
+.goPlaylistListBtn:hover {
+ 	background-color: #e0e0e0;
+}
+
 .searchMusicBox {
   width: 80%;
 }
@@ -44,12 +68,12 @@
 .musicListBox > div {
   height: 100%;
   display: flex;
-  flex-direction: column;
   justify-content: center;
 }
 .musicCheck {
   width: 5%;
   align-items: center;
+  flex-direction: column;
 }
 .musicCheck label {
   width: 10px;
@@ -65,6 +89,7 @@
 .musicImg {
   width: 10%;
   align-items: center;
+  flex-direction: column;
 }
 .musicImg > img {
   width: 70px;
@@ -74,9 +99,10 @@
   overflow: hidden;
 }
 .musicDesc {
-  width: 75%;
+  width: 73%;
   align-items: flex-start;
   padding: 10px;
+  flex-direction: column;
 }
 .musicDesc > div {
   padding: 5px;
@@ -87,13 +113,36 @@
   color: #999;
 }
 .addMusicIcon {
-  width: 10%;
+  width: 12%;
+  align-items: center;
+  display: flex;
+  justify-content: center;
   align-items: center;
 }
+
+.playlistMusicActionBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.musicPlayBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+	color: #999;
+	padding: 10px;
+	transition: 0.2s;
+}
+.playlistMusicActionBtn:hover > .musicPlayBtn{
+	color: white;
+}
+
 .addMusicIcon > i {
   padding: 10px;
   cursor: pointer;
   transition: 0.3s;
+  color: #999;
 }
 .addMusicIcon > i:hover {
   color: #02f958;
@@ -113,14 +162,6 @@
 .addMusicform input[type="button"]:hover {
   background-color: white;
 }
-.addMusicform a {
-  color: #aaa;
-  transition: 0.3s;
-  cursor: pointer;
-}
-.addMusicform a:hover {
-  color: red;
-}
 /* 스크롤바 스타일 */
 .addMusicBox::-webkit-scrollbar {
   width: 5px; /* 스크롤바의 너비 */
@@ -137,3 +178,43 @@
 input[type=text]:focus{
 	outline: none;
 }
+
+/* 플레이어 모달 배경 */
+.playerModal {
+  display: none; /* 모달 기본적으로 숨김 */
+  position: fixed;
+  z-index: 1000; /* 모달이 화면의 위에 오도록 */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* 모달 콘텐츠 */
+.modal-content {
+  background-color: rgba(50, 50, 50, 0.8);
+  margin: 15% auto; /* 화면 중앙에 위치 */
+  padding: 20px;
+  width: 380px;
+  height: 400px;
+  border-radius: 10px;
+  position: relative;
+}
+
+/* 닫기 버튼 */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+.close:hover,
+.close:focus {
+  color: #666;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+

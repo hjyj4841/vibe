@@ -9,9 +9,6 @@ import com.master.vibe.model.vo.User;
 
 import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Builder @Data
 public class PlaylistDTO {

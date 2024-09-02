@@ -24,12 +24,12 @@
 		<!-- nav2 영역 -->
 		<div id="nav2">
 			<sec:authorize access="!isAuthenticated()">
-				<a href="login" class="my">Sign In</a>
-				<a href="registerUser" class="signUp">Sign Up</a>
+				<a href="/login" class="my">Sign In</a>
+				<a href="/registerUser" class="signUp">Sign Up</a>
 			</sec:authorize>
 			<sec:authorize access="isAuthenticated()">
-				<a href="mypage" class="my">My</a>
-				<a href="logout" class="signUp">Logout</a>
+				<a href="/mypage" class="my">My</a>
+				<a href="/logout" class="signUp">Logout</a>
 			</sec:authorize>
 		</div>
 	</header>

@@ -13,26 +13,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import com.master.vibe.model.dto.CreatePlaylistDTO;
 import com.master.vibe.model.dto.PlaylistDTO;
 import com.master.vibe.model.vo.Music;
 import com.master.vibe.model.vo.MusicPaging;
-import com.master.vibe.model.vo.Paging;
 import com.master.vibe.model.vo.Playlist;
-import com.master.vibe.model.vo.PlaylistTag;
 import com.master.vibe.model.vo.User;
 import com.master.vibe.playlistViewer.PlaylistViewer;
 import com.master.vibe.model.dto.SearchDTO;
 import com.master.vibe.model.dto.UpdatePlaylistDTO;
 import com.master.vibe.service.PlaylistMusicService;
 import com.master.vibe.service.PlaylistService;
-import com.master.vibe.service.PlaylistTagService;
 import com.master.vibe.service.SpotifyService;
 import com.master.vibe.service.TagService;
-import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 public class PlaylistController {
