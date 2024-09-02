@@ -17,9 +17,9 @@
   padding: 0 15px;
   transition: 0.2s;
 }
-.rankingHead a:hover {
+.rankingHead a.active {
   color: #ff1818;
 }
-.rankingHead a.active {
+.rankingHead a:hover {
   color: #ff1818;
 }

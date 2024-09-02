@@ -14,49 +14,28 @@
 		<li><a href="/playListRankingOnGender?userGender=male">Gender Ranking</a></li>
 	</ul>
 	<script>
+	const url = new URL(location.href);
+	const pathname = url.pathname;
+	const search = pathname + url.search;
+	const btns = document.querySelectorAll(".rankingHead a");
+
 	document.addEventListener("DOMContentLoaded", function () {
-		  var btns = document.querySelectorAll(".rankingHead a");
+		const links = document.querySelectorAll(".ageLink a");
+	
+		btns.forEach((btn) => {
+			if(pathname === btn.getAttribute("href").split("?")[0]) {
+				btn.classList.add("active");
+			}
+		})
 
-		  btns.forEach(function (btn) {
-		    btn.addEventListener("click", function (e) {
-		      e.preventDefault();  // 기본 링크 동작 방지
-
-		      btns.forEach(function (b) {
-		        b.classList.remove("active");
-		        b.classList.remove("age-ranking");
-		        b.classList.remove("gender-ranking");
-		      });
-
-		      btn.classList.add("active");
-
-		      // href 속성을 기반으로 특정 색상 클래스를 추가
-		      if (btn.getAttribute("href").includes("ageGroup=20")) {
-		        btn.classList.add("age-ranking");
-		      } else if (btn.getAttribute("href").includes("userGender=male")) {
-		        btn.classList.add("gender-ranking");
-		      }
-
-		      // Active Class 설정 후 해당 URL로 Redirection
-		      window.location.href = btn.getAttribute("href");
-		    });
-		  });
-
-		  // 선택적으로 현재 URL을 기반으로 활성 링크를 설정
-		  var currentUrl = window.location.pathname + window.location.search;
-		  btns.forEach(function (btn) {
-		    if (btn.getAttribute("href") === currentUrl || 
-		        (currentUrl === '/' && btn.getAttribute("href") === '/')) {
-		      btn.classList.add("active");
-
-		      // href 속성을 기반으로 특정 색상 클래스를 추가
-		      if (btn.getAttribute("href").includes("ageGroup=20")) {
-		        btn.classList.add("age-ranking");
-		      } else if (btn.getAttribute("href").includes("userGender=male")) {
-		        btn.classList.add("gender-ranking");
-		      }
-		    }
-		  });
-		});
+		if(url.search !== "") {
+			links.forEach((link) => {
+				if(search === link.getAttribute("href")) {
+					link.style.color = "red";
+				}
+			})
+		}
+	});
 	</script>
 </body>
 </html>

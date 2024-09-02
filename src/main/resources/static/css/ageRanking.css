@@ -38,8 +38,11 @@
 	color: white;
 	transition: 0.2s;
 }
+.ageLink a.active {
+	color: #ff1818;
+}
 .ageLink a:hover{
-	color: red;
+	color: #ff1818;
 }
 .searchContainer{
 	height: 100%;
