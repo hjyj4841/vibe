@@ -20,22 +20,22 @@
 			<div class="ageLink">
 				<ul>
 					<li>
-						<a href="playListRankingOnAgeGroup?ageGroup=10">10's</a>
+						<a href="/playListRankingOnAgeGroup?ageGroup=10">10's</a>
 					</li>
 					<li>
-						<a href="playListRankingOnAgeGroup?ageGroup=20">20's</a>
+						<a href="/playListRankingOnAgeGroup?ageGroup=20">20's</a>
 					</li>
 					<li>
-						<a href="playListRankingOnAgeGroup?ageGroup=30">30's</a>
+						<a href="/playListRankingOnAgeGroup?ageGroup=30">30's</a>
 					</li>
 					<li>
-						<a href="playListRankingOnAgeGroup?ageGroup=40">40's</a>
+						<a href="/playListRankingOnAgeGroup?ageGroup=40">40's</a>
 					</li>
 					<li>
-						<a href="playListRankingOnAgeGroup?ageGroup=50">50's</a>
+						<a href="/playListRankingOnAgeGroup?ageGroup=50">50's</a>
 					</li>
 					<li>
-						<a href="playListRankingOnAgeGroup?ageGroup=etc">etc</a>
+						<a href="/playListRankingOnAgeGroup?ageGroup=etc">etc</a>
 					</li>
 				</ul>
 			</div>

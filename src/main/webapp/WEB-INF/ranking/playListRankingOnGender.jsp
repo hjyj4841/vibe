@@ -20,13 +20,13 @@
 			<div class="ageLink">
 				<ul>
 					<li>
-						<a href="playListRankingOnGender?userGender=male">male</a>
+						<a href="/playListRankingOnGender?userGender=male">male</a>
 					</li>
 					<li>
-						<a href="playListRankingOnGender?userGender=female">female</a>
+						<a href="/playListRankingOnGender?userGender=female">female</a>
 					</li>
 					<li>
-						<a href="playListRankingOnGender?userGender=nonbinary">non-binary</a>
+						<a href="/playListRankingOnGender?userGender=nonbinary">non-binary</a>
 					</li>
 				</ul>
 			</div>
