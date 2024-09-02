@@ -217,30 +217,19 @@ public class PlaylistController {
 			dto.getPlImgFile().transferTo(newFile);
 			newFileName = "http://192.168.10.6:8080/playlistImg/" + newFileName;
 
-			// defaultImg가 null이 아니다 -> 기본 이미지 URL이(defaultCD.img) 전달되었다. defaultImg가 비어있지
-			// 않다 -> 기본 이미지 URL이 빈 문자열이 아니다.
-			// 이 조건문이 참인 경우, 기본 이미지 URL이 폼 데이터에 포함되었음을 의미, 이를 새 이미지로 설정
+			// 기본 이미지 URL이 폼 데이터에 포함됨. 새 이미지로 설정
 		} else if (dto.getDefaultImg() != null && !dto.getDefaultImg().isEmpty()) {
-			// 기본 이미지 URL이 폼에 포함된 경우로
-			// 사용자가 "기본 이미지로" 버튼을 클릭하여 기본 이미지로 변경한 경우, 기존의 이미지 파일을 변경하지 않고 이 기본 이미지 URL을 새
-			// 이미지로 사용 -> 즉, defaultCD.img로 설정하겠다.
+			
+			// 사용자가 버튼을 클릭하여 기본 이미지로 변경한 경우, 기존의 이미지 파일을 변경하지 않고 이 기본 이미지 URL을 새 이미지로 사용 -> 즉, defaultCD.img로 설정하겠다.
 			newFileName = dto.getDefaultImg();
 		} else {
 			// 이미지 파일 변경하지 않았으면 기존 이미지 유지
-			// 사용자가 이미지 파일을 업로드하지 않았고, 기본 이미지로 리셋하지 않은 경우에는 기존 이미지 URL을 그대로 유지
 			newFileName = playlist.getPlImg();
 		}
 
 		// Playlist 객체를 사용하여 플레이리스트 업데이트
 		playlist.setPlTitle(dto.getPlTitle());
 		playlist.setPlImg(newFileName); // 새 이미지 파일 이름으로 설정
-
-		/*
-		 * // DTO를 사용하여 플레이리스트 업데이트 Playlist updatedPlaylist = new Playlist();
-		 * updatedPlaylist.setPlCode(dto.getPlCode());
-		 * updatedPlaylist.setPlTitle(dto.getPlTitle());
-		 * updatedPlaylist.setPlImg(newFileName); // 이미지 파일 이름을 경로로 설정
-		 */
 
 		playlistService.updatePlaylist(playlist); // 수정된 서비스 메서드 호출
 
@@ -322,26 +311,5 @@ public class PlaylistController {
 		
 		return playlistViewer.playlistView(playlist);
 	}
-	/*
-	 * @PostMapping("/updatePlaylist") public String updatePlaylist(@ModelAttribute
-	 * PlaylistDTO playlistDTO) { MultipartFile file = playlistDTO.getPlImg(); if
-	 * (file != null && !file.isEmpty()) { // 파일 처리 로직 (예: 파일 저장) String fileName =
-	 * file.getOriginalFilename(); // 파일 저장 위치 및 로직을 설정하세요. // 예:
-	 * file.transferTo(new File("/path/to/save/" + fileName)); // 파일 저장 후, 경로를 DTO에
-	 * 추가할 수 있습니다. // playlistDTO.setPlImgPath("/path/to/save/" + fileName); } //
-	 * DTO를 사용하여 업데이트 로직 처리 playlistService.updatePlaylist(playlistDTO); return
-	 * "redirect:/somePage"; }
-	 */
-
-	/*
-	 * // 플레이리스트 생성 처리
-	 * 
-	 * @PostMapping("/createPlaylist") public String
-	 * createPlaylist(CreatePlaylistDTO dto, Model model) {
-	 * playlistService.createPlaylist(dto);
-	 * 
-	 * // DTO에서 제목을 추출하여 모델에 추가 model.addAttribute("plTitle", dto.getPlTitle());
-	 * 
-	 * // 생성된 플레이리스트 정보 페이지로 이동 return "test/playlist/createPlaylistInfo"; }
-	 */
+	
 }
