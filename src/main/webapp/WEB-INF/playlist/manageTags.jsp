@@ -27,15 +27,17 @@
 
 						<!-- 태그 추가 폼 -->
 						<div class="form-tag-section">
-							<form id="addTagForm"
-								action="${pageContext.request.contextPath}/playlist/addTag"
-								method="post">
-								<input type="hidden" name="plCode" value="${playlistCode}">
-								<h2>New Tags</h2>
-								<input type="text" id="tags" name="newTag"
-									placeholder="Type your new Tag" required />
-								<button type="submit">Add Tag</button>
-							</form>
+							<div class="form-tag-section-addTagForm">
+								<form id="addTagForm"
+									action="${pageContext.request.contextPath}/playlist/addTag"
+									method="post">
+									<input type="hidden" name="plCode" value="${playlistCode}">
+									<h2>New Tags</h2>
+									<input type="text" id="tags" name="newTag"
+										placeholder="Type your new Tag" required />
+									<button type="submit">Add</button>
+								</form>
+							</div>
 						</div>
 
 						<!-- 태그 삭제 폼 -->
@@ -47,17 +49,16 @@
 								<input type="hidden" name="plCode" value="${playlistCode}" />
 								<table>
 									<thead>
-										<tr>
-											<td>Tags</td>
-											<td>
-										</tr>
+											<td class="tags-column">Tags</td>
 									</thead>
 									<tbody>
 										<c:forEach var="playlistTag" items="${existingTags}">
 											<tr>
-												<td>${playlistTag.tag.tagName}</td>
-												<td><input type="checkbox" name="tagCodes[]"
-													value="${playlistTag.tag.tagCode}" /></td>
+												<td class="radioCheckBox"><input type="checkbox"
+													name="tagCodes[]" value="${playlistTag.tag.tagCode}"
+													id="checkbox-${playlistTag.tag.tagCode}" /> <label
+													for="checkbox-${playlistTag.tag.tagCode}"></label></td>
+												<td class="deleteTagList">${playlistTag.tag.tagName}</td>
 											</tr>
 										</c:forEach>
 									</tbody>
