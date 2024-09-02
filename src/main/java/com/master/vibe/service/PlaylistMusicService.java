@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.master.vibe.model.vo.MusicPaging;
 import com.master.vibe.model.vo.PlaylistMusic;
 
 import mapper.PlaylistMusicMapper;
@@ -32,8 +33,9 @@ public class PlaylistMusicService {
     }
     
     // 플레이리스트_뮤직 테이블에서 해당 플레이리스트의 뮤직코드만 조회
-    public List<String> showMusicList(int plCode){
-    	return playlistMusicMapper.showMusicList(plCode);
+    public List<String> showMusicList(MusicPaging paging){
+    	paging.setOffset(paging.getLimit() * (paging.getPage() - 1));
+    	return playlistMusicMapper.showMusicList(paging);
     }
     
     

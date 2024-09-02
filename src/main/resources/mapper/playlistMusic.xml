@@ -17,10 +17,11 @@
 	</insert>
 	
 	<!-- 해당 플레이리스트의 음악코드 조회 -->
-	<select id="showMusicList" parameterType="Integer" resultType="String">
+	<select id="showMusicList" parameterType="MusicPaging" resultType="String">
 		SELECT music_code
 		FROM playlist_music
 		WHERE pl_code = #{plCode}
+		LIMIT #{offset}, #{limit}
 	</select>
 
 	<!-- 플레이리스트 음악 삭제 -->

@@ -98,28 +98,6 @@
 			JOIN tag USING (tag_code)
 		WHERE pl_code = #{code}
 	</select>
-	
-	<!-- 무한스크롤 --> 
-	<!-- 
-	<select id="limitAllPlaylist" resultMap="playlistMap"
-		parameterType="Paging">
-		SELECT * FROM playlist
-		JOIN user USING (user_email)
-		WHERE pl_public_yn = 'Y'
-		 타이틀로 검색 쿼리
-		<if test="search != null">
-			AND pl_title LIKE CONCAT('%', #{search}, '%')
-		</if>
-		 태그로 검색 쿼리 
-		<if test="codes != null">
-			AND pl_code IN
-			<foreach collection="codes" item="code" open="(" close=")"
-				separator=",">
-				#{code}
-			</foreach>
-		</if>
-	</select>
- -->
 
 	<!-- 플레이리스트 생성 --> <!-- 이미지 추가! -->
 	<insert id="createPlaylist" parameterType="CreatePlaylistDTO" useGeneratedKeys="true" keyProperty="plCode" keyColumn="pl_code">
@@ -127,15 +105,6 @@
 		playlist(pl_title, user_email, pl_img, pl_public_yn)
 		VALUES (#{plTitle}, #{userEmail}, #{plImg}, #{plPublicYn})
 	</insert>
-	
-	
-	<!-- 플레이리스트 이미지 업데이트  
-	<update id="updatePlaylist" parameterType="Playlist">
-		UPDATE playlist
-		SET pl_img = #{plImg}
-		WHERE pl_code = #{pl_code}
-	</update>
-	-->
 	
 	<!-- 플레이리스트 제목과 이미지 동시에 업데이트 -->
 	<update id="updatePlaylist" parameterType="UpdatePlaylistDTO">
@@ -164,6 +133,7 @@
 	<!-- 플레이리스트 코드로 플레이리스트 정보 조회 -->
 	<select id="selectPlaylistByPlCode" resultMap="playlistMap" parameterType="Integer">
 		SELECT * FROM playlist
+		JOIN user USING(user_email)
 		WHERE pl_code = #{plCode}
 	</select>
 

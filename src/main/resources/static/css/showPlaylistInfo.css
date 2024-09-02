@@ -6,6 +6,9 @@ a {
 /* 플레이리스트 정보 화면 메인 */
 .playlistInfoMain {
 	overflow-y: scroll;
+	position: relative;
+	width: 100%;
+	height: 100%;
 }
 /* 스크롤바 스타일 */
 .playlistInfoMain::-webkit-scrollbar {
@@ -45,6 +48,19 @@ a {
 	font-weight: 600;
 	padding: 10px;
 }
+
+.plTitle,
+.likeBox{
+	display: inline;
+}
+.likeBox{
+	margin-left: 30px;
+	cursor: pointer;
+}
+.likeBox .heartEmoji{
+	font-size: 1rem;
+}
+
 /* 자물쇠 lock(플리 공개여부) */
 .PlaylistInfoBox .plTitle i{
 	padding-left: 10px;
@@ -180,9 +196,8 @@ a {
 
 /* 플리 목록으로 돌아가기 버튼(화살표) */
 .goPlaylistListBtn {
-	position: fixed;
-	top: 120px; /* 화면 상단에서의 거리 */
-	right: 350px; /* 화면 오른쪽에서의 거리 */
+	top: 0; /* 화면 상단에서의 거리 */
+	left: 100%; /* 화면 오른쪽에서의 거리 */
 	width: 50px;
 	height: 50px;
 	background-color: white;
@@ -190,6 +205,8 @@ a {
 	text-decoration: none;
 	color: black;
 	display: flex;
+	position: sticky;
+	z-index: 10;
 	align-items: center; /* 세로 중앙 정렬 */
 	justify-content: center; /* 가로 중앙 정렬 */
 	font-size: 1.3rem; /* 아이콘 크기 조절 */
@@ -211,8 +228,6 @@ a {
     align-items: center;
     padding: 5px;
     position: relative;
-    /*border: 1px solid #ddd;*/
-    /*border-radius: 5px;*/
 }
 .playlistList:hover {
     display: flex;
@@ -241,7 +256,7 @@ a {
 }
 .artistName {
 	font-size: 0.7rem;
-    color: white;
+    color: #999;
 }
 
 
@@ -263,22 +278,24 @@ a {
 	color: #999;
 }
 
+.deleteMusicFromPlaylist{
+	position: relative;
+}
 
 /* 플레이리스트 음악 삭제 버튼 */
 .deleteMusicBtn {
-	width: 920px;
+	width: 100%;
 	height: 50px;
 	border-radius: 4px;
 	background-color: rgba(2, 249, 88, 0.8);
-	/* background-color: #02f958; */
 	color: #fff;
 	border: none;
 	font-weight: bold;
 	font-size: 1.2rem;
-	position: fixed;
-	bottom: 110px;
+	position: sticky;
+	bottom: 0;
 	display: none;
-	z-index: 1000;
+	z-index: 10;
 	cursor: pointer;
 }
 
@@ -297,12 +314,6 @@ a {
 .radioCheckBox input[type="checkbox"] {
 	opacity: 0; /* 투명하게 만들어 화면에서 보이지 않게 */
 	z-index: -1; /* 체크박스를 다른 요소들 뒤로 보내 가려지게 */
-	/*
-	position: relative;
-	width: 20px;
-	height: 20px;
-	cursor: pointer;
-	*/
 }
 .radioCheckBox label {
 	display: block;

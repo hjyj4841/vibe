@@ -133,3 +133,7 @@
 .addMusicBox::-webkit-scrollbar-track {
   background: #111; /* 스크롤바 뒷 배경 색상 */
 }
+
+input[type=text]:focus{
+	outline: none;
+}

@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.master.vibe.model.dto.CreatePlaylistDTO;
 import com.master.vibe.model.dto.PlaylistDTO;
 import com.master.vibe.model.vo.Music;
+import com.master.vibe.model.vo.MusicPaging;
 import com.master.vibe.model.vo.Paging;
 import com.master.vibe.model.vo.Playlist;
 import com.master.vibe.model.vo.PlaylistTag;
@@ -53,9 +54,6 @@ public class PlaylistController {
 
 	@Autowired
 	private PlaylistViewer playlistViewer;
-
-	@Autowired
-	private PlaylistTagService playlistTagService;
 
 	public String fileUpload(MultipartFile file) throws IllegalStateException, IOException {
 		UUID uuid = UUID.randomUUID();
@@ -117,30 +115,30 @@ public class PlaylistController {
 
 	// 음악 리스트
 	@GetMapping("/showPlaylistInfo")
-	public String showPlaylistInfo(int plCode, Model model) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		User user = null;
-		if (!authentication.getName().equals("anonymousUser")) {
-			user = (User) authentication.getPrincipal();
-			model.addAttribute("user", user);
-		}
-		List<String> musicCode = playlistMusicService.showMusicList(plCode);
-		Playlist playlist = playlistService.selectPlaylistByPlCode(plCode);
-
-		List<PlaylistTag> tags = playlistTagService.searchTagPlaylist(plCode);
-
+	public String showPlaylistInfo(MusicPaging paging, Model model) {
+		// 해당 플레이리스의 음악정보
+		List<String> musicCode = playlistMusicService.showMusicList(paging);
+		
 		if (musicCode.size() != 0) {
-			List<Music> musicInfo = spotifyService.getMusicINfoByMusicCode(musicCode);
+			List<Music> musicInfo = spotifyService.getMusicInfoByMusicCode(musicCode);
 			model.addAttribute("musicList", musicInfo);
 		}
-		model.addAttribute("user", user);
-		model.addAttribute("playlist", playlist);
-
-		// 태그 목록을 모델에 추가
-		model.addAttribute("tags", tags);
-
+		
+		// 해당 플레이리스트의 정보
+		Playlist playlist = playlistService.selectPlaylistByPlCode(paging.getPlCode());
+		model.addAttribute("playlist", playlistViewer.onePlaylistView(playlist));
+		
 		return "playlist/showPlaylistInfo";
 	}
+	@ResponseBody
+	@GetMapping("/limitPlaylistMusicList")
+	public List<Music> limitPlaylistMusicList(MusicPaging paging, int plCode) {
+		paging.setPlCode(plCode);
+		List<String> musicCode = playlistMusicService.showMusicList(paging);
+		
+		return spotifyService.getMusicInfoByMusicCode(musicCode);
+	}
+	
 
 	// 회원본인의 플레이리스트 조회
 	@GetMapping("/myPlaylist")

@@ -146,22 +146,13 @@ public class SpotifyService {
 	}
 	
 	// 플레이리스트에 담겨 있는 음악정보 받아오는 메서드
-	public ArrayList<Music> getMusicINfoByMusicCode(List<String> musicCodeList){
+	public ArrayList<Music> getMusicInfoByMusicCode(List<String> musicCodeList){
 		String accessToken = getAccessToken();
 		
 		String str = "";
 		
-		if(musicCodeList.size() <= 50) {
-			for(String musicCode : musicCodeList) str += musicCode + ",";
-			str = str.substring(0, str.length()-1); // 마지막 콤마 제거 위함
-		} else {
-			int page = musicCodeList.size() / 50; // 한번에 최대 요청할 수 있는 음악 갯수 50개
-			if(musicCodeList.size() % 50 > 0) page ++;
-			
-			// 일단 50개만 보이도록 고정
-			for(int i = 0; i < 50; i++) str += musicCodeList.get(i) + ","; 
-			str = str.substring(0, str.length()-1);
-		}
+		for(String musicCode : musicCodeList) str += musicCode + ","; // 콤마를 구분자로 10개씩 요청
+		str = str.substring(0, str.length()-1); // 마지막 콤마 제거 위함
 		
 		String url = "https://api.spotify.com/v1/tracks?ids=" + str;
 		

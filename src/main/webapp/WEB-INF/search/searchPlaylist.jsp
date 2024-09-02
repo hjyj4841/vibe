@@ -68,7 +68,7 @@
 					<select name="select">
 						<option value="title">Title</option>
 						<option value="tag">Tag</option>
-					</select> <input type="text" placeholder="Search Playlist..." name="search" value="${dto.search }">
+					</select> <input type="text" placeholder="Search Playlist..." name="search" autocomplete="off" value="${dto.search }">
 					<button id="searchPlBtn" type="submit">
 						<i class="fa-solid fa-magnifying-glass"></i>
 					</button>

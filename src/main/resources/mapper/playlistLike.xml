@@ -83,4 +83,9 @@
 	WHERE pl_code = #{plCode}
 	</select>
 	
+	<!-- 해당 플레이리스트 삭제 시 해당하는 좋아요 전체 삭제 -->
+	<delete id="deleteAllPlLike" parameterType="Integer">
+		DELETE FROM playlist_like
+		WHERE pl_code = #{pl_code}
+	</delete>
 </mapper>

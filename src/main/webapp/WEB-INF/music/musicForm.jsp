@@ -29,6 +29,7 @@
                     placeholder="아티스트, 곡 제목 등 검색어를 입력하세요."
                     id="musicName"
                     onkeyup="if(event.keyCode=='13'){searchMusic();}"
+                    autocomplete="off"
                     required
                   />
                   <button id="searchBtn" type="button" onclick="searchMusic()">

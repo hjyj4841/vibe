@@ -159,7 +159,7 @@ public class UserController {
 		try {
 			Playlist playlist = playlistService.likeRankByUserEmail(user.getUserEmail());
 			
-			model.addAttribute("topPlaylist", playlistViewer.onePlaylistView(playlist, user));
+			model.addAttribute("topPlaylist", playlistViewer.onePlaylistView(playlist));
 		} catch(Exception e) {
 			model.addAttribute("topPlaylist", null);
 		}
@@ -167,7 +167,7 @@ public class UserController {
 		// 랜덤 플레이리스트 하나 보여주기
 		try {
 			Playlist playlist = playlistService.randomPlaylist(user.getUserEmail()).get(0);
-			model.addAttribute("randomPlaylist", playlistViewer.onePlaylistView(playlist, user));
+			model.addAttribute("randomPlaylist", playlistViewer.onePlaylistView(playlist));
 		} catch(Exception e) {
 			model.addAttribute("randomPlaylist", null);
 		}

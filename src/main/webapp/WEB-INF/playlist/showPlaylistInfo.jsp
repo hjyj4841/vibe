@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,20 +21,26 @@
 		<div class="con">
 			<div class="mypageBox">
 				<!-- 로그인한 유저만 mypageLeft.jsp 보이게 -->
-				<c:if test="${not empty user}">
+				<sec:authorize access="isAuthenticated()">
 					<div class="myLeft">
 						<jsp:include page="../tiles/mypageLeft.jsp"></jsp:include>
 					</div>
-				</c:if>
+				</sec:authorize>
+				
 				<div class="myRight">
 					<div class="playlistInfoMain">
+						<!-- 플레이리스트 목록으로 -->
+						<a href="javascript:window.history.back();" class="goPlaylistListBtn">
+							<i class="fa-solid fa-arrow-left"></i>
+						</a>
+					
 						<div class="PlaylistInfoBox">
 							<div class="playlistImg">
 								<img src="${playlist.plImg}">
 							</div>
 							<p class="plTitle">${playlist.plTitle}
 								<c:choose>
-									<c:when test="${searchPlaylist.plPublicYn == 89}">
+									<c:when test="${playlist.plPublicYn == 89}">
 										<i class="fa-solid fa-lock-open"></i>
 									</c:when>
 									<c:otherwise>
@@ -40,52 +48,71 @@
 									</c:otherwise>
 								</c:choose>
 							</p>
+							
+							<div class="likeBox" data-code="${playlist.plCode}" onclick="clickLike(event)">
+								<c:choose>
+									<c:when test="${not empty playlist.plLike}">
+										<i class="fa-solid fa-heart heartEmoji" id="redHeart"></i>
+									</c:when>
+									<c:otherwise>
+										<i class="fa-regular fa-heart heartEmoji"></i>
+									</c:otherwise>
+								</c:choose>
+								<span>LIKE </span> <span class="likeCount">${playlist.likeCount }</span>
+							</div>
+							
 							<div class="playlistTagBox">
 								<ul class="plTags">
-									<c:forEach items="${tags}" var="tag">
+									<c:forEach items="${playlist.tagList}" var="tag">
 										<li>#${tag.tag.tagName}</li>
 									</c:forEach>
 								</ul>
 							</div>
 							<div class="playlistInfoBox">
 								<div class="creatorInfo">
-									<img src="${user.userImg}">
-									<p class="creatorNickname">${user.userNickname}</p>
+									<img src="${playlist.user.userImg}">
+									<p class="creatorNickname">${playlist.user.userNickname}</p>
 									<!-- 링크 공유하기 -->
 									<div class="playlistShareBtn">
 										<i id="link-copy-icon" class="fa-solid fa-link"
 											style="cursor: pointer;" onclick="sharePlayList()"></i> <span
 											id="copy-message">링크가 복사되었습니다!</span>
 									</div>
-									<c:if test="${not empty user}">
-										<nav class="playlistMenuBox">
-											<div class="playlistmenuBtn">
-												<a href="#" class="plMenuBtn"><i
-													class="fa-solid fa-minus"></i></a>
-											</div>
-											<div class="playlistMenu">
-												<div class="plUpdateMenu">
-													<a href="updatePlaylist?plCode=${playlist.plCode }"><i
-														class="fa-solid fa-pen"></i>Edit</a>
+									
+									<sec:authorize access="isAuthenticated()" var="principal">
+										<sec:authentication property="principal" var="user" />
+										<c:if test="${user.userEmail eq playlist.user.userEmail}">
+											<nav class="playlistMenuBox">
+												<div class="playlistmenuBtn">
+													<a href="#" class="plMenuBtn"><i
+														class="fa-solid fa-minus"></i></a>
 												</div>
-												<div class="plTagUpdateMenu">
-													<a
-														href="${pageContext.request.contextPath}/playlist/manageTags?plCode=${playlist.plCode}"><i
-														class="fa-solid fa-hashtag"></i>Tag Edit</a>
+												<div class="playlistMenu">
+													<div class="plUpdateMenu">
+														<a href="updatePlaylist?plCode=${playlist.plCode }"><i
+															class="fa-solid fa-pen"></i>Edit</a>
+													</div>
+													<div class="plTagUpdateMenu">
+														<a
+															href="${pageContext.request.contextPath}/playlist/manageTags?plCode=${playlist.plCode}"><i
+															class="fa-solid fa-hashtag"></i>Tag Edit</a>
+													</div>
+													<div class="plDeletePlMenu">
+														<a href="#"
+															onclick="confirmDelete(event, 'deletePlaylist?plCode=${playlist.plCode }')"><i
+															class="fa-solid fa-minus"></i>Delete playlist</a>
+													</div>
 												</div>
-												<div class="plDeletePlMenu">
-													<a href="#"
-														onclick="confirmDelete(event, 'deletePlaylist?plCode=${playlist.plCode }')"><i
-														class="fa-solid fa-minus"></i>Delete playlist</a>
-												</div>
-											</div>
-										</nav>
-									</c:if>
+											</nav>
+										</c:if>
+									</sec:authorize>
+									
 								</div>
 							</div>
 						</div>
 						<!-- 사용자 로그인 상태에 따라 버튼 표시 -->
-						<c:if test="${not empty user}">
+						<sec:authorize access="isAuthenticated()" var="principal">
+							<sec:authentication property="principal" var="user" />
 							<!-- 현재 사용자가 생성자와 동일할 때만 표시 -->
 							<c:if test="${user.userEmail eq playlist.user.userEmail}">
 								<div class="addMusicBtnBox"
@@ -100,12 +127,9 @@
 									</div>
 								</div>
 							</c:if>
-						</c:if>
-						<c:if test="${not empty user}">
-							<!-- 플레이리스트 목록으로 -->
-							<a href="myPlaylist" class="goPlaylistListBtn"><i
-								class="fa-solid fa-arrow-left"></i></a>
-						</c:if>
+						</sec:authorize>
+						
+						
 						<form action="deleteMusicFromPlaylist" method="post"
 							onsubmit="checkForSelectedMusic(event)">
 							<input type="hidden" name="plCode" value="${playlist.plCode}">
@@ -113,26 +137,29 @@
 								<c:forEach items="${musicList}" var="music" varStatus="status">
 									<div class="playlistList">
 										<!-- 체크박스는 로그인한 사용자만 보이도록 유지 -->
-										<c:if test="${not empty user}">
-											<div class="radioCheckBox">
-												<c:choose>
-													<c:when test="${user.userEmail eq playlist.user.userEmail}">
-														<input type="checkbox" name="selectedDeleteMusic"
-															value="${music.id}" id="radioCheck${status.index}">
-													</c:when>
-													<c:otherwise>
-														<input type="checkbox" name="selectedDeleteMusic"
-															value="${music.id}" id="radioCheck${status.index}"
-															class="hidden-checkbox">
-													</c:otherwise>
-												</c:choose>
-												<label for="radioCheck${status.index}"></label>
-											</div>
-										</c:if>
+										<sec:authorize access="isAuthenticated()" var="principal">
+											<sec:authentication property="principal" var="user" />
+											<c:if test="${user.userEmail eq playlist.user.userEmail}">
+												<div class="radioCheckBox">
+													<c:choose>
+														<c:when test="${user.userEmail eq playlist.user.userEmail}">
+															<input type="checkbox" name="selectedDeleteMusic"
+																value="${music.id}" id="radioCheck${status.index}">
+														</c:when>
+														<c:otherwise>
+															<input type="checkbox" name="selectedDeleteMusic"
+																value="${music.id}" id="radioCheck${status.index}"
+																class="hidden-checkbox">
+														</c:otherwise>
+													</c:choose>
+													<label for="radioCheck${status.index}"></label>
+												</div>
+											</c:if>
+										</sec:authorize>
 										<img src="${music.albumUrl}" class="albumImg">
 										<div class="plMusicInfo">
 											<div class="musicTitle">${music.musicTitle}</div>
-											<div class="artistName">${music.artistName}</div>
+											<div class="artistName">${music.artistName} ㆍ ${music.albumName }</div>
 										</div>
 										<!-- 로그인 여부와 상관없이 노래 재생 기능이 동작하도록 수정 -->
 										<div class="playlistMusicActionBtn">
@@ -161,48 +188,147 @@
 				frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
 		</div>
 	</div>
+	
+	
 	<script>
+		let userEmail = null;
+	</script>
+	<sec:authorize access="isAuthenticated()" var="principal">
+		<sec:authentication property="principal" var="user" />
+		<script>
+			userEmail = "<c:out value='${user.userEmail}'/>";
+		</script>
+	</sec:authorize>
+	
+	<script>
+	//paging 처리 코드
+	let page = 1;
+	let plCode = "<c:out value='${playlist.plCode}'/>";
+	let plUserEmail = "<c:out value='${playlist.user.userEmail}'/>";
+	
+	$(".playlistInfoMain").scroll(function(){
+		var innerHeight = $(this).innerHeight();
+		// 사이즈 안맞아서 1 더함
+		var scroll = $(this).scrollTop() + $(this).innerHeight() + 1;
+		var height = $(this)[0].scrollHeight;
+		
+		if(height === scroll){
+			page++;
+			$.ajax({
+				url: '/limitPlaylistMusicList',
+				type: 'get',
+				data: {
+					page: page,
+					plCode: plCode
+				},
+				success: function(musicList){
+					let playlistListBox = $(".playlistListBox");
+					$.each(musicList, function(index, music){
+						let musicItem = `<div class="playlistList">`;
+						if(userEmail != null && userEmail === plUserEmail){
+							musicItem += `<div class="radioCheckBox">` +
+								`<input type="checkbox" name="selectedDeleteMusic" value="` + music.id + `" id="radioCheck` + ((page - 1) * 10 + index) + `">` +
+								`<label for="radioCheck` + ((page - 1) * 10 + index) + `"></label>` +
+								`</div>`;
+						}
+						musicItem += `<img src="` + music.albumUrl + `" class="albumImg">` +
+							`<div class="plMusicInfo">` +
+							`<div class="musicTitle">` + music.musicTitle + `</div>` +
+							`<div class="artistName">` + music.artistName + ` ㆍ ` + music.albumName + `</div>` +
+							`</div>` +
+							`<div class="playlistMusicActionBtn">` +
+							`<a href="#" onclick="playMusic(event)" class="musicPlayBtn" data-track-id="` + music.id + `">` + 
+							`<i class="fa-solid fa-circle-play"></i></a>` +
+							`</div>` +
+							`</div>`;
+						playlistListBox.append(musicItem);
+					});
+					
+					// 모달을 열도록 하는 예시
+				  	  document.querySelectorAll('.musicPlayBtn').forEach(button => {
+				  	    button.addEventListener('click', (event) => {
+				  	      event.preventDefault(); // 링크 기본 동작 방지
+				  	      const trackId = button.getAttribute('data-track-id'); // trackId를 버튼에서 가져온다고 가정
+				  	      openModal(trackId);
+				  	    });
+				  	  });
+				}
+			});
+		}
+	});
+	
+	
+	
+	// 좋아요 기능
+	function clickLike(event) {
+		const plLike = event.currentTarget;
+		$.ajax({
+			type: 'post',
+			url: '/userLike',
+			data: {
+				plCode: plLike.getAttribute("data-code")
+			},
+			success: function(data){
+				const count = plLike.querySelector('.likeCount').innerHTML;
+				if(data){
+					plLike.querySelector('i').style.color = 'red';
+					plLike.querySelector('i').setAttribute('class', 'fa-solid fa-heart');
+					plLike.querySelector('.likeCount').innerHTML = Number(count) + 1;
+				}else{
+					plLike.querySelector('i').style.color = 'white';
+					plLike.querySelector('i').setAttribute('class', 'fa-regular fa-heart');
+					plLike.querySelector('.likeCount').innerHTML = Number(count) - 1;
+				}
+			},
+			error: function(){
+				alert("로그인 후 이용해 주세요.");
+			}
+		});
+	}
 	
 	 // 음악을 재생하는 함수
-    function playMusic(trackId) {
+    function playMusic(event) {
+		const musicCode =  event.currentTarget.getAttribute("data-track-id");
         const iframe = document.getElementById("main_frame");
         // 자동 재생을 위해 autoplay 파라미터 추가
-        iframe.src = "https://open.spotify.com/embed/track/" + trackId + "?autoplay=1";
-        // iframe.src = "https://open.spotify.com/embed/track/" + trackId;
+        iframe.src = "https://open.spotify.com/embed/track/" + musicCode + "?autoplay=1";
     }
- // 플레이어 모달을 열고 닫는 기능 추가
-    document.addEventListener('DOMContentLoaded', () => {
-    	  const modal = document.getElementById('playerModal');
-    	  const span = document.querySelector('.close');
-    	  function openModal(trackId) {
-    	    const iframe = document.getElementById('main_frame');
-    	    iframe.src = "https://open.spotify.com/embed/track/" + trackId + "?autoplay=1";
-    	    modal.style.display = 'block';
-    	  }
-    	  function closeModal() {
-    	    modal.style.display = 'none';
-    	    const iframe = document.getElementById('main_frame');
-    	    iframe.src = ""; // 비우기 (혹은 stop 재생)
-    	  }
-    	  // 모달을 열도록 하는 예시
-    	  document.querySelectorAll('.musicPlayBtn').forEach(button => {
-    	    button.addEventListener('click', (event) => {
-    	      event.preventDefault(); // 링크 기본 동작 방지
-    	      const trackId = button.getAttribute('data-track-id'); // trackId를 버튼에서 가져온다고 가정
-    	      openModal(trackId);
-    	    });
-    	  });
-    	  // 닫기 버튼 클릭 시 모달 닫기
-    	  span.addEventListener('click', () => {
-    	    closeModal();
-    	  });
-    	  // 모달 외부 클릭 시 모달 닫기
-    	  window.addEventListener('click', (event) => {
-    	    if (event.target === modal) {
-    	      closeModal();
-    	    }
-    	  });
-    	});
+	 // 플레이어 모달을 열고 닫는 기능 추가
+  	  const modal = document.getElementById('playerModal');
+  	  const span = document.querySelector('.close');
+  	  
+  	  function openModal(trackId) {
+  	    const iframe = document.getElementById('main_frame');
+  	    iframe.src = "https://open.spotify.com/embed/track/" + trackId + "?autoplay=1";
+  	    modal.style.display = 'block';
+  	  }
+  	  
+  	  function closeModal() {
+  	    modal.style.display = 'none';
+  	    const iframe = document.getElementById('main_frame');
+  	    iframe.src = ""; // 비우기 (혹은 stop 재생)
+  	  }
+  	  
+  	  // 모달을 열도록 하는 예시
+  	  document.querySelectorAll('.musicPlayBtn').forEach(button => {
+  	    button.addEventListener('click', (event) => {
+  	      event.preventDefault(); // 링크 기본 동작 방지
+  	      const trackId = button.getAttribute('data-track-id'); // trackId를 버튼에서 가져온다고 가정
+  	      openModal(trackId);
+  	    });
+  	  });
+  	  
+  	  // 닫기 버튼 클릭 시 모달 닫기
+  	  span.addEventListener('click', () => {
+  	    closeModal();
+  	  });
+  	  
+  	  // 모달 외부 클릭 시 모달 닫기
+  	  window.addEventListener('click', (event) => {
+  	    if (event.target === modal) {
+  	      closeModal();
+  	    }
+  	  });
 		// 플레이리스트 메뉴 표시/숨기기
 		document.querySelector('.plMenuBtn').addEventListener('click', function(event) {
 			event.preventDefault();
@@ -220,7 +346,7 @@
 		// 플레이리스트 삭제 확인
 		function confirmDelete(event, url) {
 			event.preventDefault();
-			if (confirm('[${playlist.plTitle}] 플레이리스트를 삭제하시겠습니까?')) {
+			if (confirm(`[${playlist.plTitle}] 플레이리스트를 삭제하시겠습니까?`)) {
 				window.location.href = url;
 			}
 		}
@@ -245,7 +371,6 @@
 				console.error('Failed to copy: ', err);
 			}
 		}
-		  
 			
 		// 페이지 로드 시 체크박스 상태 초기화
 		function resetCheckboxes() {

@@ -23,4 +23,6 @@ public interface PlaylistLikeMapper {
 	void userUnLike(PlaylistLikeDTO dto);
 	// 해당 플리의 좋아요 수 조회
 	int showLikeCount(int plCode);
+	// 해당 플리 삭제 시 모든 좋아요 삭제
+	void deleteAllPlLike(int plCode);
 }

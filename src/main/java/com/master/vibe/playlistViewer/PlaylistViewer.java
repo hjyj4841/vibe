@@ -112,7 +112,13 @@ public class PlaylistViewer {
   		return list;
 	}
 	
-	public PlaylistDTO onePlaylistView(Playlist playlist, User user){
+	public PlaylistDTO onePlaylistView(Playlist playlist){
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		User user = new User();
+		if(!authentication.getName().equals("anonymousUser")) {
+    		user = (User) authentication.getPrincipal();
+  		}
+		
 		// 뽑아온 태그를 리스트로 만드는 코드
 		List<PlaylistTag> tagList = playlistTagService.searchTagPlaylist(playlist.getPlCode());
 		
@@ -133,6 +139,7 @@ public class PlaylistViewer {
 				.plPublicYn(playlist.getPlPublicYn())
 				.tagList(tagList)
 				.user(User.builder()
+						.userEmail(playlist.getUser().getUserEmail())
 						.userNickname(playlist.getUser().getUserNickname())
 						.userImg(playlist.getUser().getUserImg())
 						.build())
