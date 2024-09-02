@@ -61,10 +61,12 @@ public class TagController {
 
     @PostMapping("/playlist/deleteTags")
     public String deleteTags(Integer plCode, @RequestParam List<Integer> tagCodes) {
-        if (tagCodes != null) {
+        if (tagCodes != null && !tagCodes.isEmpty()) {
             for (int tagCode : tagCodes) {
                 playlistTagService.deletePlaylistTag(plCode, tagCode);
             }
+        } else {
+            return "redirect:/playlist/manageTags?plCode=" + plCode;
         }
 
         return "redirect:/playlist/manageTags?plCode=" + plCode;
