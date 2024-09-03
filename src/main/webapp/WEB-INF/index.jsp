@@ -53,19 +53,20 @@
 				<img src="/imgs/listLogo/2931162_arrow_back_left_direction_move_icon.png">
 			</div>
 			<div class="listContainer">
-				<!-- 랭크 1위 - 상위 리스트 3개만 표출 -->
-				<section class="listRank">
-					<c:forEach items="${rankTop}" var="searchPlaylist" begin="0" end="0">
+				<!-- 상위 리스트 3개만 표출 -->
+				<c:forEach items="${rankTop}" var="searchPlaylist">
+					<section class="listRank">
 						<img src="${searchPlaylist.plImg}" data-code="${searchPlaylist.plCode}">
-						<div class="plDesc">
+						<div class="plDesc hidden">
 							<div>
 								<img src="${searchPlaylist.plImg}" data-code="${searchPlaylist.plCode}">
 								<div>
-									Music
+									<div>Music ${searchPlaylist.musicCount}</div>
+									<a href="/showPlaylistInfo?plCode=${searchPlaylist.plCode}" >Go</a>
+									LIKE ${searchPlaylist.likeCount }
 								</div>
 							</div>
 						</div>
-						
 						<div class="listRankDesc">
 							<img src="${searchPlaylist.plImg}"
 								data-code="${searchPlaylist.plCode}">
@@ -84,60 +85,8 @@
 								<p>${searchPlaylist.user.userNickname}</p>
 							</div>
 						</div>
-					</c:forEach>
-				</section>
-
-				<!-- 랭크 2위 -->
-				<section class="listRank">
-					<c:forEach items="${rankTop}" var="searchPlaylist" begin="1" end="1">
-						<img src="${searchPlaylist.plImg}"
-							data-code="${searchPlaylist.plCode}">
-						<div class="listRankDesc">
-							<img src="${searchPlaylist.plImg}"
-								data-code="${searchPlaylist.plCode}">
-							<div class="rankTag">
-								<c:forEach items="${searchPlaylist.tagList}" var="tag">
-									<c:if test="${empty tag.tag.tagName}">
-										<div style="opacity: 0">&nbsp</div>
-									</c:if>
-									<c:if test="${not empty tag.tag.tagName}">
-										#${tag.tag.tagName}
-									</c:if>
-								</c:forEach>
-							</div>
-							<div class="listRankText">
-								<p>${searchPlaylist.plTitle}</p>
-								<p>${searchPlaylist.user.userNickname}</p>
-							</div>
-						</div>
-					</c:forEach>
-				</section>
-
-				<!-- 랭크 3위 -->
-				<section class="listRank">
-					<c:forEach items="${rankTop}" var="searchPlaylist" begin="2" end="2">
-						<img src="${searchPlaylist.plImg}"
-							data-code="${searchPlaylist.plCode}">
-						<div class="listRankDesc">
-							<img src="${searchPlaylist.plImg}"
-								data-code="${searchPlaylist.plCode}">
-							<div class="rankTag">
-								<c:forEach items="${searchPlaylist.tagList}" var="tag">
-									<c:if test="${empty tag.tag.tagName}">
-										<div style="opacity: 0">&nbsp</div>
-									</c:if>
-									<c:if test="${not empty tag.tag.tagName}">
-										#${tag.tag.tagName}
-									</c:if>
-								</c:forEach>
-							</div>
-							<div class="listRankText">
-								<p>${searchPlaylist.plTitle}</p>
-								<p>${searchPlaylist.user.userNickname}</p>
-							</div>
-						</div>
-					</c:forEach>
-				</section>
+					</section>
+				</c:forEach>
 			</div>
 			<div class="emptyRight">
 				<img src="/imgs/listLogo/2931159_arrow_forward_right_move_navigation_icon.png">

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.master.vibe.model.vo.MusicPaging;
+import com.master.vibe.model.vo.Playlist;
 import com.master.vibe.model.vo.PlaylistMusic;
 
 import mapper.PlaylistMusicMapper;
@@ -37,7 +38,6 @@ public class PlaylistMusicService {
     	paging.setOffset(paging.getLimit() * (paging.getPage() - 1));
     	return playlistMusicMapper.showMusicList(paging);
     }
-    
     
     // 플레이리스트에서 음악 삭제
     public void deleteMusicFromPlaylist(int plCode, List<String> selectedDeleteMusic) {

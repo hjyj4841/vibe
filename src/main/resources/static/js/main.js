@@ -1,5 +1,6 @@
 const rankButton = document.querySelectorAll(".rankButtonBox div")
 const rankList = document.querySelectorAll(".listRank");
+const plDesc = document.querySelectorAll(".plDesc");
 const rightArrow = document.querySelector(".emptyRight");
 const leftArrow = document.querySelector(".emptyLeft img");
 const listRankDesc = document.querySelectorAll(".listRankDesc");
@@ -8,6 +9,7 @@ const rankBox = document.querySelector(".rankButtonBox");
 rightArrow.addEventListener("click", function() {
 	for(let i = 0; i < listRankDesc.length; i++){
 		listRankDesc[i].classList.remove("hidden");
+		plDesc[i].classList.add("hidden");
 	}
 	
 	if(!rankButton[0].classList.contains("black")){
@@ -58,6 +60,7 @@ rightArrow.addEventListener("click", function() {
 leftArrow.addEventListener("click", function(){
 	for(let i = 0; i < listRankDesc.length; i++){
 		listRankDesc[i].classList.remove("hidden");
+		plDesc[i].classList.add("hidden");
 	}
 
 	if(!rankButton[0].classList.contains("black")){
@@ -110,8 +113,10 @@ function listRankDescToggle() {
 
 		if (check) {
 			listRankDesc[i].classList.remove("hidden");
+			plDesc[i].classList.add("hidden");
 		} else {
 			listRankDesc[i].classList.add("hidden");
+			plDesc[i].classList.remove("hidden");
 		}
 	}
 }
@@ -119,6 +124,14 @@ function listRankDescToggle() {
 for (let i = 0; i < rankList.length; i++) {
 	rankList[i].addEventListener("click", listRankDescToggle);
 }
+
+
+
+
+
+
+
+
 
 
 

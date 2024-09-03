@@ -23,7 +23,7 @@
 		WHERE pl_code = #{plCode}
 		LIMIT #{offset}, #{limit}
 	</select>
-
+ 
 	<!-- 플레이리스트 음악 삭제 -->
 	<delete id="deleteMusicFromPlaylist" parameterType="java.util.List">
 		DELETE FROM playlist_music

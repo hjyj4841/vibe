@@ -28,4 +28,5 @@ public class Playlist {
 	
 	private int likeCount;
 	
+	private int musicCount;
 }

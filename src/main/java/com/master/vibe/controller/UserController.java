@@ -23,6 +23,7 @@ import com.master.vibe.model.dto.UserLikeTagDTO;
 import com.master.vibe.model.vo.Playlist;
 import com.master.vibe.model.vo.User;
 import com.master.vibe.playlistViewer.PlaylistViewer;
+import com.master.vibe.service.PlaylistMusicService;
 import com.master.vibe.service.PlaylistService;
 import com.master.vibe.service.UserService;
 
@@ -61,6 +62,10 @@ public class UserController {
 	@GetMapping("/")
 	public String index(Model model) {
 		List<Playlist> playlist = playlistService.rankTop();
+		for(Playlist l : playlist) {
+			System.out.println(l);
+		}
+		
 		model.addAttribute("rankTop", playlistViewer.playlistView(playlist));
 		return "index";
 	}
