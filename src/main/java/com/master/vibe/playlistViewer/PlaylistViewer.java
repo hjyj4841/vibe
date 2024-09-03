@@ -98,6 +98,7 @@ public class PlaylistViewer {
   					.plTitle(play.getPlTitle())
   					.plImg(play.getPlImg())
   					.plPublicYn(play.getPlPublicYn())
+  					.musicCount(play.getMusicCount())
   					.user(play.getUser())
   					.build();
   			

@@ -10,6 +10,7 @@
 		<result column="pl_date" property="plDate" />
 		<result column="pl_public_yn" property="plPublicYn" />
 		<result column="pl_code_count" property="likeCount"/>
+		<result column="music_count" property="musicCount"/>
 		<association property="user" javaType="User">
 			<id column="user_email" property="userEmail" />
 			<result column="user_password" property="userPassword" />
@@ -38,7 +39,7 @@
 	<resultMap type="PlaylistLike" id="likeMap">
 		<id column="like_code" property="likeCode"/>
 	</resultMap>
-
+	
 	<!-- 전체플리 조회 -->
 	<select id="allPlaylist" resultMap="playlistMap" parameterType="SearchDTO">
 		SELECT * FROM playlist
@@ -59,7 +60,7 @@
 		LIMIT #{offset}, #{limit}
 	</select>
 	
-	<!-- 전체플리 조회  limit 5 고정 -->
+	<!-- 전체플리 조회  limit 5 (5개 고정) -->
 	<select id="rankPlaylist" resultMap="playlistMap"
 		parameterType="SearchDTO">
 		SELECT pl_code, pl_title, pl_img, u.user_email, u.user_nickname, u.user_img
@@ -171,17 +172,24 @@
     	LIMIT #{offset}, #{limit}
     </select>
     
-    <!-- 랭킹 : 좋아요 TOP3 -->
+    <!-- 랭킹 : 좋아요 TOP3 + 플리 음악 개수 조회 -->
     <select id="rankTop" resultMap="playlistMap">
-    	SELECT pl_code, pl_title, pl_img, pl_date, u.user_email, u.user_nickname, count(pl_code)
-    	FROM playlist p
-	    	JOIN user u ON (u.user_email = p.user_email)
-	    	LEFT JOIN playlist_like USING (pl_code)
-    	WHERE pl_public_yn = 'Y'
-    	GROUP BY pl_code
-    	ORDER BY COUNT(like_code) DESC
-    	LIMIT 3
+		SELECT *
+		FROM playlist
+		LEFT JOIN
+			(SELECT pl_code, count(*) as music_count
+	 		 FROM playlist_music
+			 GROUP BY pl_code) music USING (pl_code)
+		LEFT JOIN 
+			(SELECT pl_code, count(*) as pl_code_count
+			 FROM playlist_like
+			 GROUP BY pl_code) music_like USING (pl_code)
+		JOIN user USING (user_email)
+		WHERE pl_public_yn = 'Y'
+		ORDER BY pl_code_count DESC
+		LIMIT 3;
     </select>
+
     
     <!-- 특정 회원의 최고 인기 플레이리스트 조회-->
     <select id="likeRankByUserEmail" resultMap="playlistMap" parameterType="String">

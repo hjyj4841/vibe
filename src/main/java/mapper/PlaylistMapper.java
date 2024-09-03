@@ -46,7 +46,7 @@ public interface PlaylistMapper {
     
     List<Playlist> likerankingPlaylist(SearchDTO dto); // 랭킹 : 좋아요순
     
-    List<Playlist> rankTop(); // index Top3
+    List<Playlist> rankTop(); // index Top3 + 플리 음악 개수 조회
     
 	void deletePlaylistMusic(int plCode);
 	

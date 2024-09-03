@@ -25,4 +25,6 @@ public class PlaylistDTO {
 	
 	// 랭킹 : 좋아요순
 	private int likeCode;
+	
+	private int musicCount;
 }

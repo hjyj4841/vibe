@@ -116,6 +116,10 @@ html {
 	flex-direction:column;
 	align-content: center;
 	justify-content: center;
+	-webkit-user-select:none;
+  	-moz-user-select:none;
+  	-ms-user-select:none;
+  	user-select:none
 }
 .listTop{
 	width: 100%;
@@ -140,7 +144,7 @@ html {
 	  border: none;
 	  background: none;
 	  color: white;
- 	  font-size: 1rem;
+ 	  font-size: 1.2rem;
  	  position: absolute;
 }
 
@@ -214,16 +218,36 @@ html {
 }
 
 .plDesc > div > div{
-	background-color: rgba(0, 0, 0, 0.6);
+	background-color: rgba(0, 0, 0, 0.85);
 	position: absolute;
 	width: 35%;
 	height: 100%;
 	right: 0;
 	top: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	font-size: 1.7rem;
+	text-shadow: 3px 3px 3px black;
+	text-align: center;
+}
+
+.plDesc > div > div > div {
+	text-align: center;
 }
 
 .plDesc.hidden{
 	display: none;
+}
+
+.plDesc > div > div > a {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	font-size: 1rem;
+	text-align: center;
+	color: white;
 }
 
 .listRankDesc {

@@ -133,7 +133,6 @@ public class PlaylistController {
 		
 		return spotifyService.getMusicInfoByMusicCode(musicCode);
 	}
-	
 
 	// 회원본인의 플레이리스트 조회
 	@GetMapping("/myPlaylist")
