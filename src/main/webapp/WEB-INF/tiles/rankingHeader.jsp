@@ -27,6 +27,7 @@
 				btn.classList.add("active");
 			}
 		})
+		
 
 		if(url.search !== "") {
 			links.forEach((link) => {
