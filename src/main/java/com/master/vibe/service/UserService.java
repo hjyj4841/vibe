@@ -9,24 +9,30 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
+import com.master.vibe.model.dto.GetUserByIdDTO;
 import com.master.vibe.model.dto.UserLikeTagDTO;
 import com.master.vibe.model.vo.User;
 
+import mapper.PlaylistLikeMapper;
 import mapper.PlaylistMapper;
 import mapper.UserMapper;
 
 @Service
-public class UserService implements UserDetailsService{
+public class UserService implements UserDetailsService {
 
 	@Autowired
 	private UserMapper userMapper;
 
 	@Autowired
 	private PlaylistMapper playlistMapper;
-	
+
 	@Autowired
 	private PasswordEncoder bcpe;
+
+	@Autowired
+	private PlaylistLikeMapper playlistLikeMapper;
 
 	// 회원가입
 	public int register(User user) {
@@ -55,12 +61,12 @@ public class UserService implements UserDetailsService{
 
 	// 회원탈퇴
 	public boolean deleteUser(User user, String userPassword) {
-		
-		if(bcpe.matches(userPassword, user.getUserPassword())){
+
+		if (bcpe.matches(userPassword, user.getUserPassword())) {
 			userMapper.deleteUser(user.getUserEmail());
 			// 회원탈퇴 user의 playlist를 playlistManager 계정으로 옮기기
 			playlistMapper.movePlaylist(user.getUserEmail());
-			
+
 			return true;
 		}
 		return false;
@@ -73,28 +79,31 @@ public class UserService implements UserDetailsService{
 
 	// 회원이 좋아하는 태그 목록 5개 출력
 	public List<UserLikeTagDTO> userLikeTag(String userEmail) {
-        List<UserLikeTagDTO> list = userMapper.userLikeTag(userEmail);
-        return list != null ? list : new ArrayList<>();
-    }
-	
+		List<UserLikeTagDTO> list = userMapper.userLikeTag(userEmail);
+		return list != null ? list : new ArrayList<>();
+	}
+
 	// 회원가입 시 이메일 중복 체크
 	public boolean emailCheck(String userEmail) {
-		if(userMapper.emailCheck(userEmail) == null) return true;
+		if (userMapper.emailCheck(userEmail) == null)
+			return true;
 		return false;
 	}
-	
+
 	// 회원가입 시 닉네임 중복 체크
 	public boolean nicknameCheck(String userNickname) {
-		if(userMapper.nicknameCheck(userNickname) == null) return true;
+		if (userMapper.nicknameCheck(userNickname) == null)
+			return true;
 		return false;
 	}
-	
+
 	// 회원수정 시 닉네임 중복 체크
 	public boolean nicknameUpdate(User user) {
-		if(userMapper.sameNickname(user) == null) return true;
+		if (userMapper.sameNickname(user) == null)
+			return true;
 		return false;
 	}
-	
+
 	// 회원정보 수정 시 패스워드 확인
 	public boolean passwordCheck(User user, String userPassword) {
 		return bcpe.matches(userPassword, user.getUserPassword());
@@ -103,6 +112,23 @@ public class UserService implements UserDetailsService{
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		return userMapper.emailCheck(username);
+	}
+
+	// 공유 용 프로필 페이지
+	public GetUserByIdDTO getUserById(String userEmail) {
+		User user = userMapper.getUserById(userEmail);
+		System.err.println(user);
+		GetUserByIdDTO dto = new GetUserByIdDTO();
+		dto.setUser(user);
+		System.err.println(dto.getUser().getUserImg());
+		if (userMapper.userLikeTag(userEmail) != null) {
+			dto.setLikeTagList(userMapper.userLikeTag(userEmail));
+		} else {
+			dto.setLikeTagList(new ArrayList<>());
+		}
+		dto.setGetPlayListById(playlistMapper.getPlayListById(userEmail));
+		System.out.println(dto.getGetPlayListById());
+		return dto;
 	}
 
 }

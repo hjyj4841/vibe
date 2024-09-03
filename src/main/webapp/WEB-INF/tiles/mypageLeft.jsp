@@ -20,12 +20,9 @@
 			<!-- 일반 공유 -->
 			<i id="link-copy-icon" class="fa-solid fa-link"></i>
 		</div>
-	
+
 		<p class="myNick">${user.userNickname }</p>
 		<p class="myEmail">${user.userEmail }</p>
-		<div class="disconnectSpotify spotifyInfo">
-			<i class="fa-brands fa-spotify"></i> <a href="/spotifyConnect"><span>disconnected</span></a>
-		</div>
 	</div>
 </sec:authorize>
 <div class="myList">

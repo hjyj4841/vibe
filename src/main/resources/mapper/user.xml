@@ -106,4 +106,15 @@
 		SELECT * FROM user
 		WHERE user_nickname = #{userNickname}
 	</select>
+	
+	
+	<!-- 공유 용 유저 정보 페이지 -->
+	<select id="getUserById" parameterType="String"
+		resultMap="userMap">
+		SELECT 
+		user_nickname, user_email, user_img
+		FROM user
+		WHERE user_email = #{userEmail}
+	</select>
+	
 </mapper>

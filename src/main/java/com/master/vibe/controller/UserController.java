@@ -14,10 +14,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.master.vibe.model.dto.GetUserByIdDTO;
 import com.master.vibe.model.dto.UserDTO;
 import com.master.vibe.model.dto.UserLikeTagDTO;
 import com.master.vibe.model.vo.Playlist;
@@ -29,6 +32,7 @@ import com.master.vibe.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class UserController {
@@ -38,10 +42,10 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private PlaylistService playlistService;
-	
+
 	@Autowired
 	private PlaylistViewer playlistViewer;
 	
@@ -81,12 +85,14 @@ public class UserController {
 	public String register() {
 		return "user/registerUser";
 	}
+
 	@PostMapping("/registerUser")
 	public String register(User user, String birthDay, Model model) {
 		// 입력받은 회원의 생일정보 포맷을 변경
 		try {
 			user.setUserBirth(new SimpleDateFormat("yyyy-MM-dd").parse(birthDay));
-		} catch (Exception e) {}
+		} catch (Exception e) {
+		}
 
 		if(userService.register(user) == 1) model.addAttribute("registerMsg", "회원가입에 성공 하였습니다.");
 		else model.addAttribute("registerMsg", "회원가입에 실패 하였습니다.");
@@ -107,12 +113,13 @@ public class UserController {
 		model.addAttribute("msg", error);
 		return "user/login";
 	}
-	
+
 	// 계정 찾기 페이지로 이동
 	@GetMapping("/findUser")
 	public String findUser() {
 		return "user/findUser";
 	}
+
 	// 계정 찾기 - ID or PASSWORD
 	@ResponseBody
 	@PostMapping("/findUser")
@@ -125,7 +132,7 @@ public class UserController {
 		if(user == null) return null;
 		return user.getUserEmail();
 	}
-	
+
 	// 비밀번호 수정 - PASSWORD 찾기 이후 이어지는 메서드
 	@ResponseBody
 	@PostMapping("/updateUserPWD")
@@ -138,7 +145,7 @@ public class UserController {
 	public String mypage(Model model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		User user = (User) authentication.getPrincipal();
-		
+
 		// 유저가 좋아하는 태그 top 5
 		List<UserLikeTagDTO> list = userService.userLikeTag(user.getUserEmail());
 		model.addAttribute("likeTagList", list);
@@ -147,33 +154,32 @@ public class UserController {
 		try {
 			Playlist playlist = playlistService.likeRankByUserEmail(user.getUserEmail());
 			model.addAttribute("topPlaylist", playlistViewer.onePlaylistView(playlist));
-		} catch(Exception e) {
+		} catch (Exception e) {
 			model.addAttribute("topPlaylist", null);
 		}
-		
+
 		// 랜덤 플레이리스트 하나 보여주기
 		try {
 			Playlist playlist = playlistService.randomPlaylist(user.getUserEmail()).get(0);
 			model.addAttribute("randomPlaylist", playlistViewer.onePlaylistView(playlist));
-		} catch(Exception e) {
+		} catch (Exception e) {
 			model.addAttribute("randomPlaylist", null);
 		}
 		return "user/mypage";
 	}
-	
-	
+
 	// 비밀번호 변경
 	@GetMapping("/changePassword")
 	public String changePassword() {
 		return "user/changePwd";
 	}
-	
+
 	@PostMapping("/changePassword")
 	public String changePassword(String changePassword, Model model, HttpServletRequest request) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		User user = (User) authentication.getPrincipal();
 		user.setUserPassword(changePassword);
-		
+
 		userService.updateUserPWD(user);
 		model.addAttribute("pwdChange", "패스워드가 변경되었습니다. 다시 로그인 해주세요.");
 		
@@ -183,15 +189,15 @@ public class UserController {
 		SecurityContextHolder.getContext().setAuthentication(null);
 		return "msgPage";
 	}
-	
+
 	// 회원탈퇴
 	@ResponseBody
 	@PostMapping("/deleteUser")
 	public boolean deleteUser(String userPassword, Model model, HttpServletRequest request) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		User user = (User) authentication.getPrincipal();
-		
-		if(userService.deleteUser(user, userPassword)) {
+
+		if (userService.deleteUser(user, userPassword)) {
 			HttpSession session = request.getSession(false);
 			session.invalidate();
 			SecurityContextHolder.getContext().setAuthentication(null);
@@ -212,14 +218,14 @@ public class UserController {
 	public boolean emailCheck(String userEmail) {
 		return userService.emailCheck(userEmail);
 	}
-	
+
 	// ajax - 회원가입시 닉네임 중복 조회
 	@ResponseBody
 	@PostMapping("/nicknameCheck")
 	public boolean nicknameCheck(String userNickname) {
 		return userService.nicknameCheck(userNickname);
 	}
-	
+
 	// ajax - 회원정보 수정 시 닉네임 중복 조회
 	@ResponseBody
 	@PostMapping("/nicknameUpdate")
@@ -227,31 +233,33 @@ public class UserController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		User user = (User) authentication.getPrincipal();
 		User u = null;
-		
+
 		try {
 			u = user.clone();
-		} catch (Exception e) {}
-		
+		} catch (Exception e) {
+		}
+
 		u.setUserNickname(userNickname);
-		
+
 		return userService.nicknameUpdate(u);
 	}
-	
+
 	// 회원정보 변경 시 패스워드 확인 - ajax
 	@ResponseBody
 	@PostMapping("/passwordCheck")
-	public boolean passwordCheck(String userPassword){
+	public boolean passwordCheck(String userPassword) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		User user = (User) authentication.getPrincipal();
-		User u = null; 
-		
+		User u = null;
+
 		try {
 			u = user.clone();
-		} catch (CloneNotSupportedException e) {}
-		
+		} catch (CloneNotSupportedException e) {
+		}
+
 		return userService.passwordCheck(u, userPassword);
 	}
-	
+
 	// ajax - 회원정보 수정시 회원 이미지 바꿔서 보여줌
 	@ResponseBody
 	@PostMapping("/previewImg")
@@ -301,7 +309,7 @@ public class UserController {
 			String fileName = uuid.toString() + "_" + dto.getFile().getOriginalFilename();
 			File copyFile = new File(UserImgDir + fileName);
 			dto.getFile().transferTo(copyFile);
-			
+
 			// 서비스 넘기기 전에 user 객체에 DB에 들어갈 img 경로 지정
 			changeUser.setUserImg("http://192.168.10.6:8080/img/user_img/" + fileName);
 		} else changeUser.setUserImg(dto.getUserImg());
@@ -309,12 +317,13 @@ public class UserController {
 		changeUser.setUserNickname(dto.getUserNickname());
 		changeUser.setUserPhone(dto.getUserPhone());
 		userService.updateUser(changeUser);
-		
+
 		// 변경된 정보로 session에 다시 담기
 		UserDetails updateUserDetails = changeUser;
-		UsernamePasswordAuthenticationToken newAuth = new UsernamePasswordAuthenticationToken(updateUserDetails, authentication.getCredentials(), updateUserDetails.getAuthorities());
+		UsernamePasswordAuthenticationToken newAuth = new UsernamePasswordAuthenticationToken(updateUserDetails,
+				authentication.getCredentials(), updateUserDetails.getAuthorities());
 		SecurityContextHolder.getContext().setAuthentication(newAuth);
-		
+
 		return "redirect:/mypage";
 	}
 
@@ -323,5 +332,13 @@ public class UserController {
 	public String cancelUpdate() {
 		deletePreviewImg();
 		return "redirect:/mypage";
+	}
+
+	// 공유 용 유저 페이지
+	@GetMapping("/profile/{userId}")
+	public String getProfile(@PathVariable("userId") String userId, Model model) {
+		GetUserByIdDTO getbyId = userService.getUserById(userId);
+		model.addAttribute("user", getbyId);
+		return "user/profile";
 	}
 }

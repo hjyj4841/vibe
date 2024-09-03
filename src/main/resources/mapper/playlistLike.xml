@@ -88,4 +88,5 @@
 		DELETE FROM playlist_like
 		WHERE pl_code = #{pl_code}
 	</delete>
+	
 </mapper>
