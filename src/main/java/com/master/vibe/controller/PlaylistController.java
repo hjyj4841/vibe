@@ -53,28 +53,23 @@ public class PlaylistController {
 	public String fileUpload(MultipartFile file) throws IllegalStateException, IOException {
 		UUID uuid = UUID.randomUUID();
 		String fileName = uuid.toString() + "_" + file.getOriginalFilename();
-		System.out.println(fileName);
 		File copyFile = new File("\\\\192.168.10.6\\vibe\\playlistImg\\" + fileName);
-
-		System.out.println(copyFile.getPath());
-
 		file.transferTo(copyFile);
+		
 		return fileName;
 	}
 
 	// 플레이리스트 전체 조회 페이지
-	@ResponseBody
-	@GetMapping("/searchHome")
-	public String searchAllPlaylist(Model model) {
-		SearchDTO dto = new SearchDTO();
-		model.addAttribute("allPlaylist", playlistService.allPlaylist(dto));
-		return "test/search/searchHome";
-	}
+//	@ResponseBody
+//	@GetMapping("/searchHome")
+//	public String searchAllPlaylist(Model model) {
+//		model.addAttribute("allPlaylist", playlistService.allPlaylist(new SearchDTO()));
+//		return "test/search/searchHome";
+//	}
 
 	// 플레이리스트 생성 처리
 	@PostMapping("/createPlaylist")
-	public String createPlaylist(CreatePlaylistDTO dto, Model model)
-			throws IllegalStateException, IOException {
+	public String createPlaylist(CreatePlaylistDTO dto, Model model) throws IllegalStateException, IOException {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		User user = (User) authentication.getPrincipal();
 
@@ -88,6 +83,7 @@ public class PlaylistController {
 			dto.setPlImg(DEFAULT_IMAGE_URL);
 		}
 
+		// 현재 접속중인 user 정보로 플레이리스트 생성 처리
 		dto.setUserEmail(user.getUserEmail());
 		playlistService.createPlaylist(dto);
 

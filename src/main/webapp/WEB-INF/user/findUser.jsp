@@ -192,7 +192,10 @@
 				$.ajax({
 					type: 'post',
 					url: '/updateUserPWD',
-					data: $('.changePassowrdFrm').serialize(),
+					data: {
+						userEmail: $('#userEmail').val(),
+						userPassword: $('#userPassword').val()
+					},
 					success: function(){
 						alert('비밀번호가 변경되었습니다.');
 						window.location.href = '/login';

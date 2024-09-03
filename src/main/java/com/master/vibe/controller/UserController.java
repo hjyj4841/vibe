@@ -28,11 +28,12 @@ import com.master.vibe.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.web.bind.annotation.RequestParam;
-
 
 @Controller
 public class UserController {
+	// 각 유저별 프리뷰 이미지 저장할 디렉토리 주소 
+	private final String previewDir = "\\\\192.168.10.6\\vibe\\img\\preview_img\\";
+	private final String UserImgDir = "\\\\192.168.10.6\\vibe\\img\\user_img\\";
 
 	@Autowired
 	private UserService userService;
@@ -43,16 +44,19 @@ public class UserController {
 	@Autowired
 	private PlaylistViewer playlistViewer;
 	
-	// 테스트 페이지 연결
-	@GetMapping("/test")
-	public String testPage() {
-		return "test/test";
+	// 프리뷰 폴더 삭제 메서드
+	public void deletePreviewImg() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		User user = (User) authentication.getPrincipal();
+		
+		File dir = new File(previewDir + user.getUserEmail());
+		while(dir.exists()) {
+			File[] dirList = dir.listFiles();
+			for(File file : dirList) file.delete();
+			if(dirList.length == 0 && dir.isDirectory()) dir.delete();
+		}
 	}
-	@GetMapping("/userTest")
-	public String userTest() {
-		return "test/userTest";
-	}
-
+	
 	// 메인페이지 연결
 	@GetMapping("/")
 	public String index(Model model) {
@@ -61,7 +65,7 @@ public class UserController {
 		return "index";
 	}
 	
-	// alert msg 띄워줄 페이지
+	// alert 메세지 띄워줄 페이지
 	@GetMapping("/msgPage")
 	public String msgPage() {
 		return "msgPage";
@@ -74,21 +78,15 @@ public class UserController {
 	}
 	@PostMapping("/registerUser")
 	public String register(User user, String birthDay, Model model) {
+		// 입력받은 회원의 생일정보 포맷을 변경
 		try {
 			user.setUserBirth(new SimpleDateFormat("yyyy-MM-dd").parse(birthDay));
 		} catch (Exception e) {}
 
-		int success = userService.register(user);
+		if(userService.register(user) == 1) model.addAttribute("registerMsg", "회원가입에 성공 하였습니다.");
+		else model.addAttribute("registerMsg", "회원가입에 실패 하였습니다.");
 		
-		
-		if(success == 1) {
-			model.addAttribute("registerMsg", "회원가입에 성공 하였습니다.");
-			return "msgPage";
-		}else {
-			model.addAttribute("registerMsg", "회원가입에 실패 하였습니다.");
-			return "registerUser";
-		}
-		
+		return "msgPage";
 	}
 
 	// 로그인
@@ -96,14 +94,10 @@ public class UserController {
 	public String login() {
 		return "user/login";
 	}
-	
 	// 로그인 에러 시 리턴할 메세지
 	@GetMapping("/loginError")
 	public String loginError(Model model, String error, String username) {
-		
-		if(error.equals("탈퇴회원")) {
-			error = "재가입까지 " + userService.rejoinDate(username) + "일 남았습니다.";
-		}
+		if(error.equals("탈퇴회원")) error = "재가입까지 " + userService.rejoinDate(username) + "일 남았습니다.";
 		
 		model.addAttribute("msg", error);
 		return "user/login";
@@ -117,26 +111,14 @@ public class UserController {
 	// 계정 찾기 - ID or PASSWORD
 	@ResponseBody
 	@PostMapping("/findUser")
-	public String findUserID(User user, String birthDay, Model model) {
-		
+	public String findUserAccount(User user, String birthDay, Model model) {
 		try {
 			user.setUserBirth(new SimpleDateFormat("yyyy-MM-dd").parse(birthDay));
 		} catch (Exception e) {}
+		user = userService.findUserAccount(user);
 		
-		// userEmail이 null 이면 아이디 찾기
-		if(user.getUserEmail() == null) { 
-			user = userService.findUserID(user);
-			if(user == null) return null;
-			else return user.getUserEmail();
-		}
-		// userEmail이 null이 아니면 비밀번호 찾기
-		else {
-			user = userService.findUserPWD(user);
-			if(user == null) {
-				return null;
-			}
-			return userService.findUserPWD(user).getUserEmail();
-		}
+		if(user == null) return null;
+		return user.getUserEmail();
 	}
 	
 	// 비밀번호 수정 - PASSWORD 찾기 이후 이어지는 메서드
@@ -154,11 +136,11 @@ public class UserController {
 		
 		// 유저가 좋아하는 태그 top 5
 		List<UserLikeTagDTO> list = userService.userLikeTag(user.getUserEmail());
+		model.addAttribute("likeTagList", list);
 		
 		// 해당유저의 좋아요가 가장 많은 플레이리스트
 		try {
 			Playlist playlist = playlistService.likeRankByUserEmail(user.getUserEmail());
-			
 			model.addAttribute("topPlaylist", playlistViewer.onePlaylistView(playlist));
 		} catch(Exception e) {
 			model.addAttribute("topPlaylist", null);
@@ -171,9 +153,6 @@ public class UserController {
 		} catch(Exception e) {
 			model.addAttribute("randomPlaylist", null);
 		}
-	    
-		model.addAttribute("likeTagList", list);
-		
 		return "user/mypage";
 	}
 	
@@ -193,12 +172,10 @@ public class UserController {
 		userService.updateUserPWD(user);
 		model.addAttribute("pwdChange", "패스워드가 변경되었습니다. 다시 로그인 해주세요.");
 		
-		// 패스워드 변경하면 세션 죽여서 로그아웃 시키기
+		// 패스워드 변경시 세션 제거 후 로그아웃
 		HttpSession session = request.getSession(false);
 		session.invalidate();
-		
 		SecurityContextHolder.getContext().setAuthentication(null);
-		
 		return "msgPage";
 	}
 	
@@ -212,7 +189,6 @@ public class UserController {
 		if(userService.deleteUser(user, userPassword)) {
 			HttpSession session = request.getSession(false);
 			session.invalidate();
-			
 			SecurityContextHolder.getContext().setAuthentication(null);
 			return true;
 		}
@@ -278,19 +254,18 @@ public class UserController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		User user = (User) authentication.getPrincipal();
 		
-		String path = "\\\\192.168.10.6\\vibe\\img\\preview_img\\" + user.getUserEmail(); // 각 유저별 프리뷰 이미지 저장할 폴더 
-		
+		// 프리뷰 폴더 경로 지정하는 파일 객체 생성
+		String path = previewDir + user.getUserEmail();
 		File dir = new File(path);
-		if(!dir.exists()) dir.mkdir(); // 없으면 폴더 생성
+		// 폴더가 없으면 폴더 생성
+		if(!dir.exists()) dir.mkdir();
 		
 		UUID uuid = UUID.randomUUID();
 		String fileName = uuid.toString() + "_" + file.getOriginalFilename();
-		
 		File copyFile = new File(path + "\\" + fileName);
 		
-		file.transferTo(copyFile); // 업로드한 파일이 지정한 path 위치로 저장
+		file.transferTo(copyFile);
 		return "http://192.168.10.6:8080/img/preview_img/" + user.getUserEmail() + "/" + fileName;
-				
 	}
 
 	// 회원 수정
@@ -298,51 +273,36 @@ public class UserController {
 	public String updateUser() {
 		return "user/updateUser";
 	}
-
 	@PostMapping("/updateUser")
 	public String updateUser(UserDTO dto, Model model) throws IllegalStateException, IOException {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		User user = (User) authentication.getPrincipal(); // 현재 접속중인 유저 정보
-		
+		User user = (User) authentication.getPrincipal();
 		User changeUser = null;
-		
 		try {
 			changeUser = user.clone();
 		} catch (CloneNotSupportedException e) {}
 		
-		// 변경할 정보들을 현재접속한 유저 객체에 담아서 서비스로 처리
-		changeUser.setUserNickname(dto.getUserNickname());
-		changeUser.setUserPhone(dto.getUserPhone());
+		deletePreviewImg();
 		
-		// 프리뷰 폴더 삭제 로직
-		File dir = new File("\\\\192.168.10.6\\vibe\\img\\preview_img\\" + user.getUserEmail());
-		while(dir.exists()) {
-			File[] dir_list = dir.listFiles();
-			for(int i = 0; i < dir_list.length; i++) dir_list[i].delete();
-			if(dir_list.length == 0 && dir.isDirectory()) dir.delete();
-		}
-		
-		// 이미지 변경 로직 추가
+		// 이미지 변경 로직
 		if(!dto.getFile().isEmpty()) {
-			
 			// 이전에 가지고 있던 유저 이미지가 기본이미지가 아니라면 삭제
 			if(!user.getUserImg().equals("http://192.168.10.6:8080/img/user_img/default_user.jpg")) {
-				File deleteFile = new File("\\\\192.168.10.6\\vibe\\img\\user_img\\" + new File(user.getUserImg()).getName());
+				File deleteFile = new File(UserImgDir + new File(user.getUserImg()).getName());
 				deleteFile.delete();
 			}
-			
 			// 파일 이름 랜덤으로 새로 생성
 			UUID uuid = UUID.randomUUID();
 			String fileName = uuid.toString() + "_" + dto.getFile().getOriginalFilename();
-			File copyFile = new File("\\\\192.168.10.6\\vibe\\img\\user_img\\" + fileName);
+			File copyFile = new File(UserImgDir + fileName);
 			dto.getFile().transferTo(copyFile);
 			
 			// 서비스 넘기기 전에 user 객체에 DB에 들어갈 img 경로 지정
 			changeUser.setUserImg("http://192.168.10.6:8080/img/user_img/" + fileName);
-		} else {
-			changeUser.setUserImg(dto.getUserImg());
-		}
-		
+		} else changeUser.setUserImg(dto.getUserImg());
+		// 그 외 변경할 정보들을 현재접속한 유저 객체에 담아서 서비스로 처리
+		changeUser.setUserNickname(dto.getUserNickname());
+		changeUser.setUserPhone(dto.getUserPhone());
 		userService.updateUser(changeUser);
 		
 		// 변경된 정보로 session에 다시 담기
@@ -353,40 +313,10 @@ public class UserController {
 		return "redirect:/mypage";
 	}
 
-	// ajax - 회원정보 수정 중 기본 이미지로 변경
-	@PostMapping("/changeDefaultImg")
-	public String changeDefaultImg() {
-	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-	    User user = (User) authentication.getPrincipal();
-	    
-	    // 기본 이미지 URL
-	    String defaultImgUrl = "http://192.168.10.6:8080/img/user_img/default_user.jpg";
-	    user.setUserImg(defaultImgUrl);
-	    
-	    // 세션을 업데이트하여 변경된 사용자 정보를 반영
-	    UserDetails updateUserDetails = user;
-	    UsernamePasswordAuthenticationToken newAuth = new UsernamePasswordAuthenticationToken(updateUserDetails, authentication.getCredentials(), updateUserDetails.getAuthorities());
-	    SecurityContextHolder.getContext().setAuthentication(newAuth);
-	    
-	    return defaultImgUrl; // 프론트엔드로 기본 이미지 URL을 반환
-	}
-	
 	// 수정 취소
 	@GetMapping("/cancelUpdate")
 	public String cancelUpdate() {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		User user = (User) authentication.getPrincipal();
-		
-		// 프리뷰 폴더 삭제 로직
-		File dir = new File("\\\\192.168.10.6\\vibe\\img\\preview_img\\" + user.getUserEmail());
-		
-		while(dir.exists()) {
-			File[] dir_list = dir.listFiles();
-			for(int i = 0; i < dir_list.length; i++) dir_list[i].delete();
-			
-			if(dir_list.length == 0 && dir.isDirectory()) dir.delete();
-		}
-		
+		deletePreviewImg();
 		return "redirect:/mypage";
 	}
 }

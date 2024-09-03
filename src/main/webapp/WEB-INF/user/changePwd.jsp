@@ -38,7 +38,7 @@
 							<div class="editButtonBox">
 								<div>
 									<button type="submit" class="editBtn">Save</button>
-									<button type="button" class="editCancle"
+									<button type="button" class="editCancel"
 										onclick="location.href='/cancelUpdate'">Cancel</button>
 								</div>
 							</div>
@@ -70,27 +70,27 @@
 			const regExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,14}$/;
 			
 			if(regExp.test($(".changePassword").val())){
-				$(".changePassword").css("border-bottom", "2px solid green");
+				$(".changePassword").css("border-bottom", "1px solid green");
 				regPasswordCheck = true;
 			}else{
-				$(".changePassword").css("border-bottom", "2px solid red");
+				$(".changePassword").css("border-bottom", "1px solid red");
 				regPasswordCheck = false;
 			}
 			if($(".changePassword").val() == $(".passwordCheck").val() && $(".changePassword").val() != ""){
-				$(".passwordCheck").css("border-bottom", "2px solid green");
+				$(".passwordCheck").css("border-bottom", "1px solid green");
 				passwordSameCheck = true;
 			}else{
-				$(".passwordCheck").css("border-bottom", "2px solid red");
+				$(".passwordCheck").css("border-bottom", "1px solid red");
 				passwordSameCheck = false;
 			}
 		});
 
 		$(".passwordCheck").keyup(() => {
 			if($(".changePassword").val() == $(".passwordCheck").val() && $(".changePassword").val() != ""){
-				$(".passwordCheck").css("border-bottom", "2px solid green");
+				$(".passwordCheck").css("border-bottom", "1px solid green");
 				passwordSameCheck = true;
 			}else{
-				$(".passwordCheck").css("border-bottom", "2px solid red");
+				$(".passwordCheck").css("border-bottom", "1px solid red");
 				passwordSameCheck = false;
 			}
 		});

@@ -59,7 +59,10 @@ a {
 	cursor: pointer;
 }
 .likeBox .heartEmoji{
-	font-size: 1rem;
+	font-size: 0.9rem;
+}
+.likeBox span{
+	font-size: 0.9rem;
 }
 
 /* 자물쇠 lock(플리 공개여부) */

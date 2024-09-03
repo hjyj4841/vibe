@@ -34,13 +34,11 @@ public class UserService implements UserDetailsService{
 		return userMapper.register(user);
 	}
 
-	// 유저 ID 찾기
-	public User findUserID(User user) {
-		return userMapper.findUserID(user);
-	}
-
-	// 유저 PWD 찾기
-	public User findUserPWD(User user) {
+	// 유저 계정 찾기
+	public User findUserAccount(User user) {
+		// userEmail이 null 이면 아이디 찾기
+		if(user.getUserEmail() == null) return userMapper.findUserID(user);
+		// userEmail이 null이 아니면 비밀번호 찾기
 		return userMapper.findUserPWD(user);
 	}
 

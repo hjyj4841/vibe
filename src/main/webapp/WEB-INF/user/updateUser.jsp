@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="sec"
-    uri="http://www.springframework.org/security/tags"%>
+	uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,68 +13,62 @@
 <title>My Profile</title>
 </head>
 <body>
-    <jsp:include page="../tiles/header.jsp"></jsp:include>
-    <div class="container">
-        <div class="con">
-            <div class="mypageBox">
-                <div class="myLeft">
-                    <jsp:include page="../tiles/mypageLeft.jsp"></jsp:include>
-                </div>
-                <div class="myRight">
-                    <div class="myTagBox">
-                        <div>Edit Profile</div>
-                        <sec:authorize access="isAuthenticated()" var="principal">
-                            <sec:authentication property="principal" var="user" />
-                            <form class="editForm" action="updateUser" method="post"
-                                onsubmit="return validate()" enctype="multipart/form-data">
-                                <input type="hidden" value="${user.userImg}" name="userImg" class="userImg">
-                                <div class="editUserImgBox">
-                                    <div>
-                                    	<img src="${user.userImg}" class="userImgView">
-                                    	<div class="changeUserImg">
-                                    		<input name="file" type="file" accept="image/*" class="imgFile"> 
-	                                        <div>
-	                                            <p>empty</p>
-	                                            <i class="fa-solid fa-camera-rotate"></i>
-	                                            <p>Change Image</p>
-	                                        </div>
-                                    	</div>
-                                        <div class="defaultUserImg">
-                                        	<button type="button" class="deleteImgBtn">Default Image</button>
-                                        </div>
-                                    </div>
-                                    
-                                </div>
-                                <div class="textAndIcon">
-                                    <input type="text" name="userNickname" class="nickname"
-                                        value="${user.userNickname}" placeholder="${user.userNickname}" readonly required /> 
-                                        <i class="fa-solid fa-pen" id="nicknanmeChangeBtn"></i>
-                                </div>
-                                <div class="textAndIcon">
-                                    <input type="text" name="userPhone" value="${user.userPhone}"
-                                        class="phoneNum" placeholder="${user.userPhone}" maxlength="13" readonly required /> 
-                                        <i class="fa-solid fa-pen" id="phoneNumChangeBtn"></i>
-                                </div>
-                                <div>
-                                    <input type="password" placeholder="Password"
-                                        name="userPassword" class="userPassword" required />
-                                </div>
-                                <div class="editButtonBox">
-                                    <div>
-                                        <button type="submit" class="editBtn">Save</button>
-                                        <button type="button" class="editCancel"
-                                            onclick="location.href='/cancelUpdate'">Cancel</button>
-                                    </div>
-                                    <a href="/changePassword">Change Password</a>
-                                </div>
-                            </form>
-                        </sec:authorize>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script>
+	<jsp:include page="../tiles/header.jsp"></jsp:include>
+	<div class="container">
+		<div class="con">
+			<div class="mypageBox">
+				<div class="myLeft">
+					<jsp:include page="../tiles/mypageLeft.jsp"></jsp:include>
+				</div>
+				<div class="myRight">
+					<div class="myTagBox">
+						<div>Edit Profile</div>
+						<sec:authorize access="isAuthenticated()" var="principal">
+							<sec:authentication property="principal" var="user" />
+							<form class="editForm" action="updateUser" method="post" onsubmit="return validate()" enctype="multipart/form-data">
+								<input type="hidden" value="${user.userImg}" name="userImg" class="userImg">
+								<div class="editUserImgBox">
+									<div>
+										<img src="${user.userImg}" class="userImgView">
+										<div class="changeUserImg">
+											<input name="file" type="file" accept="image/*" class="imgFile">
+											<div>
+												<p>empty</p>
+												<i class="fa-solid fa-camera-rotate"></i>
+												<p>Change Image</p>
+											</div>
+										</div>
+										<div class="defaultUserImg">
+											<button type="button" class="deleteImgBtn">Default Image</button>
+										</div>
+									</div>
+								</div>
+								<div class="textAndIcon">
+									<input type="text" name="userNickname" class="nickname" value="${user.userNickname}" placeholder="${user.userNickname}" readonly required /> 
+									<i class="fa-solid fa-pen" id="nicknanmeChangeBtn"></i>
+								</div>
+								<div class="textAndIcon">
+									<input type="text" name="userPhone" value="${user.userPhone}" class="phoneNum" placeholder="${user.userPhone}" maxlength="13" readonly required /> 
+									<i class="fa-solid fa-pen" id="phoneNumChangeBtn"></i>
+								</div>
+								<div>
+									<input type="password" placeholder="Password" name="userPassword" class="userPassword" required />
+								</div>
+								<div class="editButtonBox">
+									<div>
+										<button type="submit" class="editBtn">Save</button>
+										<button type="button" class="editCancel" onclick="location.href='/cancelUpdate'">Cancel</button>
+									</div>
+									<a href="/changePassword">Change Password</a>
+								</div>
+							</form>
+						</sec:authorize>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
         const DEFAULT_IMAGE_URL = 'http://192.168.10.6:8080/img/user_img/default_user.jpg'; // 기본 이미지 URL 설정
 
         let nicknameCheck = true;
@@ -84,14 +78,14 @@
 
         $("#nicknanmeChangeBtn").click(() => {
             $(".nickname").attr('readonly', false)
-            .css({'color': 'white', 'border-bottom': '2px solid red'})
+            .css({'color': 'white', 'border-bottom': '1px solid red'})
             .focus().val('');
             nicknameCheck = false;
         });
 
         $("#phoneNumChangeBtn").click(() => {
             $(".phoneNum").attr('readonly', false)
-            .css({'color': 'white', 'border-bottom': '2px solid red'})
+            .css({'color': 'white', 'border-bottom': '1px solid red'})
             .focus().val('');
             phoneCheck = false;
         });
@@ -105,19 +99,19 @@
                 },
                 success: function(check){
                     if($(".nickname").prop('readonly') == true){
-                        $(".nickname").css("border-bottom", "2px solid #333");
+                        $(".nickname").css("border-bottom", "1px solid #333");
                         phoneCheck = true;
                     } else {
                         if(check) {
                             if($(".nickname").val() != ''){
-                                $(".nickname").css('border-bottom', '2px solid green');
+                                $(".nickname").css('border-bottom', '1px solid green');
                                 nicknameCheck = true;
                             } else {
-                                $(".nickname").css('border-bottom', '2px solid red');
+                                $(".nickname").css('border-bottom', '1px solid red');
                                 nicknameCheck = false;
                             }
                         } else {
-                            $(".nickname").css('border-bottom', '2px solid red');
+                            $(".nickname").css('border-bottom', '1px solid red');
                             nicknameCheck = false;
                         }
                     }
@@ -132,14 +126,14 @@
             $(".phoneNum").val($(".phoneNum").val().replace(/[^0-9]/gi, "").replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`));
             
             if($(".phoneNum").prop('readonly') == true){
-                $(".phoneNum").css("border-bottom", "2px solid #333");
+                $(".phoneNum").css("border-bottom", "1px solid #333");
                 phoneCheck = true;
             } else {
                 if(regExp.test($(".phoneNum").val())){
-                    $(".phoneNum").css("border-bottom", "2px solid green");
+                    $(".phoneNum").css("border-bottom", "1px solid green");
                     phoneCheck = true;
                 } else {
-                    $(".phoneNum").css("border-bottom", "2px solid red");
+                    $(".phoneNum").css("border-bottom", "1px solid red");
                     phoneCheck = false;
                 }
             }

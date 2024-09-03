@@ -23,18 +23,9 @@
 	
 		<p class="myNick">${user.userNickname }</p>
 		<p class="myEmail">${user.userEmail }</p>
-		<c:choose>
-			<c:when test="${user.userSpotifyYn == 89}">
-				<div class="connectSpotify spotifyInfo">
-					<i class="fa-brands fa-spotify"></i> <span>connected</span>
-				</div>
-			</c:when>
-			<c:otherwise>
-				<div class="disconnectSpotify spotifyInfo">
-					<i class="fa-brands fa-spotify"></i> <a href="/spotifyConnect"><span>disconnected</span></a>
-				</div>
-			</c:otherwise>
-		</c:choose>
+		<div class="disconnectSpotify spotifyInfo">
+			<i class="fa-brands fa-spotify"></i> <a href="/spotifyConnect"><span>disconnected</span></a>
+		</div>
 	</div>
 </sec:authorize>
 <div class="myList">
