@@ -29,7 +29,7 @@
 				
 				<div class="myRight">
 					<div class="playlistInfoMain">
-						<!-- 플레이리스트 목록으로 -->
+						<!-- 이전 화면으로 -->
 						<a href="javascript:window.history.back();" class="goPlaylistListBtn">
 							<i class="fa-solid fa-arrow-left"></i>
 						</a>
@@ -58,7 +58,7 @@
 										<i class="fa-regular fa-heart heartEmoji"></i>
 									</c:otherwise>
 								</c:choose>
-								<span>LIKE </span> <span class="likeCount">${playlist.likeCount }</span>
+								<span>LIKE </span> <span class="likeCount">${playlist.likeCount}</span>
 							</div>
 							
 							<div class="playlistTagBox">

@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="./css/updatePlaylist.css" />
 <script src="https://kit.fontawesome.com/df04184d5c.js" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.2/color-thief.umd.js"></script> <!-- ColorThief 라이브러리 추가 -->
+<script src="node_modules/colorthief/dist/color-thief.umd.js"></script>
 <title>플레이리스트 수정하기</title>
 <script type="text/javascript">
 	// [취소하기] 버튼 클릭 시 수정 취소 동시에 이전 화면으로
@@ -28,20 +29,15 @@
 				const image = document.getElementById("playlistImg");
 				image.src = e.target.result;
 
-				// ColorThief를 사용하여 이미지에서 색상 추출
-				const colorThief = new ColorThief();
-				const imgElement = document.getElementById("playlistImg");
-				if (imgElement.complete) {
-					const dominantColor = colorThief.getColor(imgElement);
-					console.log('Dominant Color from Default Image:', dominantColor); // 추출된 색상 출력
-				} else {
-					imgElement.addEventListener('load', function() {
-						const dominantColor = colorThief.getColor(imgElement);
-						console.log('Dominant Color from Default Image:', dominantColor); // 추출된 색상 출력
-					});
-				}
-			};
-			reader.readAsDataURL(file);
+				 // ColorThief를 사용하여 이미지에서 색상 추출
+	            const colorThief = new ColorThief();
+	            const imgElement = document.getElementById("playlistImg");
+	            imgElement.onload = function() {
+	                const dominantColor = colorThief.getColor(imgElement);
+	                console.log('Dominant Color from Uploaded Image:', dominantColor); // 추출된 색상 출력
+	            };
+	        };
+	        reader.readAsDataURL(file);
 		}
 	}
 
@@ -57,17 +53,11 @@
 		document.getElementById("defaultImg").value = DEFAULT_IMAGE_URL; // 기본 이미지 URL 추가
 
 		// 기본 이미지에서 색상 추출
-		const colorThief = new ColorThief();
-		const imgElement = document.getElementById("playlistImg");
-		if (imgElement.complete) {
-			const dominantColor = colorThief.getColor(imgElement);
-			console.log(dominantColor); // 추출된 색상 출력
-		} else {
-			imgElement.addEventListener('load', function() {
-				const dominantColor = colorThief.getColor(imgElement);
-				console.log(dominantColor); // 추출된 색상 출력
-			});
-		}
+	    const colorThief = new ColorThief();
+	    img.onload = function() {
+	        const dominantColor = colorThief.getColor(img);
+	        console.log('Dominant Color from Default Image:', dominantColor); // 추출된 색상 출력
+	    };
 	}
 </script>
 </head>
@@ -88,8 +78,21 @@
 							<form action="/updatePlaylist" method="post" enctype="multipart/form-data">
 								<!-- 플레이리스트 코드와 수정할 제목을 입력 받음 -->
 								<input type="hidden" value="${playlist.plCode}" name="plCode" />
-								<div class="updatePlImg">
-									<img id="playlistImg" src="${playlist.plImg}">
+								<div class="updatePlImgBox">
+									<div class="updatePlImg">
+										<img src="${playlist.plImg}" id="playlistImg" class="playlistImg">
+										<div class="changePlImg">
+											<input type="file" id="imgChange" name="plImgFile" accept="image/*" onchange="previewImg(event)" />
+											<div>
+	                                            <i class="fa-solid fa-camera-rotate"></i>
+	                                            <p>Change Image</p>
+	                                        </div>
+										</div>
+										<div class="defaultImg">
+											<input type="hidden" id="defaultImg" name="defaultImg" value="${playlist.plImg}" />
+											<button type="button" class="deleteImgBtn" onclick="resetDefaultImg()">Default Image</button>
+										</div>
+									</div>
 								</div>
 								<div class="updatePlTitle">
 									<input type="text" id="plTitle" name="plTitle"
@@ -103,30 +106,26 @@
 										</c:otherwise>
 									</c:choose>
 								</div>
-
-								<label for="imgChange">Change Image</label> <input type="file"
-									id="imgChange" name="plImgFile" accept="image/*"
-									onchange="previewImg(event)" /> <input type="hidden"
-									id="defaultImg" name="defaultImg" value="${playlist.plImg}" />
-
-								<!-- 기본 이미지 URL 필드 추가 -->
-								<button type="button" onclick="resetDefaultImg()">Default
-									Image</button>
 						</div>
-
-
-						<br>
-						<br>
-						<br>
-						<br>
-						<br>
-						<br>
-						<br>
-						<div class="button-group">
-							<button type="submit">Save</button>
+						
+						<!-- 
+						<div class="playlistTagBox">
+								<ul class="plTags">
+									<c:forEach items="${playlist.tagList}" var="tag">
+										<li>#${tag.tag.tagName}</li>
+									</c:forEach>
+								</ul>
 						</div>
-
-						<!-- 이전 플레이리스트 화면으로 -->
+						-->
+					
+						<div class="editButtonBox">
+							<div class="editButton">
+								<button type="submit" class="editBtn">Save</button>
+								<button type="button" class="editCancel" onclick="javascript:window.history.back();">Cancel</button>
+							</div>
+						</div>
+						
+						<!-- 이전 화면으로 -->
 						<a href="javascript:void(0);" onclick="cancel()"
 							class="goPlaylistBtn"><i class="fa-solid fa-arrow-left"></i></a>
 						</form>
@@ -135,7 +134,29 @@
 			</div>
 		</div>
 	</div>
-	</div>
-	<script src="./js/scroll.js"></script>
+	
+	<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var inputElement = document.getElementById('plTitle');
+
+            if (inputElement) {
+                // 페이지 로드 시 입력 필드의 끝으로 커서 이동되어 있기
+                inputElement.focus();
+                var length = inputElement.value.length;
+                inputElement.setSelectionRange(length, length);
+
+                // 클릭 시 커서 위치 클릭한 위치로 이동
+                inputElement.addEventListener('click', function(event) {
+                    var offsetX = event.clientX - inputElement.getBoundingClientRect().left;
+                    var value = inputElement.value;
+                    //var inputWidth = inputElement.clientWidth;
+                    //var charWidth = inputWidth / (value.length || 1);
+                    var index = Math.min(value.length, Math.floor(offsetX / charWidth));
+                    inputElement.setSelectionRange(index, index);
+                });
+            }
+        });
+    </script>
+    <script src="./js/scroll.js"></script>
 </body>
 </html>
