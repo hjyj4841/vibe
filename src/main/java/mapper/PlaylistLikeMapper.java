@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.master.vibe.model.dto.GetUserByIdDTO;
 import com.master.vibe.model.dto.PlaylistLikeDTO;
 import com.master.vibe.model.dto.SearchDTO;
 import com.master.vibe.model.vo.Playlist;
@@ -25,4 +26,5 @@ public interface PlaylistLikeMapper {
 	int showLikeCount(int plCode);
 	// 해당 플리 삭제 시 모든 좋아요 삭제
 	void deleteAllPlLike(int plCode);
+	
 }

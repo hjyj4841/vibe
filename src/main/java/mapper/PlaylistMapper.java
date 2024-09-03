@@ -5,11 +5,14 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.master.vibe.model.dto.CreatePlaylistDTO;
+import com.master.vibe.model.dto.GetUserByIdDTO;
+import com.master.vibe.model.dto.PlaylistDTO;
 import com.master.vibe.model.dto.SearchDTO;
 import com.master.vibe.model.vo.Paging;
 import com.master.vibe.model.dto.UpdatePlaylistDTO;
 import com.master.vibe.model.vo.Playlist;
 import com.master.vibe.model.vo.PlaylistTag;
+import com.master.vibe.model.vo.User;
 
 
 // PlaylistMapper.java는 플레이리스트를 데이터베이스에 추가하는 addPlaylist 메소드를 정의
@@ -63,5 +66,9 @@ public interface PlaylistMapper {
     List<Playlist> playListRankingOnAgeGroup(SearchDTO dto); // 연령대별 좋아요 랭킹
     
     List<Playlist> playListRankingOnGender(SearchDTO dto); // 성별 별 좋아요 랭킹
+    
+    GetUserByIdDTO getUserById(String userEmail); // 공유 용 유저 페이지 
+    
+    List<PlaylistDTO> getPlayListById(String userEmail);
     
 }

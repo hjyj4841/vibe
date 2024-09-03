@@ -42,15 +42,31 @@ public class ConnectToSpotifyController {
 	}
 
 	@GetMapping("/callback")
-	public String handleSpotifyCallbackForMusicPlayer(@RequestParam("code") String code, Model model){
+	public String handleSpotifyCallbackForMusicPlayer(@RequestParam("code") String code, Model model) {
 		try {
 			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			if (authentication == null) {
+				System.err.println("Authentication is null");
+				return "redirect:/error";
+			}
+
 			User user = (User) authentication.getPrincipal();
+			if (user == null) {
+				System.err.println("User is null");
+				return "redirect:/error";
+			}
+
 			String accessToken = spotifyService.getAccessToken(code, clientId, clientSecret, redirectUri);
-			System.out.println(accessToken);
+			if (accessToken == null) {
+				System.err.println("Access token is null");
+				return "redirect:/error";
+			}
+
+			System.out.println("Access Token: " + accessToken);
 			model.addAttribute("token", accessToken);
 			spotifyService.updateUserSpotifyStatus(user.getUserEmail());
-			return "user/mypage"; // 마이페이지로 리다이렉트
+
+			return "redirect:/mypage"; // 마이페이지로 리다이렉트
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "redirect:/error"; // 오류 시 에러 페이지로 리다이렉트

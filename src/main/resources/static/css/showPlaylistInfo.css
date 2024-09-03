@@ -381,3 +381,26 @@ a {
   text-decoration: none;
   cursor: pointer;
 }
+
+/* 모달 관련 */
+.modal-content{
+	height: 450px;
+}
+
+.spotify-login-box {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.spotify-login-box > p {
+	margin-top: 5px;
+	margin-bottom: 20px;
+	color: #aaa;
+}
+
+.spotify-login-box > p > i {
+	color: white;
+}
+

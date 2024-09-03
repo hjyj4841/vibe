@@ -9,7 +9,7 @@
 		<result column="pl_img" property="plImg" />
 		<result column="pl_date" property="plDate" />
 		<result column="pl_public_yn" property="plPublicYn" />
-		<result column="pl_code_count" property="likeCount"/>
+		<result column="pl_code_count" property="likeCount" />
 		<association property="user" javaType="User">
 			<id column="user_email" property="userEmail" />
 			<result column="user_password" property="userPassword" />
@@ -26,7 +26,7 @@
 			<result column="age_group" property="ageGroup" />
 		</association>
 	</resultMap>
-	
+
 	<resultMap type="PlayListTag" id="listTagMap">
 		<id column="pl_tag_code" property="plTagCode" />
 		<association property="tag" javaType="Tag">
@@ -34,16 +34,59 @@
 			<result column="tag_name" property="tagName" />
 		</association>
 	</resultMap>
-	
+
 	<resultMap type="PlaylistLike" id="likeMap">
-		<id column="like_code" property="likeCode"/>
+		<id column="like_code" property="likeCode" />
+	</resultMap>
+	
+	<resultMap id="playlistDTOMap"
+		type="PlaylistDTO">
+		<!-- plCode에 대한 매핑 -->
+		<id column="pl_code" property="plCode" />
+
+		<!-- 나머지 속성에 대한 매핑 -->
+		<result column="pl_title" property="plTitle" />
+		<result column="pl_img" property="plImg" />
+		<result column="pl_date" property="plDate" />
+		<result column="pl_public_yn" property="plPublicYn" />
+		<result column="likeCount" property="likeCount" />
+		<result column="like_code" property="likeCode" />
+
+		<!-- User 객체에 대한 매핑 -->
+		<association property="user"
+			javaType="User">
+			<id column="user_email" property="userEmail" />
+			<result column="user_nickname" property="userNickname" />
+			<result column="user_img" property="userImg" />
+			<!-- 필요한 경우 추가적인 유저 필드를 여기에 매핑 -->
+		</association>
+
+		<!-- PlaylistLike 객체에 대한 매핑 -->
+		<association property="plLike"
+			javaType="PlaylistLike">
+			<id column="like_code" property="likeCode" />
+			<!-- 필요한 경우 추가적인 필드를 여기에 매핑 -->
+		</association>
+
+		<!-- 태그 리스트 매핑 -->
+		<collection property="tagList"
+			ofType="PlaylistTag">
+			<id column="pl_tag_code" property="plTagCode" />
+			<association property="tag"
+				javaType="com.master.vibe.model.vo.Tag">
+				<id column="tag_code" property="tagCode" />
+				<result column="tag_name" property="tagName" />
+			</association>
+		</collection>
 	</resultMap>
 
 	<!-- 전체플리 조회 -->
-	<select id="allPlaylist" resultMap="playlistMap" parameterType="SearchDTO">
+	<select id="allPlaylist" resultMap="playlistMap"
+		parameterType="SearchDTO">
 		SELECT * FROM playlist
 		JOIN user USING (user_email)
-		WHERE pl_public_yn = 'Y'
+		WHERE pl_public_yn =
+		'Y'
 		<!-- 타이틀로 검색 쿼리 -->
 		<if test="select == 'title' and search != ''">
 			AND lower(pl_title) LIKE CONCAT('%', #{search}, '%')
@@ -58,14 +101,15 @@
 		ORDER BY pl_code DESC
 		LIMIT #{offset}, #{limit}
 	</select>
-	
-	<!-- 전체플리 조회  limit 5 고정 -->
+
+	<!-- 전체플리 조회 limit 5 고정 -->
 	<select id="rankPlaylist" resultMap="playlistMap"
 		parameterType="SearchDTO">
-		SELECT pl_code, pl_title, pl_img, u.user_email, u.user_nickname, u.user_img
+		SELECT pl_code, pl_title, pl_img, u.user_email, u.user_nickname,
+		u.user_img
 		FROM playlist p
 		JOIN user u ON (u.user_email = p.user_email)
-	    	LEFT JOIN playlist_like USING (pl_code)
+		LEFT JOIN playlist_like USING (pl_code)
 		WHERE pl_public_yn = 'Y'
 		<!-- 타이틀로 검색 쿼리 -->
 		<if test="select == 'title' and search != ''">
@@ -82,34 +126,42 @@
 		ORDER BY COUNT(like_code) DESC
 		LIMIT 5
 	</select>
-	
+
 	<!-- 플레이리스트 태그테이블에서 태그 검색 쿼리(중복 제거) -->
-	<select id="searchTag" resultType="Integer" parameterType="String">
-		SELECT distinct pl_code 
+	<select id="searchTag" resultType="Integer"
+		parameterType="String">
+		SELECT distinct pl_code
 		FROM playlist_tag
-			JOIN tag USING (tag_code)
-		WHERE lower(tag_name) LIKE CONCAT('%', #{search}, '%')
+		JOIN tag USING
+		(tag_code)
+		WHERE lower(tag_name) LIKE CONCAT('%', #{search},
+		'%')
 	</select>
-	
+
 	<!-- 플레이리스트 플레이리스트코드마다 태그 가져오는 쿼리 -->
-	<select id="searchTagPlayList" resultMap="listTagMap" parameterType="Integer">
-		SELECT * 
+	<select id="searchTagPlayList" resultMap="listTagMap"
+		parameterType="Integer">
+		SELECT *
 		FROM playlist_tag
-			JOIN tag USING (tag_code)
-		WHERE pl_code = #{code}
+		JOIN tag USING (tag_code)
+		WHERE
+		pl_code = #{code}
 	</select>
 
 	<!-- 플레이리스트 생성 --> <!-- 이미지 추가! -->
-	<insert id="createPlaylist" parameterType="CreatePlaylistDTO" useGeneratedKeys="true" keyProperty="plCode" keyColumn="pl_code">
+	<insert id="createPlaylist" parameterType="CreatePlaylistDTO"
+		useGeneratedKeys="true" keyProperty="plCode" keyColumn="pl_code">
 		INSERT INTO
 		playlist(pl_title, user_email, pl_img, pl_public_yn)
-		VALUES (#{plTitle}, #{userEmail}, #{plImg}, #{plPublicYn})
+		VALUES
+		(#{plTitle}, #{userEmail}, #{plImg}, #{plPublicYn})
 	</insert>
-	
+
 	<!-- 플레이리스트 제목과 이미지 동시에 업데이트 -->
 	<update id="updatePlaylist" parameterType="UpdatePlaylistDTO">
 		UPDATE playlist
-		SET pl_title = #{plTitle}, pl_img = #{plImg}
+		SET
+		pl_title = #{plTitle}, pl_img = #{plImg}
 		WHERE pl_code = #{plCode}
 	</update>
 
@@ -122,95 +174,123 @@
 	</update>
 
 	<!-- 회원 본인의 플레이리스트 조회 -->
-	<select id="myPlaylist" resultMap="playlistMap" parameterType="SearchDTO">
+	<select id="myPlaylist" resultMap="playlistMap"
+		parameterType="SearchDTO">
 		SELECT * FROM playlist
 		JOIN user USING (user_email)
-		WHERE user_email = #{userEmail}
+		WHERE
+		user_email = #{userEmail}
 		ORDER BY pl_code DESC
-		LIMIT #{offset}, #{limit};
+		LIMIT #{offset},
+		#{limit};
 	</select>
 
 	<!-- 플레이리스트 코드로 플레이리스트 정보 조회 -->
-	<select id="selectPlaylistByPlCode" resultMap="playlistMap" parameterType="Integer">
+	<select id="selectPlaylistByPlCode" resultMap="playlistMap"
+		parameterType="Integer">
 		SELECT * FROM playlist
 		JOIN user USING(user_email)
-		WHERE pl_code = #{plCode}
+		WHERE
+		pl_code = #{plCode}
 	</select>
 
 	<!-- 플레이리스트 관련 음악 삭제 -->
 	<delete id="deletePlaylistMusic" parameterType="Integer">
-		DELETE FROM playlist_music WHERE pl_code = #{plCode}
+		DELETE FROM
+		playlist_music WHERE pl_code = #{plCode}
 	</delete>
 
 	<!-- 플레이리스트 삭제 -->
 	<delete id="deletePlaylist" parameterType="Integer">
-		DELETE FROM playlist WHERE pl_code = #{plCode}
+		DELETE FROM playlist
+		WHERE pl_code = #{plCode}
 	</delete>
 
-    <!-- 플레이리스트 태그 삭제 -->
+	<!-- 플레이리스트 태그 삭제 -->
 	<delete id="deletePlaylistTags" parameterType="Integer">
-	    DELETE FROM playlist_tag WHERE pl_code = #{plCode}
+		DELETE FROM
+		playlist_tag WHERE pl_code = #{plCode}
 	</delete>
-	
+
 	<!-- 플레이리스트 제목 수정 -->
-    <update id="updatePlaylistTitle" parameterType="Playlist">
-        UPDATE playlist
-        SET pl_title = #{plTitle}
-        WHERE pl_code = #{plCode}
-    </update>
-    
-    <!-- 랭킹 : 좋아요순 -->
-    <select id="likerankingPlaylist" resultMap="playlistMap" parameterType="SearchDTO">
-    	SELECT pl_code, pl_title, pl_img, pl_date, u.user_email, u.user_nickname, u.user_img, count(pl_code)
-    	FROM playlist p
-	    	JOIN user u ON (u.user_email = p.user_email)
-	    	LEFT JOIN playlist_like USING (pl_code)
-    	WHERE pl_public_yn = 'Y'
-    	GROUP BY pl_code
-    	ORDER BY COUNT(like_code) DESC
-    	LIMIT #{offset}, #{limit}
-    </select>
-    
-    <!-- 랭킹 : 좋아요 TOP3 -->
-    <select id="rankTop" resultMap="playlistMap">
-    	SELECT pl_code, pl_title, pl_img, pl_date, u.user_email, u.user_nickname, count(pl_code)
-    	FROM playlist p
-	    	JOIN user u ON (u.user_email = p.user_email)
-	    	LEFT JOIN playlist_like USING (pl_code)
-    	WHERE pl_public_yn = 'Y'
-    	GROUP BY pl_code
-    	ORDER BY COUNT(like_code) DESC
-    	LIMIT 3
-    </select>
-    
-    <!-- 특정 회원의 최고 인기 플레이리스트 조회-->
-    <select id="likeRankByUserEmail" resultMap="playlistMap" parameterType="String">
-    	SELECT pl_code, pl_title, pl_img, pl_date, u.user_email, u.user_nickname, u.user_img
-    	FROM playlist p
-	    	JOIN user u ON (u.user_email = p.user_email)
-	    	LEFT JOIN playlist_like USING (pl_code)
-    	WHERE u.user_email = #{user_email}
-    	GROUP BY pl_code
-    	ORDER BY COUNT(like_code) DESC
-    	LIMIT 1
-    </select>
+	<update id="updatePlaylistTitle" parameterType="Playlist">
+		UPDATE playlist
+		SET pl_title = #{plTitle}
+		WHERE pl_code = #{plCode}
+	</update>
+
+	<!-- 랭킹 : 좋아요순 -->
+	<select id="likerankingPlaylist" resultMap="playlistMap"
+		parameterType="SearchDTO">
+		SELECT pl_code, pl_title, pl_img, pl_date, u.user_email,
+		u.user_nickname,
+		u.user_img, count(pl_code)
+		FROM playlist p
+		JOIN user u
+		ON (u.user_email = p.user_email)
+		LEFT JOIN playlist_like USING
+		(pl_code)
+		WHERE pl_public_yn = 'Y'
+		GROUP BY pl_code
+		ORDER BY
+		COUNT(like_code) DESC
+		LIMIT #{offset}, #{limit}
+	</select>
+
+	<!-- 랭킹 : 좋아요 TOP3 -->
+	<select id="rankTop" resultMap="playlistMap">
+		SELECT pl_code, pl_title, pl_img,
+		pl_date, u.user_email, u.user_nickname,
+		count(pl_code)
+		FROM playlist p
+		JOIN user u ON (u.user_email = p.user_email)
+		LEFT JOIN playlist_like
+		USING (pl_code)
+		WHERE pl_public_yn = 'Y'
+		GROUP BY pl_code
+		ORDER BY
+		COUNT(like_code) DESC
+		LIMIT 3
+	</select>
+
+	<!-- 특정 회원의 최고 인기 플레이리스트 조회 -->
+	<select id="likeRankByUserEmail" resultMap="playlistMap"
+		parameterType="String">
+		SELECT pl_code, pl_title, pl_img, pl_date, u.user_email,
+		u.user_nickname,
+		u.user_img
+		FROM playlist p
+		JOIN user u ON (u.user_email
+		= p.user_email)
+		LEFT JOIN playlist_like USING (pl_code)
+		WHERE
+		u.user_email = #{user_email}
+		GROUP BY pl_code
+		ORDER BY COUNT(like_code)
+		DESC
+		LIMIT 1
+	</select>
 
 	<!-- 플레이리스트 코드로 태그 이름 조회 -->
-	<select id="findTagsByPlaylistCode" resultType="String" parameterType="int">
-	    SELECT tag_name 
-	    FROM playlist
-		    JOIN playlist_tag USING (pl_code)
-		    JOIN tag USING (tag_code)
-	    WHERE pl_code = #{plCode}
+	<select id="findTagsByPlaylistCode" resultType="String"
+		parameterType="int">
+		SELECT tag_name
+		FROM playlist
+		JOIN playlist_tag USING
+		(pl_code)
+		JOIN tag USING (tag_code)
+		WHERE pl_code = #{plCode}
 	</select>
-	
+
 	<!-- 플레이리스트 랜덤 조회 -->
-	<select id="randomPlaylist" resultMap="playlistMap" parameterType="String">
+	<select id="randomPlaylist" resultMap="playlistMap"
+		parameterType="String">
 		SELECT *
 		FROM playlist
 		JOIN user USING (user_email)
-		WHERE pl_public_yn = 'Y'
-			AND user_email != #{userEmail}
+		WHERE
+		pl_public_yn = 'Y'
+		AND user_email != #{userEmail}
 		ORDER BY RAND()
 	</select>
 
@@ -222,10 +302,13 @@
 		FROM
 		playlist p
 		JOIN user u ON p.user_email = u.user_email
-		JOIN playlist_like pl ON p.pl_code = pl.pl_code
-		JOIN playlist_tag pt ON p.pl_code = pt.pl_code
+		JOIN playlist_like
+		pl ON p.pl_code = pl.pl_code
+		JOIN playlist_tag pt ON p.pl_code =
+		pt.pl_code
 		JOIN tag t ON pt.tag_code = t.tag_code
-		WHERE t.tag_name LIKE CONCAT('%',
+		WHERE t.tag_name LIKE
+		CONCAT('%',
 		#{tagName}, '%')
 		GROUP BY p.pl_code, u.user_nickname
 		ORDER BY
@@ -239,57 +322,110 @@
 		p.pl_public_yn, u.user_nickname,
 		COUNT(*) AS pl_code_count
 		FROM playlist p
-			JOIN user u ON p.user_email = u.user_email
-			JOIN playlist_like pl ON p.pl_code = pl.pl_code
-			JOIN playlist_tag pt ON p.pl_code = pt.pl_code
-			JOIN tag t ON pt.tag_code = t.tag_code
+		JOIN user u ON p.user_email =
+		u.user_email
+		JOIN playlist_like pl ON p.pl_code = pl.pl_code
+		JOIN
+		playlist_tag pt ON p.pl_code = pt.pl_code
+		JOIN tag t ON pt.tag_code =
+		t.tag_code
 		WHERE p.pl_date BETWEEN
-			DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH) AND CURRENT_DATE()
-			AND pl_public_yn = 'Y'
-		GROUP BY p.pl_code, u.user_nickname
-		ORDER BY pl_code_count DESC;
+		DATE_SUB(CURRENT_DATE(), INTERVAL 1
+		MONTH) AND CURRENT_DATE()
+		AND pl_public_yn = 'Y'
+		GROUP BY p.pl_code,
+		u.user_nickname
+		ORDER BY
+		pl_code_count DESC;
 	</select>
-	
+
 	<!-- 연령대별 좋아요 랭킹 -->
 	<select id="playListRankingOnAgeGroup" parameterType="SearchDTO"
 		resultMap="playlistMap">
 		SELECT
 		CASE
-			WHEN FLOOR(DATEDIFF(CURDATE(), u.user_birth) / 365.25) BETWEEN 10 AND 19
-				THEN '10'
-			WHEN FLOOR(DATEDIFF(CURDATE(), u.user_birth) / 365.25) BETWEEN 20 AND 29
-				THEN '20'
-			WHEN FLOOR(DATEDIFF(CURDATE(), u.user_birth) / 365.25) BETWEEN 30 AND 39
-				THEN '30'
-			WHEN FLOOR(DATEDIFF(CURDATE(), u.user_birth) / 365.25) BETWEEN 40 AND 49
-				THEN '40'
-			WHEN FLOOR(DATEDIFF(CURDATE(), u.user_birth) / 365.25) BETWEEN 50 AND 59
-				THEN '50'
-			ELSE 'etc'
-				END AS age_group, 
-			p.pl_code, p.pl_title, p.pl_img, p.pl_date, p.pl_public_yn, u.user_nickname, u.user_email, u.user_img, COUNT(*) AS pl_code_count
+		WHEN FLOOR(DATEDIFF(CURDATE(), u.user_birth) /
+		365.25) BETWEEN 10 AND 19
+		THEN '10'
+		WHEN FLOOR(DATEDIFF(CURDATE(),
+		u.user_birth) / 365.25) BETWEEN 20 AND 29
+		THEN '20'
+		WHEN
+		FLOOR(DATEDIFF(CURDATE(), u.user_birth) / 365.25) BETWEEN 30 AND 39
+		THEN '30'
+		WHEN FLOOR(DATEDIFF(CURDATE(), u.user_birth) / 365.25)
+		BETWEEN 40 AND 49
+		THEN '40'
+		WHEN FLOOR(DATEDIFF(CURDATE(), u.user_birth)
+		/ 365.25) BETWEEN 50 AND 59
+		THEN '50'
+		ELSE 'etc'
+		END AS age_group,
+		p.pl_code, p.pl_title, p.pl_img, p.pl_date, p.pl_public_yn,
+		u.user_nickname,
+		u.user_email, u.user_img, COUNT(*) AS pl_code_count
 		FROM playlist p
-			JOIN user u ON p.user_email = u.user_email
-			JOIN playlist_like pl ON p.pl_code = pl.pl_code
+		JOIN user u ON p.user_email = u.user_email
+		JOIN
+		playlist_like pl ON p.pl_code = pl.pl_code
 		WHERE pl_public_yn = 'Y'
 		GROUP BY age_group, p.pl_code, u.user_nickname
-		HAVING age_group = #{ageGroup}
+		HAVING age_group =
+		#{ageGroup}
 		ORDER BY age_group, pl_code_count DESC
-		LIMIT #{offset}, #{limit}
+		LIMIT #{offset},
+		#{limit}
 	</select>
 
 	<!-- 성별 별 좋아요 랭킹 -->
 	<select id="playListRankingOnGender" parameterType="SearchDTO"
 		resultMap="playlistMap">
-		SELECT p.pl_code, p.pl_title, p.pl_img, p.pl_date, p.pl_public_yn, 
-			u.user_nickname, u.user_email, u.user_img, COUNT(like_code) AS pl_code_count
-		FROM user u
-			JOIN playlist p ON (u.user_email = p.user_email)
-			JOIN playlist_like USING (pl_code)
-		WHERE user_gender = #{userGender}
-			AND pl_public_yn = 'Y'
+		SELECT p.pl_code, p.pl_title, p.pl_img, p.pl_date,
+		p.pl_public_yn,
+		u.user_nickname, u.user_email, u.user_img,
+		COUNT(like_code) AS pl_code_count
+		FROM user
+		u
+		JOIN playlist p ON
+		(u.user_email = p.user_email)
+		JOIN playlist_like USING (pl_code)
+		WHERE
+		user_gender = #{userGender}
+		AND pl_public_yn = 'Y'
 		GROUP BY pl_code
 		ORDER BY pl_code_count desc
-		LIMIT #{offset}, #{limit}
+		LIMIT
+		#{offset}, #{limit}
 	</select>
+
+	<!-- 공유 용 유저 정보 페이지 -->
+	<select id="getUserById" parameterType="String"
+		resultMap="playlistMap">
+		SELECT p.pl_code, p.pl_title, p.pl_img, p.pl_date,
+		p.pl_public_yn,
+		u.user_nickname, u.user_email, u.user_img
+		FROM user
+		u
+		JOIN playlist p ON (u.user_email = p.user_email)
+		JOIN playlist_like
+		USING (pl_code)
+		WHERE u.user_email = #{userEmail}
+	</select>
+
+	<!-- 회원 본인의 플레이리스트 조회 -->
+	<select id="getPlayListById" resultMap="playlistMap"
+		parameterType="String">
+		SELECT pl_code, pl_title, pl_img, pl_date, pl_public_yn, count(pl_code) as pl_code_count
+		FROM playlist p
+		JOIN user u ON (u.user_email
+		= p.user_email)
+		LEFT JOIN playlist_like USING (pl_code)
+		WHERE
+		u.user_email = #{userEmail}
+		GROUP BY pl_code
+		ORDER BY count(pl_code)
+		DESC
+		LIMIT 5
+	</select>
+
 </mapper>

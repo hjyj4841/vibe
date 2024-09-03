@@ -26,14 +26,14 @@
 						<jsp:include page="../tiles/mypageLeft.jsp"></jsp:include>
 					</div>
 				</sec:authorize>
-				
+
 				<div class="myRight">
 					<div class="playlistInfoMain">
 						<!-- 플레이리스트 목록으로 -->
-						<a href="javascript:window.history.back();" class="goPlaylistListBtn">
-							<i class="fa-solid fa-arrow-left"></i>
+						<a href="javascript:window.history.back();"
+							class="goPlaylistListBtn"> <i class="fa-solid fa-arrow-left"></i>
 						</a>
-					
+
 						<div class="PlaylistInfoBox">
 							<div class="playlistImg">
 								<img src="${playlist.plImg}">
@@ -48,8 +48,9 @@
 									</c:otherwise>
 								</c:choose>
 							</p>
-							
-							<div class="likeBox" data-code="${playlist.plCode}" onclick="clickLike(event)">
+
+							<div class="likeBox" data-code="${playlist.plCode}"
+								onclick="clickLike(event)">
 								<c:choose>
 									<c:when test="${not empty playlist.plLike}">
 										<i class="fa-solid fa-heart heartEmoji" id="redHeart"></i>
@@ -60,7 +61,7 @@
 								</c:choose>
 								<span>LIKE </span> <span class="likeCount">${playlist.likeCount }</span>
 							</div>
-							
+
 							<div class="playlistTagBox">
 								<ul class="plTags">
 									<c:forEach items="${playlist.tagList}" var="tag">
@@ -78,7 +79,7 @@
 											style="cursor: pointer;" onclick="sharePlayList()"></i> <span
 											id="copy-message">링크가 복사되었습니다!</span>
 									</div>
-									
+
 									<sec:authorize access="isAuthenticated()" var="principal">
 										<sec:authentication property="principal" var="user" />
 										<c:if test="${user.userEmail eq playlist.user.userEmail}">
@@ -106,7 +107,7 @@
 											</nav>
 										</c:if>
 									</sec:authorize>
-									
+
 								</div>
 							</div>
 						</div>
@@ -128,8 +129,8 @@
 								</div>
 							</c:if>
 						</sec:authorize>
-						
-						
+
+
 						<form action="deleteMusicFromPlaylist" method="post"
 							onsubmit="checkForSelectedMusic(event)">
 							<input type="hidden" name="plCode" value="${playlist.plCode}">
@@ -150,7 +151,8 @@
 										<img src="${music.albumUrl}" class="albumImg">
 										<div class="plMusicInfo">
 											<div class="musicTitle">${music.musicTitle}</div>
-											<div class="artistName">${music.artistName} ㆍ ${music.albumName }</div>
+											<div class="artistName">${music.artistName}ㆍ
+												${music.albumName }</div>
 										</div>
 										<!-- 로그인 여부와 상관없이 노래 재생 기능이 동작하도록 수정 -->
 										<div class="playlistMusicActionBtn">
@@ -172,15 +174,20 @@
 		</div>
 	</div>
 	<!-- 플레이어 모달 -->
-	<div id="playerModal" class="playerModal" >
+	<div id="playerModal" class="playerModal">
 		<div class="modal-content">
 			<span class="close">&times;</span>
-			<iframe id="main_frame" src="" width="300" height="380"
-				frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+
+			<div class="spotify-login-box">
+				<p>Press <i class="fa-brands fa-spotify"></i> If you want Full Song</p>
+
+				<!-- 음악 재생 iFrame -->
+				<iframe id="main_frame" src="" width="300" height="380"
+					frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+			</div>
 		</div>
 	</div>
-	
-	
+
 	<script>
 		let userEmail = null;
 	</script>
@@ -190,7 +197,7 @@
 			userEmail = "<c:out value='${user.userEmail}'/>";
 		</script>
 	</sec:authorize>
-	
+
 	<script>
 	//paging 처리 코드
 	let page = 1;
@@ -275,7 +282,45 @@
 		});
 	}
 	
-	 // 음악을 재생하는 함수
+	document.addEventListener('DOMContentLoaded', () => {
+	    const modal = document.getElementById('playerModal');
+	    const span = document.querySelector('.close');
+
+	    function openModal(trackId) {
+
+	        const iframe = document.getElementById('main_frame');
+	            iframe.src = "https://open.spotify.com/embed/track/" + trackId + "?autoplay=1"; // 전체 재생
+	     
+	        modal.style.display = 'block';
+	    }
+
+	    function closeModal() {
+	        modal.style.display = 'none';
+	        const iframe = document.getElementById('main_frame');
+	        iframe.src = ""; // 비우기 (혹은 stop 재생)
+	    }
+
+	    document.querySelectorAll('.musicPlayBtn').forEach(button => {
+	        button.addEventListener('click', (event) => {
+	            event.preventDefault();
+	            const trackId = button.getAttribute('data-track-id');
+	            openModal(trackId);
+	        });
+	    });
+
+	    // 닫기 버튼 클릭 시 모달 닫기
+	    span.addEventListener('click', () => {
+	        closeModal();
+	    });
+
+	    // 모달 외부 클릭 시 모달 닫기
+	    window.addEventListener('click', (event) => {
+	        if (event.target === modal) {
+	            closeModal();
+	        }
+	    });
+	});
+	/*  // 음악을 재생하는 함수
     function playMusic(event) {
 		const musicCode =  event.currentTarget.getAttribute("data-track-id");
         const iframe = document.getElementById("main_frame");
@@ -317,7 +362,7 @@
   	    if (event.target === modal) {
   	      closeModal();
   	    }
-  	  });
+  	  }); */
 		// 플레이리스트 메뉴 표시/숨기기
 		document.querySelector('.plMenuBtn').addEventListener('click', function(event) {
 			event.preventDefault();
