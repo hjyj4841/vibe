@@ -1,27 +1,121 @@
+/* 플레이리스트 수정 화면 메인 */
 .updatePlInfoMain {
 	overflow-y: scroll;
 	position: relative;
 	width: 100%;
 	height: 100%;
 }
+/* 스크롤바 스타일 */
+.updatePlInfoMain::-webkit-scrollbar {
+    width: 5px;  /* 스크롤바의 너비 */
+}
+.updatePlInfoMain::-webkit-scrollbar-thumb {
+    height: 10%; /* 스크롤바의 길이 */
+    background: black; /* 스크롤바의 색상 */
+    border-radius: 10px;
+}
+.updatePlInfoMain::-webkit-scrollbar-track {
+    background: #111;  /* 스크롤바 뒷 배경 색상 */
+}
 
-/* 플레이리스트 이미지 영역 */
+
 .updatePlInfoBox {
-	padding: 20px 20px 10px 20px;
+	padding: 20px;
 }
 
-.updatePlImg {
-	padding-bottom: 10px;
+/* 플레이리스트 이미지 수정 영역 */
+.updatePlImgBox {
+	padding-bottom: 20px;
 }
-.updatePlImg img {
+.updatePlImgBox > div {
+	position: relative;
 	display: flex;
 	width: 250px;
-    height: 250px;
+	height: 250px;
 	justify-content: center;
-    align-items: center;
+	align-items: center;
 	border-radius: 10px;
 	margin-left: 10px;
+	overflow: hidden;
+	object-fit: cover;
+	z-index: 1;
 }
+.updatePlImgBox > div > * {
+	position: absolute;
+	width: 100%;
+}
+.updatePlImgBox > div > div {
+	height: 50%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	z-index: 2;
+	background-color: rgba(0, 0, 0, 0.8);
+	color: #999;
+	opacity: 0;
+	transition: 0.3s;
+}
+.updatePlImgBox > div > div:hover {
+	opacity: 1;
+}
+
+/*
+.updatePlImg {
+	padding-bottom: 20px;
+}
+
+.updatePlImgBox > div > img {
+	height: 100%;
+	object-fit: cover;
+	z-index: 1;
+}
+*/
+.changePlImg {
+	top: 0;
+	position: relative;
+}
+.changePlImg > * {
+	position: absolute;
+}
+.changePlImg input {
+	height: 100%;
+	width: 100%;
+	opacity: 0;
+	z-index: 3;
+	cursor: pointer;
+}
+.changePlImg > div {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+.changePlImg > div > i {
+	font-size: 2.5rem;
+	padding: 10px;
+}
+.changePlImg > div > p {
+	font-size: 0.8rem;
+}
+.changePlImg > div > p:nth-child(1) {
+	opacity: 0;
+}
+
+
+.defaultImg {
+	bottom: 0;
+}
+.defaultImg > button {
+	width: 100%;
+	height: 100%;
+	cursor: pointer;
+	background: transparent;
+	border: none;
+	color: #999;
+}
+
+/* 플레이리스트 제목 수정 영역 */
 .updatePlTitle {
 	font-size: 2.5rem;
     font-weight: 600;
@@ -34,7 +128,7 @@
     font-weight: 600;
     padding-left: 10px;
     padding-top: 3px;
-    width: 80%;
+    width: 90%;
 }
 .updatePlTitle input[type="text"]::placeholder {
     color: white;
@@ -43,8 +137,9 @@
     opacity: 0.1;
 }
 
+
 /* 자물쇠 lock(플리 공개여부) */
-.PlaylistInfoBox .plTitle i{
+.updatePlInfoBox .updatePlTitle i{
 	padding-left: 10px;
 	font-size: 0.7rem;
 	justify-content: center;
@@ -57,6 +152,67 @@
 }
 
 
+/* 태그 영역 */
+.playlistTagBox {
+	padding: 10px 15px;
+}
+.plTags {
+	display: flex;
+	gap: 10px;
+	font-size: 0.8rem;
+    color: #808080;
+    font-weight: bold;
+    padding-top: 10px;   
+}
+
+
+
+
+
+/* 수정 저장, 취소 버튼 영역 */
+.editButtonBox {
+  	display: flex;
+  	justify-content: space-between;
+  	padding-left: 30px;
+}
+.editButtonBox > div > * {
+  	padding: 10px;
+}
+.editButtonBox > div > button {
+  	width: 100px;
+  	cursor: pointer;
+  	background-color: white;
+  	border-radius: 5px;
+  	border: none;
+  	font-weight: bold;
+  	transition: 0.5s;
+}
+.editBtn {
+  	color: #2868b0;
+}
+.editBtn:hover {
+  	box-shadow: 0px 0px 8px 3px #2868b0;
+}
+.editCancel {
+  	color: #333;
+}
+.editCancel:hover {
+  	box-shadow: 0px 0px 8px 3px darkred;
+}
+.editButtonBox > a {
+  	color: white;
+  	width: 200px;
+  	cursor: pointer;
+  	transition: 0.2s;
+}
+.editButtonBox > a:hover {
+	color: red;
+}
+
+
+
+
+/* 이전 화면으로 이동 */
 .goPlaylistBtn {
 	position: fixed;
 	top: 120px; /* 화면 상단에서의 거리 */
@@ -72,24 +228,4 @@
 	justify-content: center;
 	font-size: 1.3rem;
 	box-shadow: 0 10px 35px rgba(0, 0, 0, 0.05), 0 6px 6px rgba(0, 0, 0, 0.1);
-}
-
-
-
-
-
-
-
-
-
-
-/* 이미지 변경 클릭 시 파일 불러오기 시스템 버튼 형태 처리 */
-/* 파일 입력 요소 숨기기 */
-#imgChange {
-	display: none;
-}
-/* label 스타일링 */
-label[for="imgChange"] {
-	cursor: pointer;
-	text-decoration: none;
 }
