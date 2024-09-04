@@ -90,7 +90,7 @@
 												</div>
 												<div class="playlistMenu">
 													<div class="plUpdateMenu">
-														<a href="updatePlaylist?plCode=${playlist.plCode }"><i
+														<a href="updatePlaylist?plCode=${playlist.plCode}"><i
 															class="fa-solid fa-pen"></i>Edit</a>
 													</div>
 													<div class="plTagUpdateMenu">

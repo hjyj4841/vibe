@@ -209,18 +209,20 @@ public class PlaylistController {
 
 			// 기본 이미지 URL이 폼 데이터에 포함됨. 새 이미지로 설정
 		} else if (dto.getDefaultImg() != null && !dto.getDefaultImg().isEmpty()) {
-			
 			// 사용자가 버튼을 클릭하여 기본 이미지로 변경한 경우, 기존의 이미지 파일을 변경하지 않고 이 기본 이미지 URL을 새 이미지로 사용 -> 즉, defaultCD.img로 설정하겠다.
 			newFileName = dto.getDefaultImg();
 		} else {
 			// 이미지 파일 변경하지 않았으면 기존 이미지 유지
 			newFileName = playlist.getPlImg();
 		}
+		
+		System.out.println("219 : " + dto.getPlPublicYn());
 
 		// Playlist 객체를 사용하여 플레이리스트 업데이트
 		playlist.setPlTitle(dto.getPlTitle());
 		playlist.setPlImg(newFileName); // 새 이미지 파일 이름으로 설정
-
+		playlist.setPlPublicYn(dto.getPlPublicYn()); // 공개/비공개 설정 추가
+		 
 		playlistService.updatePlaylist(playlist); // 수정된 서비스 메서드 호출
 
 		// 플레이리스트 수정 후 저장 시 변경한 정보로 저장 후 이전 화면으로 이동(선택한 플레이리스트 화면)
@@ -228,6 +230,8 @@ public class PlaylistController {
 		return "redirect:/showPlaylistInfo?plCode=" + dto.getPlCode();
 
 	}
+	
+	
 
 	// 랭킹 : 좋아요순
 	@GetMapping("/likeranking")

@@ -167,6 +167,55 @@
 
 
 
+/* 공개 비공개 토글 영역 */
+.privateBox {
+  width: 60px;
+  align-self: flex-end;
+  margin-right: 20px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  position: relative;
+  height: 25px;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: #b42021;
+  transition: 0.2s;
+}
+
+.privateBox > input[type="radio"] {
+  display: none;
+}
+
+.privateBox > * {
+  position: absolute;
+}
+
+.privateBox > i {
+  width: 30px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 0.7rem;
+}
+
+.privateBox > i:first-of-type {
+  left: 0;
+  top: 0;
+}
+
+.privateBox > .toggleHidden {
+  background-color: #810000;
+  border-radius: 5px;
+  z-index: 1;
+  width: 30px;
+  height: 100%;
+  left: 0;
+  top: 0;
+  transition: 0.2s;
+}
 
 
 /* 수정 저장, 취소 버튼 영역 */

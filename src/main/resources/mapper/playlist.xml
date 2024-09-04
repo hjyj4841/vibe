@@ -159,10 +159,10 @@
 	</insert>
 
 	<!-- 플레이리스트 제목과 이미지 동시에 업데이트 -->
-	<update id="updatePlaylist" parameterType="UpdatePlaylistDTO">
+	<update id="updatePlaylist" parameterType="Playlist">
 		UPDATE playlist
 		SET
-		pl_title = #{plTitle}, pl_img = #{plImg}
+		pl_title = #{plTitle}, pl_img = #{plImg}, pl_public_yn = #{plPublicYn}
 		WHERE pl_code = #{plCode}
 	</update>
 
