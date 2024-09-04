@@ -404,10 +404,9 @@
 		WHERE u.user_email = #{userEmail}
 	</select>
 
-	<!-- 회원 본인의 플레이리스트 조회 -->
 	<select id="getPlayListById" resultMap="playlistMap"
 		parameterType="String">
-		SELECT pl_code, pl_title, pl_img, pl_date, pl_public_yn, count(pl_code) as pl_code_count
+		SELECT pl_code, pl_title, pl_img, pl_date, pl_public_yn, count(pl_code) as like_code
 		FROM playlist p
 		JOIN user u ON (u.user_email
 		= p.user_email)
@@ -419,5 +418,16 @@
 		DESC
 		LIMIT 5
 	</select>
+	
+	<select id="getTagNameByPlcode" resultMap="listTagMap"
+		parameterType="int">
+		SELECT tag_name
+		FROM playlist
+		JOIN playlist_tag USING
+		(pl_code)
+		JOIN tag USING (tag_code)
+		WHERE pl_code = #{plCode}
+	</select>
+	
 
 </mapper>

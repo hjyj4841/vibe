@@ -1,74 +1,76 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="stylesheet" href="./css/reset.css" />
-    <link rel="stylesheet" href="./css/search.css" />
-    <link rel="stylesheet" href="./css/mypage.css" />
-    <link rel="stylesheet" href="./css/musicForm.css" />
-    <script src="https://kit.fontawesome.com/df04184d5c.js" crossorigin="anonymous"></script>
-    <script src="/js/searchMusic.js"></script>
-    <title>검색하기</title>
-  </head>
-  <body>
-    <jsp:include page="../tiles/header.jsp"></jsp:include>
-    <div class="container">
-      <div class="con">
-        <div class="mypageBox">
-          <div class="myLeft">
-            <jsp:include page="../tiles/mypageLeft.jsp"></jsp:include>
-          </div>
-          <div class="myRight">
-            <div class="myTagBox">
-            	<!-- 플레이리스트 목록으로 -->
-				<a href="/showPlaylistInfo?plCode=${plCode}" class="goPlaylistListBtn">
-					<i class="fa-solid fa-arrow-left"></i>
-				</a>
-            
-              <h2>Search Music</h2>
-              <div class="searchMusicBox">
-                <form class="mainSearchBox" onsubmit="return false;">
-                  <input
-                    type="text"
-                    placeholder="아티스트, 곡 제목 등 검색어를 입력하세요."
-                    id="musicName"
-                    onkeyup="if(event.keyCode=='13'){searchMusic();}"
-                    autocomplete="off"
-                    required
-                  />
-                  <button id="searchBtn" type="button" onclick="searchMusic()">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                  </button>
-                </form>
-                <!-- 검색 결과를 표시할 영역 -->
-                <div id="resultContainer">
-                  <form class="addMusicform">
-                    <div class="addMusicBox"></div>
-                    <input
-                      type="button"
-                      value="add Music"
-                      id="musicExistsInPlaylist"
-                      onclick="addMusicList()"
-                    />
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <!-- 플레이어 모달 -->
-	<div id="playerModal" class="playerModal" >
-	<div class="modal-content">
-		<span class="close">&times;</span>
-		<iframe id="main_frame" src="" width="300" height="380"
-			frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" href="./css/reset.css" />
+<link rel="stylesheet" href="./css/search.css" />
+<link rel="stylesheet" href="./css/mypage.css" />
+<link rel="stylesheet" href="./css/musicForm.css" />
+<script src="https://kit.fontawesome.com/df04184d5c.js"
+	crossorigin="anonymous"></script>
+<script src="/js/searchMusic.js"></script>
+<title>검색하기</title>
+</head>
+<body>
+	<jsp:include page="../tiles/header.jsp"></jsp:include>
+	<div class="container">
+		<div class="con">
+			<div class="mypageBox">
+				<div class="myLeft">
+					<jsp:include page="../tiles/mypageLeft.jsp"></jsp:include>
+				</div>
+				<div class="myRight">
+					<div class="myTagBox">
+						<!-- 플레이리스트 목록으로 -->
+						<a href="/showPlaylistInfo?plCode=${plCode}"
+							class="goPlaylistListBtn"> <i class="fa-solid fa-arrow-left"></i>
+						</a>
+
+						<h2>Search Music</h2>
+						<div class="searchMusicBox">
+							<form class="mainSearchBox" onsubmit="return false;">
+								<input type="text" placeholder="아티스트, 곡 제목 등 검색어를 입력하세요."
+									id="musicName"
+									onkeyup="if(event.keyCode=='13'){searchMusic();}"
+									autocomplete="off" required />
+								<button id="searchBtn" type="button" onclick="searchMusic()">
+									<i class="fa-solid fa-magnifying-glass"></i>
+								</button>
+							</form>
+							<!-- 검색 결과를 표시할 영역 -->
+							<div id="resultContainer">
+								<form class="addMusicform">
+									<div class="addMusicBox"></div>
+									<input type="button" value="add Music"
+										id="musicExistsInPlaylist" onclick="addMusicList()" />
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
+
+	<!-- 플레이어 모달 -->
+	<div id="playerModal" class="playerModal">
+		<div class="modal-content">
+			<span class="close">&times;</span>
+			<div class="spotify-login-box">
+				<p>
+					Press <i class="fa-brands fa-spotify"></i> If you want Full Song
+				</p>
+
+				<!-- 음악 재생 iFrame -->
+				<iframe id="main_frame" src="" width="300" height="380"
+					frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+			</div>
+		</div>
 	</div>
-    <script>
+	<script>
       let offset = 0;
       let plCode = "<c:out value='${plCode}'/>";
 
@@ -347,5 +349,5 @@
         });
       }
     </script>
-  </body>
+</body>
 </html>
