@@ -9,8 +9,7 @@
 <link rel="stylesheet" href="/css/reset.css" />
 <link rel="stylesheet" href="/css/mypage.css" />
 <link rel="stylesheet" href="/css/manageTags.css" />
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
 	<jsp:include page="../tiles/header.jsp"></jsp:include>
@@ -35,6 +34,16 @@
 									<h2>New Tags</h2>
 									<input type="text" id="tags" name="newTag"
 										placeholder="Type your new Tag" required />
+									<c:if test="${not empty addSuccessMessage}">
+										<div id="addSuccessMessage" class="alert-success">
+											<c:out value="${addSuccessMessage}" />
+										</div>
+									</c:if>
+									<c:if test="${not empty addErrorMessage}">
+										<div id="addErrorMessage" class="alert-danger">
+											<c:out value="${addErrorMessage}" />
+										</div>
+									</c:if>
 									<button type="submit">Add</button>
 								</form>
 							</div>
@@ -49,7 +58,9 @@
 								<input type="hidden" name="plCode" value="${playlistCode}" />
 								<table>
 									<thead>
+										<tr>
 											<td class="tags-column">Tags</td>
+										</tr>
 									</thead>
 									<tbody>
 										<c:forEach var="playlistTag" items="${existingTags}">
@@ -63,6 +74,16 @@
 										</c:forEach>
 									</tbody>
 								</table>
+								<c:if test="${not empty deleteSuccessMessage}">
+									<div id="deleteSuccessMessage" class="alert-success">
+										<c:out value="${deleteSuccessMessage}" />
+									</div>
+								</c:if>
+								<c:if test="${not empty deleteErrorMessage}">
+									<div id="deleteErrorMessage" class="alert-danger">
+										<c:out value="${deleteErrorMessage}" />
+									</div>
+								</c:if>
 								<button type="submit">Delete</button>
 							</form>
 						</div>
@@ -72,5 +93,24 @@
 		</div>
 	</div>
 	<script src="./js/manageTag.js"></script>
+	<script>
+		// 메시지를 자동으로 숨기는 함수
+		function hideMessageAfterDelay(id, delay) {
+			const messageElement = document.getElementById(id);
+			if (messageElement) {
+				setTimeout(() => {
+					messageElement.style.display = 'none';
+				}, delay);
+			}
+		}
+
+		document.addEventListener('DOMContentLoaded', function() {
+			// 메시지를 2초 후에 숨기도록 설정
+			hideMessageAfterDelay('addSuccessMessage', 2000);
+			hideMessageAfterDelay('addErrorMessage', 2000);
+			hideMessageAfterDelay('deleteSuccessMessage', 2000);
+			hideMessageAfterDelay('deleteErrorMessage', 2000);
+		});
+	</script>
 </body>
 </html>

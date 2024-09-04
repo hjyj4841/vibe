@@ -2,8 +2,8 @@
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-    align-items: center;
-	border-radius : 8px;
+	align-items: center;
+	border-radius: 8px;
 	background-color: #222;
 	border-radius: 8px;
 	margin-left: 50px;
@@ -28,8 +28,8 @@
 	padding: 15px;
 	border-radius: 6px;
 	display: flex;
-    flex-direction: column;
-    align-items: center;
+	flex-direction: column;
+	align-items: center;
 }
 
 .form-tag-section-addTagForm {
@@ -75,8 +75,8 @@
 	border-radius: 6px;
 	width: 70%;
 	display: flex;
-    flex-direction: column;
-    margin: 0 auto;
+	flex-direction: column;
+	margin: 0 auto;
 }
 
 .table-section table {
@@ -97,7 +97,7 @@
 }
 
 .tags-column {
-    width: 5%;
+	width: 5%;
 }
 
 /* 라디오 체크 박스 처리 */
@@ -106,10 +106,12 @@
 	align-items: center;
 	height: 50px;
 }
+
 .radioCheckBox input[type="checkbox"] {
 	opacity: 0; /* 투명하게 만들어 화면에서 보이지 않게 */
 	z-index: -1; /* 체크박스를 다른 요소들 뒤로 보내 가려지게 */
 }
+
 .radioCheckBox label {
 	display: inline-block;
 	width: 20px;
@@ -119,10 +121,12 @@
 	cursor: pointer;
 	margin-right: 10px;
 }
-.radioCheckBox input[type="checkbox"]:checked + label {
+
+.radioCheckBox input[type="checkbox"]:checked+label {
 	background: red; /* 체크되었을 때 레이블의 배경색 설정 */
 }
-.radioCheckBox input[type="checkbox"]:checked + label::after {
+
+.radioCheckBox input[type="checkbox"]:checked+label::after {
 	content: '✔';
 	display: block;
 	color: white;
@@ -130,6 +134,7 @@
 	line-height: 20px;
 	font-size: 14px;
 }
+
 .table-section input[type="checkbox"] {
 	transform: scale(1);
 	margin-left: auto;
@@ -173,4 +178,12 @@
 
 .tag-list-wrapper::-webkit-scrollbar-track {
 	background: #111; /* 스크롤바 뒷 배경 색상 */
+}
+
+.alert-success {
+	color: #02f958;
+}
+
+.alert-danger {
+	color: red;
 }
