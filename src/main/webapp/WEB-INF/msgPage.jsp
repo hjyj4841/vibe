@@ -18,6 +18,9 @@
 		alert('${pwdChange}');
 		location.href = '/';
 	}
-		
+	if ('${fileError}' != ''){
+		alert('${fileError}');
+		history.back();
+	}
 </script>
 </html>

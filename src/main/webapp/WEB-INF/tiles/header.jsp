@@ -16,7 +16,7 @@
 	<!-- nav1 영역 -->
 	<div id="nav1">
 		<a href="/searchPlaylist?select=title&search=" id="search">Search</a> 
-		<a href="" id="contact">Contact</a>
+		<a href="likeranking" id="contact">Ranking</a>
 	</div>
 	
 	<!-- nav2 영역 -->

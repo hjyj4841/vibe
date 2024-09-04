@@ -92,6 +92,10 @@
 	height: 40px;
 	margin: 20px;
 }
+.registerLeft span {
+	font-size: 0.7rem;
+	color: #666;
+}
 
 .emailBox,
 .nicknameBox{

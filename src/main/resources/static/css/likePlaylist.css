@@ -80,6 +80,7 @@
 .editForm > .textAndIcon > i {
   right: 10px;
 }
+
 .editForm > div > i {
   cursor: pointer;
   color: #999;
@@ -99,15 +100,6 @@
   overflow: hidden;
 }
 
-.editForm > .textAndIcon {
-  position: relative;
-  height: 60px;
-}
-
-.editForm > .textAndIcon > * {
-  position: absolute;
-  width: 100%;
-}
 .editUserImgBox > div > img {
   height: 100%;
   object-fit: cover;
@@ -125,10 +117,6 @@
   color: #999;
   opacity: 0;
   transition: 0.3s;
-}
-
-.editForm > .textAndIcon > i {
-  right: 10px;
 }
 
 .editForm > div > i {

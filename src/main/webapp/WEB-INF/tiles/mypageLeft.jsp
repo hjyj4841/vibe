@@ -59,7 +59,7 @@
 		</a>
 	</div>
 	<div>
-		<a class="/deleteUser"> <span>delete ID</span>
+		<a class="deleteUser"> <span>delete ID</span>
 		</a>
 	</div>
 </div>

@@ -50,12 +50,11 @@ public class PlaylistController {
 	@Autowired
 	private PlaylistViewer playlistViewer;
 
-	public String fileUpload(MultipartFile file) throws IllegalStateException, IOException {
+	public String fileUpload(MultipartFile file) throws IllegalStateException, IOException{
 		UUID uuid = UUID.randomUUID();
 		String fileName = uuid.toString() + "_" + file.getOriginalFilename();
 		File copyFile = new File("\\\\192.168.10.6\\vibe\\playlistImg\\" + fileName);
 		file.transferTo(copyFile);
-		
 		return fileName;
 	}
 
@@ -76,8 +75,8 @@ public class PlaylistController {
 		// 이미지 선택 여부 확인
 		String fileName;
 		if (dto.getPlUrl() != null && !dto.getPlUrl().isEmpty() && !dto.getPlUrl().getOriginalFilename().equals("")) {
-			fileName = fileUpload(dto.getPlUrl());
-			dto.setPlImg("http://192.168.10.6:8080/playlistImg/" + fileName);
+		fileName = fileUpload(dto.getPlUrl());
+		dto.setPlImg("http://192.168.10.6:8080/playlistImg/" + fileName);
 		} else {
 			// 이미지 선택하지 않은 경우 기본 이미지 URL 설정
 			dto.setPlImg(DEFAULT_IMAGE_URL);
@@ -188,7 +187,7 @@ public class PlaylistController {
 		if (dto.getPlImgFile() != null && !dto.getPlImgFile().isEmpty()) {
 
 			// 기존 이미지 파일 삭제
-			String existImg = playlist.getPlImg();
+			String existImg = new File(playlist.getPlImg()).getName();
 			if (existImg != null && !existImg.isEmpty()) {
 				System.out.println("존재하는 파일 : " + existImg);
 				File file = new File("\\\\192.168.10.6\\vibe\\playlistImg\\" + existImg); // 파일을 저장할 실제 경로로 설정
@@ -199,10 +198,7 @@ public class PlaylistController {
 
 			UUID uuid = UUID.randomUUID();
 			newFileName = uuid.toString() + "_" + dto.getPlImgFile().getOriginalFilename();
-			System.out.println("새로 들어온 파일 : " + newFileName);
 			File newFile = new File("\\\\192.168.10.6\\vibe\\playlistImg\\" + newFileName);
-
-			System.out.println(newFile.getPath());
 
 			dto.getPlImgFile().transferTo(newFile);
 			newFileName = "http://192.168.10.6:8080/playlistImg/" + newFileName;

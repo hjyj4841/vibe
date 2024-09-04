@@ -25,6 +25,7 @@
 								</div>
 							</div>
 							<div><input type="password" name="userPassword" placeholder="Password" id="userPassword" required></div>
+							<span>(영문자, 숫자, 특수문자 포함 8 ~ 14자 이내)</span>
 							<div><input type="password" placeholder="Password Check" id="passwordCheck" required></div>
 							<div>
 								<div class="nicknameBox">

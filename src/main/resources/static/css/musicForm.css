@@ -31,6 +31,7 @@
 	justify-content: center; /* 가로 중앙 정렬 */
 	font-size: 1.3rem; /* 아이콘 크기 조절 */
 	box-shadow: 0 10px 35px rgba(0, 0, 0, 0.05), 0 6px 6px rgba(0, 0, 0, 0.1);
+	cursor: pointer;
 }
 .goPlaylistListBtn:hover {
  	background-color: #e0e0e0;
@@ -161,6 +162,14 @@
 }
 .addMusicform input[type="button"]:hover {
   background-color: white;
+}
+.addMusicform > a{
+	color: #999;
+	transition: 0.2s;
+	font-size: 0.8rem;
+}
+.addMusicform > a:hover{
+	color: red;
 }
 /* 스크롤바 스타일 */
 .addMusicBox::-webkit-scrollbar {

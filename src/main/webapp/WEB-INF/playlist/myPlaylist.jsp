@@ -47,7 +47,7 @@
 									<div class="plContentsBox" data-code="${searchPlaylist.plCode}">
 										<p class="plTitle">${searchPlaylist.plTitle}
 											<c:choose>
-												<c:when test="${searchPlaylist.plPublicYn == 89}">
+												<c:when test="${Character.toString(searchPlaylist.plPublicYn) eq 'Y'}">
 													<i class="fa-solid fa-lock-open"></i>
 												</c:when>
 												<c:otherwise>
@@ -201,12 +201,10 @@
 			'</div>' +
 			'</div>' +
 			'<div class="plContentsBox" id="createConBox">' +
-			'<input type="text" class="plTitle" id="plTitle" name="plTitle" placeholder="Type your Playlist title">' +
+			'<input type="text" class="plTitle" id="plTitle" name="plTitle" placeholder="Type your Playlist title"  maxlength="100">' +
 			'<input type="text" class="plTags" id="tags" name="tags" placeholder="add Tags">' +
 			'</div>' +
-			
 			'<div class="createPlaylistRight">' +
-			
 			'<div class="privateBox">' +
 			'<input type="radio" name="plPublicYn" value="Y" id="publicRadio">' +
 			'<input type="radio" name="plPublicYn" value="N" id="privateRadio" checked>' +
@@ -214,12 +212,10 @@
 			'<i class="fa-solid fa-lock"></i>' +
 			'<div class="toggleHidden"></div>' +
 			'</div>' +
-			
 			'<div class="form-submit-container">' +
 			'<button type="submit" class="successBtn">Create</button>' +
 			'<button type="button" class="cancelBtn">Cancel</button>' +
 			'</div>' +
-			
 			'</div>' +
 			'</form>';
 			

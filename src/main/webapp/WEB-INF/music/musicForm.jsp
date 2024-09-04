@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="./css/search.css" />
     <link rel="stylesheet" href="./css/mypage.css" />
     <link rel="stylesheet" href="./css/musicForm.css" />
-    <script src="https://kit.fontawesome.com/df04184d5c.js" crossorigin="anonymous"></script>
     <script src="/js/searchMusic.js"></script>
     <title>검색하기</title>
   </head>
@@ -22,7 +21,7 @@
           <div class="myRight">
             <div class="myTagBox">
             	<!-- 플레이리스트 목록으로 -->
-				<a href="/showPlaylistInfo?plCode=${plCode}" class="goPlaylistListBtn">
+				<a class="goPlaylistListBtn" onclick="history.back()">
 					<i class="fa-solid fa-arrow-left"></i>
 				</a>
             
@@ -51,6 +50,7 @@
                       id="musicExistsInPlaylist"
                       onclick="addMusicList()"
                     />
+                    <a href="/showPlaylistInfo?plCode=${plCode }">Playlist Page</a>
                   </form>
                 </div>
               </div>
@@ -136,7 +136,7 @@
           },
           error: function () {
             $(".addMusicBox").html("검색하신 내용이 없습니다.");
-          },
+          }
         });
       }
 
@@ -211,10 +211,7 @@
   	  	      			openModal(trackId);
   	  	    		});
   	  	  		});
-            },
-            error: function () {
-              $(".addMusicBox").append("검색한 내용이 없습니다.");
-            },
+            }
           });
         }
       });

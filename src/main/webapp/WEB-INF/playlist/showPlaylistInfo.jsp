@@ -40,7 +40,7 @@
 							</div>
 							<p class="plTitle">${playlist.plTitle}
 								<c:choose>
-									<c:when test="${playlist.plPublicYn == 89}">
+									<c:when test="${Character.toString(playlist.plPublicYn) eq 'Y'}">
 										<i class="fa-solid fa-lock-open"></i>
 									</c:when>
 									<c:otherwise>
@@ -282,7 +282,6 @@
 		});
 	}
 	
-	document.addEventListener('DOMContentLoaded', () => {
 	    const modal = document.getElementById('playerModal');
 	    const span = document.querySelector('.close');
 
@@ -319,50 +318,8 @@
 	            closeModal();
 	        }
 	    });
-	});
-	/*  // 음악을 재생하는 함수
-    function playMusic(event) {
-		const musicCode =  event.currentTarget.getAttribute("data-track-id");
-        const iframe = document.getElementById("main_frame");
-        // 자동 재생을 위해 autoplay 파라미터 추가
-        iframe.src = "https://open.spotify.com/embed/track/" + musicCode + "?autoplay=1";
-    }
-	 // 플레이어 모달을 열고 닫는 기능 추가
-  	  const modal = document.getElementById('playerModal');
-  	  const span = document.querySelector('.close');
-  	  
-  	  function openModal(trackId) {
-  	    const iframe = document.getElementById('main_frame');
-  	    iframe.src = "https://open.spotify.com/embed/track/" + trackId + "?autoplay=1";
-  	    modal.style.display = 'block';
-  	  }
-  	  
-  	  function closeModal() {
-  	    modal.style.display = 'none';
-  	    const iframe = document.getElementById('main_frame');
-  	    iframe.src = ""; // 비우기 (혹은 stop 재생)
-  	  }
-  	  
-  	  // 모달을 열도록 하는 예시
-  	  document.querySelectorAll('.musicPlayBtn').forEach(button => {
-  	    button.addEventListener('click', (event) => {
-  	      event.preventDefault(); // 링크 기본 동작 방지
-  	      const trackId = button.getAttribute('data-track-id'); // trackId를 버튼에서 가져온다고 가정
-  	      openModal(trackId);
-  	    });
-  	  });
-  	  
-  	  // 닫기 버튼 클릭 시 모달 닫기
-  	  span.addEventListener('click', () => {
-  	    closeModal();
-  	  });
-  	  
-  	  // 모달 외부 클릭 시 모달 닫기
-  	  window.addEventListener('click', (event) => {
-  	    if (event.target === modal) {
-  	      closeModal();
-  	    }
-  	  }); */
+
+
 		// 플레이리스트 메뉴 표시/숨기기
 		document.querySelector('.plMenuBtn').addEventListener('click', function(event) {
 			event.preventDefault();
