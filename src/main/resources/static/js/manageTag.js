@@ -68,3 +68,20 @@ $(document).ready(function() {
 		}
 	});
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+        // 현재 URL의 쿼리 파라미터에서 plCode 추출
+        const urlParams = new URLSearchParams(window.location.search);
+        const plCode = urlParams.get('plCode');
+
+        // 페이지 상태를 기록 (현재 URL을 상태로 저장)
+        history.replaceState({ plCode: plCode }, document.title, window.location.href);
+
+        // popstate 이벤트 리스너 추가
+        window.addEventListener('popstate', function(event) {
+            if (event.state && event.state.plCode) {
+                // plCode를 포함한 URL로 리디렉션
+                window.location.href = `/showPlaylistInfo?plCode=${event.state.plCode}`;
+            }
+        });
+    });
