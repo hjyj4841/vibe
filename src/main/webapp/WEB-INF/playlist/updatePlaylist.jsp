@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,9 +10,14 @@
 <link rel="stylesheet" href="./css/search.css" />
 <link rel="stylesheet" href="./css/mypage.css" />
 <link rel="stylesheet" href="./css/updatePlaylist.css" />
-<script src="https://kit.fontawesome.com/df04184d5c.js" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.2/color-thief.umd.js"></script> <!-- ColorThief 라이브러리 추가 -->
+<script src="https://kit.fontawesome.com/df04184d5c.js"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.2/color-thief.umd.js"></script>
+<!-- ColorThief 라이브러리 추가 -->
 <script src="node_modules/colorthief/dist/color-thief.umd.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <title>플레이리스트 수정하기</title>
 <script type="text/javascript">
 	// [취소하기] 버튼 클릭 시 수정 취소 동시에 이전 화면으로
@@ -75,28 +81,51 @@
 				<div class="myRight">
 					<div class="updatePlInfoMain">
 						<div class="updatePlInfoBox">
-							<form action="/updatePlaylist" method="post" enctype="multipart/form-data">
+							<form action="/updatePlaylist" method="post"
+								enctype="multipart/form-data">
 								<!-- 플레이리스트 코드와 수정할 제목을 입력 받음 -->
 								<input type="hidden" value="${playlist.plCode}" name="plCode" />
 								<div class="updatePlImgBox">
 									<div class="updatePlImg">
-										<img src="${playlist.plImg}" id="playlistImg" class="playlistImg">
+										<img src="${playlist.plImg}" id="playlistImg"
+											class="playlistImg">
 										<div class="changePlImg">
-											<input type="file" id="imgChange" name="plImgFile" accept="image/*" onchange="previewImg(event)" />
+											<input type="file" id="imgChange" name="plImgFile"
+												accept="image/*" onchange="previewImg(event)" />
 											<div>
-	                                            <i class="fa-solid fa-camera-rotate"></i>
-	                                            <p>Change Image</p>
-	                                        </div>
+												<i class="fa-solid fa-camera-rotate"></i>
+												<p>Change Image</p>
+											</div>
 										</div>
 										<div class="defaultImg">
-											<input type="hidden" id="defaultImg" name="defaultImg" value="${playlist.plImg}" />
-											<button type="button" class="deleteImgBtn" onclick="resetDefaultImg()">Default Image</button>
+											<input type="hidden" id="defaultImg" name="defaultImg"
+												value="${playlist.plImg}" />
+											<button type="button" class="deleteImgBtn"
+												onclick="resetDefaultImg()">Default Image</button>
 										</div>
 									</div>
 								</div>
 								<div class="updatePlTitle">
 									<input type="text" id="plTitle" name="plTitle"
 										value="${playlist.plTitle}" placeholder="Playlist Title" />
+
+									<!-- 공개/비공개 설정 -->
+									<div class="privateBox">
+										
+										<input type="radio" name="plPublicYn" value="Y" id="publicRadio" ${Character.toString(playlist.plPublicYn) eq "Y" ? "checked" : ""}> 
+										<input type="radio" name="plPublicYn" value="N" id="privateRadio" ${Character.toString(playlist.plPublicYn) eq "N" ? "checked" : ""}>
+
+										<c:if test='${Character.toString(playlist.plPublicYn) eq "Y"}'>
+											<i class="fa-solid fa-lock-open"></i>
+										</c:if>
+										<c:if test='${Character.toString(playlist.plPublicYn) eq "N"}'>
+											<i class="fa-solid fa-lock"></i>
+										</c:if>
+
+										<div class="toggleHidden"></div>
+									</div>
+
+									<!-- 
 									<c:choose>
 										<c:when test="${searchPlaylist.plPublicYn == 89}">
 											<i class="fa-solid fa-lock-open"></i>
@@ -105,26 +134,19 @@
 											<i class="fa-solid fa-lock"></i>
 										</c:otherwise>
 									</c:choose>
+									 -->
 								</div>
 						</div>
-						
-						<!-- 
-						<div class="playlistTagBox">
-								<ul class="plTags">
-									<c:forEach items="${playlist.tagList}" var="tag">
-										<li>#${tag.tag.tagName}</li>
-									</c:forEach>
-								</ul>
-						</div>
-						-->
-					
+
+
 						<div class="editButtonBox">
 							<div class="editButton">
 								<button type="submit" class="editBtn">Save</button>
-								<button type="button" class="editCancel" onclick="javascript:window.history.back();">Cancel</button>
+								<button type="button" class="editCancel"
+									onclick="javascript:window.history.back();">Cancel</button>
 							</div>
 						</div>
-						
+
 						<!-- 이전 화면으로 -->
 						<a href="javascript:void(0);" onclick="cancel()"
 							class="goPlaylistBtn"><i class="fa-solid fa-arrow-left"></i></a>
@@ -134,7 +156,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<script>
         document.addEventListener('DOMContentLoaded', function() {
             var inputElement = document.getElementById('plTitle');
@@ -156,7 +178,87 @@
                 });
             }
         });
-    </script>
-    <script src="./js/scroll.js"></script>
+    
+       	// 메시지를 자동으로 숨기는 함수
+   		function hideMessageAfterDelay(id, delay) {
+   			const messageElement = document.getElementById(id);
+   			if (messageElement) {
+   				setTimeout(() => {
+   					messageElement.style.display = 'none';
+   				}, delay);
+   			}
+   		}
+
+   		document.addEventListener('DOMContentLoaded', function() {
+   			// 메시지를 2초 후에 숨기도록 설정
+   			hideMessageAfterDelay('addSuccessMessage', 2000);
+   			hideMessageAfterDelay('addErrorMessage', 2000);
+   			hideMessageAfterDelay('deleteSuccessMessage', 2000);
+   			hideMessageAfterDelay('deleteErrorMessage', 2000);
+   		});
+   		
+   		const publicSelect = document.querySelector('.privateBox');
+   		
+   		if($("#publicRadio").is(":checked")) {
+   			$(".toggleHidden").css({
+   				left: '30px',
+   				'background-color': '#315B52'
+   			});
+    		$('.privateBox').css('background-color', '#018B00');
+    		$(".privateBox > i").css({
+   				left: '0px'
+   			})
+   		}
+   		
+   		if($('#privateRadio').is(':checked')){
+   			$(".toggleHidden").css({
+   				left: '0px',
+   				'background-color' : '#810000'
+   			})
+    		$('.privateBox').css('background-color', '#B42021');
+   			$(".privateBox > i").css({
+   				left: '24px'
+   			})
+    	}
+   		
+   		// 공개 범위 선택
+        function selectPublicBox(){
+        	const moveRight = {transform: ['translate(40px, 0)']};
+        	const moveLeft = {transform: ['translate(-40px, 0)']};
+        	const option = {duration: 500};
+        	
+        	$(".privateBox > i").removeClass("fa-lock-open");
+        	$(".privateBox > i").removeClass("fa-lock");
+        	
+        	if($('#privateRadio').is(':checked')){
+        		$('#privateRadio').removeAttr('checked');
+        		$('#publicRadio').attr('checked', 'checked');
+        		//$('#publicRadio').prop('checked', true);
+        		$('.toggleHidden').animate({left: '30px'})
+        			.css('background-color', '#315B52');
+        		$('.privateBox').css('background-color', '#018B00');
+        		$(".privateBox > i").css({
+       				left: '0px'
+       			}).addClass('fa-lock-open')
+       			
+        	}else{
+        		//$('#privateRadio').prop('checked', true);
+        		$('#publicRadio').removeAttr('checked');
+        		$('#privateRadio').attr('checked', 'checked');
+        		$('.toggleHidden').animate({left: '0px'})
+        			.css('background-color', '#810000');
+        		$('.privateBox').css('background-color', '#B42021');
+        		$(".privateBox > i").css({
+       				left: '24px'
+       			}).addClass('fa-lock');
+        	}
+        }
+   		
+        publicSelect.addEventListener('click', selectPublicBox);
+   	</script>
+
+
+	<script src="./js/scroll.js"></script>
+	<script src="./js/manageTag.js"></script>
 </body>
 </html>

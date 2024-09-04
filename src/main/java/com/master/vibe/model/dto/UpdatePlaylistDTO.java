@@ -13,4 +13,6 @@ public class UpdatePlaylistDTO {
 	private String plTitle;
 	private MultipartFile plImgFile; // 업로드할 파일
 	private String defaultImg; // 기본 이미지 URL 필드 추가
+	
+	private char plPublicYn;
 }

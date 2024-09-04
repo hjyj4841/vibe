@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.master.vibe.model.dto.CreatePlaylistDTO;
 import com.master.vibe.model.dto.SearchDTO;
+import com.master.vibe.model.dto.UpdatePlaylistDTO;
 import com.master.vibe.model.vo.Music;
 import com.master.vibe.model.vo.Playlist;
 import com.master.vibe.model.vo.PlaylistTag;
@@ -78,20 +79,27 @@ public class PlaylistService {
 //	}
 	
 	
-	/*
-	public void updatePlaylist(UpdatePlaylistDTO dto) {
-//		playlistMapper.updatePlaylist();
-		Playlist playlist = new Playlist();
-		playlist.setPlCode(dto.getPlCode());
-		playlist.setPlTitle(dto.getPlTitle());
-		playlist.setPlImg(dto.getPlImgFile().getOriginalFilename()); // 새 이미지 경로 설정
-		
-		playlistMapper.updatePlaylist(playlist);
-	}
-*/
+//	public void updatePlaylist(UpdatePlaylistDTO dto) {
+//		Playlist playlist = new Playlist();
+//		
+//		playlist.setPlCode(dto.getPlCode());
+//		playlist.setPlTitle(dto.getPlTitle());
+//		playlist.setPlImg(dto.getPlImgFile().getOriginalFilename()); // 새 이미지 경로 설정
+//		playlist.setPlPublicYn(dto.getPlPublicYn());
+//		
+//		playlistMapper.updatePlaylist(playlist);
+//	}
+
 //	public void updatePlaylistTitle(Playlist playlist) {
 //		playlistMapper.updatePlaylistTitle(playlist);
 //	}
+	
+	
+	
+	
+	
+	
+	
 
 	// 랭킹 : 좋아요순
 	public List<Playlist> likerankingPlaylist(SearchDTO dto) {

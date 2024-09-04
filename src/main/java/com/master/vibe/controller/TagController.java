@@ -41,28 +41,29 @@ public class TagController {
 
     @PostMapping("/playlist/addTag")
     public String addTag(Integer plCode, String newTag, RedirectAttributes redirectAttributes) {
-        // 중복 태그 체크
         if (tagService.isTagExistsInPlaylist(plCode, newTag)) {
-            redirectAttributes.addFlashAttribute("errorMessage", "이미 존재하는 태그입니다.");
+            redirectAttributes.addFlashAttribute("addErrorMessage", "이미 존재하는 태그입니다.");
             return "redirect:/playlist/manageTags?plCode=" + plCode;
         }
 
-        // 태그 추가 가능 여부 체크
         if (!tagService.canAddMoreTags(plCode)) {
-            redirectAttributes.addFlashAttribute("errorMessage", "더 이상 추가할 수 없습니다.");
+            redirectAttributes.addFlashAttribute("addErrorMessage", "더 이상 추가할 수 없습니다.");
             return "redirect:/playlist/manageTags?plCode=" + plCode;
         }
 
         Tag tag = tagService.addTag(newTag);
         playlistTagService.addPlaylistTag(plCode, tag.getTagCode());
 
+        redirectAttributes.addFlashAttribute("addSuccessMessage", "태그가 성공적으로 추가되었습니다.");
         return "redirect:/playlist/manageTags?plCode=" + plCode;
     }
 
     @PostMapping("/playlist/deleteTags")
     public String deleteTags(@RequestParam("plCode") Integer plCode, 
-                             @RequestParam(value = "tagCodes", required = false) List<Integer> tagCodes) {
+                             @RequestParam(value = "tagCodes", required = false) List<Integer> tagCodes,
+                             RedirectAttributes redirectAttributes) {
         if (tagCodes == null || tagCodes.isEmpty()) {
+            redirectAttributes.addFlashAttribute("deleteErrorMessage", "삭제할 태그를 선택하세요.");
             return "redirect:/playlist/manageTags?plCode=" + plCode;
         }
 
@@ -70,7 +71,7 @@ public class TagController {
             playlistTagService.deletePlaylistTag(plCode, tagCode);
         }
 
+        redirectAttributes.addFlashAttribute("deleteSuccessMessage", "태그가 성공적으로 삭제되었습니다.");
         return "redirect:/playlist/manageTags?plCode=" + plCode;
     }
-
 }
