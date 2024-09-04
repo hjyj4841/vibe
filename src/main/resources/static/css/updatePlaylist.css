@@ -119,6 +119,7 @@
 .updatePlTitle {
 	font-size: 2.5rem;
     font-weight: 600;
+    display: flex;
 }
 .updatePlTitle input[type="text"] {
     border: none;

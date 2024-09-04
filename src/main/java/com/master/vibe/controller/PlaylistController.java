@@ -188,11 +188,13 @@ public class PlaylistController {
 
 			// 기존 이미지 파일 삭제
 			String existImg = new File(playlist.getPlImg()).getName();
-			if (existImg != null && !existImg.isEmpty()) {
-				System.out.println("존재하는 파일 : " + existImg);
-				File file = new File("\\\\192.168.10.6\\vibe\\playlistImg\\" + existImg); // 파일을 저장할 실제 경로로 설정
-				if (file.exists()) {
-					file.delete();
+			if (!playlist.getPlImg().equals("http://192.168.10.6:8080/playlistImg/defaultCD.png")) {
+				if (existImg != null && !existImg.isEmpty()) {
+					System.out.println("존재하는 파일 : " + existImg);
+					File file = new File("\\\\192.168.10.6\\vibe\\playlistImg\\" + existImg); // 파일을 저장할 실제 경로로 설정
+					if (file.exists()) {
+						file.delete();
+					}
 				}
 			}
 
