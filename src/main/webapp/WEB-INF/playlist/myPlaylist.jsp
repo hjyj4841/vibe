@@ -8,9 +8,11 @@
 <link rel="stylesheet" href="./css/reset.css" />
 <link rel="stylesheet" href="./css/search.css" />
 <link rel="stylesheet" href="./css/mypage.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tagify/4.9.2/tagify.min.css"/>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/tagify/4.9.2/tagify.min.css" />
 <link rel="stylesheet" href="./css/likePlaylist.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tagify/4.9.6/tagify.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/tagify/4.9.6/tagify.min.js"></script>
 <title>My Playlist</title>
 </head>
 <body>
@@ -25,13 +27,13 @@
 					<div class="myTagBox">
 						<div class="playlistCreateBox">
 							<div class="createBtnBox">
-							<!-- 
+								<!-- 
 								<a href="createPlaylist" id="createPlaylistLink"> <i
 									class="fa-solid fa-plus"></i> Create Playlist
 								</a>
 							 -->
-							 	<a id="createPlaylistLink" onclick="createPlaylistView()">
-							 		<i class="fa-solid fa-plus"></i> Create Playlist
+								<a id="createPlaylistLink" onclick="createPlaylistView()"> <i
+									class="fa-solid fa-plus"></i> Create Playlist
 								</a>
 							</div>
 							<div>My Playlist</div>
@@ -287,10 +289,22 @@
 			// 태그 입력 필드 초기화
 	        const input = document.querySelector('#tags');
 	        new Tagify(input, {
-	            delimiters: " ",
 	            maxTags: 5, 
 	    		tagTextProp: 'value' // 태그의 텍스트 값 설정
 	        });
+	    
+	   	// 엔터키로만 태그 추가
+        input.addEventListener('keydown', function(event) {
+            if (event.key === " ") {
+                event.preventDefault();
+            } else if (event.key === "Enter") {
+                const value = input.value.trim();
+                if (value.length > 0) {
+                    tagify.addTags(value);
+                    input.value = "";
+                }
+            }
+        });
 		}
 	</script>
 </body>

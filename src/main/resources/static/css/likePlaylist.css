@@ -89,15 +89,12 @@
   padding-left: 10px;
 }
 
-.editUserImgBox > div {
-  position: relative;
+.editForm > div {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 300px;
-  height: 300px;
-  border-radius: 50%;
-  overflow: hidden;
+  width: 500px;
+  padding: 10px;
 }
 
 .editUserImgBox > div > img {
@@ -117,6 +114,48 @@
   color: #999;
   opacity: 0;
   transition: 0.3s;
+}
+
+.editForm > div > i {
+  cursor: pointer;
+  color: #999;
+  transition: 0.2s;
+  font-size: 1.5rem;
+  padding-left: 10px;
+}
+
+.editUserImgBox > div {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.editUserImgBox > div > img {
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+.editUserImgBox > div > div {
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #999;
+  opacity: 0;
+  transition: 0.3s;
+}
+
+.editForm > .textAndIcon > i {
+  right: 10px;
 }
 
 .editForm > div > i {
@@ -185,13 +224,16 @@
   justify-content: center;
   align-items: center;
 }
+
 .changeUserImg > div > i {
   font-size: 2.5rem;
   padding: 10px;
 }
+
 .changeUserImg > div > p {
   font-size: 0.8rem;
 }
+
 .changeUserImg > div > p:nth-child(1) {
   opacity: 0;
 }
@@ -220,9 +262,11 @@
   border: none;
   color: #999;
 }
+
 .editForm > div > i:hover {
   color: white;
 }
+
 .editForm > div > input {
   width: 100%;
   padding: 5px;
@@ -233,22 +277,28 @@
   color: white;
   font-size: 1.2rem;
 }
+
 .editForm > div > input[type="text"] {
   color: #757575;
 }
+
 .editForm > div > input:focus {
   outline: none;
 }
+
 .editButtonBox {
   display: flex;
   justify-content: space-between;
 }
+
 .editButtonBox > div {
   width: 100%;
 }
+
 .editButtonBox > div > * {
   padding: 10px;
 }
+
 .editButtonBox > div > button {
   width: 100px;
   cursor: pointer;
@@ -258,24 +308,30 @@
   font-weight: bold;
   transition: 0.5s;
 }
+
 .editBtn {
   color: #2868b0;
 }
+
 .editBtn:hover {
   box-shadow: 0px 0px 8px 3px #2868b0;
 }
+
 .editCancel {
   color: #333;
 }
+
 .editCancel:hover {
   box-shadow: 0px 0px 8px 3px darkred;
 }
+
 .editButtonBox > a {
   color: white;
   width: 200px;
   cursor: pointer;
   transition: 0.2s;
 }
+
 .editButtonBox > a:hover {
   color: red;
 }
@@ -414,6 +470,16 @@ tags {
 }
 
 .tagify__input {
+  white-space: nowrap;
+  max-width: 328.3px;
+}
+
+tags.tagify.plTags {
+  white-space: nowrap;
+  max-width: 328.3px;
+}
+
+.tagify__tag > div > * {
   white-space: nowrap;
 }
 
