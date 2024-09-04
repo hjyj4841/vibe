@@ -336,17 +336,13 @@
 		resultMap="playlistMap">
 		SELECT
 		CASE
-		WHEN FLOOR(DATEDIFF(CURDATE(), u.user_birth) /
-		365.25) BETWEEN 10 AND 19
+		WHEN FLOOR(DATEDIFF(CURDATE(), u.user_birth) / 365.25) BETWEEN 10 AND 19
 		THEN '10'
-		WHEN FLOOR(DATEDIFF(CURDATE(),
-		u.user_birth) / 365.25) BETWEEN 20 AND 29
+		WHEN FLOOR(DATEDIFF(CURDATE(), u.user_birth) / 365.25) BETWEEN 20 AND 29
 		THEN '20'
-		WHEN
-		FLOOR(DATEDIFF(CURDATE(), u.user_birth) / 365.25) BETWEEN 30 AND 39
+		WHEN FLOOR(DATEDIFF(CURDATE(), u.user_birth) / 365.25) BETWEEN 30 AND 39
 		THEN '30'
-		WHEN FLOOR(DATEDIFF(CURDATE(), u.user_birth) / 365.25)
-		BETWEEN 40 AND 49
+		WHEN FLOOR(DATEDIFF(CURDATE(), u.user_birth) / 365.25) BETWEEN 40 AND 49
 		THEN '40'
 		WHEN FLOOR(DATEDIFF(CURDATE(), u.user_birth)
 		/ 365.25) BETWEEN 50 AND 59
@@ -373,21 +369,17 @@
 	<select id="playListRankingOnGender" parameterType="SearchDTO"
 		resultMap="playlistMap">
 		SELECT p.pl_code, p.pl_title, p.pl_img, p.pl_date,
-		p.pl_public_yn,
-		u.user_nickname, u.user_email, u.user_img,
-		COUNT(like_code) AS pl_code_count
-		FROM user
-		u
-		JOIN playlist p ON
-		(u.user_email = p.user_email)
-		JOIN playlist_like USING (pl_code)
-		WHERE
-		user_gender = #{userGender}
-		AND pl_public_yn = 'Y'
+		 p.pl_public_yn, u.user_nickname, u.user_email, u.user_img,
+		 COUNT(like_code) AS pl_code_count
+		FROM playlist p
+		 JOIN user u ON (u.user_email = p.user_email)
+		 JOIN playlist_like pu USING (pl_code)
+	     JOIN user lu ON lu.user_email = pu.user_email	 
+		WHERE lu.user_gender = #{userGender}
+		 AND pl_public_yn = 'Y' 
 		GROUP BY pl_code
 		ORDER BY pl_code_count desc
-		LIMIT
-		#{offset}, #{limit}
+		LIMIT #{offset}, #{limit}
 	</select>
 
 	<!-- 공유 용 유저 정보 페이지 -->
