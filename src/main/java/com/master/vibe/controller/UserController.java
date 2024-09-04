@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.master.vibe.model.dto.GetUserByIdDTO;
+import com.master.vibe.model.dto.PlaylistDTO;
+import com.master.vibe.model.dto.SearchDTO;
 import com.master.vibe.model.dto.UserDTO;
 import com.master.vibe.model.dto.UserLikeTagDTO;
 import com.master.vibe.model.vo.Playlist;
@@ -36,7 +38,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class UserController {
-	// 각 유저별 프리뷰 이미지 저장할 디렉토리 주소 
+	// 각 유저별 프리뷰 이미지 저장할 디렉토리 주소
 	private final String previewDir = "\\\\192.168.10.6\\vibe\\img\\preview_img\\";
 	private final String UserImgDir = "\\\\192.168.10.6\\vibe\\img\\user_img\\";
 
@@ -49,31 +51,34 @@ public class UserController {
 	@Autowired
 	private PlaylistViewer playlistViewer;
 	
+
 	// 프리뷰 폴더 삭제 메서드
 	public void deletePreviewImg() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		User user = (User) authentication.getPrincipal();
-		
+
 		File dir = new File(previewDir + user.getUserEmail());
-		while(dir.exists()) {
+		while (dir.exists()) {
 			File[] dirList = dir.listFiles();
-			for(File file : dirList) file.delete();
-			if(dirList.length == 0 && dir.isDirectory()) dir.delete();
+			for (File file : dirList)
+				file.delete();
+			if (dirList.length == 0 && dir.isDirectory())
+				dir.delete();
 		}
 	}
-	
+
 	// 메인페이지 연결
 	@GetMapping("/")
 	public String index(Model model) {
 		List<Playlist> playlist = playlistService.rankTop();
-		for(Playlist l : playlist) {
+		for (Playlist l : playlist) {
 			System.out.println(l);
 		}
-		
+
 		model.addAttribute("rankTop", playlistViewer.playlistView(playlist));
 		return "index";
 	}
-	
+
 	// alert 메세지 띄워줄 페이지
 	@GetMapping("/msgPage")
 	public String msgPage() {
@@ -94,9 +99,11 @@ public class UserController {
 		} catch (Exception e) {
 		}
 
-		if(userService.register(user) == 1) model.addAttribute("registerMsg", "회원가입에 성공 하였습니다.");
-		else model.addAttribute("registerMsg", "회원가입에 실패 하였습니다.");
-		
+		if (userService.register(user) == 1)
+			model.addAttribute("registerMsg", "회원가입에 성공 하였습니다.");
+		else
+			model.addAttribute("registerMsg", "회원가입에 실패 하였습니다.");
+
 		return "msgPage";
 	}
 
@@ -105,11 +112,13 @@ public class UserController {
 	public String login() {
 		return "user/login";
 	}
+
 	// 로그인 에러 시 리턴할 메세지
 	@GetMapping("/loginError")
 	public String loginError(Model model, String error, String username) {
-		if(error.equals("탈퇴회원")) error = "재가입까지 " + userService.rejoinDate(username) + "일 남았습니다.";
-		
+		if (error.equals("탈퇴회원"))
+			error = "재가입까지 " + userService.rejoinDate(username) + "일 남았습니다.";
+
 		model.addAttribute("msg", error);
 		return "user/login";
 	}
@@ -126,10 +135,12 @@ public class UserController {
 	public String findUserAccount(User user, String birthDay, Model model) {
 		try {
 			user.setUserBirth(new SimpleDateFormat("yyyy-MM-dd").parse(birthDay));
-		} catch (Exception e) {}
+		} catch (Exception e) {
+		}
 		user = userService.findUserAccount(user);
-		
-		if(user == null) return null;
+
+		if (user == null)
+			return null;
 		return user.getUserEmail();
 	}
 
@@ -149,7 +160,7 @@ public class UserController {
 		// 유저가 좋아하는 태그 top 5
 		List<UserLikeTagDTO> list = userService.userLikeTag(user.getUserEmail());
 		model.addAttribute("likeTagList", list);
-		
+
 		// 해당유저의 좋아요가 가장 많은 플레이리스트
 		try {
 			Playlist playlist = playlistService.likeRankByUserEmail(user.getUserEmail());
@@ -182,7 +193,7 @@ public class UserController {
 
 		userService.updateUserPWD(user);
 		model.addAttribute("pwdChange", "패스워드가 변경되었습니다. 다시 로그인 해주세요.");
-		
+
 		// 패스워드 변경시 세션 제거 후 로그아웃
 		HttpSession session = request.getSession(false);
 		session.invalidate();
@@ -266,17 +277,18 @@ public class UserController {
 	public String previewImg(MultipartFile file) throws IllegalStateException, IOException {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		User user = (User) authentication.getPrincipal();
-		
+
 		// 프리뷰 폴더 경로 지정하는 파일 객체 생성
 		String path = previewDir + user.getUserEmail();
 		File dir = new File(path);
 		// 폴더가 없으면 폴더 생성
-		if(!dir.exists()) dir.mkdir();
-		
+		if (!dir.exists())
+			dir.mkdir();
+
 		UUID uuid = UUID.randomUUID();
 		String fileName = uuid.toString() + "_" + file.getOriginalFilename();
 		File copyFile = new File(path + "\\" + fileName);
-		
+
 		file.transferTo(copyFile);
 		return "http://192.168.10.6:8080/img/preview_img/" + user.getUserEmail() + "/" + fileName;
 	}
@@ -286,6 +298,7 @@ public class UserController {
 	public String updateUser() {
 		return "user/updateUser";
 	}
+
 	@PostMapping("/updateUser")
 	public String updateUser(UserDTO dto, Model model) throws IllegalStateException, IOException {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -293,14 +306,15 @@ public class UserController {
 		User changeUser = null;
 		try {
 			changeUser = user.clone();
-		} catch (CloneNotSupportedException e) {}
-		
+		} catch (CloneNotSupportedException e) {
+		}
+
 		deletePreviewImg();
-		
+
 		// 이미지 변경 로직
-		if(!dto.getFile().isEmpty()) {
+		if (!dto.getFile().isEmpty()) {
 			// 이전에 가지고 있던 유저 이미지가 기본이미지가 아니라면 삭제
-			if(!user.getUserImg().equals("http://192.168.10.6:8080/img/user_img/default_user.jpg")) {
+			if (!user.getUserImg().equals("http://192.168.10.6:8080/img/user_img/default_user.jpg")) {
 				File deleteFile = new File(UserImgDir + new File(user.getUserImg()).getName());
 				deleteFile.delete();
 			}
@@ -312,7 +326,8 @@ public class UserController {
 
 			// 서비스 넘기기 전에 user 객체에 DB에 들어갈 img 경로 지정
 			changeUser.setUserImg("http://192.168.10.6:8080/img/user_img/" + fileName);
-		} else changeUser.setUserImg(dto.getUserImg());
+		} else
+			changeUser.setUserImg(dto.getUserImg());
 		// 그 외 변경할 정보들을 현재접속한 유저 객체에 담아서 서비스로 처리
 		changeUser.setUserNickname(dto.getUserNickname());
 		changeUser.setUserPhone(dto.getUserPhone());
@@ -337,8 +352,28 @@ public class UserController {
 	// 공유 용 유저 페이지
 	@GetMapping("/profile/{userId}")
 	public String getProfile(@PathVariable("userId") String userId, Model model) {
-		GetUserByIdDTO getbyId = userService.getUserById(userId);
-		model.addAttribute("user", getbyId);
+		User user = userService.getUserById(userId);
+		model.addAttribute("user",user);
+		System.err.println(user);
+		
+		List<UserLikeTagDTO> likeTag = userService.userLikeTag(userId);
+		model.addAttribute("likeTag", likeTag);
+		System.err.println(likeTag);
+		
+		SearchDTO searchDTO = new SearchDTO();
+		
+		searchDTO.setUserEmail(userId);
+		searchDTO.setLimit(5);
+		searchDTO.setPage(1);
+		
+		List<Playlist> playList = playlistService.myPlaylist(searchDTO);
+		
+		List<PlaylistDTO> playlistView = playlistViewer.playlistView(playList);
+		
+		model.addAttribute("playlistView", playlistView);
+		System.err.println(playlistView);
+		
+		
 		return "user/profile";
 	}
 }

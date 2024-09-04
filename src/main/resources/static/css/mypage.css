@@ -308,8 +308,9 @@
 	margin-top: 5px;
 }
 
-.sharProfile > i{
+.shareProfile > i{
 	display: flex;
 	align-items: center;
 	text-align: center;
+	cursor: pointer;
 }

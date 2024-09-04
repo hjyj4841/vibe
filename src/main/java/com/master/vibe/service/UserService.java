@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.master.vibe.model.dto.GetUserByIdDTO;
+import com.master.vibe.model.dto.PlaylistDTO;
 import com.master.vibe.model.dto.UserLikeTagDTO;
 import com.master.vibe.model.vo.User;
 
@@ -97,20 +98,10 @@ public class UserService implements UserDetailsService{
 	}
 	
 	// 공유 용 프로필 페이지
-		public GetUserByIdDTO getUserById(String userEmail) {
+		public User getUserById(String userEmail) {
 			User user = userMapper.getUserById(userEmail);
-			System.err.println(user);
-			GetUserByIdDTO dto = new GetUserByIdDTO();
-			dto.setUser(user);
-			System.err.println(dto.getUser().getUserImg());
-			if (userMapper.userLikeTag(userEmail) != null) {
-				dto.setLikeTagList(userMapper.userLikeTag(userEmail));
-			} else {
-				dto.setLikeTagList(new ArrayList<>());
-			}
-			dto.setGetPlayListById(playlistMapper.getPlayListById(userEmail));
-			System.out.println(dto.getGetPlayListById());
-			return dto;
+		
+			return user;
 		}
 	
 	@Override

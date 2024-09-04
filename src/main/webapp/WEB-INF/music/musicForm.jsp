@@ -1,4 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+pageEncoding="UTF-8"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core"
+prefix="c"%>
 <!DOCTYPE html>
 <html>
   <head>
@@ -7,6 +9,10 @@
     <link rel="stylesheet" href="./css/search.css" />
     <link rel="stylesheet" href="./css/mypage.css" />
     <link rel="stylesheet" href="./css/musicForm.css" />
+    <script
+      src="https://kit.fontawesome.com/df04184d5c.js"
+      crossorigin="anonymous"
+    ></script>
     <script src="/js/searchMusic.js"></script>
     <title>검색하기</title>
   </head>
@@ -20,11 +26,14 @@
           </div>
           <div class="myRight">
             <div class="myTagBox">
-            	<!-- 플레이리스트 목록으로 -->
-				<a class="goPlaylistListBtn" onclick="history.back()">
-					<i class="fa-solid fa-arrow-left"></i>
-				</a>
-            
+              <!-- 플레이리스트 목록으로 -->
+              <a
+                href="/showPlaylistInfo?plCode=${plCode}"
+                class="goPlaylistListBtn"
+              >
+                <i class="fa-solid fa-arrow-left"></i>
+              </a>
+
               <h2>Search Music</h2>
               <div class="searchMusicBox">
                 <form class="mainSearchBox" onsubmit="return false;">
@@ -50,7 +59,6 @@
                       id="musicExistsInPlaylist"
                       onclick="addMusicList()"
                     />
-                    <a href="/showPlaylistInfo?plCode=${plCode }">Playlist Page</a>
                   </form>
                 </div>
               </div>
@@ -59,15 +67,29 @@
         </div>
       </div>
     </div>
-    
+
     <!-- 플레이어 모달 -->
-	<div id="playerModal" class="playerModal" >
-	<div class="modal-content">
-		<span class="close">&times;</span>
-		<iframe id="main_frame" src="" width="300" height="380"
-			frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-	</div>
-	</div>
+    <div id="playerModal" class="playerModal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <div class="spotify-login-box">
+          <p>
+            Press <i class="fa-brands fa-spotify"></i> If you want Full Song
+          </p>
+
+          <!-- 음악 재생 iFrame -->
+          <iframe
+            id="main_frame"
+            src=""
+            width="300"
+            height="380"
+            frameborder="0"
+            allowtransparency="true"
+            allow="encrypted-media"
+          ></iframe>
+        </div>
+      </div>
+    </div>
     <script>
       let offset = 0;
       let plCode = "<c:out value='${plCode}'/>";
@@ -90,22 +112,36 @@
                 '<div class="musicListBox">' +
                 '<div class="musicCheck">' +
                 '<label class="checkLabel">' +
-                '<input type="checkbox" name="selectedMusic" class="selectedMusic" onchange="listCheck()" value="' + music.id + '">' +
+                '<input type="checkbox" name="selectedMusic" class="selectedMusic" onchange="listCheck()" value="' +
+                music.id +
+                '">' +
                 "</label>" +
                 "</div>" +
                 '<div class="musicImg">' +
-                '<img src="' + music.albumUrl + '">' +
+                '<img src="' +
+                music.albumUrl +
+                '">' +
                 "</div>" +
                 '<div class="musicDesc">' +
-                "<div>" + music.musicTitle + "</div>" +
-                "<div>" + music.artistName + " · " + music.albumName + "</div>" +
+                "<div>" +
+                music.musicTitle +
+                "</div>" +
+                "<div>" +
+                music.artistName +
+                " · " +
+                music.albumName +
+                "</div>" +
                 "</div>" +
                 '<div class="addMusicIcon">' +
                 '<div class="playlistMusicActionBtn">' +
-				`<a href="#" onclick="playMusic('` + music.id + `')"` +
-				'class="musicPlayBtn" data-track-id="' + music.id  + '">' +
-				'<i class="fa-solid fa-circle-play"></i></a>' +
-				'</div>' +
+                `<a href="#" onclick="playMusic('` +
+                music.id +
+                `')"` +
+                'class="musicPlayBtn" data-track-id="' +
+                music.id +
+                '">' +
+                '<i class="fa-solid fa-circle-play"></i></a>' +
+                "</div>" +
                 '<i class="fa-solid fa-plus" onclick="addOneMusic(event)" data-code="' +
                 music.id +
                 '"></i>' +
@@ -124,19 +160,19 @@
                 $(e.target).parent().css("background-color", "#999");
               }
             });
-            
-         	// 모달을 열도록 하는 예시
-	  	  	document.querySelectorAll('.musicPlayBtn').forEach(button => {
-	  	    	button.addEventListener('click', (event) => {
-	  	      		event.preventDefault(); // 링크 기본 동작 방지
-	  	      		const trackId = button.getAttribute('data-track-id'); // trackId를 버튼에서 가져온다고 가정
-	  	      		openModal(trackId);
-	  	    	});
-	  	  	});
+
+            // 모달을 열도록 하는 예시
+            document.querySelectorAll(".musicPlayBtn").forEach((button) => {
+              button.addEventListener("click", (event) => {
+                event.preventDefault(); // 링크 기본 동작 방지
+                const trackId = button.getAttribute("data-track-id"); // trackId를 버튼에서 가져온다고 가정
+                openModal(trackId);
+              });
+            });
           },
           error: function () {
             $(".addMusicBox").html("검색하신 내용이 없습니다.");
-          }
+          },
         });
       }
 
@@ -182,9 +218,13 @@
                   "</div>" +
                   '<div class="addMusicIcon">' +
                   '<div class="playlistMusicActionBtn">' +
-  					`<a href="#" onclick="playMusic('` + music.id + `')" class="musicPlayBtn" data-track-id="` + music.id  + `">` +
-  					'<i class="fa-solid fa-circle-play"></i></a>' +
-  					'</div>' +
+                  `<a href="#" onclick="playMusic('` +
+                  music.id +
+                  `')" class="musicPlayBtn" data-track-id="` +
+                  music.id +
+                  `">` +
+                  '<i class="fa-solid fa-circle-play"></i></a>' +
+                  "</div>" +
                   '<i class="fa-solid fa-plus" onclick="addOneMusic(event)" data-code="' +
                   music.id +
                   '"></i>' +
@@ -202,69 +242,68 @@
                   $(e.target).parent().css("background-color", "#999");
                 }
               });
-              
-           		// 모달을 열도록 하는 예시
-  	  	  		document.querySelectorAll('.musicPlayBtn').forEach(button => {
-  	  	    		button.addEventListener('click', (event) => {
-  	  	      			event.preventDefault(); // 링크 기본 동작 방지
-  	  	      			const trackId = button.getAttribute('data-track-id'); // trackId를 버튼에서 가져온다고 가정
-  	  	      			openModal(trackId);
-  	  	    		});
-  	  	  		});
-            }
+
+              // 모달을 열도록 하는 예시
+              document.querySelectorAll(".musicPlayBtn").forEach((button) => {
+                button.addEventListener("click", (event) => {
+                  event.preventDefault(); // 링크 기본 동작 방지
+                  const trackId = button.getAttribute("data-track-id"); // trackId를 버튼에서 가져온다고 가정
+                  openModal(trackId);
+                });
+              });
+            },
           });
         }
       });
 
- 	// 플레이어 모달을 열고 닫는 기능 추가
-    const modal = document.getElementById('playerModal');
-    const span = document.querySelector('.close');
-      
-	// 음악을 재생하는 함수
-   	function playMusic(event) {
-   		const musicCode =  event.currentTarget.getAttribute("data-track-id");
-   		const iframe = document.getElementById("main_frame");
-   		
-   		// 자동 재생을 위해 autoplay 파라미터 추가
-   		iframe.src = "https://open.spotify.com/embed/track/" + musicCode + "?autoplay=1";
-   	}
-    	
-   	
-    	  
-    function openModal(trackId) {
-    	const iframe = document.getElementById('main_frame');
-    	iframe.src = "https://open.spotify.com/embed/track/" + trackId + "?autoplay=1";
-    	modal.style.display = 'block';
-    }
-    	  
-    function closeModal() {
-    	modal.style.display = 'none';
-    	const iframe = document.getElementById('main_frame');
-   		iframe.src = ""; // 비우기 (혹은 stop 재생)
-    }
-        	  
-   	// 모달을 열도록 하는 예시
-   	document.querySelectorAll('.musicPlayBtn').forEach(button => {
-   		button.addEventListener('click', (event) => {
-   			event.preventDefault(); // 링크 기본 동작 방지
-    	      	const trackId = button.getAttribute('data-track-id'); // trackId를 버튼에서 가져온다고 가정
-    	      	openModal(trackId);
-    	    });
-   	});
-       	  
-   	// 닫기 버튼 클릭 시 모달 닫기
-   	span.addEventListener('click', () => {
-   		closeModal();
-   	});
-      	  
-  	// 모달 외부 클릭 시 모달 닫기
-  	window.addEventListener('click', (event) => {
-  		if (event.target === modal) {
-  	  		closeModal();
-  	    }
-  	});
+      // 플레이어 모달을 열고 닫는 기능 추가
+      const modal = document.getElementById("playerModal");
+      const span = document.querySelector(".close");
 
-      
+      // 음악을 재생하는 함수
+      function playMusic(event) {
+        const musicCode = event.currentTarget.getAttribute("data-track-id");
+        const iframe = document.getElementById("main_frame");
+
+        // 자동 재생을 위해 autoplay 파라미터 추가
+        iframe.src =
+          "https://open.spotify.com/embed/track/" + musicCode + "?autoplay=1";
+      }
+
+      function openModal(trackId) {
+        const iframe = document.getElementById("main_frame");
+        iframe.src =
+          "https://open.spotify.com/embed/track/" + trackId + "?autoplay=1";
+        modal.style.display = "block";
+      }
+
+      function closeModal() {
+        modal.style.display = "none";
+        const iframe = document.getElementById("main_frame");
+        iframe.src = ""; // 비우기 (혹은 stop 재생)
+      }
+
+      // 모달을 열도록 하는 예시
+      document.querySelectorAll(".musicPlayBtn").forEach((button) => {
+        button.addEventListener("click", (event) => {
+          event.preventDefault(); // 링크 기본 동작 방지
+          const trackId = button.getAttribute("data-track-id"); // trackId를 버튼에서 가져온다고 가정
+          openModal(trackId);
+        });
+      });
+
+      // 닫기 버튼 클릭 시 모달 닫기
+      span.addEventListener("click", () => {
+        closeModal();
+      });
+
+      // 모달 외부 클릭 시 모달 닫기
+      window.addEventListener("click", (event) => {
+        if (event.target === modal) {
+          closeModal();
+        }
+      });
+
       function addOneMusic(event) {
         $.ajax({
           url: "/addOneMusic",
@@ -284,7 +323,7 @@
           },
         });
       }
-    	
+
       function listCheck() {
         // 선택된 체크박스의 ID 값을 배열로 가져오기
         const selectedMusicId = $("input[name='selectedMusic']:checked")

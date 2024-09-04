@@ -72,7 +72,7 @@
 							<div class="playlistInfoBox">
 								<div class="creatorInfo">
 									<img src="${playlist.user.userImg}">
-									<p class="creatorNickname">${playlist.user.userNickname}</p>
+									<a href="http://localhost:8080/profile/${playlist.user.userEmail }"><p class="creatorNickname">${playlist.user.userNickname}</p></a>
 									<!-- 링크 공유하기 -->
 									<div class="playlistShareBtn">
 										<i id="link-copy-icon" class="fa-solid fa-link"

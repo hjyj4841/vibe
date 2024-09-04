@@ -71,4 +71,6 @@ public interface PlaylistMapper {
     
     List<PlaylistDTO> getPlayListById(String userEmail);
     
+    List<PlaylistTag> getTagNameByPlcode(int plCode);
+    
 }

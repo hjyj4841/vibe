@@ -106,19 +106,21 @@ const deletTxt =
 	
 	var userNickname = "${user.userNickname}";
 	var userImg = "${user.userImg}";
+	var userEmail = "${user.userEmail}"
 	document.getElementById("kakaotalk-sharing-btn").addEventListener(
 			"click", function() {
 				Kakao.Share.sendCustom({
 					templateId : 111024,
 					templateArgs : {
 						'userNickname' : userNickname,
-						'userImg' : userImg
+						'userImg' : userImg,
+						'userEmail' : userEmail
 					}
 				});
 			});
 	
 	async function onClickCopyLink() {
-		const link = window.location.href;
+		const link = "http://localhost:8080/profile/${user.userEmail}"
 		await
 		navigator.clipboard.writeText(link);
 		window.alert('클립보드에 링크가 복사되었습니다.');
