@@ -28,11 +28,6 @@
 					<div class="myTagBox">
 						<div class="playlistCreateBox">
 							<div class="createBtnBox">
-								<!-- 
-								<a href="createPlaylist" id="createPlaylistLink"> <i
-									class="fa-solid fa-plus"></i> Create Playlist
-								</a>
-							 -->
 								<a id="createPlaylistLink" onclick="createPlaylistView()"> <i
 									class="fa-solid fa-plus"></i> Create Playlist
 								</a>
@@ -50,7 +45,8 @@
 									<div class="plContentsBox" data-code="${searchPlaylist.plCode}">
 										<p class="plTitle">${searchPlaylist.plTitle}
 											<c:choose>
-												<c:when test="${Character.toString(searchPlaylist.plPublicYn) eq 'Y'}">
+												<c:when
+													test="${Character.toString(searchPlaylist.plPublicYn) eq 'Y'}">
 													<i class="fa-solid fa-lock-open"></i>
 												</c:when>
 												<c:otherwise>
@@ -289,23 +285,34 @@
 		function initializeImagePreviewAndTagify(){
 			// 태그 입력 필드 초기화
 	        const input = document.querySelector('#tags');
-	        new Tagify(input, {
+	        const tagify = new Tagify(input, {
 	            maxTags: 5, 
 	    		tagTextProp: 'value' // 태그의 텍스트 값 설정
 	        });
 	    
-	   	// 엔터키로만 태그 추가
-        input.addEventListener('keydown', function(event) {
-            if (event.key === " ") {
-                event.preventDefault();
-            } else if (event.key === "Enter") {
-                const value = input.value.trim();
-                if (value.length > 0) {
-                    tagify.addTags(value);
-                    input.value = "";
-                }
-            }
-        });
+	        // 엔터키로만 태그 추가
+	        input.addEventListener('keydown', function(event) {
+	            if (event.key === " ") {
+	                event.preventDefault();
+	            } else if (event.key === "Enter") {
+	                const value = input.value.trim();
+	                if (value.length > 0) {
+	                    tagify.addTags(value);
+	                    input.value = "";
+	                }
+	            }
+	        });
+	        
+	        // 태그 입력 시 특수문자 제거
+	        tagify.on('add', function(e){
+	            const tagValue = e.detail.data.value;
+	            const cleanedTag = tagValue.replace(/[^a-zA-Z0-9 ]+/g, '');
+	            if (cleanedTag !== tagValue) {
+	                tagify.removeTag(e.detail.tag);
+	                tagify.addTags(cleanedTag);
+	                alert("특수문자는 사용할 수 없습니다.");
+	            }
+	        });
 		}
 	</script>
 </body>

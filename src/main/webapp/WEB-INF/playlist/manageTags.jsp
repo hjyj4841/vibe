@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="/css/mypage.css" />
 <link rel="stylesheet" href="/css/manageTags.css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tagify/4.9.6/tagify.min.js"></script>
 </head>
 <body>
 	<jsp:include page="../tiles/header.jsp"></jsp:include>
@@ -20,7 +21,6 @@
 				<div class="myLeft">
 					<jsp:include page="../tiles/mypageLeft.jsp"></jsp:include>
 				</div>
-
 				<div class="myRight">
 					<div class="tag-list-wrapper">
 						<h1>Tag Management</h1>
@@ -112,6 +112,25 @@
 			hideMessageAfterDelay('deleteSuccessMessage', 2000);
 			hideMessageAfterDelay('deleteErrorMessage', 2000);
 		});
+		
+		// 태그 입력 시 특수문자 제거
+        document.addEventListener('DOMContentLoaded', function() {
+            const input = document.querySelector('#tags');
+            const tagify = new Tagify(input, {
+                maxTags: 5,
+                tagTextProp: 'value' // 태그의 텍스트 값 설정
+            });
+
+            tagify.on('add', function(e){
+                const tagValue = e.detail.data.value;
+                const cleanedTag = tagValue.replace(/[^a-zA-Z0-9 ]+/g, '');
+                if (cleanedTag !== tagValue) {
+                    tagify.removeTag(e.detail.tag);
+                    tagify.addTags(cleanedTag);
+                    alert("특수문자는 사용할 수 없습니다.");
+                }
+            });
+        });
 	</script>
 </body>
 </html>
