@@ -367,7 +367,15 @@ input:focus{
 	outline: none;
 }
 
-
-
+/* 플레이어 */
+.plDesc > div > span {
+	display: flex;
+	justify-content: center;
+	align-items: center; 
+	z-index: 1000;
+	position: absolute;
+	height: 100%;
+	padding-left: 13%;
+}
 
 
