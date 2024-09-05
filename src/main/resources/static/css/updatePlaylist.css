@@ -247,6 +247,7 @@
 
 /* 이전 화면으로 이동 */
 .goPlaylistBtn {
+	z-index:1;
 	position: absolute;
 	top: -5px;
 	right: 10px;
