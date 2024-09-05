@@ -5,7 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<link rel="icon" href="/imgs/logo/logoB_small.png">
+<title>VibeMaster</title>
 </head>
 <body>
 <h1>랜덤 플레이리스트 조회</h1>

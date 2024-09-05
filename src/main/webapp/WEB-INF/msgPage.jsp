@@ -4,7 +4,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>VibeMaster</title>
+<link rel="icon" href="/imgs/logo/logoB_small.png">
 </head>
 <body>
 
@@ -17,10 +18,6 @@
 	if ('${pwdChange}' != ''){
 		alert('${pwdChange}');
 		location.href = '/';
-	}
-	if ('${fileError}' != ''){
-		alert('${fileError}');
-		history.back();
 	}
 </script>
 </html>

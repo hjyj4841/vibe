@@ -6,6 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="icon" href="/imgs/logo/logoB_small.png">
 <link rel="stylesheet" href="./css/reset.css" />
 <link rel="stylesheet" href="./css/search.css" />
 <link rel="stylesheet" href="./css/mypage.css" />
@@ -18,7 +19,7 @@
 <script src="node_modules/colorthief/dist/color-thief.umd.js"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<title>플레이리스트 수정하기</title>
+<title>VibeMaster</title>
 <script type="text/javascript">
 	// [취소하기] 버튼 클릭 시 수정 취소 동시에 이전 화면으로
 	function cancel() {

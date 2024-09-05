@@ -5,10 +5,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="icon" href="/imgs/logo/logoB_small.png">
 <link rel="stylesheet" href="./css/reset.css" />
 <link rel="stylesheet" href="./css/search.css" />
 <link rel="stylesheet" href="./css/ageRanking.css" />
-<title>Search Results</title>
+<title>VibeMaster</title>
 </head>
 <body>
 	<jsp:include page="../tiles/header.jsp"></jsp:include>

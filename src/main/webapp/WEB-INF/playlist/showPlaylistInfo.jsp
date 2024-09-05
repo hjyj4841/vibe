@@ -7,13 +7,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="icon" href="/imgs/logo/logoB_small.png">
 <link rel="stylesheet" href="./css/reset.css" />
 <link rel="stylesheet" href="./css/search.css" />
 <link rel="stylesheet" href="./css/mypage.css" />
 <link rel="stylesheet" href="./css/showPlaylistInfo.css" />
 <script src="https://kit.fontawesome.com/df04184d5c.js"
 	crossorigin="anonymous"></script>
-<title>플레이리스트 곡 조회</title>
+<title>VibeMaster</title>
 </head>
 <body>
 	<jsp:include page="../tiles/header.jsp"></jsp:include>

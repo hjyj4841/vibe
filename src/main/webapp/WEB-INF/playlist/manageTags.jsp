@@ -5,7 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>태그 관리</title>
+<title>VibeMaster</title>
+<link rel="icon" href="/imgs/logo/logoB_small.png">
 <link rel="stylesheet" href="/css/reset.css" />
 <link rel="stylesheet" href="/css/mypage.css" />
 <link rel="stylesheet" href="/css/manageTags.css" />

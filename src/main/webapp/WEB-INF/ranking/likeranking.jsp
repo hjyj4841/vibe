@@ -5,7 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Like Ranking</title>
+<title>VibeMaster</title>
+<link rel="icon" href="/imgs/logo/logoB_small.png">
 <link rel="stylesheet" href="./css/reset.css" />
 <link rel="stylesheet" href="./css/search.css" />
 <link rel="stylesheet" href="./css/likeranking.css" />

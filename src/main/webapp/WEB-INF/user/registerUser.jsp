@@ -4,7 +4,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Sign Up</title>
+<title>VibeMaster</title>
+<link rel="icon" href="/imgs/logo/logoB_small.png">
 <link rel="stylesheet" href="./css/reset.css" />
 <link rel="stylesheet" href="./css/register.css">
 </head>

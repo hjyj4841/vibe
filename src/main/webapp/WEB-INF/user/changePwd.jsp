@@ -9,7 +9,8 @@
 <link rel="stylesheet" href="./css/reset.css" />
 <link rel="stylesheet" href="./css/mypage.css" />
 <link rel="stylesheet" href="./css/likePlaylist.css" />
-<title>Insert title here</title>
+<link rel="icon" href="/imgs/logo/logoB_small.png">
+<title>VibeMaster</title>
 </head>
 <body>
 	<jsp:include page="../tiles/header.jsp"></jsp:include>

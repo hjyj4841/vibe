@@ -9,6 +9,7 @@
 <meta charset="UTF-8" />
 <link rel="stylesheet" href="./css/reset.css" />
 <link rel="stylesheet" href="./css/style.css" />
+<link rel="icon" href="/imgs/logo/logoB_small.png">
 <title>VibeMaster</title>
 </head>
 <body>

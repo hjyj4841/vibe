@@ -6,7 +6,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://sdk.scdn.co/spotify-player.js"></script>
-<title>Spotify Web Player</title>
+<link rel="icon" href="/imgs/logo/logoB_small.png">
+<title>VibeMaster</title>
 <style>
 body {
 	font-family: Arial, sans-serif;

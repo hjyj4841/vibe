@@ -7,10 +7,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="icon" href="/imgs/logo/logoB_small.png">
 <link rel="stylesheet" href="./css/reset.css" />
 <link rel="stylesheet" href="./css/mypage.css" />
 <link rel="stylesheet" href="./css/likePlaylist.css" />
-<title>My Profile</title>
+<title>VibeMaster</title>
 </head>
 <body>
 	<jsp:include page="../tiles/header.jsp"></jsp:include>

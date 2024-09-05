@@ -9,12 +9,10 @@ prefix="c"%>
     <link rel="stylesheet" href="./css/search.css" />
     <link rel="stylesheet" href="./css/mypage.css" />
     <link rel="stylesheet" href="./css/musicForm.css" />
-    <script
-      src="https://kit.fontawesome.com/df04184d5c.js"
-      crossorigin="anonymous"
-    ></script>
+    <link rel="icon" href="/imgs/logo/logoB_small.png">
+    <script src="https://kit.fontawesome.com/df04184d5c.js" crossorigin="anonymous"></script>
     <script src="/js/searchMusic.js"></script>
-    <title>검색하기</title>
+	<title>VibeMaster</title>
   </head>
   <body>
     <jsp:include page="../tiles/header.jsp"></jsp:include>

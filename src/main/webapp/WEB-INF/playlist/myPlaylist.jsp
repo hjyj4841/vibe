@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="icon" href="/imgs/logo/logoB_small.png">
 <link rel="stylesheet" href="./css/reset.css" />
 <link rel="stylesheet" href="./css/search.css" />
 <link rel="stylesheet" href="./css/mypage.css" />
@@ -13,7 +14,7 @@
 <link rel="stylesheet" href="./css/likePlaylist.css" />
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/tagify/4.9.6/tagify.min.js"></script>
-<title>My Playlist</title>
+<title>VibeMaster</title>
 </head>
 <body>
 	<jsp:include page="../tiles/header.jsp"></jsp:include>
