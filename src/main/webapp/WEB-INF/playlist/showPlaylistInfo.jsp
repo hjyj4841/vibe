@@ -49,18 +49,19 @@
 									</c:otherwise>
 								</c:choose>
 							</p>
-
-							<div class="likeBox" data-code="${playlist.plCode}"
-								onclick="clickLike(event)">
-								<c:choose>
-									<c:when test="${not empty playlist.plLike}">
-										<i class="fa-solid fa-heart heartEmoji" id="redHeart"></i>
-									</c:when>
-									<c:otherwise>
-										<i class="fa-regular fa-heart heartEmoji"></i>
-									</c:otherwise>
-								</c:choose>
-								<span>LIKE </span> <span class="likeCount">${playlist.likeCount}</span>
+							<div>
+								<div class="likeBox" data-code="${playlist.plCode}"
+									onclick="clickLike(event)">
+									<c:choose>
+										<c:when test="${not empty playlist.plLike}">
+											<i class="fa-solid fa-heart heartEmoji" id="redHeart"></i>
+										</c:when>
+										<c:otherwise>
+											<i class="fa-regular fa-heart heartEmoji"></i>
+										</c:otherwise>
+									</c:choose>
+									<span>LIKE </span> <span class="likeCount">${playlist.likeCount}</span>
+								</div>
 							</div>
 
 							<div class="playlistTagBox">

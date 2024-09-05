@@ -55,6 +55,8 @@ a {
 .likeBox{
 	padding: 10px;
 	cursor: pointer;
+	display: inline;
+	flex-basis: 1;
 }
 .likeBox *{
 	font-size: 0.9rem;
