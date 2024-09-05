@@ -92,6 +92,7 @@
         });
 
         $(".nickname").keyup(() => {
+        	const regExp = /^[a-zA-Z0-9가-힣]+$/;
             $.ajax({
                 type: "post",
                 url: "/nicknameUpdate",
@@ -102,7 +103,10 @@
                     if($(".nickname").prop('readonly') == true){
                         $(".nickname").css("border-bottom", "1px solid #333");
                         phoneCheck = true;
-                    } else {
+                    } else if(!regExp.test($(".nickname").val())){
+        				$(".nickname").css("border-bottom", "1px solid red");
+        				nicknameCheck = false;
+        			} else {
                         if(check) {
                             if($(".nickname").val() != ''){
                                 $(".nickname").css('border-bottom', '1px solid green');

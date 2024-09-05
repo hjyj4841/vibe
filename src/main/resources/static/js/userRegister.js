@@ -4,9 +4,9 @@ let regEmailCheck = false;
 let regPasswordCheck = false;
 let passwordSameCheck = false;
 let phoneCheck = false;
+let regNickNameCheck = false;
 
 $("#emailCheck").click(() => {
-	const regExp = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 	$.ajax({
 		type: "post",
 		url: "/emailCheck",
@@ -31,8 +31,7 @@ $("#emailCheck").click(() => {
 				emailCheck = true;
 				$("#userEmail").css("border-bottom", "1px solid green");
 				$("#emailCheck").val("✓")
-					.css({"color": "black",
-						"font-size": "1rem"});
+					.css({"color": "black", "font-size": "1rem"});
 			}
 		}
 	});
@@ -54,6 +53,10 @@ $("#nicknameCheck").click(() => {
 				alert("닉네임을 입력해주세요.");
 				$("#userNickname").css("border-bottom", "1px solid red");
 				nicknameCheck = false;
+			}else if(!regNickNameCheck){
+				alert("닉네임 형식을 확인해주세요. (영어/한글/숫자)");
+				$("#userNickname").css("border-bottom", "1px solid red");
+				nicknameCheck = false;
 			}else{
 				alert("사용가능한 닉네임 입니다.");
 				nicknameCheck = true;
@@ -64,6 +67,21 @@ $("#nicknameCheck").click(() => {
 			}
 		}
 	});
+});
+
+$("#userNickname").keyup(() => {
+	nicknameCheck = false;
+	const regExp = /^[a-zA-Z0-9가-힣]+$/;
+	$("#nicknameCheck").val("Check")
+			.css({"color": "#787775",
+				"font-size": "0.8rem"});
+	if(regExp.test($("#userNickname").val())){
+		regNickNameCheck = true;
+		$("#userNickname").css("border-bottom", "1px solid green");
+	}else{
+		regNickNameCheck = false;
+		$("#userNickname").css("border-bottom", "1px solid red");
+	}
 });
 
 $("#userEmail").keyup(() => {
@@ -136,9 +154,10 @@ function validate(){
 	if(!emailCheck) alert("이메일 체크를 진행해주세요.");
 	else if(!nicknameCheck) alert("닉네임 체크를 진행해주세요.");
 	else if(!regEmailCheck) alert("이메일형식을 확인해주세요.");
-	else if(!regPasswordCheck) alert("패스워드 형식을 확인해주세요. (알파벳/숫자/특수문자 포함 8~14자)");
+	else if(!regPasswordCheck) alert("패스워드 형식을 확인해주세요. (영어/숫자/특수문자 포함 8~14자)");
 	else if(!passwordSameCheck) alert("패스워드가 다릅니다.");
 	else if(!phoneCheck) alert("전화번호 형식을 확인해주세요.");
-	return emailCheck && nicknameCheck && regEmailCheck 
+	else if(!nicknameCheck) alert("닉네임 형식을 확인해주세요. (영어/한글/숫자)");
+	return emailCheck && nicknameCheck && regEmailCheck && nicknameCheck
 	&& regPasswordCheck && passwordSameCheck && phoneCheck;
 }

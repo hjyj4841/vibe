@@ -67,8 +67,14 @@
 			<div class="searchBox">
 				<form class="mainSearchBox" action="searchPlaylist">
 					<select name="select">
-						<option value="title">Title</option>
-						<option value="tag">Tag</option>
+						<c:if test="${dto.select eq 'title' }">
+							<option value="title">Title</option>
+							<option value="tag">Tag</option>
+						</c:if>
+						<c:if test="${dto.select eq 'tag' }">
+							<option value="title">Title</option>
+							<option value="tag" selected>Tag</option>
+						</c:if>
 					</select> <input type="text" placeholder="Search Playlist..." name="search" autocomplete="off" value="${dto.search }">
 					<button id="searchPlBtn" type="submit">
 						<i class="fa-solid fa-magnifying-glass"></i>
