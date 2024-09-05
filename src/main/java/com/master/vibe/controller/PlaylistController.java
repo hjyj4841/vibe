@@ -272,8 +272,8 @@ public class PlaylistController {
 	@GetMapping("/playListRankingOnAgeGroup")
 	public String playListRankingOnAgeGroup(SearchDTO dto, Model model) {
 		List<Playlist> playlist = playlistService.playListRankingOnAgeGroup(dto);
-		
 		model.addAttribute("searchTag", playlistViewer.playlistView(playlist));
+	
 		model.addAttribute("ageGroup", dto.getAgeGroup());
 		return "ranking/playListRankingOnAgeGroup";
 	}

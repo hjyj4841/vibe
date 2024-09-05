@@ -104,6 +104,7 @@ public class PlaylistViewer {
   					.plImg(play.getPlImg())
   					.plPublicYn(play.getPlPublicYn())
   					.musicCount(play.getMusicCount())
+  					.localCount(play.getLikeCount())
   					.user(play.getUser())
   					.build();
   			
