@@ -6,6 +6,7 @@ const leftArrow = document.querySelector(".emptyLeft img");
 const listRankDesc = document.querySelectorAll(".listRankDesc");
 const rankBox = document.querySelector(".rankButtonBox");
 const linkA = document.querySelectorAll(".linkDesc");
+const linkB = document.querySelectorAll(".plDesc > div > div > div > div")
 
 rightArrow.addEventListener("click", function() {
 	for(let i = 0; i < listRankDesc.length; i++){
@@ -125,6 +126,9 @@ function listRankDescToggle() {
 for (let i = 0; i < rankList.length; i++) {
 	rankList[i].addEventListener("click", listRankDescToggle);
 	linkA[i].addEventListener("click", function(event){
+		event.stopPropagation();
+	})
+	linkB[i].addEventListener("click", function(event){
 		event.stopPropagation();
 	})
 }

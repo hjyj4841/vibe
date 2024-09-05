@@ -23,6 +23,8 @@ public class PlaylistDTO {
 	private int likeCount; // 해당 플리의 좋아요 수
 	private List<PlaylistTag> tagList;
 	
+	private String musicCode;
+	
 	// 랭킹 : 좋아요순
 	private int likeCode;
 	

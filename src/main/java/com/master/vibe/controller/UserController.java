@@ -71,10 +71,6 @@ public class UserController {
 	@GetMapping("/")
 	public String index(Model model) {
 		List<Playlist> playlist = playlistService.rankTop();
-		for (Playlist l : playlist) {
-			System.out.println(l);
-		}
-
 		model.addAttribute("rankTop", playlistViewer.playlistView(playlist));
 		return "index";
 	}

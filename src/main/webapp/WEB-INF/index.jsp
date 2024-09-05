@@ -66,16 +66,15 @@
 								<img src="${searchPlaylist.plImg}"
 									data-code="${searchPlaylist.plCode}">
 								<!-- 음악 재생 iFrame -->
-								<span>
-									<iframe id="main_frame"
-										src="https://open.spotify.com/embed/track/2OcHlYHykmzAvPNg47dida"
+								<span> <iframe id="main_frame"
+										src="https://open.spotify.com/embed/track/${searchPlaylist.musicCode}"
 										width="250" height="360" frameborder="0"
 										allow="encrypted-media"></iframe>
 								</span>
 								<div>
 									<div>
 										Music
-										<div>${searchPlaylist.musicCount}</div>
+										<div><a href="/showPlaylistInfo?plCode=${searchPlaylist.plCode}"><img src="/imgs/listLogo/playlist_logo.png"><span>${searchPlaylist.musicCount}</span></a></div>
 									</div>
 									<a class="linkDesc"
 										href="/showPlaylistInfo?plCode=${searchPlaylist.plCode}">Go

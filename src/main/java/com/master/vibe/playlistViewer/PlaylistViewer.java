@@ -11,11 +11,13 @@ import org.springframework.stereotype.Component;
 import com.master.vibe.model.dto.PlaylistDTO;
 import com.master.vibe.model.dto.PlaylistLikeDTO;
 import com.master.vibe.model.dto.SearchDTO;
+import com.master.vibe.model.vo.MusicPaging;
 import com.master.vibe.model.vo.Playlist;
 import com.master.vibe.model.vo.PlaylistLike;
 import com.master.vibe.model.vo.PlaylistTag;
 import com.master.vibe.model.vo.User;
 import com.master.vibe.service.PlaylistLikeService;
+import com.master.vibe.service.PlaylistMusicService;
 import com.master.vibe.service.PlaylistService;
 import com.master.vibe.service.PlaylistTagService;
 
@@ -30,6 +32,9 @@ public class PlaylistViewer {
 	
 	@Autowired
 	private PlaylistService playlistService;
+	
+	@Autowired
+	private PlaylistMusicService playlistMusicService;
 	
 	public List<PlaylistDTO> showPlaylistAll(SearchDTO dto, String rankYn) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -105,6 +110,14 @@ public class PlaylistViewer {
   			PlaylistLikeDTO plDto = new PlaylistLikeDTO();
   			plDto.setPlCode(play.getPlCode());
   			plDto.setUserEmail(user.getUserEmail());
+  			
+  			MusicPaging mp = new MusicPaging();
+  			mp.setPlCode(play.getPlCode());
+  			List<String> pmList = playlistMusicService.showMusicList(mp);
+  			if(pmList.size() != 0) {
+  				dtoPlay.setMusicCode(pmList.get(0));
+  			}
+  			
   			dtoPlay.setLikeCount(playlistLikeService.showLikeCount(play.getPlCode()));
   			dtoPlay.setPlLike(playlistLikeService.showPlLikeUser(plDto));
   			dtoPlay.setTagList(playlistService.searchTagPlayList(play.getPlCode()));
