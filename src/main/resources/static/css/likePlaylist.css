@@ -476,7 +476,7 @@ tags {
 
 tags.tagify.plTags {
   white-space: nowrap;
-  max-width: 328.3px;
+  max-width: 80%;
 }
 
 .tagify__tag > div > * {
