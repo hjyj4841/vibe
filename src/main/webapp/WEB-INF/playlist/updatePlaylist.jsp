@@ -73,6 +73,11 @@
 	<div class="container">
 		<div class="con">
 			<div class="mypageBox">
+				<!-- 이전 화면으로 -->
+				<a href="javascript:void(0);" onclick="cancel()"
+					class="goPlaylistBtn"><i class="fa-solid fa-arrow-left"></i></a>
+				</form>
+				
 				<!-- 로그인한 유저만 mypageLeft.jsp 보이게 -->
 				<c:if test="${not empty user}">
 					<div class="myLeft">
@@ -148,10 +153,6 @@
 							</div>
 						</div>
 
-						<!-- 이전 화면으로 -->
-						<a href="javascript:void(0);" onclick="cancel()"
-							class="goPlaylistBtn"><i class="fa-solid fa-arrow-left"></i></a>
-						</form>
 					</div>
 				</div>
 			</div>
@@ -159,6 +160,66 @@
 	</div>
 
 	<script>
+   		const publicSelect = document.querySelector('.privateBox');
+   		
+   		if($("#publicRadio").is(":checked")) {
+   			$(".toggleHidden").css({
+   				left: '30px',
+   				'background-color': '#315B52'
+   			});
+    		$('.privateBox').css('background-color', '#018B00');
+    		$(".privateBox > i").css({
+   				left: '0px'
+   			})
+   		}
+   		
+   		if($('#privateRadio').is(':checked')) {
+   			$(".toggleHidden").css({
+   				left: '0px',
+   				'background-color' : '#810000'
+   			})
+    		$('.privateBox').css('background-color', '#B42021');
+   			$(".privateBox > i").css({
+   				left: '24px'
+   			})
+    	}
+   		
+   		// 공개 범위 선택
+        function selectPublicBox() {
+        	const moveRight = {transform: ['translate(40px, 0)']};
+        	const moveLeft = {transform: ['translate(-40px, 0)']};
+        	const option = {duration: 500};
+        	
+        	$(".privateBox > i").removeClass("fa-lock-open");
+        	$(".privateBox > i").removeClass("fa-lock");
+        	
+        	if ($('#privateRadio').is(':checked')){
+        		$('#privateRadio').removeAttr('checked');
+        		$('#publicRadio').attr('checked', 'checked');
+        		//$('#publicRadio').prop('checked', true);
+        		$('.toggleHidden').animate({left: '30px'})
+        			.css('background-color', '#315B52');
+        		$('.privateBox').css('background-color', '#018B00');
+        		$(".privateBox > i").css({
+       				left: '0px'
+       			}).addClass('fa-lock-open')
+       			
+        	} else {
+        		//$('#privateRadio').prop('checked', true);
+        		$('#publicRadio').removeAttr('checked');
+        		$('#privateRadio').attr('checked', 'checked');
+        		$('.toggleHidden').animate({left: '0px'})
+        			.css('background-color', '#810000');
+        		$('.privateBox').css('background-color', '#B42021');
+        		$(".privateBox > i").css({
+       				left: '24px'
+       			}).addClass('fa-lock');
+        	}
+        }
+   		
+        publicSelect.addEventListener('click', selectPublicBox);
+        
+        
         document.addEventListener('DOMContentLoaded', function() {
             var inputElement = document.getElementById('plTitle');
 
@@ -179,86 +240,8 @@
                 });
             }
         });
-    
-       	// 메시지를 자동으로 숨기는 함수
-   		function hideMessageAfterDelay(id, delay) {
-   			const messageElement = document.getElementById(id);
-   			if (messageElement) {
-   				setTimeout(() => {
-   					messageElement.style.display = 'none';
-   				}, delay);
-   			}
-   		}
-
-   		document.addEventListener('DOMContentLoaded', function() {
-   			// 메시지를 2초 후에 숨기도록 설정
-   			hideMessageAfterDelay('addSuccessMessage', 2000);
-   			hideMessageAfterDelay('addErrorMessage', 2000);
-   			hideMessageAfterDelay('deleteSuccessMessage', 2000);
-   			hideMessageAfterDelay('deleteErrorMessage', 2000);
-   		});
-   		
-   		const publicSelect = document.querySelector('.privateBox');
-   		
-   		if($("#publicRadio").is(":checked")) {
-   			$(".toggleHidden").css({
-   				left: '30px',
-   				'background-color': '#315B52'
-   			});
-    		$('.privateBox').css('background-color', '#018B00');
-    		$(".privateBox > i").css({
-   				left: '0px'
-   			})
-   		}
-   		
-   		if($('#privateRadio').is(':checked')){
-   			$(".toggleHidden").css({
-   				left: '0px',
-   				'background-color' : '#810000'
-   			})
-    		$('.privateBox').css('background-color', '#B42021');
-   			$(".privateBox > i").css({
-   				left: '24px'
-   			})
-    	}
-   		
-   		// 공개 범위 선택
-        function selectPublicBox(){
-        	const moveRight = {transform: ['translate(40px, 0)']};
-        	const moveLeft = {transform: ['translate(-40px, 0)']};
-        	const option = {duration: 500};
-        	
-        	$(".privateBox > i").removeClass("fa-lock-open");
-        	$(".privateBox > i").removeClass("fa-lock");
-        	
-        	if($('#privateRadio').is(':checked')){
-        		$('#privateRadio').removeAttr('checked');
-        		$('#publicRadio').attr('checked', 'checked');
-        		//$('#publicRadio').prop('checked', true);
-        		$('.toggleHidden').animate({left: '30px'})
-        			.css('background-color', '#315B52');
-        		$('.privateBox').css('background-color', '#018B00');
-        		$(".privateBox > i").css({
-       				left: '0px'
-       			}).addClass('fa-lock-open')
-       			
-        	}else{
-        		//$('#privateRadio').prop('checked', true);
-        		$('#publicRadio').removeAttr('checked');
-        		$('#privateRadio').attr('checked', 'checked');
-        		$('.toggleHidden').animate({left: '0px'})
-        			.css('background-color', '#810000');
-        		$('.privateBox').css('background-color', '#B42021');
-        		$(".privateBox > i").css({
-       				left: '24px'
-       			}).addClass('fa-lock');
-        	}
-        }
-   		
-        publicSelect.addEventListener('click', selectPublicBox);
+        
    	</script>
-
-
 	<script src="./js/scroll.js"></script>
 	<script src="./js/manageTag.js"></script>
 </body>

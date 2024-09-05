@@ -21,6 +21,10 @@
 	<div class="container">
 		<div class="con">
 			<div class="mypageBox">
+				<!-- 이전 화면으로 -->
+				<a href="javascript:window.history.back();"
+					class="goPlaylistListBtn"> <i class="fa-solid fa-arrow-left"></i>
+				</a>
 				<!-- 로그인한 유저만 mypageLeft.jsp 보이게 -->
 				<sec:authorize access="isAuthenticated()">
 					<div class="myLeft">
@@ -30,18 +34,14 @@
 
 				<div class="myRight">
 					<div class="playlistInfoMain">
-						<!-- 이전 화면으로 -->
-						<a href="javascript:window.history.back();" class="goPlaylistListBtn">
-							<i class="fa-solid fa-arrow-left"></i>
-						</a>
-
 						<div class="PlaylistInfoBox">
 							<div class="playlistImg">
 								<img src="${playlist.plImg}">
 							</div>
 							<p class="plTitle">${playlist.plTitle}
 								<c:choose>
-									<c:when test="${Character.toString(playlist.plPublicYn) eq 'Y'}">
+									<c:when
+										test="${Character.toString(playlist.plPublicYn) eq 'Y'}">
 										<i class="fa-solid fa-lock-open"></i>
 									</c:when>
 									<c:otherwise>
@@ -73,8 +73,9 @@
 							</div>
 							<div class="playlistInfoBox">
 								<div class="creatorInfo">
-									<img src="${playlist.user.userImg}">
-									<a href="http://localhost:8080/profile/${playlist.user.userEmail }"><p class="creatorNickname">${playlist.user.userNickname}</p></a>
+									<img src="${playlist.user.userImg}"> <a
+										href="http://localhost:8080/profile/${playlist.user.userEmail }"><p
+											class="creatorNickname">${playlist.user.userNickname}</p></a>
 									<!-- 링크 공유하기 -->
 									<div class="playlistShareBtn">
 										<i id="link-copy-icon" class="fa-solid fa-link"
@@ -181,7 +182,9 @@
 			<span class="close">&times;</span>
 
 			<div class="spotify-login-box">
-				<p>Press <i class="fa-brands fa-spotify"></i> If you want Full Song</p>
+				<p>
+					Press <i class="fa-brands fa-spotify"></i> If you want Full Song
+				</p>
 
 				<!-- 음악 재생 iFrame -->
 				<iframe id="main_frame" src="" width="300" height="380"
@@ -339,7 +342,8 @@
 		// 플레이리스트 삭제 확인
 		function confirmDelete(event, url) {
 			event.preventDefault();
-			if (confirm(`[${playlist.plTitle}] 플레이리스트를 삭제하시겠습니까?`)) {
+			const plTitle = "${playlist.plTitle}";
+			if (confirm("[ " + plTitle + " ] 플레이리스트를 삭제하시겠습니까?")) {
 				window.location.href = url;
 			}
 		}
@@ -383,6 +387,7 @@
 				updateDeleteButtonVisibility();
 			}
 		});
+		
 	</script>
 </body>
 </html>

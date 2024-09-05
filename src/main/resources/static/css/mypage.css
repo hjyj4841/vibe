@@ -17,16 +17,18 @@
 .mypageBox{
 	width: 1200px;
 	height: 100%;
-	overflow: hidden;
+	/*overflow: hidden;*/
 	display: flex;
+	position: relative;
 }
 .myLeft{
+	 border-right: 1.5px solid rgba(210, 210, 210, 0.5);
 	min-width: 280px;
 	height: 100%;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	box-shadow: 0px 3px 3px white;
+	/* box-shadow: 0px 3px 3px white;*/
 }
 .myLeft > div{
 	width: 100%;
