@@ -46,11 +46,6 @@
 				PlayList</span>
 		</a>
 	</div>
-	<div>
-		<a href="/musicListen"> <i class="fa-solid fa-circle-play"></i> <span>MUSIC
-				player</span>
-		</a>
-	</div>
 </div>
 <div class="myChangeInfo">
 	<div>

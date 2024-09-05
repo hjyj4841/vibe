@@ -188,21 +188,15 @@
 		</div>
 	</div>
 
-	<script>
-		let userEmail = null;
-	</script>
-	<sec:authorize access="isAuthenticated()" var="principal">
-		<sec:authentication property="principal" var="user" />
-		<script>
-			userEmail = "<c:out value='${user.userEmail}'/>";
-		</script>
-	</sec:authorize>
 
+	<sec:authorize access="isAuthenticated()" var="principal">
+	<sec:authentication property="principal" var="user" />
 	<script>
 	//paging 처리 코드
 	let page = 1;
 	let plCode = "<c:out value='${playlist.plCode}'/>";
 	let plUserEmail = "<c:out value='${playlist.user.userEmail}'/>";
+	userEmail = "<c:out value='${user.userEmail}'/>";
 	
 	$(".playlistInfoMain").scroll(function(){
 		var innerHeight = $(this).innerHeight();
@@ -382,5 +376,6 @@
 			}
 		});
 	</script>
+	</sec:authorize>
 </body>
 </html>

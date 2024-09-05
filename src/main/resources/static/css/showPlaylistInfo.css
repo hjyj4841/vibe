@@ -41,6 +41,8 @@ a {
 
 .PlaylistInfoBox {
 	padding: 0px 20px 10px 20px;
+	display: flex;
+	flex-direction: column;
 }
 
 /* 플레이리스트 제목 영역 */
@@ -50,18 +52,11 @@ a {
 	padding: 10px;
 }
 
-.plTitle,
 .likeBox{
-	display: inline;
-}
-.likeBox{
-	margin-left: 30px;
+	padding: 10px;
 	cursor: pointer;
 }
-.likeBox .heartEmoji{
-	font-size: 0.9rem;
-}
-.likeBox span{
+.likeBox *{
 	font-size: 0.9rem;
 }
 
