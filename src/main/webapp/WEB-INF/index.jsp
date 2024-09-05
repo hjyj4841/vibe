@@ -33,7 +33,8 @@
 			<select name="select">
 				<option value="title">Title</option>
 				<option value="tag">Tag</option>
-			</select> <input type="text" autocomplete="off" placeholder="Search Playlist..." name="search" />
+			</select> <input type="text" autocomplete="off"
+				placeholder="Search Playlist..." name="search" />
 			<button id="searchPlBtn" type="submit">
 				<i class="fa-solid fa-magnifying-glass"></i>
 			</button>
@@ -50,20 +51,28 @@
 		</div>
 		<div class="listTop">
 			<div class="emptyLeft">
-				<img src="/imgs/listLogo/2931162_arrow_back_left_direction_move_icon.png">
+				<img
+					src="/imgs/listLogo/2931162_arrow_back_left_direction_move_icon.png">
 			</div>
 			<div class="listContainer">
 				<!-- 상위 리스트 3개만 표출 -->
 				<c:forEach items="${rankTop}" var="searchPlaylist">
 					<section class="listRank">
-						<img src="${searchPlaylist.plImg}" data-code="${searchPlaylist.plCode}">
+						<img src="${searchPlaylist.plImg}"
+							data-code="${searchPlaylist.plCode}">
 						<div class="plDesc hidden">
 							<div>
-								<img src="${searchPlaylist.plImg}" data-code="${searchPlaylist.plCode}">
+								<img src="${searchPlaylist.plImg}"
+									data-code="${searchPlaylist.plCode}">
 								<div>
-									<div>Music ${searchPlaylist.musicCount}</div>
-									<a href="/showPlaylistInfo?plCode=${searchPlaylist.plCode}" >Go</a>
-									LIKE ${searchPlaylist.likeCount }
+									<div>
+										Music
+										<div>${searchPlaylist.musicCount}</div>
+									</div>
+									<a class="linkDesc"
+										href="/showPlaylistInfo?plCode=${searchPlaylist.plCode}">Go
+										PlayList</a> <span class="likeCount">LIKE
+										${searchPlaylist.likeCount }</span>
 								</div>
 							</div>
 						</div>
@@ -89,7 +98,8 @@
 				</c:forEach>
 			</div>
 			<div class="emptyRight">
-				<img src="/imgs/listLogo/2931159_arrow_forward_right_move_navigation_icon.png">
+				<img
+					src="/imgs/listLogo/2931159_arrow_forward_right_move_navigation_icon.png">
 			</div>
 		</div>
 	</div>
