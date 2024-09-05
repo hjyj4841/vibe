@@ -62,6 +62,8 @@
 											</c:otherwise>
 										</c:choose>
 										<span>LIKE </span> <span class="likeCount">${searchPlaylist.likeCount }</span>
+										<br><br>
+										<span>${userGender}'s like</span> <span class="likeCount">${searchPlaylist.localCount }</span>
 									</div>
 								</div>
 							</div>
@@ -116,6 +118,8 @@
 											}
 											searchItem += '<span> LIKE </span>' +
 											'<span class="likeCount">' + searchPlaylist.likeCount + '</span>' +
+											'<br><br>' + 
+							                '<span>' + '${userGender}' + '\'s like</span> <span class="likeCount">' + searchPlaylist.localCount + '</span>' +
 										'</div>' + 
 									'</div>' + 
 								'</div>';

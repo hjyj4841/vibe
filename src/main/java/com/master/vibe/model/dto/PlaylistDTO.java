@@ -21,6 +21,7 @@ public class PlaylistDTO {
 	private User user;
 	private PlaylistLike plLike; // 좋아요 했는지 확인용
 	private int likeCount; // 해당 플리의 좋아요 수
+	private int localCount; // 랭킹 기준의 좋아요 수
 	private List<PlaylistTag> tagList;
 	
 	// 랭킹 : 좋아요순

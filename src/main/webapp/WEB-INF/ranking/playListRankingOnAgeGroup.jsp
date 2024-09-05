@@ -70,7 +70,8 @@
 												<i class="fa-regular fa-heart"></i>
 											</c:otherwise>
 										</c:choose>
-										<span>LIKE </span> <span class="likeCount">${searchPlaylist.likeCount }</span>
+										<span>LIKE </span> <span class="likeCount">${searchPlaylist.likeCount }</span><br><br>
+										<span>${ageGroup}'s like</span> <span class="likeCount">${searchPlaylist.localCount }</span>
 									</div>
 								</div>
 							</div>
@@ -124,7 +125,9 @@
 												searchItem += '<i class="fa-regular fa-heart"></i>';
 											}
 											searchItem += '<span> LIKE </span>' +
-											'<span class="likeCount">' + searchPlaylist.likeCount + '</span>' +
+											'<span class="likeCount">' + searchPlaylist.likeCount + '</span>' 
+											+ '<br><br>' + 
+							                '<span>' + ${ageGroup} + '\'s like</span> <span class="likeCount">' + searchPlaylist.localCount + '</span>' +
 										'</div>' + 
 									'</div>' + 
 								'</div>';
