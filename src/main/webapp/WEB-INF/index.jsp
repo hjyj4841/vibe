@@ -64,6 +64,13 @@
 							<div>
 								<img src="${searchPlaylist.plImg}"
 									data-code="${searchPlaylist.plCode}">
+								<!-- 음악 재생 iFrame -->
+								<span>
+									<iframe id="main_frame"
+										src="https://open.spotify.com/embed/track/2OcHlYHykmzAvPNg47dida"
+										width="250" height="360" frameborder="0"
+										allow="encrypted-media"></iframe>
+								</span>
 								<div>
 									<div>
 										Music
