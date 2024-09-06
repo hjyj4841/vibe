@@ -56,6 +56,12 @@
 	opacity: 0;
 	transition: 0.3s;
 }
+
+.playlistImg{
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
 .updatePlImgBox > div > div:hover {
 	opacity: 1;
 }
