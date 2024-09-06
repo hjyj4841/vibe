@@ -68,9 +68,9 @@
 		
 		$(".searchListMain").scroll(function(){
 			var innerHeight = $(this).innerHeight();
-			var scroll = $(this).scrollTop() + $(this).innerHeight(); 
+			var scroll = $(this).scrollTop() + $(this).innerHeight() + 1; 
 			var height = $(this)[0].scrollHeight;
-			if(height === scroll){
+			if(height <= scroll){
 				page++;
 				$.ajax({
 					url: "/limitLikeList",
