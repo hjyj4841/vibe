@@ -176,7 +176,7 @@
 }
 
 .tag-list-wrapper::-webkit-scrollbar-track {
-	background: #111; /* 스크롤바 뒷 배경 색상 */
+	background: #222; /* 스크롤바 뒷 배경 색상 */
 }
 
 .alert-success {
