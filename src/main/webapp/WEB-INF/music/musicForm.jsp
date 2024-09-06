@@ -108,19 +108,19 @@ prefix="c"%>
               let addMusicItem =
                 "<div>" +
                 '<div class="musicListBox">' +
-                '<div class="musicCheck">' +
+                '<div class="musicCheck" onclick="listClick(event)">' +
                 '<label class="checkLabel">' +
-                '<input type="checkbox" name="selectedMusic" class="selectedMusic" onchange="listCheck()" value="' +
+                '<input type="checkbox" name="selectedMusic" class="selectedMusic" value="' +
                 music.id +
                 '">' +
                 "</label>" +
                 "</div>" +
-                '<div class="musicImg">' +
+                '<div class="musicImg" onclick="listClick(event)">' +
                 '<img src="' +
                 music.albumUrl +
                 '">' +
                 "</div>" +
-                '<div class="musicDesc">' +
+                '<div class="musicDesc" onclick="listClick(event)">' +
                 "<div>" +
                 music.musicTitle +
                 "</div>" +
@@ -151,17 +151,6 @@ prefix="c"%>
             $(".addMusicBox").html(viewMusicItem);
             offset += 10;
 
-            $(".musicCheck, .musicImg, .musicDesc").click((e) => {
-            	if($(e.currentTarget).parent().find(".selectedMusic").is(":checked")){
-            		$(e.currentTarget).parent().find(".checkLabel").css("background-color", "#999");
-            		$(e.currentTarget).parent().find(".selectedMusic").prop('checked', false);
-            	}else{
-            		$(e.currentTarget).parent().find(".checkLabel").css("background-color", "#02f958");
-            		$(e.currentTarget).parent().find(".selectedMusic").prop('checked', true);
-            		listCheck();
-            	}
-            });
-
             // 모달을 열도록 하는 예시
             document.querySelectorAll(".musicPlayBtn").forEach((button) => {
               button.addEventListener("click", (event) => {
@@ -175,6 +164,7 @@ prefix="c"%>
             $(".addMusicBox").html("검색하신 내용이 없습니다.");
           },
         });
+        
       }
 
       $(".addMusicBox").scroll(function (e) {
@@ -195,19 +185,19 @@ prefix="c"%>
                 let addMusicItem =
                   "<div>" +
                   '<div class="musicListBox">' +
-                  '<div class="musicCheck">' +
+                  '<div class="musicCheck" onclick="listClick(event)">' +
                   '<label class="checkLabel">' +
-                  '<input type="checkbox" name="selectedMusic" class="selectedMusic" onchange="listCheck()" value="' +
+                  '<input type="checkbox" name="selectedMusic" class="selectedMusic" value="' +
                   music.id +
                   '">' +
                   "</label>" +
                   "</div>" +
-                  '<div class="musicImg">' +
+                  '<div class="musicImg" onclick="listClick(event)">' +
                   '<img src="' +
                   music.albumUrl +
                   '">' +
                   "</div>" +
-                  '<div class="musicDesc">' +
+                  '<div class="musicDesc" onclick="listClick(event)">' +
                   "<div>" +
                   music.musicTitle +
                   "</div>" +
@@ -236,17 +226,6 @@ prefix="c"%>
               });
               offset += 10;
 
-              $(".musicCheck, .musicImg, .musicDesc").click((e) => {
-              	if($(e.currentTarget).parent().find(".selectedMusic").is(":checked")){
-              		$(e.currentTarget).parent().find(".checkLabel").css("background-color", "#999");
-              		$(e.currentTarget).parent().find(".selectedMusic").prop('checked', false);
-              	}else{
-              		$(e.currentTarget).parent().find(".checkLabel").css("background-color", "#02f958");
-              		$(e.currentTarget).parent().find(".selectedMusic").prop('checked', true);
-              		listCheck();
-              	}
-              });
-
               // 모달을 열도록 하는 예시
               document.querySelectorAll(".musicPlayBtn").forEach((button) => {
                 button.addEventListener("click", (event) => {
@@ -258,6 +237,7 @@ prefix="c"%>
             },
           });
         }
+        
       });
 
       // 플레이어 모달을 열고 닫는 기능 추가
@@ -321,6 +301,7 @@ prefix="c"%>
               alert("곡이 추가 되었습니다.");
 
               listCheck();
+              alert("314!");
             } else {
               alert("이미 추가된 곡입니다.");
             }
@@ -385,6 +366,17 @@ prefix="c"%>
             alert("추가할 곡이 없습니다.");
           },
         });
+      }
+      
+      function listClick(e){
+	   	  if($(e.currentTarget).parent().find(".selectedMusic").is(":checked")){
+	       		$(e.currentTarget).parent().find(".checkLabel").css("background-color", "#999");
+	       		$(e.currentTarget).parent().find(".selectedMusic").prop('checked', false);
+	       	}else{
+	       		$(e.currentTarget).parent().find(".checkLabel").css("background-color", "#02f958");
+	       		$(e.currentTarget).parent().find(".selectedMusic").prop('checked', true);
+	       		listCheck();
+	       	}
       }
     </script>
   </body>

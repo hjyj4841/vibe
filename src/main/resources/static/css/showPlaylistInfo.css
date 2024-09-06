@@ -227,6 +227,7 @@ a {
   align-items: center;
   padding: 5px;
   position: relative;
+  cursor: pointer;
 }
 .playlistList:hover {
   display: flex;

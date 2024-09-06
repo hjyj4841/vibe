@@ -144,15 +144,15 @@
 										<sec:authorize access="isAuthenticated()" var="principal">
 											<sec:authentication property="principal" var="user" />
 											<c:if test="${user.userEmail eq playlist.user.userEmail}">
-												<div class="radioCheckBox">
+												<div class="radioCheckBox" onclick="listClick(event)">
 													<input type="checkbox" name="selectedDeleteMusic"
 														value="${music.id}" id="radioCheck${status.index}">
 													<label for="radioCheck${status.index}"></label>
 												</div>
 											</c:if>
 										</sec:authorize>
-										<img src="${music.albumUrl}" class="albumImg">
-										<div class="plMusicInfo">
+										<img src="${music.albumUrl}" class="albumImg" onclick="listClick(event)">
+										<div class="plMusicInfo" onclick="listClick(event)">
 											<div class="musicTitle">${music.musicTitle}</div>
 											<div class="artistName">${music.artistName}ㆍ
 												${music.albumName }</div>
@@ -229,13 +229,13 @@
 					$.each(musicList, function(index, music){
 						let musicItem = `<div class="playlistList">`;
 						if(userEmail != null && userEmail === plUserEmail){
-							musicItem += `<div class="radioCheckBox">` +
+							musicItem += `<div class="radioCheckBox" onclick="listClick(event)">` +
 								`<input type="checkbox" name="selectedDeleteMusic" value="` + music.id + `" id="radioCheck` + ((page - 1) * 10 + index) + `">` +
 								`<label for="radioCheck` + ((page - 1) * 10 + index) + `"></label>` +
 								`</div>`;
 						}
-						musicItem += `<img src="` + music.albumUrl + `" class="albumImg">` +
-							`<div class="plMusicInfo">` +
+						musicItem += `<img src="` + music.albumUrl + `" class="albumImg" onclick="listClick(event)">` +
+							`<div class="plMusicInfo" onclick="listClick(event)">` +
 							`<div class="musicTitle">` + music.musicTitle + `</div>` +
 							`<div class="artistName">` + music.artistName + ` ㆍ ` + music.albumName + `</div>` +
 							`</div>` +
@@ -246,6 +246,8 @@
 							`</div>`;
 						playlistListBox.append(musicItem);
 					});
+					
+					
 					
 					// 모달을 열도록 하는 예시
 				  	  document.querySelectorAll('.musicPlayBtn').forEach(button => {
@@ -378,11 +380,7 @@
 		
 		window.addEventListener('load', resetCheckboxes);
 		// 체크박스 상태에 따라 삭제 버튼 표시 여부 결정
-		function updateDeleteButtonVisibility() {
-			const checkboxes = document.querySelectorAll('input[name="selectedDeleteMusic"]');
-			const deleteButton = document.querySelector('.deleteMusicBtn');
-			deleteButton.classList.toggle('showDeleteBtn', Array.from(checkboxes).some(checkbox => checkbox.checked));
-		}
+		
 		document.addEventListener('change', (event) => {
 			if (event.target.name === 'selectedDeleteMusic') {
 				updateDeleteButtonVisibility();
@@ -390,31 +388,39 @@
 		});
 		
 		
-		document.addEventListener('DOMContentLoaded', function() {
-		    // 모든 playlistList 요소를 선택합니다.
-		    const playlistLists = document.querySelectorAll('.playlistList');
+	    // 모든 playlistList 요소를 선택합니다.
+	   //const playlistLists = document.querySelectorAll('.playlistList');
 
-		    // 각 playlistList 요소에 클릭 이벤트 리스너를 추가합니다.
-		    playlistLists.forEach(list => {
-		        list.addEventListener('click', function(event) {
-		            // 클릭된 요소 내의 체크박스를 찾습니다.
-		            const checkbox = this.querySelector('input[type="checkbox"]');
-		            if (checkbox) {
-		                // 체크박스 상태를 반전시킵니다.
-		                checkbox.checked = !checkbox.checked;
-		                // 체크박스 상태에 따라 삭제 버튼의 표시 여부를 업데이트합니다.
-		                updateDeleteButtonVisibility();
-		            }
-		        });
-		    });
+	    // 각 playlistList 요소에 클릭 이벤트 리스너를 추가합니다.
+	   // playlistLists.forEach(list => {
+	   //     list.addEventListener('click', function(event) {
+	            // 클릭된 요소 내의 체크박스를 찾습니다.
+	   //         const checkbox = this.querySelector('input[type="checkbox"]');
+	   //         if (checkbox) {
+	                // 체크박스 상태를 반전시킵니다.
+	    //            checkbox.checked = !checkbox.checked;
+	                // 체크박스 상태에 따라 삭제 버튼의 표시 여부를 업데이트합니다.
+	    //            updateDeleteButtonVisibility();
+	    //        }
+	    //    });
+	   // });
+	    
+	    function listClick(event){
+	    	event.preventDefault();
+	        if ($(event.currentTarget).parent().find('input[type="checkbox"]')) {
+	            // 체크박스 상태를 반전시킵니다.
+	            $(event.currentTarget).parent().find('input[type="checkbox"]').prop('checked', !$(event.currentTarget).parent().find('input[type="checkbox"]').is(":checked"));
+	            // 체크박스 상태에 따라 삭제 버튼의 표시 여부를 업데이트합니다.
+	            updateDeleteButtonVisibility();
+	        }
+	    }
 
-		    // 삭제 버튼의 표시 여부를 체크박스 상태에 따라 업데이트하는 함수
-		    function updateDeleteButtonVisibility() {
-		        const checkboxes = document.querySelectorAll('input[name="selectedDeleteMusic"]');
-		        const deleteButton = document.querySelector('.deleteMusicBtn');
-		        deleteButton.classList.toggle('showDeleteBtn', Array.from(checkboxes).some(checkbox => checkbox.checked));
-		    }
-		});
+	    // 삭제 버튼의 표시 여부를 체크박스 상태에 따라 업데이트하는 함수
+	    function updateDeleteButtonVisibility() {
+	        const checkboxes = document.querySelectorAll('input[name="selectedDeleteMusic"]');
+	        const deleteButton = document.querySelector('.deleteMusicBtn');
+	        deleteButton.classList.toggle('showDeleteBtn', Array.from(checkboxes).some(checkbox => checkbox.checked));
+	    }
 		
 	</script>
 </body>
