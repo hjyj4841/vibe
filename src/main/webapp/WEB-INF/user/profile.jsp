@@ -127,6 +127,16 @@
 		$('.plContentsBox').click((e) => {
 			location.href = "/showPlaylistInfo?plCode=" + e.currentTarget.getAttribute("data-code");
 		});
+		
+    	const moveTagSearch = document.querySelectorAll('.moveTagSearch');
+    	
+    	moveTagSearch.forEach(moveTag => {
+    		moveTag.addEventListener("click", function(e){
+    			const tag = moveTag.getAttribute("data-code");
+    			window.location.href = '/searchPlaylist?select=tag&search=' + tag;
+    		});
+    	});
+
     </script>
 </body>
 </html>

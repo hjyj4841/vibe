@@ -3,6 +3,8 @@ package com.master.vibe.controller;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
@@ -365,6 +367,7 @@ public class UserController {
 		List<Playlist> playList = playlistService.myPlaylist(searchDTO);
 		
 		List<PlaylistDTO> playlistView = playlistViewer.playlistView(playList);
+		playlistView.sort(Comparator.comparing(PlaylistDTO::getLikeCount).reversed());
 		
 		model.addAttribute("playlistView", playlistView);
 		System.err.println(playlistView);
