@@ -303,5 +303,4 @@ public class PlaylistController {
 		
 		return playlistViewer.playlistView(playlist);
 	}
-	
 }
