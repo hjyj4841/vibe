@@ -22,7 +22,6 @@
 				<c:if test="${dto.search != '' }">
 					<h1>'${dto.search }' By Popular TOP 5</h1>
 				</c:if>
-				
 				<c:forEach items="${searchRank}" var="searchPlaylist" begin="0" end="4">
 					<div class="playlistCon">
 						<div class="plImgBox">

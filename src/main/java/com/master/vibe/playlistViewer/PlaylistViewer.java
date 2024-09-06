@@ -55,6 +55,9 @@ public class PlaylistViewer {
   			if(codes.size()!=0) {
   				dto.setCodes(codes);
   			}
+  			else {
+  				return new ArrayList<>();
+  			}
   		}
 
   		// 검색한 내용을 바탕으로 플레이리스트를 담는 리스트 생성
