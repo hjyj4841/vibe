@@ -306,7 +306,7 @@
 	        // 태그 입력 시 특수문자 제거
 	        tagify.on('add', function(e){
 	            const tagValue = e.detail.data.value;
-	            const cleanedTag = tagValue.replace(/[^a-zA-Z0-9 ]+/g, '');
+	            const cleanedTag = tagValue.replace(/[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g, '');
 	            if (cleanedTag !== tagValue) {
 	                tagify.removeTag(e.detail.tag);
 	                tagify.addTags(cleanedTag);
