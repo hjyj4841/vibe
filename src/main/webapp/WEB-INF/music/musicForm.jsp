@@ -151,12 +151,15 @@ prefix="c"%>
             $(".addMusicBox").html(viewMusicItem);
             offset += 10;
 
-            $(".selectedMusic").click((e) => {
-              if ($(e.target).is(":checked")) {
-                $(e.target).parent().css("background-color", "#02f958");
-              } else {
-                $(e.target).parent().css("background-color", "#999");
-              }
+            $(".musicCheck, .musicImg, .musicDesc").click((e) => {
+            	if($(e.currentTarget).parent().find(".selectedMusic").is(":checked")){
+            		$(e.currentTarget).parent().find(".checkLabel").css("background-color", "#999");
+            		$(e.currentTarget).parent().find(".selectedMusic").prop('checked', false);
+            	}else{
+            		$(e.currentTarget).parent().find(".checkLabel").css("background-color", "#02f958");
+            		$(e.currentTarget).parent().find(".selectedMusic").prop('checked', true);
+            		listCheck();
+            	}
             });
 
             // 모달을 열도록 하는 예시
@@ -233,12 +236,15 @@ prefix="c"%>
               });
               offset += 10;
 
-              $(".selectedMusic").click((e) => {
-                if ($(e.target).is(":checked")) {
-                  $(e.target).parent().css("background-color", "#02f958");
-                } else {
-                  $(e.target).parent().css("background-color", "#999");
-                }
+              $(".musicCheck, .musicImg, .musicDesc").click((e) => {
+              	if($(e.currentTarget).parent().find(".selectedMusic").is(":checked")){
+              		$(e.currentTarget).parent().find(".checkLabel").css("background-color", "#999");
+              		$(e.currentTarget).parent().find(".selectedMusic").prop('checked', false);
+              	}else{
+              		$(e.currentTarget).parent().find(".checkLabel").css("background-color", "#02f958");
+              		$(e.currentTarget).parent().find(".selectedMusic").prop('checked', true);
+              		listCheck();
+              	}
               });
 
               // 모달을 열도록 하는 예시
