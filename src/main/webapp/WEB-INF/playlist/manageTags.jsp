@@ -10,8 +10,10 @@
 <link rel="stylesheet" href="/css/reset.css" />
 <link rel="stylesheet" href="/css/mypage.css" />
 <link rel="stylesheet" href="/css/manageTags.css" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tagify/4.9.6/tagify.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/tagify/4.9.6/tagify.min.js"></script>
 </head>
 <body>
 	<jsp:include page="../tiles/header.jsp"></jsp:include>
@@ -112,25 +114,20 @@
 			hideMessageAfterDelay('deleteSuccessMessage', 2000);
 			hideMessageAfterDelay('deleteErrorMessage', 2000);
 		});
-		
-		// 태그 입력 시 특수문자 제거
-        document.addEventListener('DOMContentLoaded', function() {
-            const input = document.querySelector('#tags');
-            const tagify = new Tagify(input, {
-                maxTags: 5,
-                tagTextProp: 'value' // 태그의 텍스트 값 설정
-            });
+	</script>
 
-            tagify.on('add', function(e){
-                const tagValue = e.detail.data.value;
-                const cleanedTag = tagValue.replace(/[^a-zA-Z0-9 ]+/g, '');
-                if (cleanedTag !== tagValue) {
-                    tagify.removeTag(e.detail.tag);
-                    tagify.addTags(cleanedTag);
-                    alert("특수문자는 사용할 수 없습니다.");
-                }
-            });
-        });
+	<script>
+	// 태그 입력 시 특수문자 제거
+	document.getElementById('addTagForm').addEventListener('submit', function(event) {
+	    const input = document.querySelector('#tags');
+	    const tagValue = input.value;
+	    const specialCharRegex = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
+
+	    if (specialCharRegex.test(tagValue)) {
+	        event.preventDefault(); // 폼 제출 취소
+	        alert("특수문자는 사용할 수 없습니다.");
+	    }
+	});
 	</script>
 </body>
 </html>
