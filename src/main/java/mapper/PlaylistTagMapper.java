@@ -20,7 +20,7 @@ public interface PlaylistTagMapper {
     // 플레이리스트 태그를 DB에 삽입
     void insertPlaylistTag(int plCode, int tagCode);
     
-    // 플레이리스트 태그를 플리태그에서 삭제
+    // 플레이리스트 태그를 플레이리스트태그에서 삭제
     void deletePlaylistTag(int plCode, int tagCode);
 
     // 태그 이름으로 태그 조회
