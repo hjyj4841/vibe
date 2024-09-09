@@ -43,13 +43,13 @@ public class TagController {
     public String addTag(Integer plCode, String newTag, RedirectAttributes redirectAttributes) {
         // 서버에서 태그 추가 처리
         if (tagService.isTagExistsInPlaylist(plCode, newTag)) {
-            redirectAttributes.addAttribute("addErrorMessage", "이미 존재하는 태그입니다.");
+            redirectAttributes.addFlashAttribute("addErrorMessage", "이미 존재하는 태그입니다.");
         } else if (!tagService.canAddMoreTags(plCode)) {
-            redirectAttributes.addAttribute("addErrorMessage", "더 이상 추가할 수 없습니다.");
+            redirectAttributes.addFlashAttribute("addErrorMessage", "더 이상 추가할 수 없습니다.");
         } else {
             Tag tag = tagService.addTag(newTag);
             playlistTagService.addPlaylistTag(plCode, tag.getTagCode());
-            redirectAttributes.addAttribute("addSuccessMessage", "태그가 성공적으로 추가되었습니다.");
+            redirectAttributes.addFlashAttribute("addSuccessMessage", "태그가 성공적으로 추가되었습니다.");
         }
         return "redirect:/playlist/manageTags?plCode=" + plCode;
     }
@@ -60,10 +60,10 @@ public class TagController {
                              @RequestParam(value = "tagCodes") List<Integer> tagCodes,
                              RedirectAttributes redirectAttributes) {
         if (tagCodes == null || tagCodes.isEmpty()) {
-            redirectAttributes.addAttribute("deleteErrorMessage", "삭제할 태그를 선택하세요.");
+            redirectAttributes.addFlashAttribute("deleteErrorMessage", "삭제할 태그를 선택하세요.");
         } else {
             tagCodes.forEach(tagCode -> playlistTagService.deletePlaylistTag(plCode, tagCode));
-            redirectAttributes.addAttribute("deleteSuccessMessage", "태그가 성공적으로 삭제되었습니다.");
+            redirectAttributes.addFlashAttribute("deleteSuccessMessage", "태그가 성공적으로 삭제되었습니다.");
         }
         return "redirect:/playlist/manageTags?plCode=" + plCode;
     }
