@@ -301,7 +301,6 @@ prefix="c"%>
               alert("곡이 추가 되었습니다.");
 
               listCheck();
-              alert("314!");
             } else {
               alert("이미 추가된 곡입니다.");
             }

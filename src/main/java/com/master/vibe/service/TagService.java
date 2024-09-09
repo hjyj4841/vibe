@@ -14,13 +14,14 @@ import java.util.List;
 
 @Service
 public class TagService {
-
+	private static final int MAX_TAGS = 5;
+	
     @Autowired
     private TagMapper tagMapper;
     
     @Autowired
     private PlaylistTagMapper playlistTagMapper;
-
+    
     public List<Integer> addTagsByName(List<String> tagNames) {
         if (tagNames == null) {
             tagNames = new ArrayList<>();
@@ -48,8 +49,6 @@ public class TagService {
         }
     }
 
-    private static final int MAX_TAGS = 5;
-    
     public Tag addTag(String tagName) {
         Tag existingTag = tagMapper.findTagByName(tagName);
         if (existingTag != null) {

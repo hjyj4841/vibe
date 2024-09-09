@@ -8,8 +8,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.master.vibe.model.dto.GetUserByIdDTO;
-import com.master.vibe.model.dto.PlaylistDTO;
 import com.master.vibe.model.dto.UserLikeTagDTO;
 import com.master.vibe.model.vo.User;
 
@@ -98,11 +96,10 @@ public class UserService implements UserDetailsService{
 	}
 	
 	// 공유 용 프로필 페이지
-		public User getUserById(String userEmail) {
-			User user = userMapper.getUserById(userEmail);
-		
-			return user;
-		}
+	public User getUserById(String userEmail) {
+		User user = userMapper.getUserById(userEmail);
+		return user;
+	}
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

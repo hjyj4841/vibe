@@ -23,16 +23,6 @@ public class PlaylistTagService {
 		return playlistTagMapper.searchTag(search);
 	}
 	
-	
-	// 제목 검색, 태그 검색
-	//public List<PlaylistTag> searchPlaylist(SearchDTO dto){
-	//	return playlistTagMapper.searchPlaylist(dto);
-	//}
-	
-	//public List<Playlist> getPlaylistsByTag(String tagCode) {
-	//	return playlistTagMapper.getPlaylistsByTag(tagCode);
-	//}
-
 	public void addPlaylistTag(int plCode, int tagCode) {
         playlistTagMapper.insertPlaylistTag(plCode, tagCode);
     }

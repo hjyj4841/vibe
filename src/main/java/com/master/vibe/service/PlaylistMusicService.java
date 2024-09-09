@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.master.vibe.model.vo.MusicPaging;
-import com.master.vibe.model.vo.Playlist;
 import com.master.vibe.model.vo.PlaylistMusic;
 
 import mapper.PlaylistMusicMapper;
@@ -49,8 +48,6 @@ public class PlaylistMusicService {
     		params.put("plCode", plCode);
     		params.put("musicId", musicId);
 	    return playlistMusicMapper.getExistingMusicIdInPlaylist(params);
-	    
-//    	return playlistMusicMapper.getExistingMusicIdInPlaylist(plCode, musicId);
     }
     
 }

@@ -20,6 +20,10 @@
 	<div class="container">
 		<div class="con">
 			<div class="mypageBox">
+				<!-- 이전 화면으로 -->
+				<a href="/showPlaylistInfo?plCode=${playlistCode }"
+					class="goPlaylistListBtn"> <i class="fa-solid fa-arrow-left"></i>
+				</a>
 				<div class="myLeft">
 					<jsp:include page="../tiles/mypageLeft.jsp"></jsp:include>
 				</div>

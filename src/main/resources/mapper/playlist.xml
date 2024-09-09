@@ -416,6 +416,5 @@
 		JOIN tag USING (tag_code)
 		WHERE pl_code = #{plCode}
 	</select>
-	
 
 </mapper>

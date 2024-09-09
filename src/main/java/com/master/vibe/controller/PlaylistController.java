@@ -58,14 +58,6 @@ public class PlaylistController {
 		return fileName;
 	}
 
-	// 플레이리스트 전체 조회 페이지
-//	@ResponseBody
-//	@GetMapping("/searchHome")
-//	public String searchAllPlaylist(Model model) {
-//		model.addAttribute("allPlaylist", playlistService.allPlaylist(new SearchDTO()));
-//		return "test/search/searchHome";
-//	}
-
 	// 플레이리스트 생성 처리
 	@PostMapping("/createPlaylist")
 	public String createPlaylist(CreatePlaylistDTO dto, Model model) throws IllegalStateException, IOException {
@@ -161,18 +153,10 @@ public class PlaylistController {
 		return "redirect:/myPlaylist";
 	}
 
-	// 플레이리스트 수정 -- 현재는 이름만 수정 가능
+	// 플레이리스트 수정
 	@GetMapping("/updatePlaylist")
 	public String updatePlaylist(String plCode, Model model) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		User user = null;
-		if (!authentication.getName().equals("anonymousUser")) {
-			user = (User) authentication.getPrincipal();
-			model.addAttribute("user", user);
-		}
-		
 		model.addAttribute("playlist", playlistService.selectPlaylistByPlCode(Integer.parseInt(plCode)));
-
 		return "playlist/updatePlaylist";
 	}
 
@@ -190,11 +174,8 @@ public class PlaylistController {
 			String existImg = new File(playlist.getPlImg()).getName();
 			if (!playlist.getPlImg().equals("http://192.168.10.6:8080/playlistImg/defaultCD.png")) {
 				if (existImg != null && !existImg.isEmpty()) {
-					System.out.println("존재하는 파일 : " + existImg);
 					File file = new File("\\\\192.168.10.6\\vibe\\playlistImg\\" + existImg); // 파일을 저장할 실제 경로로 설정
-					if (file.exists()) {
-						file.delete();
-					}
+					if (file.exists()) file.delete();
 				}
 			}
 
@@ -213,8 +194,6 @@ public class PlaylistController {
 			// 이미지 파일 변경하지 않았으면 기존 이미지 유지
 			newFileName = playlist.getPlImg();
 		}
-		
-		System.out.println("219 : " + dto.getPlPublicYn());
 
 		// Playlist 객체를 사용하여 플레이리스트 업데이트
 		playlist.setPlTitle(dto.getPlTitle());
@@ -224,12 +203,8 @@ public class PlaylistController {
 		playlistService.updatePlaylist(playlist); // 수정된 서비스 메서드 호출
 
 		// 플레이리스트 수정 후 저장 시 변경한 정보로 저장 후 이전 화면으로 이동(선택한 플레이리스트 화면)
-//      return "redirect:/showPlaylistInfo?plCode=" + playlist.getPlCode();
 		return "redirect:/showPlaylistInfo?plCode=" + dto.getPlCode();
-
 	}
-	
-	
 
 	// 랭킹 : 좋아요순
 	@GetMapping("/likeranking")
@@ -243,21 +218,7 @@ public class PlaylistController {
 	@GetMapping("/limitLikeRankList")
 	public List<PlaylistDTO> limitLikeRankList(SearchDTO dto) {
 		List<Playlist> playlist = playlistService.likerankingPlaylist(dto);
-		
 		return playlistViewer.playlistView(playlist);
-	}
-	
-	// 태그 검색 랭킹 조회
-	@GetMapping("/searchTag")
-	public String searchTag() {
-		return "ranking/searchTag";
-	}
-
-	@GetMapping("/searchTagRanking")
-	public String searchTagRanking(String tagName, Model model) {
-		List<Playlist> playlist = playlistService.searchTagRanking(tagName);
-		model.addAttribute("searchTagRanking", playlist);
-		return "ranking/searchTagRanking";
 	}
 	
 	// 한달 동안의 플레이리스트 좋아요 랭킹 조회
@@ -273,7 +234,6 @@ public class PlaylistController {
 	public String playListRankingOnAgeGroup(SearchDTO dto, Model model) {
 		List<Playlist> playlist = playlistService.playListRankingOnAgeGroup(dto);
 		model.addAttribute("searchTag", playlistViewer.playlistView(playlist));
-	
 		model.addAttribute("ageGroup", dto.getAgeGroup());
 		return "ranking/playListRankingOnAgeGroup";
 	}
@@ -282,7 +242,6 @@ public class PlaylistController {
 	@GetMapping("/limitAgeRankList")
 	public List<PlaylistDTO> limitAgeRankList(SearchDTO dto) {
 		List<Playlist> playlist = playlistService.playListRankingOnAgeGroup(dto);
-		
 		return playlistViewer.playlistView(playlist);
 	}
 
@@ -300,7 +259,6 @@ public class PlaylistController {
 	@GetMapping("/limitGenderRankList")
 	public List<PlaylistDTO> limitGenderRankList(SearchDTO dto) {
 		List<Playlist> playlist = playlistService.playListRankingOnGender(dto);
-		
 		return playlistViewer.playlistView(playlist);
 	}
 }

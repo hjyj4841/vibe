@@ -14,10 +14,6 @@ public interface PlaylistTagMapper {
 	
 	List<Integer> searchTag(String search);
 	
-	//List<PlaylistTag> searchPlaylist(SearchDTO dto); // 플리제목 검색, 태그 검색
-	
-	//List<Playlist> getPlaylistsByTag(String tagCode);
-	
 	 // 태그를 DB에 삽입
     void insertTag(Tag tag);
 

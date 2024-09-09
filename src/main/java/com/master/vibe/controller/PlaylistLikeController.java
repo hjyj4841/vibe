@@ -36,7 +36,6 @@ public class PlaylistLikeController {
 		dto.setUserEmail(user.getUserEmail());
 		
 		List<Playlist> playlist = playlistLikeService.likePlaylist(dto);
-		
 		model.addAttribute("searchTag", playlistViewer.playlistView(playlist));
 		
 		return "playlist/myLikeList";
@@ -50,7 +49,6 @@ public class PlaylistLikeController {
 		dto.setUserEmail(user.getUserEmail());
 		
 		List<Playlist> playlist = playlistLikeService.likePlaylist(dto);
-		
 		return playlistViewer.playlistView(playlist);
 		
 	}

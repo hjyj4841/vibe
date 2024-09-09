@@ -76,12 +76,9 @@
 				<a href="javascript:void(0);" onclick="cancel()"
 					class="goPlaylistBtn"><i class="fa-solid fa-arrow-left"></i></a>
 				
-				<!-- 로그인한 유저만 mypageLeft.jsp 보이게 -->
-				<c:if test="${not empty user}">
-					<div class="myLeft">
-						<jsp:include page="../tiles/mypageLeft.jsp"></jsp:include>
-					</div>
-				</c:if>
+				<div class="myLeft">
+					<jsp:include page="../tiles/mypageLeft.jsp"></jsp:include>
+				</div>
 				<div class="myRight">
 					<div class="updatePlInfoMain">
 						<div class="updatePlInfoBox">
