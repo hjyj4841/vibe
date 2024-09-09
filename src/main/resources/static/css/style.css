@@ -278,6 +278,10 @@ html {
 	color: white;
 }
 
+.plDesc > div > div > a:hover{
+	color: red;
+}
+
 .listRankDesc {
 	display: flex;
 	flex-direction: column;
