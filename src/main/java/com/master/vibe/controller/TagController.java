@@ -60,20 +60,17 @@ public class TagController {
         return "redirect:/playlist/manageTags?plCode=" + plCode;
     }
 
-    @PostMapping("/playlist/deleteTags")
-    public String deleteTags(@RequestParam Integer plCode,
-                             @RequestParam(value = "tagCodes") List<Integer> tagCodes,
-                             RedirectAttributes redirectAttributes) {
-        if (tagCodes == null || tagCodes.isEmpty()) {
-            // 삭제할 태그가 선택되지 않은 경우 에러 메시지 설정
-            redirectAttributes.addFlashAttribute("deleteErrorMessage", "삭제할 태그를 선택하세요.");
-        } else {
-            // 선택된 태그 코드 리스트를 순회하며 태그 삭제 처리
-            tagCodes.forEach(tagCode -> playlistTagService.deletePlaylistTag(plCode, tagCode));
-            // 성공 메시지 설정
-            redirectAttributes.addFlashAttribute("deleteSuccessMessage", "태그가 성공적으로 삭제되었습니다.");
-        }
-        // 태그 관리 페이지로 리다이렉트
-        return "redirect:/playlist/manageTags?plCode=" + plCode;
-    }
+	@PostMapping("/playlist/deleteTags")
+	public String deleteTags(@RequestParam("plCode") Integer plCode,
+			@RequestParam(value = "tagCodes", required = false) List<Integer> tagCodes) {
+		if (tagCodes == null || tagCodes.isEmpty()) {
+			return "redirect:/playlist/manageTags?plCode=" + plCode;
+		}
+
+		for (int tagCode : tagCodes) {
+			playlistTagService.deletePlaylistTag(plCode, tagCode);
+		}
+
+		return "redirect:/playlist/manageTags?plCode=" + plCode;
+	}
 }
