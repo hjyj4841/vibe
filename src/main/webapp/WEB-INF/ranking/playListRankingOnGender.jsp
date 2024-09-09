@@ -61,8 +61,7 @@
 											</c:otherwise>
 										</c:choose>
 										<span>LIKE </span> <span class="likeCount">${searchPlaylist.likeCount }</span>
-										<br>
-										<br> <span>${userGender}'s like</span> <span
+										<br> <br> <span>${userGender}'s like</span> <span
 											class="likeCount">${searchPlaylist.localCount }</span>
 									</div>
 								</div>
@@ -75,114 +74,122 @@
 		</div>
 	</div>
 	<script>
-		let page = 1;
-		
-		let loadedPlCodes = new Set(); // 이미 로드된 플레이리스트의 plCode를 저장
+    let page = 1;
+    let loadedPlCodes = new Set(); // 이미 로드된 플레이리스트의 plCode를 저장
 
-		$(".searchListMain").scroll(function(){
-		    var innerHeight = $(this).innerHeight();
-		    var scroll = $(this).scrollTop() + $(this).innerHeight(); 
-		    var height = $(this)[0].scrollHeight;
-		    if(height === scroll){
-		        page++;
-		        $.ajax({
-		            url: "/limitGenderRankList",
-		            type: "get",
-		            data: {
-		                page: page,
-		                userGender: '${userGender}'
-		            },
-		            success: function(searchTag) {
-		                let searchListMain = $(".searchListMain");
-		                $.each(searchTag, function(index, searchPlaylist) {
-		                    // 중복된 plCode가 있으면 추가하지 않음
-		                    if (loadedPlCodes.has(searchPlaylist.plCode)) {
-		                        return;
-		                    }
+    // 페이지 로드 시 이미 렌더된 플레이리스트들의 plCode를 Set에 추가
+    $(document).ready(function() {
+        $(".playlistCon").each(function() {
+            const plCode = $(this).find(".plImgBox img").data("code");
+            loadedPlCodes.add(plCode);
+        });
+    });
 
-		                    let searchItem = '<div class="playlistCon">' + 
-		                        '<div class="plImgBox">' +
-		                            '<img src="' + searchPlaylist.plImg + '" data-code="' + searchPlaylist.plCode + '">' + 
-		                        '</div>' +
-		                        '<div class="plContentsBox" data-code="' + searchPlaylist.plCode + '">' + 
-		                            '<p class="plTitle">' + searchPlaylist.plTitle + '</p>' + 
-		                            '<p class="plTags">';
-		                            for(let tag of searchPlaylist.tagList) {
-		                                searchItem += '#' + tag.tag.tagName;
-		                            }
-		                        searchItem += '</p>' +
-		                            '<div class="creatorInfo">' + 
-		                                '<img src="' + searchPlaylist.user.userImg + '">' + 
-		                                '<p class="creatorNickname">' + searchPlaylist.user.userNickname + '</p>' + 
-		                            '</div>' + 
-		                        '</div>' + 
-		                        '<div class="plLikeBox" data-code="' + searchPlaylist.plCode + '" onclick="clickLike(event)">' + 
-		                            '<div>'; 
-		                            if(searchPlaylist.plLike != null) {
-		                                searchItem += '<i class="fa-solid fa-heart" id="redHeart"></i>';
-		                            } else {
-		                                searchItem += '<i class="fa-regular fa-heart"></i>';
-		                            }
-		                            searchItem += '<span> LIKE </span>' +
-		                            '<span class="likeCount">' + searchPlaylist.likeCount + '</span>' +
-		                            '<br><br>' + 
-		                            '<span>' + '${userGender}' + '\'s like</span> <span class="likeCount">' + searchPlaylist.localCount + '</span>' +
-		                        '</div>' + 
-		                        '</div>' + 
-		                        '</div>';
-		                    
-		                    searchListMain.append(searchItem);
-		                    // 새로운 plCode를 Set에 추가
-		                    loadedPlCodes.add(searchPlaylist.plCode);
-		                });
+    $(".searchListMain").scroll(function(){
+        var innerHeight = $(this).innerHeight();
+        var scroll = $(this).scrollTop() + $(this).innerHeight(); 
+        var height = $(this)[0].scrollHeight;
+        if(height === scroll){
+            page++;
+            $.ajax({
+                url: "/limitGenderRankList",
+                type: "get",
+                data: {
+                    page: page,
+                    userGender: '${userGender}'
+                },
+                success: function(searchTag) {
+                    let searchListMain = $(".searchListMain");
+                    $.each(searchTag, function(index, searchPlaylist) {
+                        // 중복된 plCode가 있으면 추가하지 않음
+                        if (loadedPlCodes.has(searchPlaylist.plCode)) {
+                            console.log("Skipping duplicate plCode: " + searchPlaylist.plCode);
+                            return;  // 중복된 플레이리스트는 건너뜀
+                        }
 
-		                // 이미지 클릭 이벤트 처리
-		                $('.playlistCon img').click((e) => {
-		                    location.href = "/showPlaylistInfo?plCode=" + e.target.getAttribute("data-code");
-		                });
-		                
-		                $('.plContentsBox').click((e) => {
-		                    location.href = "/showPlaylistInfo?plCode=" + e.currentTarget.getAttribute("data-code");
-		                });
-		            }
-		        });
-		    }
-		});
-		
-		$('.playlistCon img').click((e) => {
-			location.href = "/showPlaylistInfo?plCode=" + e.target.getAttribute("data-code");
-		});
-		
-		$('.plContentsBox').click((e) => {
-			location.href = "/showPlaylistInfo?plCode=" + e.currentTarget.getAttribute("data-code");
-		})
-		
-		function clickLike(event) {
-			const plLike = event.currentTarget;
-			$.ajax({
-				type: 'post',
-				url: '/userLike',
-				data: {
-					plCode: plLike.getAttribute("data-code")
-				},
-				success: function(data){
-					const count = plLike.querySelector('.likeCount').innerHTML;
-					if(data){
-						plLike.querySelector('i').style.color = 'red';
-						plLike.querySelector('i').setAttribute('class', 'fa-solid fa-heart');
-						plLike.querySelector('.likeCount').innerHTML = Number(count) + 1;
-					}else{
-						plLike.querySelector('i').style.color = 'white';
-						plLike.querySelector('i').setAttribute('class', 'fa-regular fa-heart');
-						plLike.querySelector('.likeCount').innerHTML = Number(count) - 1;
-					}
-				},
-				error: function(){
-					alert("로그인 후 이용해 주세요.");
-				}
-			});
-		}	
-	</script>
+                        let searchItem = '<div class="playlistCon">' + 
+                            '<div class="plImgBox">' +
+                                '<img src="' + searchPlaylist.plImg + '" data-code="' + searchPlaylist.plCode + '">' + 
+                            '</div>' +
+                            '<div class="plContentsBox" data-code="' + searchPlaylist.plCode + '">' + 
+                                '<p class="plTitle">' + searchPlaylist.plTitle + '</p>' + 
+                                '<p class="plTags">';
+                                for(let tag of searchPlaylist.tagList) {
+                                    searchItem += '#' + tag.tag.tagName;
+                                }
+                            searchItem += '</p>' +
+                                '<div class="creatorInfo">' + 
+                                    '<img src="' + searchPlaylist.user.userImg + '">' + 
+                                    '<p class="creatorNickname">' + searchPlaylist.user.userNickname + '</p>' + 
+                                '</div>' + 
+                            '</div>' + 
+                            '<div class="plLikeBox" data-code="' + searchPlaylist.plCode + '" onclick="clickLike(event)">' + 
+                                '<div>'; 
+                                if(searchPlaylist.plLike != null) {
+                                    searchItem += '<i class="fa-solid fa-heart" id="redHeart"></i>';
+                                } else {
+                                    searchItem += '<i class="fa-regular fa-heart"></i>';
+                                }
+                                searchItem += '<span> LIKE </span>' +
+                                '<span class="likeCount">' + searchPlaylist.likeCount + '</span>' +
+                                '<br><br>' + 
+                                '<span>' + '${userGender}' + '\'s like</span> <span class="likeCount">' + searchPlaylist.localCount + '</span>' +
+                            '</div>' + 
+                            '</div>' + 
+                            '</div>';
+
+                        // 새로운 plCode를 Set에 추가
+                        loadedPlCodes.add(searchPlaylist.plCode);
+                        searchListMain.append(searchItem);
+                    });
+
+                    // 이미지 클릭 이벤트 처리
+                    $('.playlistCon img').click((e) => {
+                        location.href = "/showPlaylistInfo?plCode=" + e.target.getAttribute("data-code");
+                    });
+                    
+                    $('.plContentsBox').click((e) => {
+                        location.href = "/showPlaylistInfo?plCode=" + e.currentTarget.getAttribute("data-code");
+                    });
+                }
+            });
+        }
+    });
+
+    $('.playlistCon img').click((e) => {
+        location.href = "/showPlaylistInfo?plCode=" + e.target.getAttribute("data-code");
+    });
+    
+    $('.plContentsBox').click((e) => {
+        location.href = "/showPlaylistInfo?plCode=" + e.currentTarget.getAttribute("data-code");
+    });
+
+    function clickLike(event) {
+        const plLike = event.currentTarget;
+        $.ajax({
+            type: 'post',
+            url: '/userLike',
+            data: {
+                plCode: plLike.getAttribute("data-code")
+            },
+            success: function(data){
+                const count = plLike.querySelector('.likeCount').innerHTML;
+                if(data){
+                    plLike.querySelector('i').style.color = 'red';
+                    plLike.querySelector('i').setAttribute('class', 'fa-solid fa-heart');
+                    plLike.querySelector('.likeCount').innerHTML = Number(count) + 1;
+                }else{
+                    plLike.querySelector('i').style.color = 'white';
+                    plLike.querySelector('i').setAttribute('class', 'fa-regular fa-heart');
+                    plLike.querySelector('.likeCount').innerHTML = Number(count) - 1;
+                }
+            },
+            error: function(){
+                alert("로그인 후 이용해 주세요.");
+            }
+        });
+    }
+</script>
 </body>
 </html>
 </body>
