@@ -56,15 +56,15 @@ public class TagController {
 
 
     @PostMapping("/playlist/deleteTags")
-    public String deleteTags(@RequestParam Integer plCode,
-                             @RequestParam(value = "tagCodes") List<Integer> tagCodes,
-                             RedirectAttributes redirectAttributes) {
-        if (tagCodes == null || tagCodes.isEmpty()) {
-            redirectAttributes.addFlashAttribute("deleteErrorMessage", "삭제할 태그를 선택하세요.");
-        } else {
-            tagCodes.forEach(tagCode -> playlistTagService.deletePlaylistTag(plCode, tagCode));
-            redirectAttributes.addFlashAttribute("deleteSuccessMessage", "태그가 성공적으로 삭제되었습니다.");
-        }
-        return "redirect:/playlist/manageTags?plCode=" + plCode;
-    }
+	public String deleteTags(@RequestParam("plCode") Integer plCode,
+			@RequestParam(value = "tagCodes", required = false) List<Integer> tagCodes) {
+		if (tagCodes == null || tagCodes.isEmpty()) {
+			return "redirect:/playlist/manageTags?plCode=" + plCode;
+		}
+		for (int tagCode : tagCodes) {
+			playlistTagService.deletePlaylistTag(plCode, tagCode);
+		}
+
+		return "redirect:/playlist/manageTags?plCode=" + plCode;
+	}
 }
