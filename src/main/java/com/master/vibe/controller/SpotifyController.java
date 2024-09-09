@@ -27,9 +27,7 @@ public class SpotifyController {
 	@ResponseBody
 	@GetMapping("/showMusic")
 	public List<Music> getMusic(String musicName, int offset) {
-		
 		List<Music> musicData = spotifyService.getMusicInfoForMusicName(musicName, offset);
-		
 		return musicData;
 	}
 }
