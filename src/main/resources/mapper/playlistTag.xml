@@ -34,8 +34,7 @@
 	</insert>
 
 	<!-- 태그 이름으로 태그 조회 -->
-	<select id="selectTagByName" parameterType="String"
-		resultType="com.master.vibe.model.vo.Tag">
+	<select id="selectTagByName" parameterType="String" resultType="Tag">
 		SELECT * FROM tag WHERE tag_name = #{tagName}
 	</select>
 
