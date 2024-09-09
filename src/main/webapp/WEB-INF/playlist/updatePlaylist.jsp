@@ -75,7 +75,6 @@
 				<!-- 이전 화면으로 -->
 				<a href="javascript:void(0);" onclick="cancel()"
 					class="goPlaylistBtn"><i class="fa-solid fa-arrow-left"></i></a>
-				</form>
 				
 				<!-- 로그인한 유저만 mypageLeft.jsp 보이게 -->
 				<c:if test="${not empty user}">
@@ -129,18 +128,8 @@
 
 										<div class="toggleHidden"></div>
 									</div>
-
-									<!-- 
-									<c:choose>
-										<c:when test="${searchPlaylist.plPublicYn == 89}">
-											<i class="fa-solid fa-lock-open"></i>
-										</c:when>
-										<c:otherwise>
-											<i class="fa-solid fa-lock"></i>
-										</c:otherwise>
-									</c:choose>
-									 -->
 								</div>
+							</form>
 						</div>
 
 
