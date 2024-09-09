@@ -386,24 +386,6 @@
 				updateDeleteButtonVisibility();
 			}
 		});
-		
-		
-	    // 모든 playlistList 요소를 선택합니다.
-	   //const playlistLists = document.querySelectorAll('.playlistList');
-
-	    // 각 playlistList 요소에 클릭 이벤트 리스너를 추가합니다.
-	   // playlistLists.forEach(list => {
-	   //     list.addEventListener('click', function(event) {
-	            // 클릭된 요소 내의 체크박스를 찾습니다.
-	   //         const checkbox = this.querySelector('input[type="checkbox"]');
-	   //         if (checkbox) {
-	                // 체크박스 상태를 반전시킵니다.
-	    //            checkbox.checked = !checkbox.checked;
-	                // 체크박스 상태에 따라 삭제 버튼의 표시 여부를 업데이트합니다.
-	    //            updateDeleteButtonVisibility();
-	    //        }
-	    //    });
-	   // });
 	    
 	    function listClick(event){
 	    	event.preventDefault();

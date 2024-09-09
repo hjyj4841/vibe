@@ -153,7 +153,7 @@ public class PlaylistController {
 		return "redirect:/myPlaylist";
 	}
 
-	// 플레이리스트 수정 -- 현재는 이름만 수정 가능
+	// 플레이리스트 수정
 	@GetMapping("/updatePlaylist")
 	public String updatePlaylist(String plCode, Model model) {
 		model.addAttribute("playlist", playlistService.selectPlaylistByPlCode(Integer.parseInt(plCode)));
