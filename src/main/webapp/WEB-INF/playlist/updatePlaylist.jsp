@@ -126,18 +126,16 @@
 										<div class="toggleHidden"></div>
 									</div>
 								</div>
+								
+								<div class="editButtonBox">
+									<div class="editButton">
+										<button type="submit" class="editBtn">Save</button>
+										<button type="button" class="editCancel"
+											onclick="javascript:window.history.back();">Cancel</button>
+									</div>
+								</div>
 							</form>
 						</div>
-
-
-						<div class="editButtonBox">
-							<div class="editButton">
-								<button type="submit" class="editBtn">Save</button>
-								<button type="button" class="editCancel"
-									onclick="javascript:window.history.back();">Cancel</button>
-							</div>
-						</div>
-
 					</div>
 				</div>
 			</div>
