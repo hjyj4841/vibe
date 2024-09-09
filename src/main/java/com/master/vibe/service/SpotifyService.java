@@ -92,7 +92,7 @@ public class SpotifyService {
 		
 		String str = "";
 		
-		for(String musicCode : musicCodeList) str += musicCode + ","; // 콤마를 구분자로 10개씩 요청
+		for(String musicCode : musicCodeList) str += musicCode + ","; // 콤마를 구분자로 요청
 		str = str.substring(0, str.length()-1); // 마지막 콤마 제거 위함
 		
 		String url = "https://api.spotify.com/v1/tracks?ids=" + str;
