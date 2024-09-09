@@ -1,7 +1,5 @@
 package com.master.vibe.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,10 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.master.vibe.model.vo.Music;
-import com.master.vibe.model.vo.Playlist;
 import com.master.vibe.model.vo.User;
-import com.master.vibe.service.PlaylistService;
 import com.master.vibe.service.SpotifyService;
 
 import jakarta.servlet.http.HttpSession;
@@ -30,9 +25,6 @@ public class ConnectToSpotifyController {
 
 	@Autowired
 	private SpotifyService spotifyService;
-
-	@Autowired
-	private PlaylistService playlistService;
 
 	@GetMapping("/spotifyConnect")
 	public String redirectToSpotify() {
@@ -64,7 +56,6 @@ public class ConnectToSpotifyController {
 
 			System.out.println("Access Token: " + accessToken);
 			model.addAttribute("token", accessToken);
-			spotifyService.updateUserSpotifyStatus(user.getUserEmail());
 
 			return "redirect:/mypage"; // 마이페이지로 리다이렉트
 		} catch (Exception e) {

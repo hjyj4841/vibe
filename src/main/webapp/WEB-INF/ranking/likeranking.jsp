@@ -126,6 +126,15 @@ $(".searchListMain").scroll(function(){
     }
 });
 
+//이벤트 리스너 추가
+$('.playlistCon img').click((e) => {
+    location.href = "/showPlaylistInfo?plCode=" + e.target.getAttribute("data-code");
+});
+
+$('.plContentsBox').click((e) => {
+    location.href = "/showPlaylistInfo?plCode=" + e.currentTarget.getAttribute("data-code");
+});
+
 function clickLike(event) {
     const plLike = event.currentTarget;
     $.ajax({

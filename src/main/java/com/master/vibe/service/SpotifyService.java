@@ -37,8 +37,6 @@ public class SpotifyService {
     private UserMapper userMapper;  // UserMapper를 인스턴스로 주입받음
 	
 	// token 발급 받는 메서드
-	
-	
 	private String getAccessToken() {
 		
 		String clientId = "d0a1ae63ef0149c08c1d1e32cfc89a0c";
@@ -94,14 +92,6 @@ public class SpotifyService {
         return jsonObject.getString("access_token");
     }
 
-    public void updateUserSpotifyStatus(String userEmail) {
-        System.out.println(userEmail);
-        userMapper.updateSpotifyStatus(userEmail, "Y"); // 스포티파이 연결 상태를 DB에 업데이트
-    }
-    
- 
-
-    
     // 검색한 음악정보 요청해서 받아오는 메서드
 	public ArrayList<Music> getMusicInfoForMusicName(String musicName, int offset) {
 		String accessToken = getAccessToken();

@@ -8,12 +8,8 @@ import com.master.vibe.model.dto.CreatePlaylistDTO;
 import com.master.vibe.model.dto.GetUserByIdDTO;
 import com.master.vibe.model.dto.PlaylistDTO;
 import com.master.vibe.model.dto.SearchDTO;
-import com.master.vibe.model.vo.Paging;
-import com.master.vibe.model.dto.UpdatePlaylistDTO;
 import com.master.vibe.model.vo.Playlist;
 import com.master.vibe.model.vo.PlaylistTag;
-import com.master.vibe.model.vo.User;
-
 
 // PlaylistMapper.java는 플레이리스트를 데이터베이스에 추가하는 addPlaylist 메소드를 정의
 // 이 메소드는 Playlist 객체를 매개변수로 받으며, XML에서 정의한 addPlaylist 메소드를 호출합니다.
@@ -26,6 +22,7 @@ public interface PlaylistMapper {
 	List<Playlist> rankPlaylist(SearchDTO dto); // 검색한 플리 좋아요 TOP 5
 
 	List<Integer> searchTag(String search);
+	
 	List<PlaylistTag> searchTagPlayList(int code);
 	
 	void movePlaylist(String userEmail); // 플레이리스트 소유자를 관리자로 변경(회원 탈퇴시)
@@ -36,16 +33,11 @@ public interface PlaylistMapper {
 	
 	Playlist selectPlaylistByPlCode(int plCode); // plCode로 플레이리스트 조회
 
-    // @Select("SELECT LAST_INSERT_ID()")
-    // int getLastInsertedId(); // 최근 삽입된 플레이리스트의 ID를 가져옴
-
 	void deletePlaylistTags(int plCode); // 플레이리스트 태그 삭제
+	
     void deletePlaylist(int plCode); // 플레이리스트 삭제
         
-//    void updatePlaylist(UpdatePlaylistDTO dto); // 플레이리스트 수정
     void updatePlaylist(Playlist playlist); // 플레이리스트 수정
-    
-    //void updatePlaylistTitle(Playlist playlist); // 플레이리스트 제목 수정
     
     List<Playlist> likerankingPlaylist(SearchDTO dto); // 랭킹 : 좋아요순
     

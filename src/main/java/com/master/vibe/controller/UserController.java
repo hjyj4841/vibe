@@ -3,7 +3,6 @@ package com.master.vibe.controller;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
@@ -18,11 +17,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.master.vibe.model.dto.GetUserByIdDTO;
 import com.master.vibe.model.dto.PlaylistDTO;
 import com.master.vibe.model.dto.SearchDTO;
 import com.master.vibe.model.dto.UserDTO;
@@ -30,13 +27,11 @@ import com.master.vibe.model.dto.UserLikeTagDTO;
 import com.master.vibe.model.vo.Playlist;
 import com.master.vibe.model.vo.User;
 import com.master.vibe.playlistViewer.PlaylistViewer;
-import com.master.vibe.service.PlaylistMusicService;
 import com.master.vibe.service.PlaylistService;
 import com.master.vibe.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class UserController {
@@ -352,11 +347,9 @@ public class UserController {
 	public String getProfile(@PathVariable("userId") String userId, Model model) {
 		User user = userService.getUserById(userId);
 		model.addAttribute("user",user);
-		System.err.println(user);
 		
 		List<UserLikeTagDTO> likeTag = userService.userLikeTag(userId);
 		model.addAttribute("likeTag", likeTag);
-		System.err.println(likeTag);
 		
 		SearchDTO searchDTO = new SearchDTO();
 		
@@ -370,8 +363,6 @@ public class UserController {
 		playlistView.sort(Comparator.comparing(PlaylistDTO::getLikeCount).reversed());
 		
 		model.addAttribute("playlistView", playlistView);
-		System.err.println(playlistView);
-		
 		
 		return "user/profile";
 	}

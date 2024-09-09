@@ -78,9 +78,9 @@
 	</delete>
 	<!-- 해당 플리의 좋아요 수 조회 -->
 	<select id="showLikeCount" parameterType="Integer" resultType="Integer">
-	SELECT COUNT(*) 
-	FROM playlist_like 
-	WHERE pl_code = #{plCode}
+		SELECT COUNT(*) 
+		FROM playlist_like 
+		WHERE pl_code = #{plCode}
 	</select>
 	
 	<!-- 해당 플레이리스트 삭제 시 해당하는 좋아요 전체 삭제 -->

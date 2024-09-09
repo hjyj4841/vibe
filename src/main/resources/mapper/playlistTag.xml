@@ -28,21 +28,6 @@
 		WHERE lower(tag_name) LIKE CONCAT('%', #{search}, '%')
 	</select>
 
-
-	<!-- SELECT * FROM playlist_tag JOIN tag USING (tag_code) WHERE pl_code 
-		= 3 AND tag_name LIKE '%El%' <select id="allPlaylist" resultMap="playlistMap" 
-		parameterType="SearchDTO"> SELECT * FROM playlist JOIN user USING (user_email) 
-		WHERE pl_public_yn = 'Y' <if test="search != null"> AND pl_title LIKE CONCAT('%', 
-		#{search}, '%') </if> </select> -->
-
-	<!-- 플리 이름검색, 태그검색 -->
-	<!-- <select id="searchPlaylist" resultMap="listTagMap" parameterType="SearchDTO"> 
-		SELECT * FROM playlist_tag RIGHT JOIN playlist USING (pl_code) LEFT JOIN 
-		user USING (user_email) LEFT JOIN tag USING (tag_code) WHERE pl_public_yn 
-		= 'Y' <choose> <when test="select == 'title'"> AND pl_title LIKE CONCAT('%', 
-		#{search}, '%') </when> <when test="select == 'tag'"> AND tag_name LIKE CONCAT('%', 
-		#{search}, '%') </when> </choose> </select> -->
-
 	<!-- 태그를 DB에 삽입 -->
 	<insert id="insertTag" parameterType="Tag">
 		INSERT INTO tag(tag_name) VALUES (#{tagName})
@@ -64,14 +49,4 @@
 	    WHERE pl_code = #{plCode} AND tag_code = #{tagCode}
 	</delete>
 	
-	<!-- 
-	<select id="findTagsByPlaylistCode" resultType="String"
-		parameterType="int">
-		SELECT tag_name
-		FROM playlist
-		JOIN playlist_tag ON (playlist.pl_code = playlist_tag.pl_code)
-		JOIN tag ON (playlist_tag.tag_code = tag.tag_code)
-		WHERE playlist.pl_code = #{plCode}
-	</select>
-	 -->
 </mapper>

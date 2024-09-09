@@ -1,15 +1,11 @@
 package com.master.vibe.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.master.vibe.model.vo.User;
-import com.master.vibe.service.PlaylistService;
 import com.master.vibe.service.SpotifyService;
 
 @Controller
@@ -34,10 +30,7 @@ public class MusicListenController {
     @GetMapping("/musicListen/callback")
     public String handleSpotifyCallbackForMusicPlayer(@RequestParam("code") String code, Model model) {
         try {
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            User user = (User) authentication.getPrincipal();
             String accessToken = spotifyService.getAccessToken(code, clientId, clientSecret, redirectUri);
-            System.out.println(accessToken);
             model.addAttribute("token", accessToken);
             return "music/musicListen"; // musicListen 페이지로 리다이렉트
         } catch (Exception e) {
