@@ -37,7 +37,7 @@
 					ageGroup = 'etc';
 				}
 			</script>
-			<li><a href="" id="ageMove">Age Ranking</a></li>
+			<li><a href="/playListRankingOnAgeGroup" id="ageMove">Age Ranking</a></li>
 			<li><a href="/playListRankingOnGender?userGender=${user.userGender }">Gender Ranking</a></li>
 		</sec:authorize>
 	</ul>
@@ -59,7 +59,7 @@
 			if(pathname === btn.getAttribute("href").split("?")[0]) {
 				btn.classList.add("active");
 			}
-		})
+		});
 		
 
 		if(url.search !== "") {
@@ -67,7 +67,7 @@
 				if(search === link.getAttribute("href")) {
 					link.style.color = "red";
 				}
-			})
+			});
 		}
 	});
 
