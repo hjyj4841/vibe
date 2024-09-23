@@ -326,18 +326,20 @@ prefix="c"%>
           },
           traditional: true, // 배열 전송 시 필요
           success: function (response) {
-            // 응답에 따라 사용자에게 결과를 알림
+			// 서버 응답을 성공적으로 받은 후 실행되는 함수
+			// 응답에 포함된 음악 ID와 선택된 체크박스의 ID를 비교하여 중복 여부 처리
             $("input[name='selectedMusic']").each(function () {
               const musicId = $(this).val();
               if (response.includes(musicId)) {
                 $(this).prop("checked", false);
                 $(this).parent().css("background-color", "#999");
-                alert("선택한 곡은 이미 플레이리스트에 있습니다.");
+                alert("선택한 곡은 이미 플레이리스트에 있습니다."); // 사용자에게 결과를 알림
               }
             });
           },
         });
       }
+      
       function addMusicList() {
         // 선택된 체크박스의 ID 값을 배열로 가져오기
         const selectedMusicId = $("input[name='selectedMusic']:checked")

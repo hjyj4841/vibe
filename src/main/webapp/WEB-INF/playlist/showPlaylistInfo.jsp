@@ -74,7 +74,7 @@
 							<div class="playlistInfoBox">
 								<div class="creatorInfo">
 									<img src="${playlist.user.userImg}"> <a
-										href="http://localhost:8080/profile/${playlist.user.userEmail }"><p
+										href="http://localhost:8080/profile/${playlist.user.userEmail}"><p
 											class="creatorNickname">${playlist.user.userNickname}</p></a>
 									<!-- 링크 공유하기 -->
 									<div class="playlistShareBtn">

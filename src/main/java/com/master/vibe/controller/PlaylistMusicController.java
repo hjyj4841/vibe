@@ -21,6 +21,7 @@ public class PlaylistMusicController {
 	@Autowired
 	private PlaylistMusicService playlistMusicService;
 	
+	// 플레이리스트에 음악 추가
 	@ResponseBody
     @PostMapping("/addMusicToPlaylist")
     public void addMusicToPlaylist(@RequestParam List<String> selectedMusic, Model model, String plCode) {
@@ -50,11 +51,12 @@ public class PlaylistMusicController {
     	return "redirect:/showPlaylistInfo?plCode=" + plCode;
     }
     
-    // 사용자가 플레이리스트에 음악 추가 시 추가하려는 음악이 해당 플레이리스트에 이미 있는 곡인지 중복 체크
+    // 사용자가 추가하려는 음악이 해당 플레이리스트에 이미 존재하는지 중복 체크
     @ResponseBody
     @PostMapping("/checkMusicInPlaylist")
     public List<String> checkMusicInPlaylist(@RequestParam List<String> musicId, HttpServletRequest request, String plCode) {
-    	// Map 형태로 전달
+    	// 플레이리스트에 존재하는 musicId 리턴
         return playlistMusicService.getExistingMusicIdInPlaylist(Integer.parseInt(plCode), musicId);
     }
 }
+

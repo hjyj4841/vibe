@@ -20,7 +20,8 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <title>플레이리스트 수정하기</title>
 <script type="text/javascript">
-	// [취소하기] 버튼 클릭 시 수정 취소 동시에 이전 화면으로
+
+	// [취소하기] 버튼 클릭 시 수정 취소 동시에 이전 페이지로 돌아감
 	function cancel() {
 		window.history.back(); // 이전 페이지로 돌아가기
 	}
@@ -33,17 +34,10 @@
 			const reader = new FileReader();
 			reader.onload = function(e) {
 				const image = document.getElementById("playlistImg");
-				image.src = e.target.result;
-
-				 // ColorThief를 사용하여 이미지에서 색상 추출
-	            const colorThief = new ColorThief();
-	            const imgElement = document.getElementById("playlistImg");
-	            imgElement.onload = function() {
-	                const dominantColor = colorThief.getColor(imgElement);
-	                console.log('Dominant Color from Uploaded Image:', dominantColor); // 추출된 색상 출력
-	            };
+				image.src = e.target.result; // 미리보기 이미지 업데이트
 	        };
-	        reader.readAsDataURL(file);
+	        
+	        reader.readAsDataURL(file); // 파일을 Data URL로 읽어오기
 		}
 	}
 
@@ -53,18 +47,11 @@
 	// 기본 이미지로 리셋 및 폼 데이터 업데이트
 	function resetDefaultImg() {
 		const img = document.getElementById("playlistImg");
-		img.src = DEFAULT_IMAGE_URL;
-		// 기본 이미지 정보 폼에 추가
+		img.src = DEFAULT_IMAGE_URL; // 기본 이미지로 변경
 		document.getElementById("imgChange").value = ""; // 파일 선택 초기화
 		document.getElementById("defaultImg").value = DEFAULT_IMAGE_URL; // 기본 이미지 URL 추가
-
-		// 기본 이미지에서 색상 추출
-	    const colorThief = new ColorThief();
-	    img.onload = function() {
-	        const dominantColor = colorThief.getColor(img);
-	        console.log('Dominant Color from Default Image:', dominantColor); // 추출된 색상 출력
-	    };
-	}
+	};
+	
 </script>
 </head>
 <body>
@@ -72,7 +59,7 @@
 	<div class="container">
 		<div class="con">
 			<div class="mypageBox">
-				<!-- 이전 화면으로 -->
+				<!-- 이전 화면으로 이동 -->
 				<a href="javascript:void(0);" onclick="cancel()"
 					class="goPlaylistBtn"><i class="fa-solid fa-arrow-left"></i></a>
 				
@@ -82,37 +69,33 @@
 				<div class="myRight">
 					<div class="updatePlInfoMain">
 						<div class="updatePlInfoBox">
-							<form action="/updatePlaylist" method="post"
-								enctype="multipart/form-data">
-								<!-- 플레이리스트 코드와 수정할 제목을 입력 받음 -->
+							<form action="/updatePlaylist" method="post" enctype="multipart/form-data">
+								<!-- 플레이리스트 코드와 수정할 플레이리스트의 이미지, 타이틀 가져오기 -->
 								<input type="hidden" value="${playlist.plCode}" name="plCode" />
 								<div class="updatePlImgBox">
 									<div class="updatePlImg">
-										<img src="${playlist.plImg}" id="playlistImg"
-											class="playlistImg">
+										<img src="${playlist.plImg}" id="playlistImg" class="playlistImg">
 										<div class="changePlImg">
-											<input type="file" id="imgChange" name="plImgFile"
-												accept="image/*" onchange="previewImg(event)" />
+											<!-- 이미지 파일 선택 및 미리보기 기능 -->
+											<input type="file" id="imgChange" name="plImgFile" accept="image/*" onchange="previewImg(event)" />
 											<div>
 												<i class="fa-solid fa-camera-rotate"></i>
 												<p>Change Image</p>
 											</div>
 										</div>
 										<div class="defaultImg">
-											<input type="hidden" id="defaultImg" name="defaultImg"
-												value="${playlist.plImg}" />
-											<button type="button" class="deleteImgBtn"
-												onclick="resetDefaultImg()">Default Image</button>
+											<input type="hidden" id="defaultImg" name="defaultImg" value="${playlist.plImg}" />
+											<!-- 기본 이미지로 리셋 -->
+											<button type="button" class="deleteImgBtn" onclick="resetDefaultImg()">Default Image</button>
 										</div>
 									</div>
 								</div>
+								<!-- 타이틀 영역 -->
 								<div class="updatePlTitle">
 									<input type="text" id="plTitle" name="plTitle"
 										value="${playlist.plTitle}" placeholder="Playlist Title" />
-
 									<!-- 공개/비공개 설정 -->
 									<div class="privateBox">
-										
 										<input type="radio" name="plPublicYn" value="Y" id="publicRadio" ${Character.toString(playlist.plPublicYn) eq "Y" ? "checked" : ""}> 
 										<input type="radio" name="plPublicYn" value="N" id="privateRadio" ${Character.toString(playlist.plPublicYn) eq "N" ? "checked" : ""}>
 
@@ -122,11 +105,10 @@
 										<c:if test='${Character.toString(playlist.plPublicYn) eq "N"}'>
 											<i class="fa-solid fa-lock"></i>
 										</c:if>
-
 										<div class="toggleHidden"></div>
 									</div>
 								</div>
-								
+								<!-- 수정 사항 저장/취소 버튼 -->
 								<div class="editButtonBox">
 									<div class="editButton">
 										<button type="submit" class="editBtn">Save</button>
@@ -145,6 +127,7 @@
 	<script>
    		const publicSelect = document.querySelector('.privateBox');
    		
+		// 공개/비공개 설정에 따라 UI 업데이트
    		if($("#publicRadio").is(":checked")) {
    			$(".toggleHidden").css({
    				left: '30px',
@@ -167,7 +150,7 @@
    			})
     	}
    		
-   		// 공개 범위 선택
+		// 공개/비공개 설정 변경 시 UI 업데이트
         function selectPublicBox() {
         	const moveRight = {transform: ['translate(40px, 0)']};
         	const moveLeft = {transform: ['translate(-40px, 0)']};
@@ -185,7 +168,7 @@
         		$('.privateBox').css('background-color', '#018B00');
         		$(".privateBox > i").css({
        				left: '0px'
-       			}).addClass('fa-lock-open')
+       			}).addClass('fa-lock-open');
        			
         	} else {
         		//$('#privateRadio').prop('checked', true);
@@ -202,12 +185,11 @@
    		
         publicSelect.addEventListener('click', selectPublicBox);
         
-        
+		// 페이지 로드 시 입력 필드의 끝으로 커서 이동
         document.addEventListener('DOMContentLoaded', function() {
             var inputElement = document.getElementById('plTitle');
 
             if (inputElement) {
-                // 페이지 로드 시 입력 필드의 끝으로 커서 이동되어 있기
                 inputElement.focus();
                 var length = inputElement.value.length;
                 inputElement.setSelectionRange(length, length);
@@ -226,6 +208,5 @@
         
    	</script>
 	<script src="./js/scroll.js"></script>
-	
 </body>
 </html>

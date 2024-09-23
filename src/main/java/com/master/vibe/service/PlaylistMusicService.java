@@ -19,9 +19,8 @@ public class PlaylistMusicService {
 	@Autowired
 	private PlaylistMusicMapper playlistMusicMapper;
 	
-	// 선택된 음악 리스트를 처리하여 플레이리스트에 추가하는 로직을 추가할 수 있습니다.
+	// 선택된 음악 리스트를 플레이리스트에 추가
     public void addMusicToPlaylist(List<String> selectedMusic, int plCode) {
-        // 예를 들어, 선택된 음악의 정보를 기반으로 Playlist 객체를 생성하고, 이를 데이터베이스에 추가하는 로직
     	List<PlaylistMusic> list = new ArrayList<PlaylistMusic>();
     	for(String musicCode : selectedMusic) {
     		PlaylistMusic pm = new PlaylistMusic();
@@ -38,16 +37,18 @@ public class PlaylistMusicService {
     	return playlistMusicMapper.showMusicList(paging);
     }
     
-    // 플레이리스트에서 음악 삭제
+    // 플레이리스트에서 선택한 음악 삭제
     public void deleteMusicFromPlaylist(int plCode, List<String> selectedDeleteMusic) {
         playlistMusicMapper.deleteMusicFromPlaylist(plCode, selectedDeleteMusic);
     }
     
-    public List<String> getExistingMusicIdInPlaylist(int plCode, List<String> musicId) { // plCode 함께 전달해야 함
-    	Map<String, Object> params = new HashMap<>();
+    // 플레이리스트에서 이미 존재하는 musicId 조회
+    public List<String> getExistingMusicIdInPlaylist(int plCode, List<String> musicId) {
+    	Map<String, Object> params = new HashMap<>(); // 파라미터 저장할 Map 객체 생성
     		params.put("plCode", plCode);
     		params.put("musicId", musicId);
-	    return playlistMusicMapper.getExistingMusicIdInPlaylist(params);
+	    return playlistMusicMapper.getExistingMusicIdInPlaylist(params); // 플레이리스트에 이미 존재하는 musicId 리스트 리턴
     }
     
 }
+

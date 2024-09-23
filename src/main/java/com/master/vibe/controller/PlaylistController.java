@@ -95,23 +95,25 @@ public class PlaylistController {
 		return "redirect:/myPlaylist";
 	}
 
-	// 음악 리스트
+	// 사용자의 플레이리스트 상세 화면
 	@GetMapping("/showPlaylistInfo")
 	public String showPlaylistInfo(MusicPaging paging, Model model) {
-		// 해당 플레이리스의 음악정보
+		// 해당 플레이리스트의 음악 정보 가져오기
 		List<String> musicCode = playlistMusicService.showMusicList(paging);
 		
+		// musicCode 리스트가 비어있지 않다면
 		if (musicCode.size() != 0) {
-			List<Music> musicInfo = spotifyService.getMusicInfoByMusicCode(musicCode);
-			model.addAttribute("musicList", musicInfo);
+			List<Music> musicInfo = spotifyService.getMusicInfoByMusicCode(musicCode); // 음악 정보 조회
+			model.addAttribute("musicList", musicInfo); // 조회된 음악 정보 모델에 추가
 		}
 		
-		// 해당 플레이리스트의 정보
+		// plCode로 해당 플레이리스트 정보 조회
 		Playlist playlist = playlistService.selectPlaylistByPlCode(paging.getPlCode());
-		model.addAttribute("playlist", playlistViewer.onePlaylistView(playlist));
+		model.addAttribute("playlist", playlistViewer.onePlaylistView(playlist)); // 조회된 플레이리스트 정보 모델에 추가
 		
 		return "playlist/showPlaylistInfo";
 	}
+	
 	@ResponseBody
 	@GetMapping("/limitPlaylistMusicList")
 	public List<Music> limitPlaylistMusicList(MusicPaging paging, int plCode) {
@@ -153,56 +155,60 @@ public class PlaylistController {
 		return "redirect:/myPlaylist";
 	}
 
-	// 플레이리스트 수정
+	// 플레이리스트 수정 페이지 요청
 	@GetMapping("/updatePlaylist")
 	public String updatePlaylist(String plCode, Model model) {
+		// plCode로 플레이리스트 정보 조회하고 모델에 추가
 		model.addAttribute("playlist", playlistService.selectPlaylistByPlCode(Integer.parseInt(plCode)));
 		return "playlist/updatePlaylist";
 	}
 
+	// 플레이리스트 수정 페이지 정보 업데이트
 	@PostMapping("/updatePlaylist")
 	public String updatePlaylist(UpdatePlaylistDTO dto) throws IllegalStateException, IOException {
 
 		// 기존 플레이리스트 정보 조회
 		Playlist playlist = playlistService.selectPlaylistByPlCode(dto.getPlCode());
 
-		// 새 이미지 파일 업로드
+		// 새 이미지 파일 업로드 처리
 		String newFileName = null;
 		if (dto.getPlImgFile() != null && !dto.getPlImgFile().isEmpty()) {
 
 			// 기존 이미지 파일 삭제
 			String existImg = new File(playlist.getPlImg()).getName();
 			if (!playlist.getPlImg().equals("http://192.168.10.6:8080/playlistImg/defaultCD.png")) {
+				// 기본 이미지가 아닌 경우에만 삭제
 				if (existImg != null && !existImg.isEmpty()) {
-					File file = new File("\\\\192.168.10.6\\vibe\\playlistImg\\" + existImg); // 파일을 저장할 실제 경로로 설정
-					if (file.exists()) file.delete();
+					File file = new File("\\\\192.168.10.6\\vibe\\playlistImg\\" + existImg); // 파일을 저장할 실제 경로
+					if (file.exists()) file.delete(); // 기존 파일 삭제
 				}
 			}
-
+			
+			// 새 이미지 파일 생성 및 저장
 			UUID uuid = UUID.randomUUID();
 			newFileName = uuid.toString() + "_" + dto.getPlImgFile().getOriginalFilename();
 			File newFile = new File("\\\\192.168.10.6\\vibe\\playlistImg\\" + newFileName);
 
-			dto.getPlImgFile().transferTo(newFile);
-			newFileName = "http://192.168.10.6:8080/playlistImg/" + newFileName;
+			dto.getPlImgFile().transferTo(newFile); // 새 파일로 저장
+			newFileName = "http://192.168.10.6:8080/playlistImg/" + newFileName; // 새 이미지 URL 생성
 
-			// 기본 이미지 URL이 폼 데이터에 포함됨. 새 이미지로 설정
 		} else if (dto.getDefaultImg() != null && !dto.getDefaultImg().isEmpty()) {
-			// 사용자가 버튼을 클릭하여 기본 이미지로 변경한 경우, 기존의 이미지 파일을 변경하지 않고 이 기본 이미지 URL을 새 이미지로 사용 -> 즉, defaultCD.img로 설정하겠다.
-			newFileName = dto.getDefaultImg();
+			// 사용자가 버튼을 클릭하여 기본 이미지로 변경한 경우
+			newFileName = dto.getDefaultImg(); // 기본 이미지 URL 사용(defaultCD.img)
 		} else {
-			// 이미지 파일 변경하지 않았으면 기존 이미지 유지
+			// 이미지 파일이 변경되지 않은 경우, 기존 이미지 유지
 			newFileName = playlist.getPlImg();
 		}
 
 		// Playlist 객체를 사용하여 플레이리스트 업데이트
 		playlist.setPlTitle(dto.getPlTitle());
-		playlist.setPlImg(newFileName); // 새 이미지 파일 이름으로 설정
-		playlist.setPlPublicYn(dto.getPlPublicYn()); // 공개/비공개 설정 추가
-		 
-		playlistService.updatePlaylist(playlist); // 수정된 서비스 메서드 호출
+		playlist.setPlImg(newFileName); // 새 이미지 파일 이름으로 업데이트
+		playlist.setPlPublicYn(dto.getPlPublicYn()); // 공개/비공개 설정 업데이트
+		
+		// 플레이리스트 서비스 호출하여 업데이트된 정보 저장
+		playlistService.updatePlaylist(playlist);
 
-		// 플레이리스트 수정 후 저장 시 변경한 정보로 저장 후 이전 화면으로 이동(선택한 플레이리스트 화면)
+		// 수정 후 저장 시 변경된 정보로 화면 리다이렉트(해당 플레이리스트 화면)
 		return "redirect:/showPlaylistInfo?plCode=" + dto.getPlCode();
 	}
 
